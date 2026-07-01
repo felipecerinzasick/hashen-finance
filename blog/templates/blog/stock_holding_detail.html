@@ -1,0 +1,382 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hashen {{ holding.ticker }}</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <style>
+    :root {
+      --ink: #123044;
+      --muted: #607285;
+      --line: #dfe5ec;
+      --panel: #ffffff;
+      --page: #f5f8fb;
+      --accent: #2487ce;
+      --blue: #124265;
+      --green: #2f8f5b;
+      --gold: #b68a35;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--ink);
+      font-family: Inter, Arial, sans-serif;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .dashboard-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 248px minmax(0, 1fr);
+    }
+
+    .sidebar {
+      background: #0f2638;
+      color: #f8fafc;
+      padding: 28px 22px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 34px;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      background: #f8fafc;
+      color: var(--blue);
+    }
+
+    .brand strong,
+    .brand span {
+      display: block;
+    }
+
+    .brand span {
+      color: #aab4c3;
+      font-size: 12px;
+    }
+
+    .nav-list {
+      display: grid;
+      gap: 6px;
+    }
+
+    .nav-link-local {
+      color: #d8dee9;
+      padding: 10px 12px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .nav-link-local.active,
+    .nav-link-local:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+      text-decoration: none;
+    }
+
+    .content {
+      min-width: 0;
+      padding: 32px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+      margin-bottom: 22px;
+    }
+
+    .topbar h1 {
+      margin: 0;
+      font-size: 32px;
+      line-height: 1.08;
+    }
+
+    .topbar p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 660px;
+    }
+
+    .btn-local {
+      border: 1px solid var(--line);
+      min-height: 38px;
+      border-radius: 6px;
+      padding: 8px 13px;
+      background: #fff;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 20px;
+      min-width: 0;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .metric {
+      margin-top: 6px;
+      color: var(--blue);
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.14;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 18px;
+    }
+
+    p,
+    li {
+      color: #33485a;
+      line-height: 1.65;
+    }
+
+    .detail-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 10px;
+    }
+
+    .detail-row:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .detail-row span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .detail-row strong {
+      text-align: right;
+    }
+
+    .target {
+      border-color: rgba(182, 138, 53, 0.4);
+      background: #fffaf0;
+    }
+
+    .target .metric {
+      color: var(--gold);
+    }
+
+    .status {
+      display: inline-flex;
+      min-height: 26px;
+      align-items: center;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: #eaf7ef;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .status.fallback {
+      background: #fff3dd;
+      color: #9a6a16;
+    }
+
+    @media (max-width: 960px) {
+      .dashboard-shell {
+        display: block;
+      }
+
+      .sidebar {
+        position: static;
+        height: auto;
+      }
+
+      .content {
+        padding: 22px;
+      }
+
+      .grid,
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        display: block;
+      }
+
+      .btn-local {
+        display: inline-flex;
+        margin-top: 14px;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="{% static 'css/wealth-console.css' %}">
+</head>
+<body>
+  <div class="dashboard-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">H</div>
+        <div>
+          <strong>Hashen</strong>
+          <span>Investment detail</span>
+        </div>
+      </div>
+      <nav class="nav-list">
+        <a class="nav-link-local" href="{% url 'dashboard' %}"><span>Overview</span><span>01</span></a>
+        <a class="nav-link-local active" href="{% url 'stocks_dashboard' %}"><span>Stocks</span><span>02</span></a>
+        <a class="nav-link-local" href="{% url 'memos' %}"><span>Memos</span><span>M</span></a>
+        <a class="nav-link-local" href="{% url 'index' %}"><span>Landing page</span><span>H</span></a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <header class="topbar">
+        <div>
+          <h1>{{ holding.ticker }} · {{ holding.name }}</h1>
+          <p>{{ holding.category|default:"Investment holding" }}</p>
+        </div>
+        <a class="btn-local" href="{% url 'stocks_dashboard' %}">Back to stocks</a>
+      </header>
+
+      <section class="summary-grid" aria-label="Holding summary">
+        <div class="panel">
+          <div class="label">Shares</div>
+          <div class="metric">{{ holding.shares }}</div>
+        </div>
+        <div class="panel">
+          <div class="label">Current price</div>
+          <div class="metric">{{ currency }} {{ price|floatformat:2 }}</div>
+          <p><span class="status {% if not live %}fallback{% endif %}">{% if live %}Live quote{% else %}Fallback{% endif %}</span></p>
+        </div>
+        <div class="panel">
+          <div class="label">Market value</div>
+          <div class="metric">{{ currency }} {{ value|floatformat:2 }}</div>
+        </div>
+      </section>
+
+      <div class="grid">
+        <article class="panel">
+          <h2>Investment Note</h2>
+          <p>{{ holding.why_own|default:"No investment note stored yet." }}</p>
+        </article>
+
+        <aside class="panel">
+          <h2>Position Facts</h2>
+          <div class="detail-list">
+            <div class="detail-row">
+              <span>Symbol</span>
+              <strong>{{ holding.symbol }}</strong>
+            </div>
+            <div class="detail-row">
+              <span>Bought at</span>
+              <strong>{{ holding.bought_at|default:"Stored default" }}</strong>
+            </div>
+            <div class="detail-row">
+              <span>Average cost</span>
+              <strong>{{ holding.cost_currency }} {{ holding.average_price|floatformat:2 }}</strong>
+            </div>
+            <div class="detail-row">
+              <span>Cost basis</span>
+              <strong>{{ holding.cost_currency }} {{ cost_value|floatformat:2 }}</strong>
+            </div>
+          </div>
+        </aside>
+
+        <section class="panel target">
+          <h2>Price Target</h2>
+          {% if holding.target_price %}
+            <div class="label">Target price</div>
+            <div class="metric">{{ holding.target_currency }} {{ holding.target_price|floatformat:2 }}</div>
+            <p>{{ holding.target_note|default:"No target note stored." }}</p>
+          {% else %}
+            <p>No target defined yet. Add the stock again as a new lot with a target, or update the stored local holding.</p>
+          {% endif %}
+        </section>
+
+        <aside class="panel target">
+          <h2>Target Math</h2>
+          <div class="detail-list">
+            <div class="detail-row">
+              <span>Target date</span>
+              <strong>{{ holding.target_date|default:"Not set" }}</strong>
+            </div>
+            <div class="detail-row">
+              <span>Target quantity</span>
+              <strong>{% if target_quantity %}{{ target_quantity }} shares{% else %}Not set{% endif %}</strong>
+            </div>
+            <div class="detail-row">
+              <span>Target value</span>
+              <strong>{% if target_value %}{{ holding.target_currency }} {{ target_value|floatformat:2 }}{% else %}Not set{% endif %}</strong>
+            </div>
+            <div class="detail-row">
+              <span>Upside to target</span>
+              <strong>{% if target_upside_pct %}{{ target_upside_pct|floatformat:1 }}%{% else %}Currency mismatch or no target{% endif %}</strong>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

@@ -246,6 +246,23 @@
       color: var(--blue);
     }
 
+    .manager-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .manager-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 1px var(--line);
+      background: #f8fbfd;
+      flex: 0 0 auto;
+    }
+
     .form-grid {
       display: grid;
       gap: 12px;
@@ -445,6 +462,7 @@
       }
     }
   </style>
+  <link rel="stylesheet" href="{% static 'css/wealth-console.css' %}">
 </head>
 <body>
   <div class="dashboard-shell">
@@ -465,6 +483,7 @@
           <a href="{% url 'treasury_stock_dashboard' 'asst' %}"><span>ASST</span><span>3</span></a>
           <a href="{% url 'treasury_stock_dashboard' 'bitmine' %}"><span>BitMine</span><span>4</span></a>
         </div>
+        <a class="nav-link-local" href="{% url 'memos' %}"><span>Memos</span><span>M</span></a>
         <a class="nav-link-local" href="{% url 'index' %}"><span>Landing page</span><span>H</span></a>
       </nav>
     </aside>
@@ -473,7 +492,7 @@
       <header class="topbar">
         <div>
           <h1>MSTR Workbench</h1>
-          <p>MicroStrategy priced in Bitcoin, modeled through 2030 scenarios.</p>
+          <p>Strategy priced in Bitcoin, modeled through long-term Saylor scenarios.</p>
         </div>
         <a class="btn-local" href="{% url 'dashboard' %}">Back to overview</a>
       </header>
@@ -482,7 +501,10 @@
         <section class="panel">
           <div class="panel-header">
             <div>
-              <h2>MSTR Investment Thesis</h2>
+              <h2 class="manager-title">
+                <img class="manager-avatar" src="{% static 'img/saylor.png' %}" alt="Michael Saylor">
+                <span>MSTR Investment Thesis</span>
+              </h2>
               <p>Main investment tracked against Bitcoin purchasing power.</p>
             </div>
             <span class="pill">MSTR / BTC</span>
@@ -497,6 +519,10 @@
               <p>Buy BTC as the monetary base layer. Buy MSTR as a capped, high-beta Saylor warrant. Monitor it in sats/share for two years. If MSTR/BTC rises from ~141k sats to 200k-250k sats, the strategy worked. If it stays flat, BTC alone was enough. If it falls below 100k sats, MSTR is consuming risk budget without delivering BTC-denominated alpha.</p>
             </div>
             <div class="form-grid">
+              <div class="goal-stat">
+                <span>Personal long-term target</span>
+                <strong>10x by July 1, 2033</strong>
+              </div>
               <div class="goal-stats">
                 <div class="goal-stat">
                   <span>Current sats per share</span>
@@ -508,7 +534,7 @@
                 </div>
               </div>
               <div class="field-group">
-                <label for="mstrBtcTargetInput">BTC 2030 price assumption</label>
+                <label for="mstrBtcTargetInput">BTC long-term price assumption</label>
                 <input id="mstrBtcTargetInput" class="field-input" type="number" min="1" step="1000" value="250000">
               </div>
               <div class="goal-stat">
@@ -533,7 +559,7 @@
           <div class="panel-header">
             <div>
               <h2>MSTR Priced In Bitcoin</h2>
-              <p>Time-proportional sats/share chart with BTC price overlay, valuation bands, and 2030 scenario markers.</p>
+              <p>Time-proportional sats/share chart with BTC price overlay, valuation bands, and July 1, 2033 target markers.</p>
             </div>
             <span id="mstrStatus" class="pill">Loading</span>
           </div>
@@ -556,7 +582,7 @@
               <h2>MSTR Scenario Model</h2>
               <p>Implied MSTR price at the selected Bitcoin price assumption.</p>
             </div>
-            <span id="mstrScenarioTarget" class="pill">BTC $250,000</span>
+            <span id="mstrScenarioTarget" class="pill">BTC $250,000 · 10x by 2033</span>
           </div>
           <table class="scenario-table">
             <thead>
@@ -564,7 +590,7 @@
                 <th>Scenario</th>
                 <th class="right">MSTR/BTC ratio</th>
                 <th class="right">Implied MSTR price</th>
-                <th class="right">Return from ~$84.84</th>
+                <th class="right">Return from $92.68</th>
                 <th class="right">Result vs BTC</th>
               </tr>
             </thead>
@@ -619,6 +645,13 @@
       { name: 'Re-rating / premium returns', ratio: 400000 }
     ];
 
+    const MSTR_LONG_TERM_TARGET = {
+      name: 'Personal 10x target',
+      referencePrice: 92.68,
+      targetPrice: 926.80,
+      targetDate: '2033-07-01'
+    };
+
     const BANDS = [
       { name: 'Deep value', min: 0, max: 100000, fill: '#e6f3fb', note: 'MSTR very cheap versus BTC' },
       { name: 'Attractive', min: 100000, max: 150000, fill: '#edf6ee', note: 'Accumulation zone' },
@@ -658,6 +691,28 @@
       document.getElementById(id).textContent = text;
     }
 
+    function mstrProjectionDate() {
+      return new Date(`${MSTR_LONG_TERM_TARGET.targetDate}T00:00:00Z`);
+    }
+
+    function mstrProjectionLabel() {
+      return mstrProjectionDate().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        timeZone: 'UTC'
+      });
+    }
+
+    function mstrScenarioRows(btcTarget) {
+      const targetRatio = (MSTR_LONG_TERM_TARGET.targetPrice / btcTarget) * 100000000;
+      return SCENARIOS.concat([{
+        name: MSTR_LONG_TERM_TARGET.name,
+        ratio: targetRatio,
+        targetPrice: MSTR_LONG_TERM_TARGET.targetPrice
+      }]);
+    }
+
     function escapeHtml(value) {
       return String(value)
         .replace(/&/g, '&amp;')
@@ -686,13 +741,14 @@
 
     function renderMstrScenarioModel() {
       const target = Number(document.getElementById('mstrBtcTargetInput').value) || 250000;
-      const startPrice = 84.84;
-      const currentBtc = 59980;
+      const latest = state.mstrBtc[state.mstrBtc.length - 1];
+      const startPrice = MSTR_LONG_TERM_TARGET.referencePrice;
+      const currentBtc = latest ? latest.btc_usd : 59980;
       const btcReturn = (target / currentBtc) - 1;
 
-      setText('mstrScenarioTarget', `BTC ${usd(target)}`);
-      document.getElementById('mstrScenarioBody').innerHTML = SCENARIOS.map(scenario => {
-        const implied = target * (scenario.ratio / 100000000);
+      setText('mstrScenarioTarget', `BTC ${usd(target)} · 10x by ${mstrProjectionLabel()}`);
+      document.getElementById('mstrScenarioBody').innerHTML = mstrScenarioRows(target).map(scenario => {
+        const implied = scenario.targetPrice || target * (scenario.ratio / 100000000);
         const mstrReturn = (implied / startPrice) - 1;
         const resultVsBtc = ((1 + mstrReturn) / (1 + btcReturn) - 1) * 100;
         return `
@@ -726,7 +782,8 @@
       setText('mstrTrimDistance', trimDistance > 0 ? `${trimDistance.toFixed(1)}% to 200k sats` : 'In trim zone');
 
       const btcTarget = Number(document.getElementById('mstrBtcTargetInput').value) || 250000;
-      const projectionDate = new Date('2030-12-31T00:00:00Z');
+      const projectionDate = mstrProjectionDate();
+      const scenarios = mstrScenarioRows(btcTarget);
       const width = 980;
       const height = 430;
       const padX = 58;
@@ -737,7 +794,7 @@
       const bandCeiling = Math.max(...BANDS.map(band => band.max));
       const btcValues = state.mstrBtc.map(point => point.btc_usd).concat([btcTarget]);
       const minSats = 0;
-      const maxSats = Math.max(...values, bandCeiling);
+      const maxSats = Math.max(...values, bandCeiling, ...scenarios.map(scenario => scenario.ratio));
       const satsRange = maxSats - minSats || 1;
       const minBtc = Math.min(...btcValues);
       const maxBtc = Math.max(...btcValues);
@@ -768,7 +825,7 @@
       const btcProjection = `${latestX.toFixed(1)},${yBtc(latest.btc_usd).toFixed(1)} ${projectionEndX.toFixed(1)},${yBtc(btcTarget).toFixed(1)}`;
       const first = state.mstrBtc[0];
       const yearTicks = [];
-      for (let year = startDate.getUTCFullYear(); year <= 2030; year += 1) {
+      for (let year = startDate.getUTCFullYear(); year <= projectionDate.getUTCFullYear(); year += 1) {
         const tickDate = new Date(`${year}-01-01T00:00:00Z`);
         if (tickDate >= startDate && tickDate <= projectionDate) {
           yearTicks.push({ year, x: xForDate(tickDate) });
@@ -793,11 +850,11 @@
           <polyline points="${btcPoints}" fill="none" stroke="var(--blue)" stroke-width="2.5" opacity="0.45" stroke-linecap="round" stroke-linejoin="round"></polyline>
           <polyline points="${btcProjection}" fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-dasharray="7 7" opacity="0.75"></polyline>
           <polyline points="${satsPoints}" fill="none" stroke="var(--gold)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></polyline>
-          ${SCENARIOS.map(scenario => {
+          ${scenarios.map(scenario => {
             const y = ySats(scenario.ratio);
             return `<line x1="${padX}" y1="${y.toFixed(1)}" x2="${projectionEndX.toFixed(1)}" y2="${y.toFixed(1)}" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="5 7" opacity="0.78"></line>
               <circle cx="${projectionEndX.toFixed(1)}" cy="${y.toFixed(1)}" r="4" fill="var(--accent)"></circle>
-              <text x="${projectionEndX + 5}" y="${(y + 4).toFixed(1)}" fill="#607285" font-size="11">${sats(scenario.ratio)}</text>`;
+              <text x="${projectionEndX + 5}" y="${(y + 4).toFixed(1)}" fill="#607285" font-size="11">${escapeHtml(scenario.name)} ${sats(scenario.ratio)}</text>`;
           }).join('')}
           ${satsCoords.map((point, index) => {
             const source = state.mstrBtc[index];
@@ -806,9 +863,9 @@
             const tooltip = `${source.label}\n${sats(source.sats_per_share)} per share\n${btcAmount(source.btc_per_share)} BTC per share\nMSTR ${usd(source.mstr_usd)}\nBTC ${usd(source.btc_usd)}`;
             return `<rect x="${previousX.toFixed(1)}" y="${padY}" width="${Math.max(2, nextX - previousX).toFixed(1)}" height="${usableHeight}" fill="transparent" data-chart-tooltip="${escapeHtml(tooltip)}"></rect>`;
           }).join('')}
-          <rect x="${latestX.toFixed(1)}" y="${padY}" width="${(projectionEndX - latestX).toFixed(1)}" height="${usableHeight}" fill="transparent" data-chart-tooltip="${escapeHtml(`2030 model\nBTC target ${usd(btcTarget)}\nHorizontal bands show valuation zones\nScenario markers show possible 2030 sats/share outcomes`)}"></rect>
+          <rect x="${latestX.toFixed(1)}" y="${padY}" width="${(projectionEndX - latestX).toFixed(1)}" height="${usableHeight}" fill="transparent" data-chart-tooltip="${escapeHtml(`${mstrProjectionLabel()} model\nBTC target ${usd(btcTarget)}\nPersonal MSTR target ${usd(MSTR_LONG_TERM_TARGET.targetPrice)}\nScenario markers show possible sats/share outcomes`)}"></rect>
           <text x="${latestX.toFixed(1)}" y="${padY - 8}" text-anchor="middle" fill="#607285" font-size="11">today</text>
-          <text x="${projectionEndX}" y="${height - 3}" text-anchor="end" fill="#607285" font-size="12">2030</text>
+          <text x="${projectionEndX}" y="${height - 3}" text-anchor="end" fill="#607285" font-size="12">${projectionDate.getUTCFullYear()}</text>
           <text x="${padX - 8}" y="${ySats(400000) + 4}" text-anchor="end" fill="#607285" font-size="11">400k</text>
           <text x="${padX - 8}" y="${ySats(250000) + 4}" text-anchor="end" fill="#607285" font-size="11">250k</text>
           <text x="${padX - 8}" y="${ySats(200000) + 4}" text-anchor="end" fill="#607285" font-size="11">200k</text>
@@ -816,7 +873,7 @@
           <text x="${width - padX + 8}" y="${padY + 4}" fill="#607285" font-size="11">${usd(maxBtc)}</text>
           <text x="${width - padX + 8}" y="${height - padY + 4}" fill="#607285" font-size="11">${usd(minBtc)}</text>
         </svg>
-        <div class="chart-meta">${sats(latest.sats_per_share)} is currently in the ${currentBand.name.toLowerCase()} band. A move to 200k sats/share is the first trim zone; BTC overlay projects to ${usd(btcTarget)} by 2030.</div>
+        <div class="chart-meta">${sats(latest.sats_per_share)} is currently in the ${currentBand.name.toLowerCase()} band. The personal 10x target is ${usd(MSTR_LONG_TERM_TARGET.targetPrice)} by ${mstrProjectionLabel()}, plotted in sats/share against the selected BTC assumption.</div>
       `;
     }
 

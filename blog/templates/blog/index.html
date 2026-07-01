@@ -1,4 +1,142 @@
 {% extends "blog/base1.html" %}
-{% block content %}
-  <h1>Hello World</h1>
-{% endblock content %}
+
+{% block main %}
+<main>
+  <section class="wc-product-hero">
+    <div class="container">
+      <div class="wc-product-grid">
+        <div>
+          <div class="wc-kicker">Private wealth console</div>
+          <h1>Long-term capital preservation with a Bitcoin-native overview.</h1>
+          <p>Hashen is a private wealth console for owners who want one place to track net worth, listed holdings, Bitcoin exposure, investment memos, and long-horizon targets.</p>
+          <p>Built for people who think in decades, but still need month-end marks, allocation views, and a calm record of why each position exists.</p>
+          <div class="wc-hero-actions">
+            {% if not PUBLIC_SITE_ONLY %}
+              <a class="sv-btn" href="{% url 'dashboard' %}">Open private console</a>
+              <a class="sv-btn secondary" href="{% url 'stocks_dashboard' %}">View holdings</a>
+            {% endif %}
+            <button class="sv-btn secondary" type="button" data-toggle="modal" data-target="#contactModal">Request access</button>
+          </div>
+        </div>
+
+        <div class="wc-screen" aria-label="Private wealth console preview">
+          <div class="wc-screen-top">
+            <span>Hashen Console</span>
+            <div class="wc-dots"><i></i><i></i><i></i></div>
+          </div>
+          <div class="wc-screen-body">
+            <div class="wc-mini-grid">
+              <div class="wc-mini-card"><span>Total NAV</span><strong>CHF 44.7k</strong></div>
+              <div class="wc-mini-card"><span>BTC</span><strong>0.4208</strong></div>
+              <div class="wc-mini-card"><span>IBKR</span><strong>EUR 21.8k</strong></div>
+            </div>
+            <div class="wc-chart">
+              <div class="wc-row"><strong>Wealth progression</strong><span>Month-end freeze</span><span>30.06</span></div>
+              <div class="wc-bars">
+                <i style="height: 38%"></i><i style="height: 46%"></i><i style="height: 42%"></i><i style="height: 55%"></i>
+                <i style="height: 64%"></i><i style="height: 58%"></i><i style="height: 72%"></i><i style="height: 68%"></i>
+                <i style="height: 76%"></i><i style="height: 83%"></i><i style="height: 70%"></i><i style="height: 62%"></i>
+              </div>
+            </div>
+            <div class="wc-table-shot">
+              <div class="wc-row"><strong>MSTR</strong><span>42 shares</span><span>Target set</span></div>
+              <div class="wc-row"><strong>Bitcoin</strong><span>Core reserve</span><span>Live mark</span></div>
+              <div class="wc-row"><strong>Memos</strong><span>Decision records</span><span>Private</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wc-section">
+    <div class="container">
+      <div class="wc-section-title">
+        <div class="wc-kicker">What it tracks</div>
+        <h2>A calmer operating layer for private wealth.</h2>
+        <p>Hashen brings together the pieces that usually live in brokerage screens, bank portals, spreadsheets, screenshots, and memory.</p>
+      </div>
+      <div class="wc-feature-grid">
+        <div class="wc-feature">
+          <h3>Net worth and month-end freezes</h3>
+          <p>Track cash, listed securities, and Bitcoin across month-end snapshots so wealth progression is visible and auditable.</p>
+        </div>
+        <div class="wc-feature">
+          <h3>Bitcoin-first capital preservation</h3>
+          <p>Keep Bitcoin exposure visible as a reserve asset, with live marks, target scenarios, and allocation context.</p>
+        </div>
+        <div class="wc-feature">
+          <h3>Investment pages and targets</h3>
+          <p>Each stock can have its own page, quantity, buy time, thesis, and price target instead of being just a ticker row.</p>
+        </div>
+        <div class="wc-feature">
+          <h3>Private memos</h3>
+          <p>Write down the reason before the market tests you. Store short-horizon bets, long-term theses, and exit rules.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wc-section white">
+    <div class="container">
+      <div class="wc-section-title">
+        <div class="wc-kicker">Working app previews</div>
+        <h2>Dashboards that feel like an owner console, not a trading terminal.</h2>
+        <p>The private console is designed for repeated review: scan the month-end state, inspect concentration, open a holding, read the memo, and move on with a clearer head.</p>
+      </div>
+      <div class="wc-shot-grid">
+        <div class="wc-shot">
+          <h3>Portfolio Overview</h3>
+          <div class="wc-mini-grid">
+            <div class="wc-mini-card"><span>Cash</span><strong>CHF 4.7k</strong></div>
+            <div class="wc-mini-card"><span>Stocks</span><strong>EUR 21.8k</strong></div>
+            <div class="wc-mini-card"><span>BTC</span><strong>0.4208</strong></div>
+          </div>
+          <p>Month-end reporting, allocation, and wealth progression in one view.</p>
+        </div>
+        <div class="wc-shot">
+          <h3>Stock Holdings</h3>
+          <div class="wc-table-shot">
+            <div class="wc-row"><strong>MSTR</strong><span>42</span><span>USD 86.93</span></div>
+            <div class="wc-row"><strong>DN3</strong><span>2,850</span><span>EUR 1.06</span></div>
+            <div class="wc-row"><strong>KEEL</strong><span>710</span><span>USD 5.74</span></div>
+          </div>
+          <p>Holdings, quantities, cost, P/L, targets, and pages for each investment.</p>
+        </div>
+        <div class="wc-shot">
+          <h3>Bitcoin Treasury Workbench</h3>
+          <div class="wc-allocation"><i></i><i></i><i></i></div>
+          <p>Scenario models for MSTR, Strive, Metaplanet, BitMine, and Bitcoin reserve thinking.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wc-section">
+    <div class="container">
+      <div class="wc-product-grid">
+        <div>
+          <div class="wc-section-title">
+            <div class="wc-kicker">For other long-term owners</div>
+            <h2>Built first for one owner, structured so others can use it.</h2>
+            <p>The product direction is simple: private by default, practical enough for personal wealth, and structured enough to be useful for other Bitcoin-focused owners and families.</p>
+          </div>
+          <button class="sv-btn" type="button" data-toggle="modal" data-target="#contactModal">Join the access list</button>
+        </div>
+        <div class="dashboard-preview">
+          <div class="preview-top">
+            <div>
+              <div class="wc-kicker">Operating rhythm</div>
+              <div class="preview-value">Review. Freeze. Decide.</div>
+            </div>
+            <span class="preview-pill">Private</span>
+          </div>
+          <div class="preview-row"><strong>Monthly</strong><span>Lock values and explain the change.</span></div>
+          <div class="preview-row"><strong>Quarterly</strong><span>Review concentration, targets, and memo quality.</span></div>
+          <div class="preview-row"><strong>Annually</strong><span>Decide what still deserves capital.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock main %}

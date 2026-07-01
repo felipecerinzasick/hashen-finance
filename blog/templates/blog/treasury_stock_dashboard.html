@@ -270,6 +270,23 @@
       color: var(--blue);
     }
 
+    .manager-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .manager-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 1px var(--line);
+      background: #f8fbfd;
+      flex: 0 0 auto;
+    }
+
     .form-grid,
     .metric-grid {
       display: grid;
@@ -461,6 +478,7 @@
       }
     }
   </style>
+  <link rel="stylesheet" href="{% static 'css/wealth-console.css' %}">
 </head>
 <body>
   <div class="dashboard-shell">
@@ -481,6 +499,7 @@
           <a class="{% if slug == 'asst' %}active{% endif %}" href="{% url 'treasury_stock_dashboard' 'asst' %}"><span>ASST</span><span>3</span></a>
           <a class="{% if slug == 'bitmine' %}active{% endif %}" href="{% url 'treasury_stock_dashboard' 'bitmine' %}"><span>BitMine</span><span>4</span></a>
         </div>
+        <a class="nav-link-local" href="{% url 'memos' %}"><span>Memos</span><span>M</span></a>
         <a class="nav-link-local" href="{% url 'index' %}"><span>Landing page</span><span>H</span></a>
       </nav>
     </aside>
@@ -513,7 +532,10 @@
         <section class="panel">
           <div class="panel-header">
             <div>
-              <h2>{{ stock.name }} Thesis</h2>
+              <h2 class="manager-title">
+                <img class="manager-avatar" src="{% static stock.manager.image %}" alt="{{ stock.manager.name }}">
+                <span>{{ stock.name }} Thesis</span>
+              </h2>
               <p>{{ stock.premium_label }}.</p>
             </div>
             <span class="pill">Risk {{ stock.risk_rank }} / 4</span>
@@ -526,6 +548,10 @@
               <p>{{ stock.risk_label }}</p>
             </div>
             <div class="form-grid">
+              <div class="metric">
+                <span>Personal target</span>
+                <strong>{{ stock.target_label }}</strong>
+              </div>
               <div class="metric-grid">
                 <div class="metric">
                   <span>Current units/share</span>
@@ -537,7 +563,7 @@
                 </div>
               </div>
               <div class="field-group">
-                <label for="targetPriceInput">{{ stock.benchmark_unit }} 2030 price assumption</label>
+                <label for="targetPriceInput">{{ stock.benchmark_unit }} long-term price assumption</label>
                 <input id="targetPriceInput" class="field-input" type="number" min="1" step="1000" value="{{ stock.target_price }}">
               </div>
               <div class="metric">
@@ -574,7 +600,7 @@
           <div class="panel-header">
             <div>
               <h2>Scenario Model</h2>
-              <p>Implied price if {{ stock.benchmark_unit }} reaches the selected 2030 assumption and the current treasury ratio re-rates.</p>
+              <p>Implied price if {{ stock.benchmark_unit }} reaches the selected long-term assumption and the current treasury ratio re-rates.</p>
             </div>
             <span id="scenarioTarget" class="pill">Loading</span>
           </div>
@@ -678,6 +704,22 @@
       document.getElementById(id).textContent = value;
     }
 
+    function projectionDate() {
+      return new Date(`${CONFIG.target_date || '2030-12-31'}T00:00:00Z`);
+    }
+
+    function projectionLabel() {
+      if (!CONFIG.target_date) {
+        return '2030 model';
+      }
+      return new Date(`${CONFIG.target_date}T00:00:00Z`).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        timeZone: 'UTC'
+      });
+    }
+
     function latestPoint() {
       return state.points[state.points.length - 1] || null;
     }
@@ -696,7 +738,10 @@
     function renderScenarios() {
       const latest = latestPoint();
       const targetPrice = Number(document.getElementById('targetPriceInput').value) || CONFIG.target_price;
-      setText('scenarioTarget', `${CONFIG.benchmark_unit} ${usd(targetPrice)}`);
+      const targetText = CONFIG.target_multiple
+        ? `${CONFIG.target_multiple.toFixed(0)}x by ${projectionLabel()}`
+        : projectionLabel();
+      setText('scenarioTarget', `${CONFIG.benchmark_unit} ${usd(targetPrice)} · ${targetText}`);
       if (!latest) {
         document.getElementById('scenarioBody').innerHTML = '<tr><td colspan="4">Waiting for market data.</td></tr>';
         return;
@@ -820,8 +865,8 @@
       const benchmarkRange = maxBenchmark - minBenchmark || 1;
       const startDate = new Date(`${state.points[0].date}T00:00:00Z`);
       const latestDate = new Date(`${latest.date}T00:00:00Z`);
-      const projectionDate = new Date('2030-12-31T00:00:00Z');
-      const timeRange = projectionDate.getTime() - startDate.getTime();
+      const projection = projectionDate();
+      const timeRange = projection.getTime() - startDate.getTime();
 
       function xForDate(date) {
         return padX + ((date.getTime() - startDate.getTime()) / timeRange) * usableWidth;
@@ -846,12 +891,12 @@
       const unitPoints = unitCoords.map(point => `${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(' ');
       const benchmarkPoints = benchmarkCoords.map(point => `${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(' ');
       const latestX = xForDate(latestDate);
-      const projectionX = xForDate(projectionDate);
+      const projectionX = xForDate(projection);
       const benchmarkProjection = `${latestX.toFixed(1)},${yBenchmark(latest.benchmark_price).toFixed(1)} ${projectionX.toFixed(1)},${yBenchmark(targetPrice).toFixed(1)}`;
       const yearTicks = [];
-      for (let year = startDate.getUTCFullYear(); year <= 2030; year += 1) {
+      for (let year = startDate.getUTCFullYear(); year <= projection.getUTCFullYear(); year += 1) {
         const tickDate = new Date(`${year}-01-01T00:00:00Z`);
-        if (tickDate >= startDate && tickDate <= projectionDate) {
+        if (tickDate >= startDate && tickDate <= projection) {
           yearTicks.push({ year, x: xForDate(tickDate) });
         }
       }
@@ -878,14 +923,14 @@
             const tooltip = `${source.label}\n${CONFIG.ticker} ${usd(source.stock_price)}\n${CONFIG.benchmark_unit} ${usd(source.benchmark_price)}\n${units(source.units_per_share)} per share`;
             return `<rect x="${previousX.toFixed(1)}" y="${padY}" width="${Math.max(2, nextX - previousX).toFixed(1)}" height="${usableHeight}" fill="transparent" data-chart-tooltip="${escapeHtml(tooltip)}"></rect>`;
           }).join('')}
-          <rect x="${latestX.toFixed(1)}" y="${padY}" width="${(projectionX - latestX).toFixed(1)}" height="${usableHeight}" fill="transparent" data-chart-tooltip="${escapeHtml(`2030 model\n${CONFIG.benchmark_unit} target ${usd(targetPrice)}\nHighest scenario is ${Math.round(maxScenario).toLocaleString('en-US')} units/share`)}"></rect>
+          <rect x="${latestX.toFixed(1)}" y="${padY}" width="${(projectionX - latestX).toFixed(1)}" height="${usableHeight}" fill="transparent" data-chart-tooltip="${escapeHtml(`${projectionLabel()} model\n${CONFIG.benchmark_unit} target ${usd(targetPrice)}\nHighest scenario is ${Math.round(maxScenario).toLocaleString('en-US')} units/share`)}"></rect>
           <text x="${latestX.toFixed(1)}" y="${padY - 8}" text-anchor="middle" fill="#607285" font-size="11">today</text>
-          <text x="${projectionX}" y="${height - 3}" text-anchor="end" fill="#607285" font-size="12">2030</text>
+          <text x="${projectionX}" y="${height - 3}" text-anchor="end" fill="#607285" font-size="12">${projection.getUTCFullYear()}</text>
           <text x="${padX - 8}" y="${padY + 4}" text-anchor="end" fill="#607285" font-size="11">${Math.round(maxUnits).toLocaleString('en-US')}</text>
           <text x="${width - padX + 8}" y="${padY + 4}" fill="#607285" font-size="11">${usd(maxBenchmark)}</text>
           <text x="${width - padX + 8}" y="${height - padY + 4}" fill="#607285" font-size="11">${usd(minBenchmark)}</text>
         </svg>
-        <div class="chart-meta">${CONFIG.ticker} is at ${units(latest.units_per_share)} per share versus ${CONFIG.benchmark_name}. The scenario lines scale from today&apos;s ratio, so the target becomes more aggressive as the premium multiple rises.</div>
+        <div class="chart-meta">${CONFIG.ticker} is at ${units(latest.units_per_share)} per share versus ${CONFIG.benchmark_name}. Scenario lines now run to ${projectionLabel()}, matching the personal target horizon where one is set.</div>
       `;
     }
 

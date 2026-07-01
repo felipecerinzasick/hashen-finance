@@ -1,8 +1,9 @@
 from .settings import *
+import os
 
 
 DEBUG = False
-PUBLIC_SITE_ONLY = True
+PUBLIC_SITE_ONLY = os.environ.get('PUBLIC_SITE_ONLY', 'False') == 'True'
 
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hashen Settlement Dashboard</title>
+  <title>Hashen Private Wealth Console</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
   <style>
@@ -800,6 +800,7 @@
       }
     }
   </style>
+  <link rel="stylesheet" href="{% static 'css/wealth-console.css' %}">
 </head>
 <body>
   <div class="dashboard-shell">
@@ -821,7 +822,7 @@
           <a href="{% url 'treasury_stock_dashboard' 'bitmine' %}"><span>BitMine</span><span>4</span></a>
         </div>
         <a class="nav-link-local" href="#reports"><span>Reports</span><span>03</span></a>
-        <a class="nav-link-local" href="#integrations"><span>Integrations</span><span>04</span></a>
+        <a class="nav-link-local" href="{% url 'memos' %}"><span>Memos</span><span>M</span></a>
         <a class="nav-link-local" href="{% url 'index' %}"><span>Landing page</span><span>H</span></a>
       </nav>
     </aside>
@@ -829,8 +830,8 @@
     <main class="content">
       <header class="topbar">
         <div>
-          <h1>Portfolio Overview</h1>
-          <p>Month-end reporting view as at <strong id="reportDateText">31.05.2026</strong> · <a class="site-link" href="{% url 'index' %}">Hashen</a></p>
+          <h1>Private Wealth Console</h1>
+          <p>Long-term capital preservation view as at <strong id="reportDateText">30.06.2026</strong> · <a class="site-link" href="{% url 'index' %}">Hashen</a></p>
         </div>
         <div class="topbar-actions">
           <select id="currencySelect" class="currency-select" aria-label="Display currency">
@@ -853,7 +854,7 @@
               <div id="totalValue" class="value-large">Loading</div>
               <p id="priceStatus" class="subtle mt-2">Fetching Bitcoin price from CoinGecko.</p>
             </div>
-            <div class="pill">Latest locked close: <span id="summaryReportDate">31.05.2026</span></div>
+            <div class="pill">Latest locked close: <span id="summaryReportDate">30.06.2026</span></div>
           </section>
           <section class="panel">
             <div class="label">Cash</div>
@@ -863,12 +864,12 @@
           <section class="panel">
             <div class="label">Stocks</div>
             <div id="stocksValue" class="metric-value">Loading</div>
-            <p class="subtle">Model portfolio placeholder</p>
+            <p class="subtle">IBKR snapshot and listed holdings</p>
           </section>
           <section class="panel">
             <div class="label">Bitcoin</div>
             <div id="bitcoinValue" class="metric-value">Loading</div>
-            <p id="bitcoinMeta" class="subtle">0.39094743 BTC</p>
+            <p id="bitcoinMeta" class="subtle">0.42082719 BTC</p>
           </section>
         </div>
 
@@ -876,8 +877,8 @@
           <section class="panel">
             <div class="panel-header">
               <div>
-                <h2>Asset Allocation</h2>
-                <p>Cash, listed securities, and Bitcoin are ready for local editing.</p>
+                <h2>Capital Allocation</h2>
+                <p>Cash, listed securities, and Bitcoin arranged for owner-level review.</p>
               </div>
               <span class="pill">Live BTC</span>
             </div>
@@ -918,16 +919,16 @@
             </div>
             <div class="form-grid">
               <div class="field-group">
-                <label id="cashInputLabel" for="cashInput">Current cash position toward 30.06.2026 close</label>
-                <input id="cashInput" class="field-input" type="number" min="0" step="0.01" value="5976.43">
+                <label id="cashInputLabel" for="cashInput">Current cash position toward 31.07.2026 close</label>
+                <input id="cashInput" class="field-input" type="number" min="0" step="0.01" value="4698.22">
               </div>
               <div class="field-group">
                 <label for="stocksInput">Stocks market value</label>
-                <input id="stocksInput" class="field-input" type="number" min="0" step="0.01" value="24489.50">
+                <input id="stocksInput" class="field-input" type="number" min="0" step="0.01" value="19595.66">
               </div>
               <div class="field-group">
                 <label for="bitcoinInput">Bitcoin amount</label>
-                <input id="bitcoinInput" class="field-input" type="number" min="0" step="0.00000001" value="0.39094743">
+                <input id="bitcoinInput" class="field-input" type="number" min="0" step="0.00000001" value="0.42082719">
               </div>
               <button id="applyPositions" class="btn-local secondary" type="button">Update current overview</button>
             </div>
@@ -939,7 +940,7 @@
             <div class="panel-header">
               <div>
                 <h2>Wealth Progression</h2>
-                <p>Private</p>
+                <p>Month-end freezes for long-term capital tracking.</p>
               </div>
               <span id="progressionChange" class="pill">Calculating</span>
             </div>
@@ -954,8 +955,8 @@
           <section class="panel">
             <div class="panel-header">
               <div>
-                <h2>Bitcoin 2030 Goal</h2>
-                <p>Live CoinGecko price against ATH, one BTC, and CHF 250,000 targets.</p>
+                <h2>Bitcoin Reserve Goal</h2>
+                <p>Live CoinGecko price against ATH, one BTC, and long-term reserve targets.</p>
               </div>
               <span class="pill">2030</span>
             </div>
@@ -1006,7 +1007,7 @@
                 <p>Reports are always anchored to month end, with monthly asset movement.</p>
               </div>
               <div class="topbar-actions">
-                <span id="reportPeriodPill" class="pill">31.05.2026</span>
+                <span id="reportPeriodPill" class="pill">30.06.2026</span>
                 <a class="btn-local secondary" href="{% url 'portfolio_report_pdf' %}">Download PDF</a>
               </div>
             </div>
@@ -1047,13 +1048,13 @@
               <tbody>
                 <tr>
                   <td>Net worth statement</td>
-                  <td>May 2026</td>
+                  <td>June 2026</td>
                   <td id="reportTotal" class="right">Loading</td>
                   <td class="right">Draft</td>
                 </tr>
                 <tr>
                   <td>Asset allocation</td>
-                  <td>May 2026</td>
+                  <td>June 2026</td>
                   <td id="reportAllocation" class="right">Loading</td>
                   <td class="right">Ready</td>
                 </tr>
@@ -1067,24 +1068,6 @@
             </table>
           </section>
 
-          <section id="integrations" class="panel">
-            <div class="panel-header">
-              <div>
-                <h2>Integrations</h2>
-                <p>Connectors planned for the account-backed version.</p>
-              </div>
-            </div>
-            <div class="integrations">
-              <div class="integration-row">
-                <div><strong>CoinGecko Bitcoin price</strong><span id="coingeckoStatus">Connecting</span></div>
-                <span id="coingeckoDot" class="status-dot pending"></span>
-              </div>
-              <div class="integration-row">
-                <div><strong>Live listed equity quotes</strong><span id="stockQuoteStatus">Loading Yahoo Finance prices</span></div>
-                <div class="integration-value" id="stockQuoteValue">Pending</div>
-              </div>
-            </div>
-          </section>
         </div>
 
         <section class="panel">
@@ -1138,7 +1121,7 @@
       </div>
       <div class="field-group">
         <label for="assetDate">Valuation date</label>
-        <input id="assetDate" class="field-input" type="date" value="2026-05-31">
+        <input id="assetDate" class="field-input" type="date" value="2026-06-30">
       </div>
       <button class="btn-local" type="submit">Add to portfolio</button>
     </form>
@@ -1148,10 +1131,10 @@
   <script>
     const state = {
       currency: 'CHF',
-      cashChf: 5976.43,
-      stocksChf: 24489.50,
-      btcAmount: 0.39094743,
-      bitcoinReportChf: 19285.36,
+      cashChf: 4698.22,
+      stocksChf: 19595.66,
+      btcAmount: 0.42082719,
+      bitcoinReportChf: 20446.87,
       btcPrices: { CHF: null, USD: null, EUR: null, GBP: null },
       btcAthChf: null,
       btcAthDate: null,
@@ -1160,8 +1143,8 @@
       btcStatus: 'loading',
       stockQuoteStatus: 'loading',
       progression: [],
-      lockedReportDateLabel: '31.05.2026',
-      currentCloseDateLabel: '30.06.2026',
+      lockedReportDateLabel: '30.06.2026',
+      currentCloseDateLabel: '31.07.2026',
       privateAssets: []
     };
 
@@ -1204,7 +1187,7 @@
     function fromChf(value) {
       if (state.currency === 'BTC') {
         const price = state.btcPrices.CHF;
-        const fallbackPrice = 0.39094743 > 0 ? 19285.36 / 0.39094743 : null;
+        const fallbackPrice = 0.42082719 > 0 ? 20446.87 / 0.42082719 : null;
         const chfPerBtc = Number.isFinite(price) ? price : fallbackPrice;
         return Number.isFinite(chfPerBtc) && chfPerBtc > 0 ? value / chfPerBtc : null;
       }
@@ -1216,7 +1199,7 @@
       if (Number.isFinite(price)) {
         return state.btcAmount * price;
       }
-      const impliedPrice = 0.39094743 > 0 ? 19285.36 / 0.39094743 : 0;
+      const impliedPrice = 0.42082719 > 0 ? 20446.87 / 0.42082719 : 0;
       return state.btcAmount * impliedPrice;
     }
 
@@ -1252,11 +1235,17 @@
     }
 
     function setText(id, text) {
-      document.getElementById(id).textContent = text;
+      const element = document.getElementById(id);
+      if (element) {
+        element.textContent = text;
+      }
     }
 
     function setWidth(id, pct) {
-      document.getElementById(id).style.width = `${Math.max(0, Math.min(100, pct))}%`;
+      const element = document.getElementById(id);
+      if (element) {
+        element.style.width = `${Math.max(0, Math.min(100, pct))}%`;
+      }
     }
 
     function pad2(value) {
@@ -1649,7 +1638,7 @@
         type: document.getElementById('assetType').value,
         name: document.getElementById('assetName').value || 'Private asset',
         valueChf: Number(document.getElementById('assetValue').value) || 0,
-        date: document.getElementById('assetDate').value || '2026-05-31'
+        date: document.getElementById('assetDate').value || '2026-06-30'
       });
       closeDrawer();
       render();
@@ -1685,13 +1674,19 @@
         setText('priceStatus', `Bitcoin price from CoinGecko. Last update: ${state.btcLastUpdated}.`);
         setText('coingeckoStatus', 'Connected');
         setText('reportBitcoinStatus', 'Live');
-        document.getElementById('coingeckoDot').classList.remove('pending', 'off');
+        const coinGeckoDot = document.getElementById('coingeckoDot');
+        if (coinGeckoDot) {
+          coinGeckoDot.classList.remove('pending', 'off');
+        }
       } catch (error) {
         state.btcStatus = 'unavailable';
         setText('priceStatus', 'Bitcoin price is unavailable. Check your internet connection and refresh.');
         setText('coingeckoStatus', 'Unavailable');
         setText('reportBitcoinStatus', 'Unavailable');
-        document.getElementById('coingeckoDot').classList.add('off');
+        const coinGeckoDot = document.getElementById('coingeckoDot');
+        if (coinGeckoDot) {
+          coinGeckoDot.classList.add('off');
+        }
         document.getElementById('priceStatus').classList.add('error-text');
       }
       render();

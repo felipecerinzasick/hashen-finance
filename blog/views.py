@@ -9,7 +9,7 @@ from hmac import compare_digest
 from urllib import parse, request as urlrequest
 from urllib.error import URLError, HTTPError
 
-from .models import Post, Comment, Resource
+from .models import Post, Comment, Resource, StockHolding, MemoNote
 from newsletter.models import Newsletter
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404, HttpResponse, JsonResponse
@@ -19,6 +19,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.utils import timezone as django_timezone
+from django.utils.text import slugify
 from .forms import PostForm,ContactForm
 from django.views.generic import (
     CreateView,
@@ -30,26 +32,76 @@ from django.views.generic import (
 
 SATOSHIS_PER_BTC = 100000000
 
-STOCK_HOLDINGS = [
-    {'name': 'Asset Entities', 'ticker': 'ASST', 'symbol': 'ASST', 'shares': Decimal('180'), 'average_price': Decimal('18.03'), 'cost_currency': 'USD', 'fallback_value': Decimal('2005'), 'fallback_currency': 'USD'},
-    {'name': 'Cipher Mining', 'ticker': 'CFR', 'symbol': 'CIFR', 'shares': Decimal('40'), 'average_price': Decimal('7.15'), 'cost_currency': 'USD', 'fallback_value': Decimal('1016'), 'fallback_currency': 'USD'},
-    {'name': 'CleanSpark', 'ticker': 'CLSK', 'symbol': 'CLSK', 'shares': Decimal('96'), 'average_price': Decimal('15.30'), 'cost_currency': 'USD', 'fallback_value': Decimal('1543'), 'fallback_currency': 'USD'},
-    {'name': 'Metaplanet', 'ticker': 'DN3', 'symbol': 'DN3.F', 'shares': Decimal('2850'), 'average_price': Decimal('2.3117'), 'cost_currency': 'EUR', 'fallback_value': Decimal('3140'), 'fallback_currency': 'EUR'},
-    {'name': 'IREN', 'ticker': 'IREN', 'symbol': 'IREN', 'shares': Decimal('30'), 'average_price': Decimal('11.99'), 'cost_currency': 'USD', 'fallback_value': Decimal('1399'), 'fallback_currency': 'USD'},
-    {'name': 'The Keel', 'ticker': 'KEEL', 'symbol': 'KEEL', 'shares': Decimal('710'), 'average_price': Decimal('2.39'), 'cost_currency': 'USD', 'fallback_value': Decimal('4264'), 'fallback_currency': 'USD'},
-    {'name': 'MARA Holdings', 'ticker': 'MARA', 'symbol': 'MARA', 'shares': Decimal('164'), 'average_price': Decimal('19.76'), 'cost_currency': 'USD', 'fallback_value': Decimal('2364'), 'fallback_currency': 'USD'},
-    {'name': 'Strategy', 'ticker': 'MSTR', 'symbol': 'MSTR', 'shares': Decimal('51'), 'average_price': Decimal('153.69'), 'cost_currency': 'USD', 'fallback_value': Decimal('4284'), 'fallback_currency': 'USD'},
-    {'name': 'PayPal', 'ticker': 'PYPL', 'symbol': 'PYPL', 'shares': Decimal('10'), 'average_price': Decimal('56.23'), 'cost_currency': 'USD', 'fallback_value': Decimal('441.60'), 'fallback_currency': 'USD'},
-    {'name': 'Riot Platforms', 'ticker': 'RIOT', 'symbol': 'RIOT', 'shares': Decimal('20'), 'average_price': Decimal('11.16'), 'cost_currency': 'USD', 'fallback_value': Decimal('561'), 'fallback_currency': 'USD'},
-    {'name': 'Shimano', 'ticker': 'SHM', 'symbol': 'SHM.F', 'shares': Decimal('5'), 'average_price': Decimal('172.40'), 'cost_currency': 'EUR', 'fallback_value': Decimal('475.75'), 'fallback_currency': 'EUR'},
-    {'name': 'Strategy Preferred STRD', 'ticker': 'STRD', 'symbol': 'STRD', 'shares': Decimal('5'), 'average_price': Decimal('61.64'), 'cost_currency': 'USD', 'fallback_value': Decimal('267.40'), 'fallback_currency': 'USD'},
-    {'name': 'STRC', 'ticker': 'STRC', 'symbol': 'STRC', 'shares': Decimal('5.5'), 'average_price': Decimal('88.69'), 'cost_currency': 'USD', 'fallback_value': Decimal('405.82'), 'fallback_currency': 'USD'},
-    {'name': 'TeraWulf', 'ticker': 'WULF', 'symbol': 'WULF', 'shares': Decimal('25'), 'average_price': Decimal('6.77'), 'cost_currency': 'USD', 'fallback_value': Decimal('651.25'), 'fallback_currency': 'USD'},
-    {'name': 'Canaan', 'ticker': 'CAN', 'symbol': 'CAN', 'shares': Decimal('231'), 'average_price': Decimal('2.60'), 'cost_currency': 'USD', 'fallback_value': Decimal('71.26'), 'fallback_currency': 'USD'},
-    {'name': 'Argo Blockchain', 'ticker': '0XP', 'symbol': '0XP.DU', 'shares': Decimal('1100'), 'average_price': Decimal('0.23'), 'cost_currency': 'EUR', 'fallback_value': Decimal('13.20'), 'fallback_currency': 'EUR'},
-    {'name': 'The Smarter Web Company', 'ticker': '3M8', 'symbol': '3M8.F', 'shares': Decimal('100'), 'average_price': Decimal('1.08'), 'cost_currency': 'EUR', 'fallback_value': Decimal('29.85'), 'fallback_currency': 'EUR'},
-    {'name': 'Y6G0', 'ticker': 'Y6G0', 'symbol': 'Y6G0.F', 'shares': Decimal('120'), 'average_price': Decimal('21.146'), 'cost_currency': 'EUR', 'fallback_value': Decimal('1431'), 'fallback_currency': 'EUR'},
+MEMOS = [
+    {
+        'slug': 'mstr-short-horizon-june-2026',
+        'title': 'MSTR Short-Horizon Bet',
+        'subtitle': 'A deliberately shorter-time-horizon position memo after adding more exposure in late June.',
+        'date': 'June 30, 2026',
+        'asset': 'Strategy (MSTR)',
+        'price_label': 'MSTR close on June 29, 2026',
+        'price_value': '$92.68',
+        'price_source': 'Yahoo Finance historical close',
+        'source_url': 'https://finance.yahoo.com/quote/MSTR/history/',
+        'position_note': 'Added roughly $900 more MSTR in the final days of June while already underwater.',
+        'horizon': 'Late June to October 2026',
+        'exit_note': 'It should be emotionally and tactically acceptable to sell in October if the trade works or the setup changes.',
+        'thesis': [
+            'The current price reflects a lot of fear and uncertainty.',
+            'At this level, it is easy to imagine MSTR trading back in three-digit territory and potentially into higher three-digit numbers again.',
+            'This is intentional: a shorter-time-horizon, high-beta bet rather than a permanent holding decision.',
+            'If MSTR stays around these levels into the end of July, the plan is to continue buying more.',
+            'The expectation for this specific trade is at least a double by October.',
+        ],
+        'guardrails': [
+            'This memo is a record of intent, not a promise to hold regardless of new information.',
+            'The October sell window is part of the plan, not a failure of conviction.',
+            'Being underwater now is acknowledged up front so the decision can be judged against the thesis instead of the discomfort.',
+        ],
+        'tags': ['MSTR', 'short horizon', 'Bitcoin treasury', 'trade memo'],
+    },
 ]
+
+STOCK_HOLDINGS = [
+    {'name': 'Argo Blockchain', 'ticker': '0XP', 'symbol': '0XP.DU', 'shares': Decimal('1100'), 'average_price': Decimal('0.232327273'), 'cost_currency': 'EUR', 'fallback_value': Decimal('13.20'), 'fallback_currency': 'EUR'},
+    {'name': 'The Smarter Web Company', 'ticker': '3M8', 'symbol': '3M8.F', 'shares': Decimal('100'), 'average_price': Decimal('1.0760'), 'cost_currency': 'EUR', 'fallback_value': Decimal('28.10'), 'fallback_currency': 'EUR'},
+    {'name': 'Metaplanet', 'ticker': 'DN3', 'symbol': 'DN3.F', 'shares': Decimal('2850'), 'average_price': Decimal('2.311705263'), 'cost_currency': 'EUR', 'fallback_value': Decimal('3021.00'), 'fallback_currency': 'EUR'},
+    {'name': 'Shimano', 'ticker': 'SHM', 'symbol': 'SHM.F', 'shares': Decimal('5'), 'average_price': Decimal('176.3700'), 'cost_currency': 'EUR', 'fallback_value': Decimal('470.50'), 'fallback_currency': 'EUR'},
+    {'name': 'Y6G0', 'ticker': 'Y6G0', 'symbol': 'Y6G0.F', 'shares': Decimal('160'), 'average_price': Decimal('18.8516125'), 'cost_currency': 'EUR', 'fallback_value': Decimal('1828.80'), 'fallback_currency': 'EUR'},
+    {'name': 'Asset Entities', 'ticker': 'ASST', 'symbol': 'ASST', 'shares': Decimal('180'), 'average_price': Decimal('18.026504972'), 'cost_currency': 'USD', 'fallback_value': Decimal('1963.80'), 'fallback_currency': 'USD'},
+    {'name': 'Canaan', 'ticker': 'CAN', 'symbol': 'CAN', 'shares': Decimal('231'), 'average_price': Decimal('2.601182684'), 'cost_currency': 'USD', 'fallback_value': Decimal('66.32'), 'fallback_currency': 'USD'},
+    {'name': 'Cipher Mining', 'ticker': 'CIFR', 'symbol': 'CIFR', 'shares': Decimal('40'), 'average_price': Decimal('7.150048'), 'cost_currency': 'USD', 'fallback_value': Decimal('980.00'), 'fallback_currency': 'USD'},
+    {'name': 'CleanSpark', 'ticker': 'CLSK', 'symbol': 'CLSK', 'shares': Decimal('96'), 'average_price': Decimal('15.303599667'), 'cost_currency': 'USD', 'fallback_value': Decimal('1396.80'), 'fallback_currency': 'USD'},
+    {'name': 'Farfetch', 'ticker': 'FTCHQ', 'symbol': 'FTCHQ', 'shares': Decimal('290'), 'average_price': Decimal('1.465446552'), 'cost_currency': 'USD', 'fallback_value': Decimal('0.00'), 'fallback_currency': 'USD'},
+    {'name': 'IREN', 'ticker': 'IREN', 'symbol': 'IREN', 'shares': Decimal('30'), 'average_price': Decimal('11.986714667'), 'cost_currency': 'USD', 'fallback_value': Decimal('1371.90'), 'fallback_currency': 'USD'},
+    {'name': 'The Keel', 'ticker': 'KEEL', 'symbol': 'KEEL', 'shares': Decimal('710'), 'average_price': Decimal('2.388193352'), 'cost_currency': 'USD', 'fallback_value': Decimal('4075.40'), 'fallback_currency': 'USD'},
+    {'name': 'MARA Holdings', 'ticker': 'MARA', 'symbol': 'MARA', 'shares': Decimal('164.0445'), 'average_price': Decimal('19.756089994'), 'cost_currency': 'USD', 'fallback_value': Decimal('2278.58'), 'fallback_currency': 'USD'},
+    {'name': 'Strategy', 'ticker': 'MSTR', 'symbol': 'MSTR', 'shares': Decimal('42'), 'average_price': Decimal('166.790604452'), 'cost_currency': 'USD', 'fallback_value': Decimal('3651.06'), 'fallback_currency': 'USD'},
+    {'name': 'PayPal', 'ticker': 'PYPL', 'symbol': 'PYPL', 'shares': Decimal('10'), 'average_price': Decimal('56.2350'), 'cost_currency': 'USD', 'fallback_value': Decimal('431.80'), 'fallback_currency': 'USD'},
+    {'name': 'Riot Platforms', 'ticker': 'RIOT', 'symbol': 'RIOT', 'shares': Decimal('20'), 'average_price': Decimal('11.155072'), 'cost_currency': 'USD', 'fallback_value': Decimal('547.60'), 'fallback_currency': 'USD'},
+    {'name': 'STRC', 'ticker': 'STRC', 'symbol': 'STRC', 'shares': Decimal('5.5'), 'average_price': Decimal('88.688002909'), 'cost_currency': 'USD', 'fallback_value': Decimal('466.73'), 'fallback_currency': 'USD'},
+    {'name': 'Strategy Preferred STRD', 'ticker': 'STRD', 'symbol': 'STRD', 'shares': Decimal('5'), 'average_price': Decimal('61.640003'), 'cost_currency': 'USD', 'fallback_value': Decimal('281.40'), 'fallback_currency': 'USD'},
+    {'name': 'TeraWulf', 'ticker': 'WULF', 'symbol': 'WULF', 'shares': Decimal('25'), 'average_price': Decimal('6.765072'), 'cost_currency': 'USD', 'fallback_value': Decimal('617.50'), 'fallback_currency': 'USD'},
+]
+
+STOCK_SNAPSHOT = {
+    'label': 'IBKR snapshot · 01.07.2026 20:18 CET',
+    'ibkr_nav_eur': Decimal('21804.00'),
+    'table_value_eur': Decimal('21234.17'),
+    'table_cost_eur': Decimal('28428.40'),
+    'table_unrealized_eur': Decimal('-7194.23'),
+    'usd_value': Decimal('18128.89'),
+    'eur_value': Decimal('5361.60'),
+    'usd_eur': Decimal('0.8755400909818527'),
+    'eur_chf': Decimal('0.920490026473999'),
+}
+
+STOCK_SNAPSHOT_FX_TO_CHF = {
+    'CHF': Decimal('1'),
+    'EUR': STOCK_SNAPSHOT['eur_chf'],
+    'USD': STOCK_SNAPSHOT['usd_eur'] * STOCK_SNAPSHOT['eur_chf'],
+    'GBP': Decimal('1.07'),
+}
 
 STOCK_NOTES = {
     'ASST': {
@@ -60,9 +112,17 @@ STOCK_NOTES = {
         'category': 'AI/HPC power conversion',
         'why': 'Hyperscale data-center developer born from Bitcoin mining. Cipher\'s value is increasingly about power sourcing, construction, and long-term HPC/data-center capacity rather than pure mining.',
     },
+    'CIFR': {
+        'category': 'AI/HPC power conversion',
+        'why': 'Hyperscale data-center developer born from Bitcoin mining. Cipher\'s value is increasingly about power sourcing, construction, and long-term HPC/data-center capacity rather than pure mining.',
+    },
     'CLSK': {
         'category': 'Bitcoin mining scale',
         'why': 'Energy-backed Bitcoin miner pivoting into large-scale AI compute infrastructure. CleanSpark\'s edge is execution at scale across energy, mining, and data-center campuses.',
+    },
+    'FTCHQ': {
+        'category': 'Legacy distressed equity',
+        'why': 'Residual distressed holding. Treat as a near-zero placeholder unless there is a separate recovery thesis.',
     },
     'DN3': {
         'category': 'Japan MSTR',
@@ -126,6 +186,18 @@ STOCK_NOTES = {
     },
 }
 
+STOCK_TARGETS = {
+    'MSTR': {
+        'target_price': Decimal('185.36'),
+        'target_currency': 'USD',
+        'target_date': '2027-01-30',
+        'target_note': 'Target for the 12 new MSTR shares bought in late June: double the June 29, 2026 reference close within roughly seven months.',
+        'target_quantity': Decimal('12'),
+        'reference_price': Decimal('92.68'),
+        'reference_date': '2026-06-29',
+    },
+}
+
 TREASURY_STOCKS = {
     'metaplanet': {
         'name': 'Metaplanet',
@@ -135,7 +207,15 @@ TREASURY_STOCKS = {
         'benchmark_name': 'Bitcoin',
         'benchmark_unit': 'BTC',
         'target_price': 250000,
+        'target_label': 'Target to define',
+        'target_multiple': None,
+        'target_date': None,
         'start': '2024-01-01',
+        'manager': {
+            'name': 'Simon Gerovich',
+            'role': 'Metaplanet',
+            'image': 'img/gerovic.png',
+        },
         'risk_rank': 2,
         'risk_label': 'Higher risk than MSTR: Japan-listed Bitcoin treasury with local market and liquidity risk.',
         'premium_label': 'BTC treasury re-rating',
@@ -148,14 +228,22 @@ TREASURY_STOCKS = {
         ],
     },
     'asst': {
-        'name': 'Asset Entities',
+        'name': 'Asset Entities / Strive',
         'ticker': 'ASST',
         'symbol': 'ASST',
         'benchmark_symbol': 'BTC-USD',
         'benchmark_name': 'Bitcoin',
         'benchmark_unit': 'BTC',
         'target_price': 250000,
+        'target_label': '15x by July 1, 2030',
+        'target_multiple': 15.0,
+        'target_date': '2030-07-01',
         'start': '2024-01-01',
+        'manager': {
+            'name': 'Matt Cole',
+            'role': 'Strive',
+            'image': 'img/cole.png',
+        },
         'risk_rank': 3,
         'risk_label': 'Microcap treasury wrapper: smaller size means larger upside premium but materially higher execution risk.',
         'premium_label': 'Microcap BTC premium',
@@ -166,6 +254,7 @@ TREASURY_STOCKS = {
             {'name': 'Small-cap premium', 'multiple': 3.0},
             {'name': 'Convex re-rating', 'multiple': 6.0},
             {'name': 'Extreme treasury premium', 'multiple': 10.0},
+            {'name': 'Personal target', 'multiple': 15.0},
         ],
     },
     'bitmine': {
@@ -176,7 +265,15 @@ TREASURY_STOCKS = {
         'benchmark_name': 'Ethereum',
         'benchmark_unit': 'ETH',
         'target_price': 25000,
+        'target_label': '50x by July 1, 2031',
+        'target_multiple': 50.0,
+        'target_date': '2031-07-01',
         'start': '2024-01-01',
+        'manager': {
+            'name': 'Tom Lee',
+            'role': 'BitMine Immersion',
+            'image': 'img/tom_lee.png',
+        },
         'risk_rank': 4,
         'risk_label': 'Highest risk in the treasury-stock sleeve: Ethereum treasury premium, operating risk, and more volatile market trust.',
         'premium_label': 'ETH treasury premium',
@@ -187,16 +284,26 @@ TREASURY_STOCKS = {
             {'name': 'High premium returns', 'multiple': 5.0},
             {'name': 'ETH treasury mania', 'multiple': 10.0},
             {'name': 'Extreme premium', 'multiple': 20.0},
+            {'name': 'Personal target', 'multiple': 50.0},
         ],
     },
 }
 
-PORTFOLIO_REPORT = {
+MAY_2026_REPORT = {
     'date': '31.05.2026',
     'cash': Decimal('5976.43'),
     'bitcoin': Decimal('19285.36'),
     'stocks': Decimal('24489.50'),
     'bitcoin_amount': Decimal('0.39094743'),
+}
+
+PORTFOLIO_REPORT = {
+    'date': '30.06.2026',
+    'cash': Decimal('4698.22'),
+    'bitcoin': Decimal('20446.87'),
+    'stocks': Decimal('19595.66'),
+    'bitcoin_amount': Decimal('0.42082719'),
+    'notes': 'June close: IBKR NAV EUR 21,244.21 at EURCHF 0.9224; BTC 0.40968638 plus 1,114,081 sats at CoinGecko 30.06.2026 BTC/CHF; cash CHF 4,491.76 + CHF 160.34 + EUR 50.',
 }
 
 PORTFOLIO_HISTORY = [
@@ -389,6 +496,7 @@ PORTFOLIO_HISTORY = [
         'bitcoin': Decimal('18132.71'),
         'stocks': Decimal('22767.77'),
     },
+    MAY_2026_REPORT,
     PORTFOLIO_REPORT,
 ]
 
@@ -603,6 +711,102 @@ def index(request):
     newsletter = get_default_newsletter()
     return render(request, 'blog/index.html', {'title': 'Index', 'newsletter':newsletter})
 
+
+def clean_lines(value):
+    return [line.strip() for line in (value or '').splitlines() if line.strip()]
+
+
+def serialize_memo_note(note):
+    return {
+        'slug': note.slug,
+        'title': note.title,
+        'subtitle': note.subtitle or note.position_note[:140],
+        'date': note.created_at.strftime('%B %-d, %Y'),
+        'asset': note.asset or 'Private note',
+        'price_label': note.price_label or 'Reference',
+        'price_value': note.price_value or 'Not set',
+        'price_source': 'User note',
+        'source_url': '',
+        'position_note': note.position_note,
+        'horizon': note.horizon or 'Open',
+        'exit_note': note.exit_note or 'No exit plan recorded yet.',
+        'thesis': clean_lines(note.thesis) or [note.position_note],
+        'guardrails': clean_lines(note.guardrails) or ['No guardrails recorded yet.'],
+        'tags': [tag.strip() for tag in note.tags.split(',') if tag.strip()],
+        'is_user_note': True,
+    }
+
+
+def unique_memo_slug(title):
+    base_slug = slugify(title)[:190] or 'memo-note'
+    slug = base_slug
+    counter = 2
+    while MemoNote.objects.filter(slug=slug).exists() or any(memo['slug'] == slug for memo in MEMOS):
+        suffix = '-%s' % counter
+        slug = '%s%s' % (base_slug[:220 - len(suffix)], suffix)
+        counter += 1
+    return slug
+
+
+def get_memo(slug):
+    for memo in MEMOS:
+        if memo['slug'] == slug:
+            return memo
+    try:
+        return serialize_memo_note(MemoNote.objects.get(slug=slug))
+    except MemoNote.DoesNotExist:
+        pass
+    raise Http404('Memo not found')
+
+
+@require_dashboard_auth
+def memos(request):
+    user_memos = [serialize_memo_note(note) for note in MemoNote.objects.all()]
+    return render(request, 'blog/memos.html', {
+        'title': 'Memos',
+        'memos': user_memos + MEMOS,
+    })
+
+
+@require_dashboard_auth
+def memo_detail(request, slug):
+    memo = get_memo(slug)
+    return render(request, 'blog/memo_detail.html', {
+        'title': memo['title'],
+        'memo': memo,
+    })
+
+
+@require_dashboard_auth
+def add_memo_note(request):
+    if request.method != 'POST':
+        return redirect('memos')
+
+    title = (request.POST.get('title') or '').strip()
+    position_note = (request.POST.get('position_note') or '').strip()
+
+    if not title or not position_note:
+        messages.error(request, 'Add a title and note before saving.')
+        return redirect('memos')
+
+    note = MemoNote.objects.create(
+        title=title,
+        slug=unique_memo_slug(title),
+        subtitle=(request.POST.get('subtitle') or '').strip(),
+        asset=(request.POST.get('asset') or '').strip(),
+        horizon=(request.POST.get('horizon') or '').strip(),
+        price_label=(request.POST.get('price_label') or '').strip(),
+        price_value=(request.POST.get('price_value') or '').strip(),
+        position_note=position_note,
+        exit_note=(request.POST.get('exit_note') or '').strip(),
+        thesis=(request.POST.get('thesis') or '').strip(),
+        guardrails=(request.POST.get('guardrails') or '').strip(),
+        tags=(request.POST.get('tags') or '').strip(),
+    )
+    messages.success(request, 'Memo note saved.')
+    return redirect('memo_detail', slug=note.slug)
+
+
 @require_dashboard_auth
 def dashboard(request):
     return render(request, 'blog/dashboard.html', {'title': 'Dashboard'})
@@ -616,6 +820,89 @@ def mstr_dashboard(request):
 @require_dashboard_auth
 def stocks_dashboard(request):
     return render(request, 'blog/stocks_dashboard.html', {'title': 'Stocks'})
+
+
+@require_dashboard_auth
+def add_stock_holding(request):
+    if request.method != 'POST':
+        return redirect('stocks_dashboard')
+
+    try:
+        ticker = normalize_ticker(request.POST.get('ticker'))
+        symbol = (request.POST.get('symbol') or ticker).strip().upper()
+        name = (request.POST.get('name') or ticker).strip()
+        shares = parse_decimal(request.POST.get('shares'), Decimal('0'))
+        average_price = parse_decimal(request.POST.get('average_price'), Decimal('0'))
+        cost_currency = normalize_ticker(request.POST.get('cost_currency') or 'USD')[:3]
+        bought_at = parse_datetime_local(request.POST.get('bought_at')) or django_timezone.now()
+        target_price = parse_decimal(request.POST.get('target_price'))
+        target_date = parse_date(request.POST.get('target_date'))
+        target_currency = normalize_ticker(request.POST.get('target_currency') or cost_currency)[:3]
+        fallback_value = shares * average_price
+
+        if not ticker or not symbol or shares <= 0 or average_price <= 0:
+            raise ValueError('Ticker, symbol, shares, and average price are required.')
+
+        StockHolding.objects.create(
+            name=name,
+            ticker=ticker,
+            symbol=symbol,
+            shares=shares,
+            average_price=average_price,
+            cost_currency=cost_currency,
+            bought_at=bought_at,
+            fallback_value=fallback_value,
+            fallback_currency=cost_currency,
+            category=(request.POST.get('category') or '').strip(),
+            why_own=(request.POST.get('why_own') or '').strip(),
+            target_price=target_price,
+            target_currency=target_currency,
+            target_date=target_date,
+            target_note=(request.POST.get('target_note') or '').strip(),
+        )
+        return redirect('stock_holding_detail', ticker=ticker.lower())
+    except (InvalidOperation, ValueError):
+        return redirect('stocks_dashboard')
+
+
+@require_dashboard_auth
+def stock_holding_detail(request, ticker):
+    holding = find_stock_holding(ticker)
+    error = None
+    try:
+        quote = _fetch_yahoo_quote(holding['symbol'])
+        price = quote['price']
+        currency = quote['currency']
+        live = True
+    except (HTTPError, URLError, TimeoutError, KeyError, IndexError, ValueError, json.JSONDecodeError) as exc:
+        price = holding['fallback_value'] / holding['shares']
+        currency = holding['fallback_currency']
+        live = False
+        error = str(exc)
+
+    value = price * holding['shares']
+    cost_value = holding['shares'] * holding['average_price']
+    target_price = holding.get('target_price')
+    target_quantity = holding.get('target_quantity') or holding['shares']
+    target_value = target_price * target_quantity if target_price else None
+    target_upside_pct = None
+    if target_price and price and (holding.get('target_currency') or currency) == currency:
+        target_upside_pct = (target_price - price) / price * Decimal('100')
+
+    context = {
+        'title': holding['ticker'],
+        'holding': holding,
+        'price': price,
+        'currency': currency,
+        'value': value,
+        'cost_value': cost_value,
+        'target_value': target_value,
+        'target_quantity': target_quantity,
+        'target_upside_pct': target_upside_pct,
+        'live': live,
+        'error': error,
+    }
+    return render(request, 'blog/stock_holding_detail.html', context)
 
 
 @require_dashboard_auth
@@ -704,7 +991,7 @@ def portfolio_report_pdf(request):
         'Values are shown in CHF and are intended for local portfolio reporting.',
     ]
     response = HttpResponse(build_simple_pdf(lines), content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="hashen-portfolio-report-2026-05-31.pdf"'
+    response['Content-Disposition'] = 'attachment; filename="hashen-portfolio-report-2026-06-30.pdf"'
     return response
 
 
@@ -855,8 +1142,140 @@ def _fx_rate_to_chf(currency):
     return _fetch_yahoo_quote(symbol)['price']
 
 
+def _snapshot_fx_rate_to_chf(currency):
+    return STOCK_SNAPSHOT_FX_TO_CHF.get((currency or 'CHF').upper(), Decimal('1'))
+
+
+def normalize_ticker(value):
+    return (value or '').strip().upper()
+
+
+def parse_decimal(value, default=None):
+    if value in (None, ''):
+        return default
+    return Decimal(str(value).strip())
+
+
+def parse_date(value):
+    if not value:
+        return None
+    return datetime.strptime(value, '%Y-%m-%d').date()
+
+
+def parse_datetime_local(value):
+    if not value:
+        return None
+    try:
+        parsed = datetime.strptime(value, '%Y-%m-%dT%H:%M')
+    except ValueError:
+        parsed_date = parse_date(value)
+        parsed = datetime.combine(parsed_date, datetime.min.time())
+    if settings.USE_TZ and django_timezone.is_naive(parsed):
+        return django_timezone.make_aware(parsed, django_timezone.get_current_timezone())
+    return parsed
+
+
+def configured_stock_holdings():
+    holdings = []
+    for holding in STOCK_HOLDINGS:
+        copied = dict(holding)
+        target = STOCK_TARGETS.get(copied['ticker'], {})
+        copied.update({
+            'source': 'static',
+            'bought_at': '',
+            'category': STOCK_NOTES.get(copied['ticker'], {}).get('category', ''),
+            'why_own': STOCK_NOTES.get(copied['ticker'], {}).get('why', ''),
+            'target_price': target.get('target_price'),
+            'target_currency': target.get('target_currency', copied['cost_currency']),
+            'target_date': target.get('target_date', ''),
+            'target_note': target.get('target_note', ''),
+            'target_quantity': target.get('target_quantity'),
+            'reference_price': target.get('reference_price'),
+            'reference_date': target.get('reference_date', ''),
+        })
+        holdings.append(copied)
+
+    for holding in StockHolding.objects.filter(active=True):
+        fallback_value = holding.fallback_value
+        if fallback_value is None:
+            fallback_value = holding.shares * holding.average_price
+        holdings.append({
+            'source': 'local',
+            'id': holding.id,
+            'name': holding.name,
+            'ticker': normalize_ticker(holding.ticker),
+            'symbol': holding.symbol.strip(),
+            'shares': holding.shares,
+            'average_price': holding.average_price,
+            'cost_currency': holding.cost_currency,
+            'fallback_value': fallback_value,
+            'fallback_currency': holding.fallback_currency,
+            'bought_at': holding.bought_at.isoformat(),
+            'category': holding.category,
+            'why_own': holding.why_own,
+            'target_price': holding.target_price,
+            'target_currency': holding.target_currency,
+            'target_date': holding.target_date.isoformat() if holding.target_date else '',
+            'target_note': holding.target_note,
+            'target_quantity': holding.shares,
+            'reference_price': holding.average_price,
+            'reference_date': holding.bought_at.isoformat(),
+        })
+    return holdings
+
+
+def stock_detail_url(ticker):
+    return '/dashboard/stocks/holding/%s/' % normalize_ticker(ticker).lower()
+
+
+def find_stock_holding(ticker):
+    normalized = normalize_ticker(ticker)
+    for holding in configured_stock_holdings():
+        if holding['ticker'] == normalized:
+            return holding
+    raise Http404('Stock holding not found')
+
+
+def serialize_stock_holding(holding, price, currency, value, value_chf, cost_value, cost_chf, unrealized_chf, live, error):
+    target_price = holding.get('target_price')
+    target_currency = holding.get('target_currency') or currency
+    target_quantity = holding.get('target_quantity') or holding['shares']
+    target_value = target_price * target_quantity if target_price else None
+    return {
+        'name': holding['name'],
+        'ticker': holding['ticker'],
+        'symbol': holding['symbol'],
+        'shares': float(holding['shares']),
+        'price': float(price),
+        'currency': currency,
+        'value': float(value),
+        'value_chf': float(value_chf),
+        'average_price': float(holding['average_price']),
+        'cost_currency': holding['cost_currency'],
+        'cost_value': float(cost_value),
+        'cost_chf': float(cost_chf),
+        'unrealized_chf': float(unrealized_chf),
+        'live': live,
+        'error': error,
+        'category': holding.get('category', ''),
+        'why_own': holding.get('why_own', ''),
+        'bought_at': holding.get('bought_at', ''),
+        'detail_url': stock_detail_url(holding['ticker']),
+        'target_price': float(target_price) if target_price else None,
+        'target_currency': target_currency,
+        'target_value': float(target_value) if target_value else None,
+        'target_date': holding.get('target_date', ''),
+        'target_note': holding.get('target_note', ''),
+        'target_quantity': float(target_quantity) if target_quantity else None,
+        'reference_price': float(holding['reference_price']) if holding.get('reference_price') else None,
+        'reference_date': holding.get('reference_date', ''),
+        'source': holding.get('source', ''),
+    }
+
+
 @require_dashboard_auth
 def stock_portfolio(request):
+    use_live_prices = request.GET.get('live') == '1'
     fx_cache = {}
     holdings = []
     totals = {
@@ -867,34 +1286,41 @@ def stock_portfolio(request):
     }
     live_count = 0
 
-    for holding in STOCK_HOLDINGS:
+    stock_configs = configured_stock_holdings()
+    for holding in stock_configs:
         error = None
-        note = STOCK_NOTES.get(holding['ticker'], {})
-        try:
-            quote = _fetch_yahoo_quote(holding['symbol'])
-            price = quote['price']
-            currency = quote['currency']
-            value = price * holding['shares']
-            live = True
-            live_count += 1
-        except (HTTPError, URLError, TimeoutError, KeyError, IndexError, ValueError, json.JSONDecodeError) as exc:
-            price = holding['fallback_value'] / holding['shares']
+        if use_live_prices:
+            try:
+                quote = _fetch_yahoo_quote(holding['symbol'])
+                price = quote['price']
+                currency = quote['currency']
+                value = price * holding['shares']
+                live = True
+                live_count += 1
+            except (HTTPError, URLError, TimeoutError, KeyError, IndexError, ValueError, json.JSONDecodeError) as exc:
+                price = holding['fallback_value'] / holding['shares']
+                currency = holding['fallback_currency']
+                value = holding['fallback_value']
+                live = False
+                error = str(exc)
+        else:
+            price = holding['fallback_value'] / holding['shares'] if holding['shares'] else Decimal('0')
             currency = holding['fallback_currency']
             value = holding['fallback_value']
             live = False
-            error = str(exc)
+            error = 'Stored IBKR snapshot'
 
         fx_key = currency
         if fx_key not in fx_cache:
             try:
-                fx_cache[fx_key] = _fx_rate_to_chf(fx_key)
+                fx_cache[fx_key] = _fx_rate_to_chf(fx_key) if use_live_prices else _snapshot_fx_rate_to_chf(fx_key)
             except (HTTPError, URLError, TimeoutError, KeyError, IndexError, ValueError, json.JSONDecodeError):
                 fx_cache[fx_key] = Decimal('0.89') if fx_key == 'EUR' else Decimal('0.80') if fx_key == 'USD' else Decimal('1')
 
         cost_currency = holding['cost_currency']
         if cost_currency not in fx_cache:
             try:
-                fx_cache[cost_currency] = _fx_rate_to_chf(cost_currency)
+                fx_cache[cost_currency] = _fx_rate_to_chf(cost_currency) if use_live_prices else _snapshot_fx_rate_to_chf(cost_currency)
             except (HTTPError, URLError, TimeoutError, KeyError, IndexError, ValueError, json.JSONDecodeError):
                 fx_cache[cost_currency] = Decimal('0.89') if cost_currency == 'EUR' else Decimal('0.80') if cost_currency == 'USD' else Decimal('1')
 
@@ -907,34 +1333,44 @@ def stock_portfolio(request):
         if currency in totals:
             totals[currency] += value
 
-        holdings.append({
-            'name': holding['name'],
-            'ticker': holding['ticker'],
-            'symbol': holding['symbol'],
-            'shares': float(holding['shares']),
-            'price': float(price),
-            'currency': currency,
-            'value': float(value),
-            'value_chf': float(value_chf),
-            'average_price': float(holding['average_price']),
-            'cost_currency': holding['cost_currency'],
-            'cost_value': float(cost_value),
-            'cost_chf': float(cost_chf),
-            'unrealized_chf': float(unrealized_chf),
-            'live': live,
-            'error': error,
-            'category': note.get('category', ''),
-            'why_own': note.get('why', ''),
-        })
+        holdings.append(serialize_stock_holding(
+            holding, price, currency, value, value_chf, cost_value, cost_chf, unrealized_chf, live, error
+        ))
 
+    if use_live_prices:
+        response_total_chf = totals['CHF']
+        response_total_cost_chf = totals['cost_chf']
+        response_unrealized_chf = totals['CHF'] - totals['cost_chf']
+    else:
+        response_total_chf = STOCK_SNAPSHOT['ibkr_nav_eur'] * STOCK_SNAPSHOT['eur_chf']
+        response_total_cost_chf = STOCK_SNAPSHOT['table_cost_eur'] * STOCK_SNAPSHOT['eur_chf']
+        response_unrealized_chf = STOCK_SNAPSHOT['table_unrealized_eur'] * STOCK_SNAPSHOT['eur_chf']
+
+    chf_to_eur = Decimal('1') / STOCK_SNAPSHOT['eur_chf']
+    chf_to_usd = Decimal('1') / STOCK_SNAPSHOT_FX_TO_CHF['USD']
     return JsonResponse({
         'status': 'ok',
-        'source': 'Yahoo Finance',
+        'source': 'Yahoo Finance' if use_live_prices else STOCK_SNAPSHOT['label'],
+        'pricing_mode': 'live' if use_live_prices else 'snapshot',
         'live_count': live_count,
-        'total_count': len(STOCK_HOLDINGS),
-        'total_chf': float(totals['CHF']),
-        'total_cost_chf': float(totals['cost_chf']),
-        'unrealized_chf': float(totals['CHF'] - totals['cost_chf']),
+        'total_count': len(stock_configs),
+        'total_chf': float(response_total_chf),
+        'total_cost_chf': float(response_total_cost_chf),
+        'unrealized_chf': float(response_unrealized_chf),
+        'fx_from_chf': {
+            'CHF': 1,
+            'EUR': float(chf_to_eur),
+            'USD': float(chf_to_usd),
+            'GBP': 0.89,
+        },
+        'snapshot': {
+            'label': STOCK_SNAPSHOT['label'],
+            'ibkr_nav_eur': float(STOCK_SNAPSHOT['ibkr_nav_eur']),
+            'table_value_eur': float(STOCK_SNAPSHOT['table_value_eur']),
+            'table_cost_eur': float(STOCK_SNAPSHOT['table_cost_eur']),
+            'table_unrealized_eur': float(STOCK_SNAPSHOT['table_unrealized_eur']),
+            'excludes_extra_mstr_shares': 13.4785,
+        },
         'totals': {
             'USD': float(totals['USD']),
             'EUR': float(totals['EUR']),

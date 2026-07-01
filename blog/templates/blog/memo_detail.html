@@ -1,0 +1,423 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hashen {{ memo.title }}</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <style>
+    :root {
+      --ink: #162d3f;
+      --muted: #647789;
+      --line: #dfe6ee;
+      --page: #f6f8fb;
+      --panel: #ffffff;
+      --blue: #124265;
+      --accent: #2487ce;
+      --soft: #e8f3fb;
+      --green: #2c7a55;
+      --warning: #9a6a12;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--ink);
+      font-family: Inter, Arial, sans-serif;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .memo-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 248px minmax(0, 1fr);
+    }
+
+    .sidebar {
+      background: #0f2638;
+      color: #f8fafc;
+      padding: 28px 22px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 34px;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      background: #f8fafc;
+      color: #124265;
+    }
+
+    .brand strong,
+    .brand span {
+      display: block;
+    }
+
+    .brand strong {
+      font-size: 15px;
+      line-height: 1.2;
+    }
+
+    .brand span {
+      color: #b8c7d3;
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .nav-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .nav-link-local {
+      min-height: 42px;
+      padding: 11px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #dce8f0;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .nav-link-local:hover,
+    .nav-link-local.active {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .content {
+      padding: 34px;
+    }
+
+    .memo-document {
+      max-width: 1040px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+    }
+
+    .memo-hero {
+      padding: 34px;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 250px;
+      gap: 34px;
+      align-items: end;
+    }
+
+    .back-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      margin: 20px 0 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 38px;
+      line-height: 1.06;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 12px 0 0;
+      max-width: 720px;
+      color: var(--muted);
+      line-height: 1.62;
+      font-size: 17px;
+    }
+
+    .price-panel {
+      border: 1px solid var(--line);
+      padding: 18px;
+      background: #fbfdff;
+    }
+
+    .price-panel span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      line-height: 1.45;
+    }
+
+    .price-panel strong {
+      display: block;
+      color: var(--green);
+      margin-top: 8px;
+      font-size: 34px;
+      line-height: 1;
+    }
+
+    .price-panel a {
+      display: inline-block;
+      color: var(--accent);
+      margin-top: 10px;
+      font-size: 12px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .memo-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 280px;
+      gap: 34px;
+      padding: 34px;
+    }
+
+    .section {
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+      margin-top: 24px;
+    }
+
+    .section:first-child {
+      border-top: 0;
+      padding-top: 0;
+      margin-top: 0;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 20px;
+      line-height: 1.25;
+    }
+
+    p,
+    li {
+      color: #33485a;
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 22px;
+    }
+
+    li + li {
+      margin-top: 10px;
+    }
+
+    .callout {
+      border: 1px solid rgba(154, 106, 18, 0.28);
+      background: #fff9ec;
+      color: var(--warning);
+      padding: 18px;
+      font-weight: 700;
+      line-height: 1.6;
+    }
+
+    .memo-aside {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .aside-block {
+      border: 1px solid var(--line);
+      background: #fbfdff;
+      padding: 16px;
+    }
+
+    .aside-block span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+
+    .aside-block strong {
+      color: var(--ink);
+      line-height: 1.45;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+      padding: 6px 9px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    @media (max-width: 900px) {
+      .memo-shell {
+        display: block;
+      }
+
+      .sidebar {
+        position: static;
+        height: auto;
+      }
+
+      .content {
+        padding: 24px 18px;
+      }
+
+      .memo-hero,
+      .memo-body {
+        display: block;
+        padding: 24px;
+      }
+
+      .price-panel,
+      .memo-aside {
+        margin-top: 22px;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="{% static 'css/wealth-console.css' %}">
+</head>
+<body>
+  <div class="memo-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">H</div>
+        <div>
+          <strong>Hashen</strong>
+          <span>Private Wealth Console</span>
+        </div>
+      </div>
+      <nav class="nav-list">
+        <a class="nav-link-local" href="{% url 'dashboard' %}"><span>Overview</span><span>01</span></a>
+        <a class="nav-link-local" href="{% url 'stocks_dashboard' %}"><span>Stocks</span><span>02</span></a>
+        <a class="nav-link-local active" href="{% url 'memos' %}"><span>Memos</span><span>03</span></a>
+        <a class="nav-link-local" href="{% url 'index' %}"><span>Landing page</span><span>H</span></a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <article class="memo-document">
+        <header class="memo-hero">
+          <div>
+            <a class="back-link" href="{% url 'memos' %}">Back to memos</a>
+            <p class="eyebrow">{{ memo.asset }}</p>
+            <h1>{{ memo.title }}</h1>
+            <p class="subtitle">{{ memo.subtitle }}</p>
+          </div>
+          <div class="price-panel">
+            <span>{{ memo.price_label }}</span>
+            <strong>{{ memo.price_value }}</strong>
+            {% if memo.source_url %}
+              <a href="{{ memo.source_url }}">{{ memo.price_source }}</a>
+            {% else %}
+              <span>{{ memo.price_source }}</span>
+            {% endif %}
+          </div>
+        </header>
+
+        <div class="memo-body">
+          <div>
+            <section class="section">
+              <h2>Position</h2>
+              <p>{{ memo.position_note }}</p>
+            </section>
+
+            <section class="section">
+              <h2>Plan</h2>
+              <p>{{ memo.exit_note }}</p>
+            </section>
+
+            <section class="section">
+              <h2>Thesis</h2>
+              <ul>
+                {% for point in memo.thesis %}
+                  <li>{{ point }}</li>
+                {% endfor %}
+              </ul>
+            </section>
+
+            <section class="section">
+              <h2>Guardrails</h2>
+              <ul>
+                {% for point in memo.guardrails %}
+                  <li>{{ point }}</li>
+                {% endfor %}
+              </ul>
+            </section>
+
+            <section class="section">
+              <div class="callout">
+                Personal memo only. This captures the decision logic at the time of the trade and should be revisited before any October action.
+              </div>
+            </section>
+          </div>
+
+          <aside class="memo-aside">
+            <div class="aside-block">
+              <span>Date</span>
+              <strong>{{ memo.date }}</strong>
+            </div>
+            <div class="aside-block">
+              <span>Horizon</span>
+              <strong>{{ memo.horizon }}</strong>
+            </div>
+            <div class="aside-block">
+              <span>Reference price</span>
+              <strong>{{ memo.price_value }}</strong>
+            </div>
+            <div class="aside-block">
+              <span>Tags</span>
+              <div class="tag-list">
+                {% if memo.tags %}
+                  {% for tag in memo.tags %}
+                    <span class="pill">{{ tag }}</span>
+                  {% endfor %}
+                {% else %}
+                  <span class="pill">Private note</span>
+                {% endif %}
+              </div>
+            </div>
+          </aside>
+        </div>
+      </article>
+    </main>
+  </div>
+</body>
+</html>

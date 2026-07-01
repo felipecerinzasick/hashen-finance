@@ -37,6 +37,11 @@
       font: inherit;
     }
 
+    input,
+    textarea {
+      font: inherit;
+    }
+
     select {
       font: inherit;
     }
@@ -267,39 +272,48 @@
     }
 
     .portfolio-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.32fr);
-      gap: 18px;
-      align-items: start;
+      display: block;
     }
 
     .table-wrap {
-      overflow-x: auto;
+      overflow-x: visible;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 13px;
-      min-width: 940px;
+      table-layout: fixed;
+      font-size: 12px;
     }
 
     th,
     td {
       border-bottom: 1px solid var(--line);
-      padding: 12px 10px;
+      padding: 10px 6px;
       text-align: left;
       vertical-align: top;
+      overflow-wrap: anywhere;
     }
 
     th {
       color: var(--muted);
-      font-size: 11px;
+      font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.03em;
       font-weight: 700;
-      white-space: nowrap;
+      white-space: normal;
     }
+
+    th:nth-child(1) { width: 15%; }
+    th:nth-child(2) { width: 8%; }
+    th:nth-child(3) { width: 9%; }
+    th:nth-child(4) { width: 11%; }
+    th:nth-child(5) { width: 11%; }
+    th:nth-child(6) { width: 9%; }
+    th:nth-child(7) { width: 11%; }
+    th:nth-child(8) { width: 9%; }
+    th:nth-child(9) { width: 8%; }
+    th:nth-child(10) { width: 9%; }
 
     th.sortable {
       cursor: pointer;
@@ -330,7 +344,7 @@
     td strong {
       display: block;
       color: var(--ink);
-      font-size: 14px;
+      font-size: 13px;
       line-height: 1.2;
     }
 
@@ -353,7 +367,7 @@
 
     .right {
       text-align: right;
-      white-space: nowrap;
+      white-space: normal;
     }
 
     .status-pill {
@@ -419,6 +433,149 @@
       line-height: 1.55;
     }
 
+    .add-form {
+      display: grid;
+      gap: 12px;
+    }
+
+    .form-grid-local {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .field-group-local {
+      display: grid;
+      gap: 5px;
+    }
+
+    .field-group-local.full {
+      grid-column: 1 / -1;
+    }
+
+    .field-group-local label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .field-input-local,
+    .field-select-local,
+    .field-textarea-local {
+      width: 100%;
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 8px 10px;
+      color: var(--ink);
+      background: #fff;
+    }
+
+    .field-textarea-local {
+      min-height: 94px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    .detail-link {
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .table-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 14px;
+    }
+
+    .modal-backdrop-local,
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      background: rgba(15, 38, 56, 0.42);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-backdrop-local.visible,
+    .loading-overlay.visible {
+      display: flex;
+    }
+
+    .modal-panel-local {
+      width: min(760px, 100%);
+      max-height: min(86vh, 820px);
+      overflow: auto;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 24px 70px rgba(15, 38, 56, 0.22);
+      padding: 18px;
+    }
+
+    .modal-header-local {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .modal-header-local h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .modal-header-local p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .icon-btn-local {
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .loading-card {
+      min-width: 240px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 20px;
+      display: grid;
+      place-items: center;
+      gap: 12px;
+      color: var(--blue);
+      font-weight: 700;
+      box-shadow: 0 20px 55px rgba(15, 38, 56, 0.18);
+    }
+
+    .spinner {
+      width: 34px;
+      height: 34px;
+      border: 3px solid #dfe5ec;
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
     .note-row {
       border-top: 1px solid var(--line);
       padding-top: 12px;
@@ -452,9 +609,66 @@
         height: auto;
       }
 
-      .summary-grid,
-      .portfolio-layout {
+      .summary-grid {
         grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 980px) {
+      table,
+      thead,
+      tbody,
+      tr,
+      th,
+      td {
+        display: block;
+      }
+
+      thead {
+        display: none;
+      }
+
+      tbody {
+        display: grid;
+        gap: 10px;
+      }
+
+      tr.holding-row {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        padding: 8px 10px;
+      }
+
+      td {
+        border-bottom: 1px solid rgba(223, 229, 236, 0.7);
+        display: grid;
+        grid-template-columns: 118px minmax(0, 1fr);
+        gap: 10px;
+        align-items: start;
+        padding: 8px 0;
+        text-align: left !important;
+      }
+
+      td:last-child {
+        border-bottom: 0;
+      }
+
+      td::before {
+        content: attr(data-label);
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .table-actions {
+        justify-content: stretch;
+      }
+
+      .table-actions .btn-local {
+        width: 100%;
+        justify-content: center;
       }
     }
 
@@ -474,12 +688,16 @@
         padding: 20px;
       }
 
-      .summary-grid,
-      .portfolio-layout {
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid-local {
         grid-template-columns: 1fr;
       }
     }
   </style>
+  <link rel="stylesheet" href="{% static 'css/wealth-console.css' %}">
 </head>
 <body>
   <div class="dashboard-shell">
@@ -501,6 +719,7 @@
           <a href="{% url 'treasury_stock_dashboard' 'bitmine' %}"><span>BitMine</span><span>4</span></a>
         </div>
         <a class="nav-link-local" href="{% url 'portfolio_report_pdf' %}"><span>Report PDF</span><span>PDF</span></a>
+        <a class="nav-link-local" href="{% url 'memos' %}"><span>Memos</span><span>M</span></a>
         <a class="nav-link-local" href="{% url 'index' %}"><span>Landing page</span><span>H</span></a>
       </nav>
     </aside>
@@ -513,9 +732,9 @@
         </div>
         <div class="topbar-actions">
           <select id="currencySelect" class="currency-select" aria-label="Display currency">
-            <option value="CHF" selected>CHF</option>
+            <option value="CHF">CHF</option>
             <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
+            <option value="EUR" selected>EUR</option>
             <option value="GBP">GBP</option>
             <option value="BTC">BTC</option>
           </select>
@@ -571,38 +790,111 @@
                     <th id="convertedValueHeader" class="right sortable" data-sort="value_chf">Value CHF</th>
                     <th class="right sortable" data-sort="average_price">Avg cost</th>
                     <th id="unrealizedHeader" class="right sortable" data-sort="unrealized_chf">Unrealized CHF</th>
+                    <th class="right">Target</th>
                     <th>Status</th>
+                    <th>Detail</th>
                   </tr>
                 </thead>
                 <tbody id="holdingsTable">
                   <tr>
-                    <td colspan="8">Loading holdings.</td>
+                    <td colspan="10">Loading holdings.</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-          </div>
-
-          <aside class="panel">
-            <div class="ownership-note">
-              <strong id="selectedTicker">Why I Own This</strong>
-              <span id="selectedCategory">Click a holding row to view the reminder.</span>
-              <textarea id="selectedWhy">Choose a stock from the table.</textarea>
+            <div class="table-actions">
+              <button id="openAddHoldingBottom" class="btn-local" type="button">Add holding</button>
             </div>
-          </aside>
+          </div>
         </section>
       </div>
     </main>
   </div>
 
+  <div id="loadingOverlay" class="loading-overlay visible" role="status" aria-live="polite">
+    <div class="loading-card">
+      <div class="spinner"></div>
+      <div>Loading holdings</div>
+    </div>
+  </div>
+
+  <div id="addHoldingModal" class="modal-backdrop-local" role="dialog" aria-modal="true" aria-labelledby="addHoldingTitle">
+    <div class="modal-panel-local">
+      <div class="modal-header-local">
+        <div>
+          <h2 id="addHoldingTitle">Add Holding</h2>
+          <p>Store a new local lot with quantity, buy time, target, and investment note.</p>
+        </div>
+        <button id="closeAddHolding" class="icon-btn-local" type="button" aria-label="Close">x</button>
+      </div>
+      <form class="add-form" method="post" action="{% url 'add_stock_holding' %}">
+        {% csrf_token %}
+        <div class="form-grid-local">
+          <div class="field-group-local">
+            <label for="ticker">Ticker</label>
+            <input id="ticker" class="field-input-local" name="ticker" type="text" placeholder="MSTR" required>
+          </div>
+          <div class="field-group-local">
+            <label for="symbol">Yahoo symbol</label>
+            <input id="symbol" class="field-input-local" name="symbol" type="text" placeholder="MSTR" required>
+          </div>
+          <div class="field-group-local full">
+            <label for="name">Name</label>
+            <input id="name" class="field-input-local" name="name" type="text" placeholder="Strategy" required>
+          </div>
+          <div class="field-group-local">
+            <label for="shares">Quantity</label>
+            <input id="shares" class="field-input-local" name="shares" type="number" min="0" step="0.00000001" placeholder="12" required>
+          </div>
+          <div class="field-group-local">
+            <label for="average_price">Buy price</label>
+            <input id="average_price" class="field-input-local" name="average_price" type="number" min="0" step="0.0001" placeholder="92.68" required>
+          </div>
+          <div class="field-group-local">
+            <label for="cost_currency">Buy currency</label>
+            <select id="cost_currency" class="field-select-local" name="cost_currency">
+              <option value="USD" selected>USD</option>
+              <option value="EUR">EUR</option>
+              <option value="CHF">CHF</option>
+              <option value="GBP">GBP</option>
+            </select>
+          </div>
+          <div class="field-group-local">
+            <label for="bought_at">Bought at</label>
+            <input id="bought_at" class="field-input-local" name="bought_at" type="datetime-local" value="2026-07-01T20:18">
+          </div>
+          <div class="field-group-local">
+            <label for="target_price">Target price</label>
+            <input id="target_price" class="field-input-local" name="target_price" type="number" min="0" step="0.0001" placeholder="185.36">
+          </div>
+          <div class="field-group-local">
+            <label for="target_date">Target date</label>
+            <input id="target_date" class="field-input-local" name="target_date" type="date" value="2027-01-30">
+          </div>
+          <div class="field-group-local full">
+            <label for="category">Category</label>
+            <input id="category" class="field-input-local" name="category" type="text" placeholder="Bitcoin treasury">
+          </div>
+          <div class="field-group-local full">
+            <label for="why_own">Investment note</label>
+            <textarea id="why_own" class="field-textarea-local" name="why_own" placeholder="Why this belongs in the portfolio."></textarea>
+          </div>
+          <div class="field-group-local full">
+            <label for="target_note">Target note</label>
+            <textarea id="target_note" class="field-textarea-local" name="target_note" placeholder="Target logic and time horizon."></textarea>
+          </div>
+        </div>
+        <button class="btn-local" type="submit">Add holding</button>
+      </form>
+    </div>
+  </div>
+
   <script>
     const state = {
-      currency: 'CHF',
+      currency: 'EUR',
       portfolio: null,
       sortKey: 'value_chf',
       sortDirection: 'desc',
-      selectedTicker: null,
-      noteOverrides: JSON.parse(localStorage.getItem('hashenStockNotes') || '{}'),
       btcChf: null
     };
 
@@ -666,6 +958,24 @@
       }
     }
 
+    function setLoading(isLoading, label = 'Loading holdings') {
+      const overlay = document.getElementById('loadingOverlay');
+      if (!overlay) {
+        return;
+      }
+      overlay.querySelector('.loading-card div:last-child').textContent = label;
+      overlay.classList.toggle('visible', isLoading);
+    }
+
+    function openAddHoldingModal() {
+      document.getElementById('addHoldingModal').classList.add('visible');
+      document.getElementById('ticker').focus();
+    }
+
+    function closeAddHoldingModal() {
+      document.getElementById('addHoldingModal').classList.remove('visible');
+    }
+
     function sortValue(holding, key) {
       if (key === 'ticker') {
         return holding.ticker;
@@ -706,36 +1016,27 @@
     function renderHoldingRow(holding) {
       const row = document.createElement('tr');
       const pnlClass = holding.unrealized_chf >= 0 ? 'gain' : 'loss';
-      row.className = `holding-row ${state.selectedTicker === holding.ticker ? 'selected' : ''}`;
-      row.title = holding.category || holding.why_own || 'Click to view ownership note';
-      row.addEventListener('click', () => selectHolding(holding));
+      const target = holding.target_price
+        ? `${holding.target_currency} ${numberFormatter.format(holding.target_price)}`
+        : 'Unset';
+      row.className = 'holding-row';
+      row.title = 'Open investment detail';
+      row.addEventListener('click', () => {
+        window.location.href = holding.detail_url;
+      });
       row.innerHTML = `
-        <td><strong>${holding.ticker}</strong><span>${holding.name}</span></td>
-        <td class="right">${shares(holding.shares)}</td>
-        <td class="right">${money(holding.price, holding.currency)}</td>
-        <td class="right">${money(holding.value, holding.currency)}</td>
-        <td class="right">${displayMoneyFromChf(holding.value_chf)}</td>
-        <td class="right">${money(holding.average_price, holding.cost_currency)}</td>
-        <td class="right ${pnlClass}">${displayMoneyFromChf(holding.unrealized_chf)}</td>
-        <td><span class="status-pill ${holding.live ? '' : 'fallback'}">${holding.live ? 'Live' : 'Fallback'}</span></td>
+        <td data-label="Holding"><strong>${holding.ticker}</strong><span>${holding.name}</span></td>
+        <td data-label="Shares" class="right">${shares(holding.shares)}</td>
+        <td data-label="Price" class="right">${money(holding.price, holding.currency)}</td>
+        <td data-label="Market value" class="right">${money(holding.value, holding.currency)}</td>
+        <td data-label="Converted value" class="right">${displayMoneyFromChf(holding.value_chf)}</td>
+        <td data-label="Avg cost" class="right">${money(holding.average_price, holding.cost_currency)}</td>
+        <td data-label="Unrealized" class="right ${pnlClass}">${displayMoneyFromChf(holding.unrealized_chf)}</td>
+        <td data-label="Target" class="right">${target}</td>
+        <td data-label="Status"><span class="status-pill ${holding.live ? '' : 'fallback'}">${holding.live ? 'Live' : 'Fallback'}</span></td>
+        <td data-label="Detail"><a class="detail-link" href="${holding.detail_url}" onclick="event.stopPropagation()">Open</a></td>
       `;
       return row;
-    }
-
-    function selectHolding(holding) {
-      state.selectedTicker = holding.ticker;
-      setText('selectedTicker', `${holding.ticker} · ${holding.name}`);
-      setText('selectedCategory', holding.category || 'Ownership reminder');
-      document.getElementById('selectedWhy').value = state.noteOverrides[holding.ticker] || holding.why_own || 'No ownership note stored yet.';
-      renderPortfolio();
-    }
-
-    function ensureSelectedHolding() {
-      if (!state.portfolio || !state.portfolio.holdings.length) {
-        return;
-      }
-      const selected = state.portfolio.holdings.find(holding => holding.ticker === state.selectedTicker);
-      selectHolding(selected || state.portfolio.holdings[0]);
     }
 
     function renderPortfolio() {
@@ -743,13 +1044,16 @@
         return;
       }
       const payload = state.portfolio;
+      if (payload.fx_from_chf) {
+        Object.assign(fxFromChf, payload.fx_from_chf);
+      }
       setText('totalChf', displayMoneyFromChf(payload.total_chf));
       setText('unrealizedChf', displayMoneyFromChf(payload.unrealized_chf));
       document.getElementById('unrealizedChf').className = `metric-value ${payload.unrealized_chf >= 0 ? 'gain' : 'loss'}`;
       setText('totalUsd', money(payload.totals.USD, 'USD'));
       setText('totalEur', money(payload.totals.EUR, 'EUR'));
-      setText('liveCoverage', `${payload.live_count}/${payload.total_count}`);
-      setText('quoteStatus', `${payload.source}. ${payload.live_count} holdings priced live.`);
+      setText('liveCoverage', payload.pricing_mode === 'live' ? `${payload.live_count}/${payload.total_count}` : 'Snapshot');
+      setText('quoteStatus', `${payload.source}. ${payload.pricing_mode === 'live' ? `${payload.live_count} holdings priced live.` : 'Stored close prices shown.'}`);
       setText('convertedValueHeader', `Value ${state.currency}`);
       setText('unrealizedHeader', `Unrealized ${state.currency}`);
       updateSortHeaders();
@@ -773,10 +1077,11 @@
       }
     }
 
-    async function fetchPortfolio() {
-      setText('quoteStatus', 'Fetching live prices.');
+    async function fetchPortfolio(useLivePrices = false) {
+      setLoading(true, useLivePrices ? 'Refreshing live prices' : 'Loading holdings');
+      setText('quoteStatus', useLivePrices ? 'Fetching live prices.' : 'Loading stored IBKR snapshot.');
       try {
-        const response = await fetch('{% url "stock_portfolio" %}');
+        const response = await fetch(`{% url "stock_portfolio" %}${useLivePrices ? '?live=1' : ''}`);
         const payload = await response.json();
         if (!response.ok || payload.status !== 'ok') {
           throw new Error('Stock portfolio unavailable');
@@ -785,12 +1090,11 @@
         state.portfolio = payload;
         setText('lastUpdated', `Updated ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`);
         renderPortfolio();
-        if (!state.selectedTicker) {
-          ensureSelectedHolding();
-        }
       } catch (error) {
         setText('quoteStatus', 'Live prices unavailable. Showing stored fallback values after refresh.');
         setText('lastUpdated', 'Refresh failed');
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -798,14 +1102,19 @@
       state.currency = event.target.value;
       renderPortfolio();
     });
-    document.getElementById('selectedWhy').addEventListener('input', event => {
-      if (!state.selectedTicker) {
-        return;
+    document.getElementById('refreshButton').addEventListener('click', () => fetchPortfolio(true));
+    document.getElementById('openAddHoldingBottom').addEventListener('click', openAddHoldingModal);
+    document.getElementById('closeAddHolding').addEventListener('click', closeAddHoldingModal);
+    document.getElementById('addHoldingModal').addEventListener('click', event => {
+      if (event.target.id === 'addHoldingModal') {
+        closeAddHoldingModal();
       }
-      state.noteOverrides[state.selectedTicker] = event.target.value;
-      localStorage.setItem('hashenStockNotes', JSON.stringify(state.noteOverrides));
     });
-    document.getElementById('refreshButton').addEventListener('click', fetchPortfolio);
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        closeAddHoldingModal();
+      }
+    });
     document.querySelectorAll('th.sortable').forEach(header => {
       header.addEventListener('click', () => {
         const nextKey = header.dataset.sort;
@@ -819,9 +1128,8 @@
       });
     });
     fetchBitcoinPrice();
-    fetchPortfolio();
+    fetchPortfolio(false);
     setInterval(fetchBitcoinPrice, 120000);
-    setInterval(fetchPortfolio, 120000);
   </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: hashen-public
+    name: hashen-finance
     runtime: python
     plan: free
     buildCommand: ./build.sh
@@ -9,10 +9,22 @@ services:
       - key: DJANGO_SETTINGS_MODULE
         value: web.public_settings
       - key: PUBLIC_SITE_ONLY
-        value: "True"
+        value: "False"
       - key: DEBUG
         value: "False"
       - key: PYTHON_VERSION
         value: "3.8.18"
       - key: SECRET_KEY
         generateValue: true
+      - key: HASHEN_DASHBOARD_USERNAME
+        value: hashen
+      - key: HASHEN_DASHBOARD_PASSWORD
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: hashen-finance-db
+          property: connectionString
+
+databases:
+  - name: hashen-finance-db
+    plan: free

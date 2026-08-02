@@ -34,6 +34,7 @@ urlpatterns = [
     path('dashboard/mstr/', views.mstr_dashboard, name='mstr_dashboard'),
     path('dashboard/report.pdf', views.portfolio_report_pdf, name='portfolio_report_pdf'),
     path('api/wealth-progression/', views.wealth_progression, name='wealth_progression'),
+    path('api/portfolio-snapshot/', views.portfolio_snapshot, name='portfolio_snapshot'),
     path('api/bitcoin-price/', views.bitcoin_price, name='bitcoin_price'),
     path('api/stock-portfolio/', views.stock_portfolio, name='stock_portfolio'),
     path('api/treasury-stock/<slug:slug>/', views.treasury_stock_data, name='treasury_stock_data'),

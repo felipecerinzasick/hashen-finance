@@ -1,4 +1,5 @@
 import base64
+import calendar
 from datetime import datetime, timedelta, timezone
 import json
 import os
@@ -9,7 +10,7 @@ from hmac import compare_digest
 from urllib import parse, request as urlrequest
 from urllib.error import URLError, HTTPError
 
-from .models import Post, Comment, Resource, StockHolding, MemoNote
+from .models import Post, Comment, Resource, StockHolding, MemoNote, PortfolioSnapshot
 from newsletter.models import Newsletter
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404, HttpResponse, JsonResponse
@@ -21,6 +22,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone as django_timezone
 from django.utils.text import slugify
+from django.views.decorators.csrf import ensure_csrf_cookie
 from .forms import PostForm,ContactForm
 from django.views.generic import (
     CreateView,
@@ -306,6 +308,14 @@ PORTFOLIO_REPORT = {
     'notes': 'June close: IBKR NAV EUR 21,244.21 at EURCHF 0.9224; BTC 0.40968638 plus 1,114,081 sats at CoinGecko 30.06.2026 BTC/CHF; cash CHF 4,491.76 + CHF 160.34 + EUR 50.',
 }
 
+CURRENT_MONTH_TO_DATE_DEFAULT = {
+    'cash': Decimal('7626.39'),
+    'bitcoin': Decimal('21095.52'),
+    'stocks': Decimal('19928.40'),
+    'bitcoin_amount': Decimal('0.42082719'),
+    'notes': 'Current month-to-date values entered on 02.08.2026: cash CHF 7,626.39, Bitcoin CHF 21,095.52, stocks CHF 19,928.40.',
+}
+
 PORTFOLIO_HISTORY = [
     {
         'date': '31.01.2024',
@@ -534,6 +544,114 @@ def portfolio_total():
 
 def period_total(period):
     return period['cash'] + period['bitcoin'] + period['stocks']
+
+
+def parse_report_date(value):
+    return datetime.strptime(value, '%d.%m.%Y').date()
+
+
+def display_report_date(value):
+    return value.strftime('%d.%m.%Y')
+
+
+def month_end_for(value):
+    last_day = calendar.monthrange(value.year, value.month)[1]
+    return value.replace(day=last_day)
+
+
+def previous_month_end(value):
+    first_day = value.replace(day=1)
+    return first_day - timedelta(days=1)
+
+
+def decimal_from_request(value, default='0'):
+    try:
+        return Decimal(str(value).replace(',', '.'))
+    except (InvalidOperation, AttributeError):
+        return Decimal(default)
+
+
+def static_period_map():
+    periods = {}
+    for period in PORTFOLIO_HISTORY:
+        periods[parse_report_date(period['date'])] = dict(period)
+    return periods
+
+
+def snapshot_to_period(snapshot):
+    period = {
+        'date': display_report_date(snapshot.snapshot_date),
+        'cash': snapshot.cash_chf,
+        'bitcoin': snapshot.bitcoin_chf,
+        'stocks': snapshot.stocks_chf,
+    }
+    if snapshot.bitcoin_amount:
+        period['bitcoin_amount'] = snapshot.bitcoin_amount
+    if snapshot.notes:
+        period['notes'] = snapshot.notes
+    return period
+
+
+def locked_portfolio_periods():
+    periods = static_period_map()
+    for snapshot in PortfolioSnapshot.objects.filter(locked=True):
+        periods[snapshot.snapshot_date] = snapshot_to_period(snapshot)
+    return [periods[date] for date in sorted(periods)]
+
+
+def latest_locked_period():
+    periods = locked_portfolio_periods()
+    return periods[-1]
+
+
+def initial_current_snapshot_values(today=None):
+    today = today or django_timezone.localdate()
+    current_end = month_end_for(today)
+    if current_end == datetime(2026, 8, 31).date():
+        return CURRENT_MONTH_TO_DATE_DEFAULT
+
+    locked = latest_locked_period()
+    return {
+        'cash': locked['cash'],
+        'bitcoin': locked['bitcoin'],
+        'stocks': locked['stocks'],
+        'bitcoin_amount': locked.get('bitcoin_amount'),
+        'notes': 'Seeded from the latest locked close until current values are entered.',
+    }
+
+
+def get_current_portfolio_snapshot():
+    today = django_timezone.localdate()
+    current_end = month_end_for(today)
+    snapshot = PortfolioSnapshot.objects.filter(snapshot_date=current_end).first()
+    if snapshot:
+        return snapshot
+
+    initial = initial_current_snapshot_values(today)
+    return PortfolioSnapshot.objects.create(
+        snapshot_date=current_end,
+        cash_chf=initial['cash'],
+        bitcoin_chf=initial['bitcoin'],
+        stocks_chf=initial['stocks'],
+        bitcoin_amount=initial.get('bitcoin_amount'),
+        locked=False,
+        notes=initial.get('notes', ''),
+    )
+
+
+def serialize_snapshot(snapshot):
+    return {
+        'date': snapshot.snapshot_date.isoformat(),
+        'date_label': display_report_date(snapshot.snapshot_date),
+        'cash_chf': float(snapshot.cash_chf),
+        'bitcoin_chf': float(snapshot.bitcoin_chf),
+        'stocks_chf': float(snapshot.stocks_chf),
+        'bitcoin_amount': float(snapshot.bitcoin_amount) if snapshot.bitcoin_amount else None,
+        'total_chf': float(snapshot.total_chf),
+        'locked': snapshot.locked,
+        'notes': snapshot.notes,
+        'updated_at': snapshot.updated_at.isoformat() if snapshot.updated_at else None,
+    }
 
 
 def chf(value):
@@ -807,6 +925,7 @@ def add_memo_note(request):
     return redirect('memo_detail', slug=note.slug)
 
 
+@ensure_csrf_cookie
 @require_dashboard_auth
 def dashboard(request):
     return render(request, 'blog/dashboard.html', {'title': 'Dashboard'})
@@ -934,7 +1053,8 @@ def get_historical_bitcoin_chf(date):
 @require_dashboard_auth
 def wealth_progression(request):
     periods = []
-    for period in PORTFOLIO_HISTORY:
+    source_periods = locked_portfolio_periods()
+    for period in source_periods:
         historical_price = None
         btc_amount = None
         if period.get('bitcoin_amount'):
@@ -956,8 +1076,8 @@ def wealth_progression(request):
             'bitcoin_amount': float(btc_amount) if btc_amount else None,
         })
 
-    first_total = period_total(PORTFOLIO_HISTORY[0])
-    latest_total = period_total(PORTFOLIO_HISTORY[-1])
+    first_total = period_total(source_periods[0])
+    latest_total = period_total(source_periods[-1])
     return JsonResponse({
         'status': 'ok',
         'source': 'CoinGecko',
@@ -969,22 +1089,89 @@ def wealth_progression(request):
 
 
 @require_dashboard_auth
+def portfolio_snapshot(request):
+    if request.method == 'GET':
+        current_snapshot = get_current_portfolio_snapshot()
+        locked_period = latest_locked_period()
+        locked_date = parse_report_date(locked_period['date'])
+        pending_date = previous_month_end(django_timezone.localdate())
+        pending_month_end = pending_date > locked_date
+        return JsonResponse({
+            'status': 'ok',
+            'current': serialize_snapshot(current_snapshot),
+            'latest_locked': {
+                'date': locked_date.isoformat(),
+                'date_label': locked_period['date'],
+                'cash_chf': float(locked_period['cash']),
+                'bitcoin_chf': float(locked_period['bitcoin']),
+                'stocks_chf': float(locked_period['stocks']),
+                'total_chf': float(period_total(locked_period)),
+                'bitcoin_amount': float(locked_period['bitcoin_amount']) if locked_period.get('bitcoin_amount') else None,
+            },
+            'pending_month_end': pending_month_end,
+            'pending_month_end_date': pending_date.isoformat(),
+            'pending_month_end_label': display_report_date(pending_date),
+        })
+
+    if request.method != 'POST':
+        return JsonResponse({'status': 'error', 'error': 'Unsupported method'}, status=405)
+
+    try:
+        payload = json.loads(request.body.decode('utf-8') or '{}')
+    except json.JSONDecodeError:
+        return JsonResponse({'status': 'error', 'error': 'Invalid JSON'}, status=400)
+
+    action = payload.get('action', 'save_current')
+    today = django_timezone.localdate()
+    snapshot_date = month_end_for(today)
+    locked = False
+
+    if action == 'lock_month_end':
+        date_value = payload.get('snapshot_date')
+        try:
+            snapshot_date = datetime.strptime(date_value, '%Y-%m-%d').date()
+        except (TypeError, ValueError):
+            snapshot_date = previous_month_end(today)
+        locked = True
+    elif action != 'save_current':
+        return JsonResponse({'status': 'error', 'error': 'Unknown action'}, status=400)
+
+    bitcoin_amount = payload.get('bitcoin_amount')
+    snapshot, _created = PortfolioSnapshot.objects.update_or_create(
+        snapshot_date=snapshot_date,
+        defaults={
+            'cash_chf': decimal_from_request(payload.get('cash_chf')).quantize(Decimal('0.01')),
+            'bitcoin_chf': decimal_from_request(payload.get('bitcoin_chf')).quantize(Decimal('0.01')),
+            'stocks_chf': decimal_from_request(payload.get('stocks_chf')).quantize(Decimal('0.01')),
+            'bitcoin_amount': decimal_from_request(bitcoin_amount).quantize(Decimal('0.00000001')) if bitcoin_amount not in (None, '') else None,
+            'locked': locked,
+            'notes': (payload.get('notes') or '').strip(),
+        }
+    )
+    return JsonResponse({
+        'status': 'ok',
+        'snapshot': serialize_snapshot(snapshot),
+    })
+
+
+@require_dashboard_auth
 def portfolio_report_pdf(request):
-    total = portfolio_total()
+    report = latest_locked_period()
+    total = period_total(report)
     lines = [
         'Hashen - Portfolio Report',
-        'Reporting date: %s' % PORTFOLIO_REPORT['date'],
+        'Reporting date: %s' % report['date'],
         '',
         'Portfolio summary',
-        'Cash: %s' % chf(PORTFOLIO_REPORT['cash']),
-        'Bitcoin: %s' % chf(PORTFOLIO_REPORT['bitcoin']),
-        'Stocks: %s' % chf(PORTFOLIO_REPORT['stocks']),
+        'Cash: %s' % chf(report['cash']),
+        'Bitcoin: %s' % chf(report['bitcoin']),
+        'Stocks: %s' % chf(report['stocks']),
         'Total portfolio value: %s' % chf(total),
         '',
         'Allocation',
-        'Cash: %.2f%%' % (PORTFOLIO_REPORT['cash'] / total * Decimal('100')),
-        'Bitcoin: %.2f%%' % (PORTFOLIO_REPORT['bitcoin'] / total * Decimal('100')),
-        'Stocks: %.2f%%' % (PORTFOLIO_REPORT['stocks'] / total * Decimal('100')),
+        'Cash: %.2f%%' % (report['cash'] / total * Decimal('100')),
+        'Bitcoin: %.2f%%' % (report['bitcoin'] / total * Decimal('100')),
+        'Stocks: %.2f%%' % (report['stocks'] / total * Decimal('100')),
         '',
         'Notes',
         'This report reflects user-provided figures for the month-end reporting date.',

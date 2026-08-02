@@ -86,6 +86,28 @@ class MemoNote(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class PortfolioSnapshot(models.Model):
+    snapshot_date = models.DateField(unique=True)
+    cash_chf = models.DecimalField(max_digits=18, decimal_places=2)
+    bitcoin_chf = models.DecimalField(max_digits=18, decimal_places=2)
+    stocks_chf = models.DecimalField(max_digits=18, decimal_places=2)
+    bitcoin_amount = models.DecimalField(max_digits=18, decimal_places=8, blank=True, null=True)
+    locked = models.BooleanField(default=False)
+    notes = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ('snapshot_date',)
+
+    @property
+    def total_chf(self):
+        return self.cash_chf + self.bitcoin_chf + self.stocks_chf
+
+    def __str__(self):
+        return '%s %s' % (self.snapshot_date, self.total_chf)
         
 
 class PostManager(models.Manager):

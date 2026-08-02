@@ -408,6 +408,41 @@
       width: 100%;
     }
 
+    .input-hint {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      margin-top: 6px;
+    }
+
+    .save-status {
+      min-height: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .month-end-panel {
+      border-color: rgba(188, 128, 37, 0.38);
+      background: #fffbf3;
+    }
+
+    .month-end-panel[hidden] {
+      display: none;
+    }
+
+    .month-end-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .month-end-actions .btn-local {
+      min-width: 160px;
+    }
+
     .integrations {
       display: grid;
       gap: 10px;
@@ -919,18 +954,61 @@
             </div>
             <div class="form-grid">
               <div class="field-group">
-                <label id="cashInputLabel" for="cashInput">Current cash position toward 31.07.2026 close</label>
-                <input id="cashInput" class="field-input" type="number" min="0" step="0.01" value="4698.22">
+                <label id="cashInputLabel" for="cashInput">Current cash position toward 31.08.2026 close</label>
+                <input id="cashInput" class="field-input" type="number" min="0" step="0.01" value="7626.39">
               </div>
               <div class="field-group">
                 <label for="stocksInput">Stocks market value</label>
-                <input id="stocksInput" class="field-input" type="number" min="0" step="0.01" value="19595.66">
+                <input id="stocksInput" class="field-input" type="number" min="0" step="0.01" value="19928.40">
               </div>
               <div class="field-group">
-                <label for="bitcoinInput">Bitcoin amount</label>
-                <input id="bitcoinInput" class="field-input" type="number" min="0" step="0.00000001" value="0.42082719">
+                <label for="bitcoinInput">Bitcoin market value</label>
+                <input id="bitcoinInput" class="field-input" type="number" min="0" step="0.01" value="21095.52">
+                <div class="input-hint">Used directly in NAV so the total matches the number you entered.</div>
               </div>
-              <button id="applyPositions" class="btn-local secondary" type="button">Update current overview</button>
+              <div class="field-group">
+                <label for="bitcoinAmountInput">Bitcoin amount</label>
+                <input id="bitcoinAmountInput" class="field-input" type="number" min="0" step="0.00000001" value="0.42082719">
+                <div class="input-hint">Optional context for BTC-specific notes and charts.</div>
+              </div>
+              <button id="applyPositions" class="btn-local secondary" type="button">Save month-to-date values</button>
+              <div id="snapshotSaveStatus" class="save-status">Values are loaded from the saved month-to-date snapshot.</div>
+            </div>
+          </section>
+
+          <section id="monthEndPrompt" class="panel month-end-panel" hidden>
+            <div class="panel-header">
+              <div>
+                <h2>Month-End Close Needed</h2>
+                <p id="monthEndPromptText">Add the final month-end values before locking the report.</p>
+              </div>
+              <span id="monthEndDatePill" class="pill">Month end</span>
+            </div>
+            <div class="form-grid">
+              <div class="field-group">
+                <label for="lockCashInput">Final cash</label>
+                <input id="lockCashInput" class="field-input" type="number" min="0" step="0.01">
+              </div>
+              <div class="field-group">
+                <label for="lockStocksInput">Final stocks</label>
+                <input id="lockStocksInput" class="field-input" type="number" min="0" step="0.01">
+              </div>
+              <div class="field-group">
+                <label for="lockBitcoinInput">Final Bitcoin value</label>
+                <input id="lockBitcoinInput" class="field-input" type="number" min="0" step="0.01">
+              </div>
+              <div class="field-group">
+                <label for="lockBitcoinAmountInput">Final Bitcoin amount</label>
+                <input id="lockBitcoinAmountInput" class="field-input" type="number" min="0" step="0.00000001">
+              </div>
+              <div class="field-group">
+                <label for="lockNotesInput">Close notes</label>
+                <input id="lockNotesInput" class="field-input" type="text" value="User-confirmed month-end close.">
+              </div>
+              <div class="month-end-actions">
+                <div id="monthEndLockStatus" class="save-status">This will add a locked bar to Wealth Progression.</div>
+                <button id="lockMonthEndButton" class="btn-local" type="button">Lock month end</button>
+              </div>
             </div>
           </section>
         </div>
@@ -1048,13 +1126,13 @@
               <tbody>
                 <tr>
                   <td>Net worth statement</td>
-                  <td>June 2026</td>
+                  <td id="netWorthPeriod">Latest locked close</td>
                   <td id="reportTotal" class="right">Loading</td>
                   <td class="right">Draft</td>
                 </tr>
                 <tr>
                   <td>Asset allocation</td>
-                  <td>June 2026</td>
+                  <td id="allocationPeriod">Latest locked close</td>
                   <td id="reportAllocation" class="right">Loading</td>
                   <td class="right">Ready</td>
                 </tr>
@@ -1131,10 +1209,10 @@
   <script>
     const state = {
       currency: 'CHF',
-      cashChf: 4698.22,
-      stocksChf: 19595.66,
+      cashChf: 7626.39,
+      stocksChf: 19928.40,
       btcAmount: 0.42082719,
-      bitcoinReportChf: 20446.87,
+      bitcoinReportChf: 21095.52,
       btcPrices: { CHF: null, USD: null, EUR: null, GBP: null },
       btcAthChf: null,
       btcAthDate: null,
@@ -1144,7 +1222,13 @@
       stockQuoteStatus: 'loading',
       progression: [],
       lockedReportDateLabel: '30.06.2026',
-      currentCloseDateLabel: '31.07.2026',
+      currentCloseDateLabel: '31.08.2026',
+      currentCloseDateIso: '2026-08-31',
+      pendingMonthEnd: false,
+      pendingMonthEndDateIso: null,
+      pendingMonthEndDateLabel: null,
+      snapshotLoaded: false,
+      snapshotSaveTimer: null,
       privateAssets: []
     };
 
@@ -1176,7 +1260,8 @@
       return new Intl.NumberFormat(currencyLocales[currency], {
         style: 'currency',
         currency,
-        maximumFractionDigits: 0
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
       }).format(value);
     }
 
@@ -1187,7 +1272,7 @@
     function fromChf(value) {
       if (state.currency === 'BTC') {
         const price = state.btcPrices.CHF;
-        const fallbackPrice = 0.42082719 > 0 ? 20446.87 / 0.42082719 : null;
+        const fallbackPrice = state.btcAmount > 0 ? state.bitcoinReportChf / state.btcAmount : null;
         const chfPerBtc = Number.isFinite(price) ? price : fallbackPrice;
         return Number.isFinite(chfPerBtc) && chfPerBtc > 0 ? value / chfPerBtc : null;
       }
@@ -1195,12 +1280,7 @@
     }
 
     function btcValueChf() {
-      const price = state.btcPrices.CHF;
-      if (Number.isFinite(price)) {
-        return state.btcAmount * price;
-      }
-      const impliedPrice = 0.42082719 > 0 ? 20446.87 / 0.42082719 : 0;
-      return state.btcAmount * impliedPrice;
+      return state.bitcoinReportChf;
     }
 
     function btcValue() {
@@ -1290,6 +1370,8 @@
       setText('reportDateText', state.lockedReportDateLabel);
       setText('summaryReportDate', state.lockedReportDateLabel);
       setText('reportPeriodPill', state.lockedReportDateLabel);
+      setText('netWorthPeriod', state.lockedReportDateLabel);
+      setText('allocationPeriod', state.lockedReportDateLabel);
       setText('cashInputLabel', `Current cash position toward ${state.currentCloseDateLabel} close`);
     }
 
@@ -1341,7 +1423,7 @@
       setText('bitcoinMeta', `${btcAmount(state.btcAmount)} BTC`);
       setText('reportTotal', money(total));
       setText('reportAllocation', `${Math.round((cash / denominator) * 100)}% cash / ${Math.round((stocks / denominator) * 100)}% stocks / ${Number.isFinite(btc) ? Math.round((btc / denominator) * 100) : 0}% BTC`);
-      setText('reportBitcoin', `${btcAmount(state.btcAmount)} BTC = ${money(btc)}`);
+      setText('reportBitcoin', `${Number.isFinite(state.btcAmount) && state.btcAmount > 0 ? `${btcAmount(state.btcAmount)} BTC = ` : ''}${money(btc)}`);
 
       const cashPct = denominator ? (cash / denominator) * 100 : 0;
       const stocksPct = denominator ? (stocks / denominator) * 100 : 0;
@@ -1617,9 +1699,139 @@
     function applyPositionInputs() {
       state.cashChf = Number(document.getElementById('cashInput').value) || 0;
       state.stocksChf = Number(document.getElementById('stocksInput').value) || 0;
-      state.btcAmount = Number(document.getElementById('bitcoinInput').value) || 0;
-      state.bitcoinReportChf = btcValueChf();
+      state.bitcoinReportChf = Number(document.getElementById('bitcoinInput').value) || 0;
+      state.btcAmount = Number(document.getElementById('bitcoinAmountInput').value) || 0;
       render();
+    }
+
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) {
+        return parts.pop().split(';').shift();
+      }
+      return '';
+    }
+
+    function formatNumberInput(value, decimals = 2) {
+      return Number.isFinite(Number(value)) ? Number(value).toFixed(decimals) : '';
+    }
+
+    function setSnapshotStatus(text, isError = false) {
+      const target = document.getElementById('snapshotSaveStatus');
+      target.textContent = text;
+      target.classList.toggle('error-text', isError);
+    }
+
+    function applySnapshot(snapshot) {
+      state.cashChf = Number(snapshot.cash_chf) || 0;
+      state.stocksChf = Number(snapshot.stocks_chf) || 0;
+      state.bitcoinReportChf = Number(snapshot.bitcoin_chf) || 0;
+      state.btcAmount = Number(snapshot.bitcoin_amount) || 0;
+      state.currentCloseDateLabel = snapshot.date_label;
+      state.currentCloseDateIso = snapshot.date;
+
+      document.getElementById('cashInput').value = formatNumberInput(state.cashChf);
+      document.getElementById('stocksInput').value = formatNumberInput(state.stocksChf);
+      document.getElementById('bitcoinInput').value = formatNumberInput(state.bitcoinReportChf);
+      document.getElementById('bitcoinAmountInput').value = state.btcAmount ? formatNumberInput(state.btcAmount, 8) : '';
+      render();
+    }
+
+    function populateMonthEndPrompt() {
+      const prompt = document.getElementById('monthEndPrompt');
+      prompt.hidden = !state.pendingMonthEnd;
+      if (!state.pendingMonthEnd) {
+        return;
+      }
+
+      setText('monthEndDatePill', state.pendingMonthEndDateLabel);
+      setText('monthEndPromptText', `Review and lock final values for ${state.pendingMonthEndDateLabel}. They will not become the latest close until you press lock.`);
+      document.getElementById('lockCashInput').value = formatNumberInput(state.cashChf);
+      document.getElementById('lockStocksInput').value = formatNumberInput(state.stocksChf);
+      document.getElementById('lockBitcoinInput').value = formatNumberInput(state.bitcoinReportChf);
+      document.getElementById('lockBitcoinAmountInput').value = state.btcAmount ? formatNumberInput(state.btcAmount, 8) : '';
+    }
+
+    async function fetchPortfolioSnapshot() {
+      try {
+        const response = await fetch('{% url "portfolio_snapshot" %}');
+        const payload = await response.json();
+        if (!response.ok || payload.status !== 'ok') {
+          throw new Error(payload.error || 'Snapshot unavailable');
+        }
+        state.lockedReportDateLabel = payload.latest_locked.date_label;
+        state.pendingMonthEnd = Boolean(payload.pending_month_end);
+        state.pendingMonthEndDateIso = payload.pending_month_end_date;
+        state.pendingMonthEndDateLabel = payload.pending_month_end_label;
+        applySnapshot(payload.current);
+        populateMonthEndPrompt();
+        state.snapshotLoaded = true;
+        setSnapshotStatus(`Saved month-to-date values for ${state.currentCloseDateLabel}.`);
+      } catch (error) {
+        state.snapshotLoaded = true;
+        setSnapshotStatus('Could not load saved month-to-date values. Using local defaults.', true);
+        render();
+      }
+    }
+
+    async function savePortfolioSnapshot(action = 'save_current') {
+      applyPositionInputs();
+      const isLock = action === 'lock_month_end';
+      const payload = {
+        action,
+        snapshot_date: isLock ? state.pendingMonthEndDateIso : state.currentCloseDateIso,
+        cash_chf: isLock ? document.getElementById('lockCashInput').value : document.getElementById('cashInput').value,
+        stocks_chf: isLock ? document.getElementById('lockStocksInput').value : document.getElementById('stocksInput').value,
+        bitcoin_chf: isLock ? document.getElementById('lockBitcoinInput').value : document.getElementById('bitcoinInput').value,
+        bitcoin_amount: isLock ? document.getElementById('lockBitcoinAmountInput').value : document.getElementById('bitcoinAmountInput').value,
+        notes: isLock ? document.getElementById('lockNotesInput').value : 'Saved month-to-date working values.'
+      };
+
+      const statusTarget = isLock ? document.getElementById('monthEndLockStatus') : document.getElementById('snapshotSaveStatus');
+      statusTarget.textContent = isLock ? 'Locking month end...' : 'Saving...';
+      statusTarget.classList.remove('error-text');
+
+      try {
+        const response = await fetch('{% url "portfolio_snapshot" %}', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+          },
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json();
+        if (!response.ok || result.status !== 'ok') {
+          throw new Error(result.error || 'Save failed');
+        }
+
+        if (isLock) {
+          state.lockedReportDateLabel = result.snapshot.date_label;
+          state.pendingMonthEnd = false;
+          document.getElementById('monthEndPrompt').hidden = true;
+          statusTarget.textContent = `Locked close for ${result.snapshot.date_label}.`;
+          await fetchWealthProgression();
+        } else {
+          applySnapshot(result.snapshot);
+          statusTarget.textContent = `Saved month-to-date values for ${result.snapshot.date_label}.`;
+        }
+      } catch (error) {
+        statusTarget.textContent = isLock ? 'Month-end lock failed. Try again.' : 'Save failed. Your visible values are still on screen.';
+        statusTarget.classList.add('error-text');
+      }
+    }
+
+    function scheduleSnapshotSave() {
+      if (!state.snapshotLoaded) {
+        return;
+      }
+      applyPositionInputs();
+      setSnapshotStatus('Unsaved changes...');
+      clearTimeout(state.snapshotSaveTimer);
+      state.snapshotSaveTimer = setTimeout(() => {
+        savePortfolioSnapshot('save_current');
+      }, 700);
     }
 
     function openDrawer() {
@@ -1700,10 +1912,6 @@
           throw new Error('Stock quotes unavailable');
         }
         const value = Number(payload.total_chf);
-        if (Number.isFinite(value)) {
-          state.stocksChf = value;
-          document.getElementById('stocksInput').value = value.toFixed(2);
-        }
         state.stockQuoteStatus = payload.live_count > 0 ? 'live' : 'fallback';
         setText('stockQuoteStatus', `${payload.live_count}/${payload.total_count} holdings priced live`);
         setText('stockQuoteValue', Number.isFinite(value) ? money(value, 'CHF') : 'Loaded');
@@ -1735,7 +1943,11 @@
       state.currency = event.target.value;
       render();
     });
-    document.getElementById('applyPositions').addEventListener('click', applyPositionInputs);
+    document.getElementById('applyPositions').addEventListener('click', () => savePortfolioSnapshot('save_current'));
+    ['cashInput', 'stocksInput', 'bitcoinInput', 'bitcoinAmountInput'].forEach(id => {
+      document.getElementById(id).addEventListener('input', scheduleSnapshotSave);
+    });
+    document.getElementById('lockMonthEndButton').addEventListener('click', () => savePortfolioSnapshot('lock_month_end'));
     document.getElementById('addAssetButton').addEventListener('click', openDrawer);
     document.getElementById('closeDrawer').addEventListener('click', closeDrawer);
     document.getElementById('drawerBackdrop').addEventListener('click', closeDrawer);
@@ -1748,9 +1960,8 @@
       chart.addEventListener('mouseleave', hideDashboardTooltip);
     });
 
-    state.lockedReportDateLabel = lastCompletedMonthEndLabel();
-    state.currentCloseDateLabel = currentMonthEndLabel();
     render();
+    fetchPortfolioSnapshot();
     fetchBitcoinPrice();
     fetchStockPortfolio();
     fetchWealthProgression();

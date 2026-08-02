@@ -604,6 +604,42 @@ def latest_locked_period():
     return periods[-1]
 
 
+def get_pending_month_end_snapshot(today=None, current_snapshot=None):
+    today = today or django_timezone.localdate()
+    locked_period = latest_locked_period()
+    locked_date = parse_report_date(locked_period['date'])
+    pending_date = previous_month_end(today)
+    if pending_date <= locked_date:
+        return None
+
+    snapshot = PortfolioSnapshot.objects.filter(snapshot_date=pending_date).first()
+    if snapshot:
+        return snapshot
+
+    current_snapshot = current_snapshot or get_current_portfolio_snapshot()
+    return PortfolioSnapshot.objects.create(
+        snapshot_date=pending_date,
+        cash_chf=current_snapshot.cash_chf,
+        bitcoin_chf=current_snapshot.bitcoin_chf,
+        stocks_chf=current_snapshot.stocks_chf,
+        bitcoin_amount=current_snapshot.bitcoin_amount,
+        locked=False,
+        notes='Pending month-end close copied from the latest saved working values.',
+    )
+
+
+def portfolio_periods_with_pending_month_end():
+    periods = static_period_map()
+    for snapshot in PortfolioSnapshot.objects.filter(locked=True):
+        periods[snapshot.snapshot_date] = snapshot_to_period(snapshot)
+
+    pending_snapshot = get_pending_month_end_snapshot()
+    if pending_snapshot:
+        periods[pending_snapshot.snapshot_date] = snapshot_to_period(pending_snapshot)
+
+    return [periods[date] for date in sorted(periods)]
+
+
 def initial_current_snapshot_values(today=None):
     today = today or django_timezone.localdate()
     current_end = month_end_for(today)
@@ -616,7 +652,7 @@ def initial_current_snapshot_values(today=None):
         'bitcoin': locked['bitcoin'],
         'stocks': locked['stocks'],
         'bitcoin_amount': locked.get('bitcoin_amount'),
-        'notes': 'Seeded from the latest locked close until current values are entered.',
+        'notes': 'Seeded from the latest month-end close until current values are entered.',
     }
 
 
@@ -651,6 +687,19 @@ def serialize_snapshot(snapshot):
         'locked': snapshot.locked,
         'notes': snapshot.notes,
         'updated_at': snapshot.updated_at.isoformat() if snapshot.updated_at else None,
+    }
+
+
+def serialize_period(period, locked=True):
+    return {
+        'date': parse_report_date(period['date']).isoformat(),
+        'date_label': period['date'],
+        'cash_chf': float(period['cash']),
+        'bitcoin_chf': float(period['bitcoin']),
+        'stocks_chf': float(period['stocks']),
+        'total_chf': float(period_total(period)),
+        'bitcoin_amount': float(period['bitcoin_amount']) if period.get('bitcoin_amount') else None,
+        'locked': locked,
     }
 
 
@@ -1053,7 +1102,7 @@ def get_historical_bitcoin_chf(date):
 @require_dashboard_auth
 def wealth_progression(request):
     periods = []
-    source_periods = locked_portfolio_periods()
+    source_periods = portfolio_periods_with_pending_month_end()
     for period in source_periods:
         historical_price = None
         btc_amount = None
@@ -1094,20 +1143,15 @@ def portfolio_snapshot(request):
         current_snapshot = get_current_portfolio_snapshot()
         locked_period = latest_locked_period()
         locked_date = parse_report_date(locked_period['date'])
+        pending_snapshot = get_pending_month_end_snapshot(current_snapshot=current_snapshot)
         pending_date = previous_month_end(django_timezone.localdate())
         pending_month_end = pending_date > locked_date
+        latest_period = snapshot_to_period(pending_snapshot) if pending_snapshot else locked_period
         return JsonResponse({
             'status': 'ok',
             'current': serialize_snapshot(current_snapshot),
-            'latest_locked': {
-                'date': locked_date.isoformat(),
-                'date_label': locked_period['date'],
-                'cash_chf': float(locked_period['cash']),
-                'bitcoin_chf': float(locked_period['bitcoin']),
-                'stocks_chf': float(locked_period['stocks']),
-                'total_chf': float(period_total(locked_period)),
-                'bitcoin_amount': float(locked_period['bitcoin_amount']) if locked_period.get('bitcoin_amount') else None,
-            },
+            'latest_locked': serialize_period(locked_period, locked=True),
+            'latest_month_end': serialize_period(latest_period, locked=pending_snapshot is None or pending_snapshot.locked),
             'pending_month_end': pending_month_end,
             'pending_month_end_date': pending_date.isoformat(),
             'pending_month_end_label': display_report_date(pending_date),

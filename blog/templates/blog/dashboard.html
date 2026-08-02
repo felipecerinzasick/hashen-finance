@@ -889,7 +889,7 @@
               <div id="totalValue" class="value-large">Loading</div>
               <p id="priceStatus" class="subtle mt-2">Fetching Bitcoin price from CoinGecko.</p>
             </div>
-            <div class="pill">Latest locked close: <span id="summaryReportDate">30.06.2026</span></div>
+            <div class="pill">Latest month-end close: <span id="summaryReportDate">30.06.2026</span></div>
           </section>
           <section class="panel">
             <div class="label">Cash</div>
@@ -1126,13 +1126,13 @@
               <tbody>
                 <tr>
                   <td>Net worth statement</td>
-                  <td id="netWorthPeriod">Latest locked close</td>
+                  <td id="netWorthPeriod">Latest month-end close</td>
                   <td id="reportTotal" class="right">Loading</td>
                   <td class="right">Draft</td>
                 </tr>
                 <tr>
                   <td>Asset allocation</td>
-                  <td id="allocationPeriod">Latest locked close</td>
+                  <td id="allocationPeriod">Latest month-end close</td>
                   <td id="reportAllocation" class="right">Loading</td>
                   <td class="right">Ready</td>
                 </tr>
@@ -1746,7 +1746,7 @@
       }
 
       setText('monthEndDatePill', state.pendingMonthEndDateLabel);
-      setText('monthEndPromptText', `Review and lock final values for ${state.pendingMonthEndDateLabel}. They will not become the latest close until you press lock.`);
+      setText('monthEndPromptText', `Review final values for ${state.pendingMonthEndDateLabel}. They are shown in Wealth Progression now and become final once you press lock.`);
       document.getElementById('lockCashInput').value = formatNumberInput(state.cashChf);
       document.getElementById('lockStocksInput').value = formatNumberInput(state.stocksChf);
       document.getElementById('lockBitcoinInput').value = formatNumberInput(state.bitcoinReportChf);
@@ -1760,7 +1760,7 @@
         if (!response.ok || payload.status !== 'ok') {
           throw new Error(payload.error || 'Snapshot unavailable');
         }
-        state.lockedReportDateLabel = payload.latest_locked.date_label;
+        state.lockedReportDateLabel = payload.latest_month_end.date_label;
         state.pendingMonthEnd = Boolean(payload.pending_month_end);
         state.pendingMonthEndDateIso = payload.pending_month_end_date;
         state.pendingMonthEndDateLabel = payload.pending_month_end_label;

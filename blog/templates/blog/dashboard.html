@@ -1810,7 +1810,11 @@
           state.lockedReportDateLabel = result.snapshot.date_label;
           state.pendingMonthEnd = false;
           document.getElementById('monthEndPrompt').hidden = true;
-          statusTarget.textContent = `Locked close for ${result.snapshot.date_label}.`;
+          const priceLock = result.price_history_lock;
+          const priceLockText = priceLock
+            ? ` Historical stock prices saved for ${priceLock.saved} rows${priceLock.failed ? `; ${priceLock.failed} symbols need retry` : ''}.`
+            : '';
+          statusTarget.textContent = `Locked close for ${result.snapshot.date_label}.${priceLockText}`;
           await fetchWealthProgression();
         } else {
           applySnapshot(result.snapshot);

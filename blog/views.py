@@ -1,5 +1,6 @@
 import base64
 import calendar
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
 import json
 import os
@@ -810,6 +811,72 @@ def saved_report_price_points(holding, start_date, end_date):
     )
 
 
+def close_on_or_after(points, target_date):
+    for point in points:
+        if point['date'] >= target_date:
+            return point
+    return None
+
+
+def close_on_or_before(points, target_date):
+    for point in reversed(points):
+        if point['date'] <= target_date:
+            return point
+    return None
+
+
+def capture_historical_prices_for_holding(holding, start_date, end_date):
+    points = _fetch_yahoo_daily_series(holding['symbol'], start_date.strftime('%Y-%m-%d'), timeout=4)
+    start_point = close_on_or_after(points, start_date)
+    end_point = close_on_or_before(points, end_date)
+    if not start_point or not end_point:
+        raise ValueError('Missing period prices for %s' % holding['symbol'])
+
+    currency = holding.get('fallback_currency') or holding.get('cost_currency') or 'USD'
+    return [
+        {
+            'ticker': normalize_ticker(holding['ticker']),
+            'symbol': (holding['symbol'] or '').strip().upper(),
+            'quote_date': point['date'],
+            'price': Decimal(str(point['close'])).quantize(Decimal('0.000001')),
+            'currency': currency,
+        }
+        for point in (start_point, end_point)
+    ]
+
+
+def capture_report_share_price_history(start_date, end_date):
+    holdings = configured_stock_holdings()
+    saved_count = 0
+    failed_count = 0
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        futures = [
+            executor.submit(capture_historical_prices_for_holding, holding, start_date, end_date)
+            for holding in holdings
+        ]
+        for future in as_completed(futures):
+            try:
+                for quote in future.result():
+                    StockQuoteHistory.objects.update_or_create(
+                        ticker=quote['ticker'],
+                        symbol=quote['symbol'],
+                        quote_date=quote['quote_date'],
+                        defaults={
+                            'price': quote['price'],
+                            'currency': quote['currency'],
+                            'source': 'Yahoo Finance historical close',
+                        }
+                    )
+                    saved_count += 1
+            except Exception:
+                failed_count += 1
+    return {
+        'saved': saved_count,
+        'failed': failed_count,
+        'total_holdings': len(holdings),
+    }
+
+
 def stock_movers_for_report(start_date, end_date):
     movers = []
     for holding in configured_stock_holdings():
@@ -937,62 +1004,198 @@ def chf(value):
     return "CHF {:,.2f}".format(value).replace(",", "'")
 
 
+def signed_chf(value):
+    prefix = '+' if value >= 0 else ''
+    return "%s%s" % (prefix, chf(value))
+
+
+def signed_pct(value):
+    prefix = '+' if value >= 0 else ''
+    return "%s%s" % (prefix, format_pct(value))
+
+
 def pdf_escape(value):
     return str(value).replace('\\', '\\\\').replace('(', '\\(').replace(')', '\\)')
 
 
-def build_simple_pdf(lines):
-    heading_lines = {
-        'NAV',
-        'Portfolio summary and asset allocation',
-        'Five biggest stock winners by percentage gain',
-        'Five biggest stock losers by percentage loss',
-        'Notes',
-    }
-    content_lines = ['BT', '50 790 Td']
-    y_position = 790
-    for index, line in enumerate(lines):
-        if line == '':
-            content_lines.append('0 -10 Td')
-            y_position -= 10
-            continue
+def pdf_color(color):
+    return '%.3f %.3f %.3f' % color
 
-        if index == 0:
-            font = '/F2 18 Tf'
-            leading = 23
-            wrap_width = 58
-        elif line in heading_lines:
-            font = '/F2 13 Tf'
-            leading = 19
-            wrap_width = 76
-            content_lines.append('0 -5 Td')
-            y_position -= 5
+
+def build_report_pdf(report):
+    width = 595
+    height = 842
+    margin = 40
+    ink = (0.071, 0.188, 0.267)
+    muted = (0.376, 0.447, 0.522)
+    line = (0.874, 0.898, 0.925)
+    panel = (1, 1, 1)
+    page_bg = (0.961, 0.976, 0.992)
+    blue = (0.071, 0.259, 0.396)
+    accent = (0.141, 0.529, 0.808)
+    gold = (0.714, 0.541, 0.208)
+    green = (0.184, 0.561, 0.357)
+    red = (0.722, 0.290, 0.290)
+    white = (1, 1, 1)
+    pages = []
+    ops = []
+    y = 0
+
+    def add_page():
+        nonlocal ops, y
+        if ops:
+            pages.append('\n'.join(ops))
+        ops = []
+        y = 780
+        rect(0, 0, width, height, page_bg)
+        rect(0, 792, width, 50, blue)
+        text('Hashen Portfolio Report', margin, 816, 18, 'F2', white)
+        text(report['period_display'], margin, 798, 10, 'F1', (0.855, 0.910, 0.957))
+
+    def ensure(space):
+        nonlocal y
+        if y - space < 56:
+            add_page()
+
+    def rect(x, y_pos, w, h, fill, stroke=None):
+        if stroke:
+            ops.append('q %s rg %s RG %.2f %.2f %.2f %.2f re B Q' % (
+                pdf_color(fill), pdf_color(stroke), x, y_pos, w, h
+            ))
         else:
-            font = '/F1 10 Tf'
-            leading = 15
-            wrap_width = 92
+            ops.append('q %s rg %.2f %.2f %.2f %.2f re f Q' % (
+                pdf_color(fill), x, y_pos, w, h
+            ))
 
-        wrapped_lines = textwrap.wrap(str(line), width=wrap_width) or ['']
-        for wrapped in wrapped_lines:
-            if y_position < 64:
-                content_lines.append('ET')
-                content_lines.append('BT')
-                content_lines.append('50 790 Td')
-                y_position = 790
-            content_lines.append(font)
-            content_lines.append('(%s) Tj' % pdf_escape(wrapped))
-            content_lines.append('0 -%s Td' % leading)
-            y_position -= leading
-    content_lines.append('ET')
-    stream = '\n'.join(content_lines).encode('latin-1', 'replace')
+    def text(value, x, y_pos, size=10, font='F1', color=ink):
+        ops.append('BT /%s %s Tf %s rg 1 0 0 1 %.2f %.2f Tm (%s) Tj ET' % (
+            font, size, pdf_color(color), x, y_pos, pdf_escape(value)
+        ))
+
+    def wrapped(value, x, y_pos, chars=80, size=10, font='F1', color=ink, leading=14):
+        lines = textwrap.wrap(str(value), width=chars) or ['']
+        for line_value in lines:
+            text(line_value, x, y_pos, size, font, color)
+            y_pos -= leading
+        return y_pos
+
+    def section(title):
+        nonlocal y
+        ensure(54)
+        y -= 22
+        text(title, margin, y, 14, 'F2', ink)
+        y -= 10
+        rect(margin, y, width - margin * 2, 1, line)
+        y -= 20
+
+    def card(x, y_pos, w, h, label, value, color=blue):
+        rect(x, y_pos, w, h, panel, line)
+        text(label.upper(), x + 14, y_pos + h - 22, 8, 'F2', muted)
+        text(value, x + 14, y_pos + 18, 16, 'F2', color)
+
+    def table_header(columns, widths):
+        nonlocal y
+        x = margin
+        rect(margin, y - 4, sum(widths), 24, (0.929, 0.953, 0.976))
+        for label, col_width in zip(columns, widths):
+            text(label.upper(), x + 8, y + 4, 8, 'F2', muted)
+            x += col_width
+        y -= 18
+
+    def table_row(values, widths, colors=None):
+        nonlocal y
+        ensure(28)
+        colors = colors or [ink] * len(values)
+        x = margin
+        for value, col_width, color in zip(values, widths, colors):
+            text(value, x + 8, y, 9, 'F1', color)
+            x += col_width
+        rect(margin, y - 8, sum(widths), 1, line)
+        y -= 22
+
+    add_page()
+    y = 742
+    card_width = (width - margin * 2 - 20) / 3
+    card(margin, y - 76, card_width, 76, 'Beginning NAV', chf(report['beginning_nav']), blue)
+    card(margin + card_width + 10, y - 76, card_width, 76, 'Ending NAV', chf(report['ending_nav']), blue)
+    change_color = green if report['change_nav'] >= 0 else red
+    card(margin + (card_width + 10) * 2, y - 76, card_width, 76, 'Change', '%s / %s' % (signed_chf(report['change_nav']), signed_pct(report['change_pct'])), change_color)
+    y -= 106
+
+    section('Portfolio Summary')
+    table_header(['Asset', 'Ending value', 'Change'], [160, 160, 190])
+    for row in report['asset_rows']:
+        color = green if row['value_change'] >= 0 else red
+        table_row([row['label'], chf(row['value']), signed_chf(row['value_change'])], [160, 160, 190], [ink, ink, color])
+
+    section('Asset Allocation')
+    table_header(['Asset', 'Ending weight', 'Weight change'], [160, 160, 190])
+    for row in report['asset_rows']:
+        color = green if row['weight_change'] >= 0 else red
+        table_row([row['label'], format_pct(row['weight']), signed_pct(row['weight_change'])], [160, 160, 190], [ink, ink, color])
+
+    section('Stock Details')
+    text('Five biggest winners by share-price percentage change', margin, y, 11, 'F2', green)
+    y -= 18
+    if report['winners']:
+        table_header(['Ticker', 'Change', 'Price move'], [110, 110, 290])
+        for mover in report['winners']:
+            price_move = '%s %s to %s (%s-%s)' % (
+                mover['currency'],
+                format_decimal(mover['start_price']),
+                format_decimal(mover['end_price']),
+                display_report_date(mover['start_date']),
+                display_report_date(mover['end_date']),
+            )
+            table_row([mover['ticker'], signed_pct(mover['change_pct']), price_move], [110, 110, 290], [ink, green, muted])
+    else:
+        y = wrapped('No saved share-price history is available for this period yet. Lock the month end to capture historical prices for future PDFs.', margin, y, chars=86, color=muted)
+
+    y -= 8
+    text('Five biggest losers by share-price percentage change', margin, y, 11, 'F2', red)
+    y -= 18
+    if report['losers']:
+        table_header(['Ticker', 'Change', 'Price move'], [110, 110, 290])
+        for mover in report['losers']:
+            price_move = '%s %s to %s (%s-%s)' % (
+                mover['currency'],
+                format_decimal(mover['start_price']),
+                format_decimal(mover['end_price']),
+                display_report_date(mover['start_date']),
+                display_report_date(mover['end_date']),
+            )
+            table_row([mover['ticker'], signed_pct(mover['change_pct']), price_move], [110, 110, 290], [ink, red, muted])
+    else:
+        y = wrapped('No saved share-price history is available for this period yet. Stock performance is share-price movement during the report period, not gain since purchase.', margin, y, chars=86, color=muted)
+
+    section('Notes')
+    y = wrapped('Status: %s' % ('Final' if report['locked'] else 'New report available - pending lock'), margin, y, chars=92, color=muted)
+    y = wrapped('Values are shown in CHF unless an individual stock price currency is shown. Report downloads use saved data only so PDFs remain fast and do not wait on external market APIs.', margin, y, chars=92, color=muted)
+
+    pages.append('\n'.join(ops))
+    return build_pdf_from_pages(pages)
+
+
+def build_pdf_from_pages(page_streams):
     objects = [
         b'<< /Type /Catalog /Pages 2 0 R >>',
-        b'<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
-        b'<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >>',
+        None,
         b'<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>',
         b'<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>',
-        b'<< /Length %d >>\nstream\n%s\nendstream' % (len(stream), stream),
     ]
+    page_ids = []
+    for stream_text in page_streams:
+        content = stream_text.encode('latin-1', 'replace')
+        page_id = len(objects) + 1
+        content_id = page_id + 1
+        page_ids.append(page_id)
+        objects.append(
+            b'<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents %d 0 R >>' % content_id
+        )
+        objects.append(b'<< /Length %d >>\nstream\n%s\nendstream' % (len(content), content))
+    kids = b' '.join(b'%d 0 R' % page_id for page_id in page_ids)
+    objects[1] = b'<< /Type /Pages /Kids [%s] /Count %d >>' % (kids, len(page_ids))
+
     pdf = bytearray(b'%PDF-1.4\n')
     offsets = [0]
     for index, obj in enumerate(objects, 1):
@@ -1450,6 +1653,7 @@ def portfolio_snapshot(request):
         return JsonResponse({'status': 'error', 'error': 'Unknown action'}, status=400)
 
     bitcoin_amount = payload.get('bitcoin_amount')
+    price_history_lock = None
     snapshot, _created = PortfolioSnapshot.objects.update_or_create(
         snapshot_date=snapshot_date,
         defaults={
@@ -1461,9 +1665,17 @@ def portfolio_snapshot(request):
             'notes': (payload.get('notes') or '').strip(),
         }
     )
+    if locked:
+        prior_rows = [row for row in report_period_rows(include_pending=False) if row['date'] < snapshot_date]
+        if prior_rows:
+            price_history_lock = capture_report_share_price_history(
+                report_period_start(prior_rows[-1]['date']),
+                snapshot_date,
+            )
     return JsonResponse({
         'status': 'ok',
         'snapshot': serialize_snapshot(snapshot),
+        'price_history_lock': price_history_lock,
     })
 
 
@@ -1481,85 +1693,12 @@ def portfolio_reports(request):
     return render(request, 'blog/portfolio_reports.html', context)
 
 
-def report_pdf_lines(report):
-    lines = [
-        'Hashen - Portfolio Report',
-        'Report type: %s' % report['kind'].title(),
-        'Period: %s' % report['period_display'],
-        'Status: %s' % ('Final' if report['locked'] else 'New report available - pending lock'),
-        '',
-        'NAV',
-        'Beginning NAV (%s): %s' % (report['start_nav_date_label'], chf(report['beginning_nav'])),
-        'Ending NAV (%s): %s' % (report['date_label'], chf(report['ending_nav'])),
-        'Change: %s / %s' % (chf(report['change_nav']), format_pct(report['change_pct'])),
-        '',
-        'Portfolio summary and asset allocation',
-    ]
-    for row in report['asset_rows']:
-        lines.append(
-            '%s: %s (%s), %s (%s)' % (
-                row['label'],
-                chf(row['value']),
-                chf(row['value_change']),
-                format_pct(row['weight']),
-                format_pct(row['weight_change']),
-            )
-        )
-    lines.extend([
-        '',
-        'Five biggest stock winners by percentage gain',
-    ])
-    if report['winners']:
-        for mover in report['winners']:
-            lines.append(
-                '%s: %s (%s %s to %s, %s-%s)' % (
-                    mover['ticker'],
-                    format_pct(mover['change_pct']),
-                    mover['currency'],
-                    format_decimal(mover['start_price']),
-                    format_decimal(mover['end_price']),
-                    display_report_date(mover['start_date']),
-                    display_report_date(mover['end_date']),
-                )
-            )
-    else:
-        lines.append('Unavailable until saved share-price history exists for this period.')
-    lines.extend([
-        '',
-        'Five biggest stock losers by percentage loss',
-    ])
-    if report['losers']:
-        for mover in report['losers']:
-            lines.append(
-                '%s: %s (%s %s to %s, %s-%s)' % (
-                    mover['ticker'],
-                    format_pct(mover['change_pct']),
-                    mover['currency'],
-                    format_decimal(mover['start_price']),
-                    format_decimal(mover['end_price']),
-                    display_report_date(mover['start_date']),
-                    display_report_date(mover['end_date']),
-                )
-            )
-    else:
-        lines.append('Unavailable until saved share-price history exists for this period.')
-    lines.extend([
-        '',
-        'Notes',
-        'Values are shown in CHF unless an individual stock price currency is shown.',
-        'Stock movers show share-price performance for the report period, not gain since purchase.',
-        'Report downloads use saved data only so PDFs remain fast and do not wait on external market APIs.',
-    ])
-    return lines
-
-
 @require_dashboard_auth
 def portfolio_period_report_pdf(request, kind, date):
     if kind not in ('monthly', 'quarterly', 'yearly'):
         raise Http404('Report type not found')
     report = find_generated_report(kind, date, include_movers=True)
-    lines = report_pdf_lines(report)
-    response = HttpResponse(build_simple_pdf(lines), content_type='application/pdf')
+    response = HttpResponse(build_report_pdf(report), content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="hashen-%s-report-%s.pdf"' % (kind, report['date_iso'])
     return response
 
@@ -1570,8 +1709,7 @@ def portfolio_report_pdf(request):
     if not reports['monthly']:
         raise Http404('Report not found')
     report = reports['monthly'][0]
-    lines = report_pdf_lines(report)
-    response = HttpResponse(build_simple_pdf(lines), content_type='application/pdf')
+    response = HttpResponse(build_report_pdf(report), content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="hashen-monthly-report-%s.pdf"' % report['date_iso']
     return response
 
@@ -1646,7 +1784,7 @@ def _unix_date(value):
     return int(parsed.replace(tzinfo=timezone.utc).timestamp())
 
 
-def _fetch_yahoo_daily_series(symbol, start):
+def _fetch_yahoo_daily_series(symbol, start, timeout=8):
     period1 = _unix_date(start)
     period2 = int((datetime.now(timezone.utc) + timedelta(days=1)).timestamp())
     params = parse.urlencode({
@@ -1658,7 +1796,7 @@ def _fetch_yahoo_daily_series(symbol, start):
     })
     url = 'https://query1.finance.yahoo.com/v8/finance/chart/%s?%s' % (parse.quote(symbol), params)
     req = urlrequest.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-    with urlrequest.urlopen(req, timeout=8) as response:
+    with urlrequest.urlopen(req, timeout=timeout) as response:
         payload = json.loads(response.read().decode('utf-8'))
 
     result = payload['chart']['result'][0]

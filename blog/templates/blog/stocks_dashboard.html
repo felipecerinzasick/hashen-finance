@@ -263,6 +263,13 @@
       font-weight: 700;
       color: var(--blue);
       line-height: 1.15;
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .metric-value.tight-value {
+      font-size: 18px;
+      line-height: 1.18;
     }
 
     .subtle {
@@ -960,6 +967,9 @@
       const element = document.getElementById(id);
       if (element) {
         element.textContent = value;
+        if (element.classList.contains('metric-value')) {
+          element.classList.toggle('tight-value', String(value).length > 17);
+        }
       }
     }
 
@@ -1056,7 +1066,8 @@
       }
       setText('totalChf', displayMoneyFromChf(payload.total_chf));
       setText('unrealizedChf', displayMoneyFromChf(payload.unrealized_chf));
-      document.getElementById('unrealizedChf').className = `metric-value ${payload.unrealized_chf >= 0 ? 'gain' : 'loss'}`;
+      const unrealizedText = displayMoneyFromChf(payload.unrealized_chf);
+      document.getElementById('unrealizedChf').className = `metric-value ${payload.unrealized_chf >= 0 ? 'gain' : 'loss'} ${unrealizedText.length > 17 ? 'tight-value' : ''}`;
       setText('totalUsd', money(payload.totals.USD, 'USD'));
       setText('totalEur', money(payload.totals.EUR, 'EUR'));
       setText('liveCoverage', `${payload.live_count} live / ${payload.saved_count || 0} saved`);

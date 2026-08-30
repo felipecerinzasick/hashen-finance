@@ -1025,7 +1025,7 @@ def pdf_color(color):
 def build_report_pdf(report):
     width = 595
     height = 842
-    margin = 40
+    margin = 34
     ink = (0.071, 0.188, 0.267)
     muted = (0.376, 0.447, 0.522)
     line = (0.874, 0.898, 0.925)
@@ -1033,29 +1033,10 @@ def build_report_pdf(report):
     page_bg = (0.961, 0.976, 0.992)
     blue = (0.071, 0.259, 0.396)
     accent = (0.141, 0.529, 0.808)
-    gold = (0.714, 0.541, 0.208)
     green = (0.184, 0.561, 0.357)
     red = (0.722, 0.290, 0.290)
     white = (1, 1, 1)
-    pages = []
     ops = []
-    y = 0
-
-    def add_page():
-        nonlocal ops, y
-        if ops:
-            pages.append('\n'.join(ops))
-        ops = []
-        y = 780
-        rect(0, 0, width, height, page_bg)
-        rect(0, 792, width, 50, blue)
-        text('Hashen Portfolio Report', margin, 816, 18, 'F2', white)
-        text(report['period_display'], margin, 798, 10, 'F1', (0.855, 0.910, 0.957))
-
-    def ensure(space):
-        nonlocal y
-        if y - space < 56:
-            add_page()
 
     def rect(x, y_pos, w, h, fill, stroke=None):
         if stroke:
@@ -1072,108 +1053,125 @@ def build_report_pdf(report):
             font, size, pdf_color(color), x, y_pos, pdf_escape(value)
         ))
 
-    def wrapped(value, x, y_pos, chars=80, size=10, font='F1', color=ink, leading=14):
-        lines = textwrap.wrap(str(value), width=chars) or ['']
-        for line_value in lines:
-            text(line_value, x, y_pos, size, font, color)
-            y_pos -= leading
-        return y_pos
+    def fit_text(value, x, y_pos, max_width, size=10, font='F1', color=ink, min_size=7):
+        value = str(value)
+        fitted_size = size
+        while len(value) * fitted_size * 0.52 > max_width and fitted_size > min_size:
+            fitted_size -= 0.5
+        text(value, x, y_pos, fitted_size, font, color)
 
-    def section(title):
-        nonlocal y
-        ensure(54)
-        y -= 22
-        text(title, margin, y, 14, 'F2', ink)
-        y -= 10
-        rect(margin, y, width - margin * 2, 1, line)
-        y -= 20
-
-    def card(x, y_pos, w, h, label, value, color=blue):
+    def card(x, y_pos, w, h, label, value, color=blue, split_value=None):
         rect(x, y_pos, w, h, panel, line)
-        text(label.upper(), x + 14, y_pos + h - 22, 8, 'F2', muted)
-        text(value, x + 14, y_pos + 18, 16, 'F2', color)
+        text(label.upper(), x + 12, y_pos + h - 18, 7, 'F2', muted)
+        if split_value:
+            fit_text(split_value[0], x + 12, y_pos + 28, w - 24, 12, 'F2', color)
+            fit_text(split_value[1], x + 12, y_pos + 13, w - 24, 10, 'F2', color)
+        else:
+            fit_text(value, x + 12, y_pos + 18, w - 24, 13, 'F2', color)
 
-    def table_header(columns, widths):
-        nonlocal y
-        x = margin
-        rect(margin, y - 4, sum(widths), 24, (0.929, 0.953, 0.976))
-        for label, col_width in zip(columns, widths):
-            text(label.upper(), x + 8, y + 4, 8, 'F2', muted)
-            x += col_width
-        y -= 18
+    def section_title(title, x, y_pos, w=None):
+        text(title, x, y_pos, 12, 'F2', ink)
+        rect(x, y_pos - 8, w or width - margin * 2, 1, line)
 
-    def table_row(values, widths, colors=None):
-        nonlocal y
-        ensure(28)
+    def table_row(x, y_pos, values, widths, colors=None, bold_first=False, size=8.5):
         colors = colors or [ink] * len(values)
-        x = margin
+        cursor = x
         for value, col_width, color in zip(values, widths, colors):
-            text(value, x + 8, y, 9, 'F1', color)
-            x += col_width
-        rect(margin, y - 8, sum(widths), 1, line)
-        y -= 22
+            font = 'F2' if bold_first and cursor == x else 'F1'
+            fit_text(value, cursor + 6, y_pos, col_width - 12, size, font, color)
+            cursor += col_width
+        rect(x, y_pos - 7, sum(widths), 1, line)
 
-    add_page()
+    rect(0, 0, width, height, page_bg)
+    rect(0, 792, width, 50, blue)
+    text('Hashen Portfolio Report', margin, 816, 18, 'F2', white)
+    text(report['period_display'], margin, 798, 10, 'F1', (0.855, 0.910, 0.957))
+    status_label = 'Final' if report['locked'] else 'New report available - pending lock'
+    fit_text(status_label, 370, 806, 180, 8, 'F2', white)
+
     y = 742
     card_width = (width - margin * 2 - 20) / 3
-    card(margin, y - 76, card_width, 76, 'Beginning NAV', chf(report['beginning_nav']), blue)
-    card(margin + card_width + 10, y - 76, card_width, 76, 'Ending NAV', chf(report['ending_nav']), blue)
+    card(margin, y - 62, card_width, 62, 'Beginning NAV', chf(report['beginning_nav']), blue)
+    card(margin + card_width + 10, y - 62, card_width, 62, 'Ending NAV', chf(report['ending_nav']), blue)
     change_color = green if report['change_nav'] >= 0 else red
-    card(margin + (card_width + 10) * 2, y - 76, card_width, 76, 'Change', '%s / %s' % (signed_chf(report['change_nav']), signed_pct(report['change_pct'])), change_color)
-    y -= 106
+    card(
+        margin + (card_width + 10) * 2,
+        y - 62,
+        card_width,
+        62,
+        'Change',
+        '',
+        change_color,
+        split_value=(signed_chf(report['change_nav']), signed_pct(report['change_pct'])),
+    )
 
-    section('Portfolio Summary')
-    table_header(['Asset', 'Ending value', 'Change'], [160, 160, 190])
-    for row in report['asset_rows']:
-        color = green if row['value_change'] >= 0 else red
-        table_row([row['label'], chf(row['value']), signed_chf(row['value_change'])], [160, 160, 190], [ink, ink, color])
+    y = 650
+    table_width = width - margin * 2
+    section_title('Portfolio Summary', margin, y, table_width)
+    y -= 24
+    rect(margin, y - 5, table_width, 20, (0.929, 0.953, 0.976))
+    table_row(margin, y, ['Asset', 'Beginning', 'Ending', 'Change'], [112, 130, 130, 150], [muted, muted, muted, muted], size=7.5)
+    y -= 20
+    for asset_row in report['asset_rows']:
+        start_value = asset_row['value'] - asset_row['value_change']
+        color = green if asset_row['value_change'] >= 0 else red
+        values = [asset_row['label'], chf(start_value), chf(asset_row['value']), signed_chf(asset_row['value_change'])]
+        table_row(margin, y, values, [112, 130, 130, 150], [ink, ink, ink, color], bold_first=True, size=8.5)
+        y -= 20
 
-    section('Asset Allocation')
-    table_header(['Asset', 'Ending weight', 'Weight change'], [160, 160, 190])
-    for row in report['asset_rows']:
-        color = green if row['weight_change'] >= 0 else red
-        table_row([row['label'], format_pct(row['weight']), signed_pct(row['weight_change'])], [160, 160, 190], [ink, ink, color])
-
-    section('Stock Details')
-    text('Five biggest winners by share-price percentage change', margin, y, 11, 'F2', green)
     y -= 18
-    if report['winners']:
-        table_header(['Ticker', 'Change', 'Price move'], [110, 110, 290])
-        for mover in report['winners']:
-            price_move = '%s %s to %s (%s-%s)' % (
-                mover['currency'],
-                format_decimal(mover['start_price']),
-                format_decimal(mover['end_price']),
-                display_report_date(mover['start_date']),
-                display_report_date(mover['end_date']),
-            )
-            table_row([mover['ticker'], signed_pct(mover['change_pct']), price_move], [110, 110, 290], [ink, green, muted])
-    else:
-        y = wrapped('No saved share-price history is available for this period yet. Lock the month end to capture historical prices for future PDFs.', margin, y, chars=86, color=muted)
+    section_title('Asset Allocation', margin, y, table_width)
+    y -= 24
+    rect(margin, y - 5, table_width, 20, (0.929, 0.953, 0.976))
+    table_row(margin, y, ['Asset', 'Beginning', 'Ending', 'Change'], [112, 130, 130, 150], [muted, muted, muted, muted], size=7.5)
+    y -= 20
+    for asset_row in report['asset_rows']:
+        start_weight = asset_row['weight'] - asset_row['weight_change']
+        color = green if asset_row['weight_change'] >= 0 else red
+        values = [asset_row['label'], format_pct(start_weight), format_pct(asset_row['weight']), signed_pct(asset_row['weight_change'])]
+        table_row(margin, y, values, [112, 130, 130, 150], [ink, ink, ink, color], bold_first=True, size=8.5)
+        y -= 20
 
-    y -= 8
-    text('Five biggest losers by share-price percentage change', margin, y, 11, 'F2', red)
     y -= 18
-    if report['losers']:
-        table_header(['Ticker', 'Change', 'Price move'], [110, 110, 290])
-        for mover in report['losers']:
-            price_move = '%s %s to %s (%s-%s)' % (
-                mover['currency'],
-                format_decimal(mover['start_price']),
-                format_decimal(mover['end_price']),
-                display_report_date(mover['start_date']),
-                display_report_date(mover['end_date']),
-            )
-            table_row([mover['ticker'], signed_pct(mover['change_pct']), price_move], [110, 110, 290], [ink, red, muted])
-    else:
-        y = wrapped('No saved share-price history is available for this period yet. Stock performance is share-price movement during the report period, not gain since purchase.', margin, y, chars=86, color=muted)
+    section_title('Stock Details', margin, y, table_width)
+    y -= 26
 
-    section('Notes')
-    y = wrapped('Status: %s' % ('Final' if report['locked'] else 'New report available - pending lock'), margin, y, chars=92, color=muted)
-    y = wrapped('Values are shown in CHF unless an individual stock price currency is shown. Report downloads use saved data only so PDFs remain fast and do not wait on external market APIs.', margin, y, chars=92, color=muted)
+    def mover_block(title, movers, x, y_pos, color):
+        block_width = (table_width - 16) / 2
+        rect(x, y_pos - 152, block_width, 152, panel, line)
+        text(title, x + 12, y_pos - 20, 10, 'F2', color)
+        text('Share-price change during report period', x + 12, y_pos - 34, 7.5, 'F1', muted)
+        row_y = y_pos - 54
+        if movers:
+            for mover in movers[:5]:
+                price_move = '%s %s to %s' % (
+                    mover['currency'],
+                    format_decimal(mover['start_price']),
+                    format_decimal(mover['end_price']),
+                )
+                fit_text(mover['ticker'], x + 12, row_y, 52, 8.5, 'F2', ink)
+                fit_text(signed_pct(mover['change_pct']), x + 68, row_y, 58, 8.5, 'F2', color)
+                fit_text(price_move, x + 130, row_y, block_width - 142, 7.5, 'F1', muted)
+                rect(x + 12, row_y - 7, block_width - 24, 1, line)
+                row_y -= 19
+        else:
+            message = 'No saved share-price history yet. Lock the month end to capture prices.'
+            for line_value in textwrap.wrap(message, width=34)[:4]:
+                text(line_value, x + 12, row_y, 8, 'F1', muted)
+                row_y -= 12
 
-    pages.append('\n'.join(ops))
-    return build_pdf_from_pages(pages)
+    mover_block('Five Biggest Winners', report['winners'], margin, y, green)
+    mover_block('Five Biggest Losers', report['losers'], margin + (table_width + 16) / 2, y, red)
+
+    y -= 176
+    section_title('Notes', margin, y, table_width)
+    y -= 22
+    note = 'Values are shown in CHF unless an individual stock price currency is shown. PDFs use saved data only; month-end lock captures historical stock prices.'
+    for line_value in textwrap.wrap(note, width=108)[:2]:
+        text(line_value, margin, y, 8, 'F1', muted)
+        y -= 11
+
+    return build_pdf_from_pages(['\n'.join(ops)])
 
 
 def build_pdf_from_pages(page_streams):
@@ -1575,6 +1573,13 @@ def get_historical_bitcoin_chf(date):
 def wealth_progression(request):
     periods = []
     source_periods = portfolio_periods_with_pending_month_end()
+    current_snapshot = get_current_portfolio_snapshot()
+    current_period = snapshot_to_period(current_snapshot)
+    current_period_date = parse_report_date(current_period['date'])
+    if parse_report_date(source_periods[-1]['date']) < current_period_date:
+        current_period['label'] = 'MTD'
+        current_period['display_label'] = 'MTD %s' % current_period['date']
+        source_periods.append(current_period)
     for period in source_periods:
         historical_price = None
         btc_amount = None
@@ -1589,6 +1594,9 @@ def wealth_progression(request):
                 btc_amount = None
         periods.append({
             'date': period['date'],
+            'label': period.get('label', period['date']),
+            'display_label': period.get('display_label', period['date']),
+            'is_current_mtd': period.get('label') == 'MTD',
             'cash_chf': float(period['cash']),
             'bitcoin_chf': float(period['bitcoin']),
             'stocks_chf': float(period['stocks']),
@@ -2178,7 +2186,7 @@ def stock_portfolio(request):
         pricing_mode = 'saved'
     else:
         pricing_mode = 'fallback'
-    if live_count:
+    if live_count or saved_count:
         current_snapshot = get_current_portfolio_snapshot()
         current_snapshot.stocks_chf = response_total_chf.quantize(Decimal('0.01'))
         current_snapshot.save(update_fields=['stocks_chf', 'updated_at'])

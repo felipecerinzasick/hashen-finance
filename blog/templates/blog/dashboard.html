@@ -240,6 +240,8 @@
       line-height: 1.05;
       font-weight: 700;
       margin-top: 10px;
+      min-width: 0;
+      overflow-wrap: anywhere;
     }
 
     .metric-value {
@@ -247,6 +249,18 @@
       line-height: 1.15;
       font-weight: 700;
       margin-top: 10px;
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .value-large.tight-value {
+      font-size: 30px;
+      line-height: 1.1;
+    }
+
+    .metric-value.tight-value {
+      font-size: 19px;
+      line-height: 1.18;
     }
 
     .subtle {
@@ -265,7 +279,8 @@
       color: var(--accent);
       font-size: 12px;
       font-weight: 700;
-      white-space: nowrap;
+      max-width: 100%;
+      overflow-wrap: anywhere;
     }
 
     .site-link {
@@ -498,11 +513,15 @@
 
     .progression-bar-row {
       display: grid;
-      grid-template-columns: 86px minmax(0, 1fr) 92px;
+      grid-template-columns: 116px minmax(0, 1fr) 112px;
       gap: 12px;
       align-items: center;
       font-size: 13px;
       color: var(--muted);
+    }
+
+    .progression-bar-row.current-mtd strong {
+      color: var(--accent);
     }
 
     .progression-track {
@@ -866,7 +885,7 @@
       <header class="topbar">
         <div>
           <h1>Private Wealth Console</h1>
-          <p>Long-term capital preservation view as at <strong id="reportDateText">30.06.2026</strong> · <a class="site-link" href="{% url 'index' %}">Hashen</a></p>
+          <p>Long-term capital preservation view as at <strong id="reportDateText">31.08.2026</strong> · <a class="site-link" href="{% url 'index' %}">Hashen</a></p>
         </div>
         <div class="topbar-actions">
           <select id="currencySelect" class="currency-select" aria-label="Display currency">
@@ -889,7 +908,7 @@
               <div id="totalValue" class="value-large">Loading</div>
               <p id="priceStatus" class="subtle mt-2">Fetching Bitcoin price from CoinGecko.</p>
             </div>
-            <div class="pill">Latest month-end close: <span id="summaryReportDate">30.06.2026</span></div>
+            <div class="pill">Current saved period: <span id="summaryReportDate">31.08.2026</span></div>
           </section>
           <section class="panel">
             <div class="label">Cash</div>
@@ -1318,6 +1337,9 @@
       const element = document.getElementById(id);
       if (element) {
         element.textContent = text;
+        if (element.classList.contains('value-large') || element.classList.contains('metric-value')) {
+          element.classList.toggle('tight-value', String(text).length > 17);
+        }
       }
     }
 
@@ -1367,8 +1389,8 @@
     }
 
     function syncReportDateLabels() {
-      setText('reportDateText', state.lockedReportDateLabel);
-      setText('summaryReportDate', state.lockedReportDateLabel);
+      setText('reportDateText', state.currentCloseDateLabel);
+      setText('summaryReportDate', state.currentCloseDateLabel);
       setText('reportPeriodPill', state.lockedReportDateLabel);
       setText('netWorthPeriod', state.lockedReportDateLabel);
       setText('allocationPeriod', state.lockedReportDateLabel);
@@ -1477,10 +1499,11 @@
         const cashPct = assetShare(period.cash_chf, period.total_chf);
         const bitcoinPct = assetShare(period.bitcoin_chf, period.total_chf);
         const stocksPct = assetShare(period.stocks_chf, period.total_chf);
-        const tooltip = `${period.date}\nCash ${cashPct.toFixed(1)}%\nBitcoin ${bitcoinPct.toFixed(1)}%\nStocks ${stocksPct.toFixed(1)}%\nTotal ${money(period.total_chf, 'CHF')}`;
+        const label = period.display_label || period.date;
+        const tooltip = `${label}\nCash ${cashPct.toFixed(1)}%\nBitcoin ${bitcoinPct.toFixed(1)}%\nStocks ${stocksPct.toFixed(1)}%\nTotal ${money(period.total_chf, 'CHF')}`;
         return `
-        <div class="progression-bar-row" data-progression-tooltip="${escapeHtml(tooltip)}">
-          <strong>${escapeHtml(period.date)}</strong>
+        <div class="progression-bar-row ${period.is_current_mtd ? 'current-mtd' : ''}" data-progression-tooltip="${escapeHtml(tooltip)}">
+          <strong>${escapeHtml(label)}</strong>
           <div class="progression-track">
             <div class="progression-stack" style="width: ${maxTotal ? (period.total_chf / maxTotal) * 100 : 0}%">
               <div class="progression-segment cash" style="width: ${cashPct}%"></div>
@@ -1969,12 +1992,14 @@
     });
 
     render();
-    fetchPortfolioSnapshot();
     fetchBitcoinPrice();
-    fetchStockPortfolio();
-    fetchWealthProgression();
+    fetchPortfolioSnapshot()
+      .then(fetchStockPortfolio)
+      .then(fetchWealthProgression);
     setInterval(fetchBitcoinPrice, 120000);
-    setInterval(fetchStockPortfolio, 120000);
+    setInterval(() => {
+      fetchStockPortfolio().then(fetchWealthProgression);
+    }, 120000);
   </script>
 </body>
 </html>

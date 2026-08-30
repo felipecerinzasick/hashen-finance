@@ -1058,20 +1058,20 @@
             <div class="form-grid edit-form">
               <div class="field-group">
                 <label id="cashInputLabel" for="cashInput">Current cash position toward 31.08.2026 close</label>
-                <input id="cashInput" class="field-input" type="number" min="0" step="0.01" value="7626.39">
+                <input id="cashInput" class="field-input" type="text" inputmode="decimal" value="7626">
               </div>
               <div class="field-group">
                 <label for="stocksInput">Stocks market value</label>
-                <input id="stocksInput" class="field-input" type="number" min="0" step="0.01" value="19928.40">
+                <input id="stocksInput" class="field-input" type="text" inputmode="decimal" value="19928">
               </div>
               <div class="field-group">
                 <label for="bitcoinInput">Bitcoin market value</label>
-                <input id="bitcoinInput" class="field-input" type="number" min="0" step="0.01" value="21095.52">
+                <input id="bitcoinInput" class="field-input" type="text" inputmode="decimal" value="21096">
                 <div class="input-hint">Used directly in NAV so the total matches the number you entered.</div>
               </div>
               <div class="field-group">
                 <label for="bitcoinAmountInput">Bitcoin amount</label>
-                <input id="bitcoinAmountInput" class="field-input" type="number" min="0" step="0.00000001" value="0.42082719">
+                <input id="bitcoinAmountInput" class="field-input" type="text" inputmode="decimal" value="0.42082719">
                 <div class="input-hint">Optional context for BTC-specific notes and charts.</div>
               </div>
               <button id="applyPositions" class="btn-local secondary form-wide" type="button">Save month-to-date values</button>
@@ -1262,7 +1262,7 @@
       </div>
       <div class="field-group">
         <label for="assetValue">Current value</label>
-        <input id="assetValue" class="field-input" type="number" min="0" step="1000" value="50000">
+        <input id="assetValue" class="field-input" type="text" inputmode="decimal" value="50000">
       </div>
       <div class="field-group">
         <label for="assetDate">Valuation date</label>
@@ -1284,19 +1284,19 @@
       <div class="form-grid edit-form">
         <div class="field-group">
           <label for="lockCashInput">Final cash</label>
-          <input id="lockCashInput" class="field-input" type="number" min="0" step="0.01">
+          <input id="lockCashInput" class="field-input" type="text" inputmode="decimal">
         </div>
         <div class="field-group">
           <label for="lockStocksInput">Final stocks</label>
-          <input id="lockStocksInput" class="field-input" type="number" min="0" step="0.01">
+          <input id="lockStocksInput" class="field-input" type="text" inputmode="decimal">
         </div>
         <div class="field-group">
           <label for="lockBitcoinInput">Final Bitcoin value</label>
-          <input id="lockBitcoinInput" class="field-input" type="number" min="0" step="0.01">
+          <input id="lockBitcoinInput" class="field-input" type="text" inputmode="decimal">
         </div>
         <div class="field-group">
           <label for="lockBitcoinAmountInput">Final Bitcoin amount</label>
-          <input id="lockBitcoinAmountInput" class="field-input" type="number" min="0" step="0.00000001">
+          <input id="lockBitcoinAmountInput" class="field-input" type="text" inputmode="decimal">
         </div>
         <div class="field-group form-wide">
           <label for="lockNotesInput">Close notes</label>
@@ -1333,7 +1333,6 @@
       pendingMonthEndDateIso: null,
       pendingMonthEndDateLabel: null,
       snapshotLoaded: false,
-      snapshotSaveTimer: null,
       privateAssets: []
     };
 
@@ -1365,8 +1364,8 @@
       return new Intl.NumberFormat(currencyLocales[currency], {
         style: 'currency',
         currency,
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
       }).format(value);
     }
 
@@ -1802,11 +1801,36 @@
         .replace(/'/g, '&#039;');
     }
 
+    function parseNumericInput(id) {
+      const element = document.getElementById(id);
+      if (!element) {
+        return 0;
+      }
+      const normalized = String(element.value)
+        .trim()
+        .replace(/[’'\s]/g, '')
+        .replace(/,/g, '.');
+      const value = Number(normalized);
+      return Number.isFinite(value) ? value : 0;
+    }
+
+    function parseWholeMoneyInput(id) {
+      const value = Math.round(parseNumericInput(id));
+      document.getElementById(id).value = formatNumberInput(value);
+      return value;
+    }
+
+    function parsePreciseInput(id, decimals = 8) {
+      const value = parseNumericInput(id);
+      document.getElementById(id).value = value ? formatNumberInput(value, decimals) : '';
+      return value;
+    }
+
     function applyPositionInputs() {
-      state.cashChf = Number(document.getElementById('cashInput').value) || 0;
-      state.stocksChf = Number(document.getElementById('stocksInput').value) || 0;
-      state.bitcoinReportChf = Number(document.getElementById('bitcoinInput').value) || 0;
-      state.btcAmount = Number(document.getElementById('bitcoinAmountInput').value) || 0;
+      state.cashChf = parseWholeMoneyInput('cashInput');
+      state.stocksChf = parseWholeMoneyInput('stocksInput');
+      state.bitcoinReportChf = parseWholeMoneyInput('bitcoinInput');
+      state.btcAmount = parsePreciseInput('bitcoinAmountInput');
       render();
     }
 
@@ -1819,7 +1843,7 @@
       return '';
     }
 
-    function formatNumberInput(value, decimals = 2) {
+    function formatNumberInput(value, decimals = 0) {
       return Number.isFinite(Number(value)) ? Number(value).toFixed(decimals) : '';
     }
 
@@ -1830,9 +1854,9 @@
     }
 
     function applySnapshot(snapshot) {
-      state.cashChf = Number(snapshot.cash_chf) || 0;
-      state.stocksChf = Number(snapshot.stocks_chf) || 0;
-      state.bitcoinReportChf = Number(snapshot.bitcoin_chf) || 0;
+      state.cashChf = Math.round(Number(snapshot.cash_chf) || 0);
+      state.stocksChf = Math.round(Number(snapshot.stocks_chf) || 0);
+      state.bitcoinReportChf = Math.round(Number(snapshot.bitcoin_chf) || 0);
       state.btcAmount = Number(snapshot.bitcoin_amount) || 0;
       state.currentCloseDateLabel = snapshot.date_label;
       state.currentCloseDateIso = snapshot.date;
@@ -1912,15 +1936,21 @@
     }
 
     async function savePortfolioSnapshot(action = 'save_current') {
-      applyPositionInputs();
       const isLock = action === 'lock_month_end';
+      if (!isLock) {
+        applyPositionInputs();
+      }
+      const cashValue = isLock ? parseWholeMoneyInput('lockCashInput') : state.cashChf;
+      const stocksValue = isLock ? parseWholeMoneyInput('lockStocksInput') : state.stocksChf;
+      const bitcoinValue = isLock ? parseWholeMoneyInput('lockBitcoinInput') : state.bitcoinReportChf;
+      const bitcoinAmountValue = isLock ? parsePreciseInput('lockBitcoinAmountInput') : state.btcAmount;
       const payload = {
         action,
         snapshot_date: isLock ? state.pendingMonthEndDateIso : state.currentCloseDateIso,
-        cash_chf: isLock ? document.getElementById('lockCashInput').value : document.getElementById('cashInput').value,
-        stocks_chf: isLock ? document.getElementById('lockStocksInput').value : document.getElementById('stocksInput').value,
-        bitcoin_chf: isLock ? document.getElementById('lockBitcoinInput').value : document.getElementById('bitcoinInput').value,
-        bitcoin_amount: isLock ? document.getElementById('lockBitcoinAmountInput').value : document.getElementById('bitcoinAmountInput').value,
+        cash_chf: cashValue,
+        stocks_chf: stocksValue,
+        bitcoin_chf: bitcoinValue,
+        bitcoin_amount: bitcoinAmountValue,
         notes: isLock ? document.getElementById('lockNotesInput').value : 'Saved month-to-date working values.'
       };
 
@@ -1956,23 +1986,12 @@
         } else {
           applySnapshot(result.snapshot);
           statusTarget.textContent = `Saved month-to-date values for ${result.snapshot.date_label}.`;
+          await fetchWealthProgression();
         }
       } catch (error) {
         statusTarget.textContent = isLock ? 'Month-end lock failed. Try again.' : 'Save failed. Your visible values are still on screen.';
         statusTarget.classList.add('error-text');
       }
-    }
-
-    function scheduleSnapshotSave() {
-      if (!state.snapshotLoaded) {
-        return;
-      }
-      applyPositionInputs();
-      setSnapshotStatus('Unsaved changes...');
-      clearTimeout(state.snapshotSaveTimer);
-      state.snapshotSaveTimer = setTimeout(() => {
-        savePortfolioSnapshot('save_current');
-      }, 700);
     }
 
     function openDrawer() {
@@ -1990,7 +2009,7 @@
       state.privateAssets.push({
         type: document.getElementById('assetType').value,
         name: document.getElementById('assetName').value || 'Private asset',
-        valueChf: Number(document.getElementById('assetValue').value) || 0,
+        valueChf: parseWholeMoneyInput('assetValue'),
         date: document.getElementById('assetDate').value || '2026-06-30'
       });
       closeDrawer();
@@ -2052,7 +2071,7 @@
         if (!response.ok || payload.status !== 'ok') {
           throw new Error('Stock quotes unavailable');
         }
-        const value = Number(payload.total_chf);
+        const value = Math.round(Number(payload.total_chf));
         if (Number.isFinite(value)) {
           state.stocksChf = value;
           document.getElementById('stocksInput').value = formatNumberInput(value);
@@ -2089,9 +2108,6 @@
       render();
     });
     document.getElementById('applyPositions').addEventListener('click', () => savePortfolioSnapshot('save_current'));
-    ['cashInput', 'stocksInput', 'bitcoinInput', 'bitcoinAmountInput'].forEach(id => {
-      document.getElementById(id).addEventListener('input', scheduleSnapshotSave);
-    });
     document.getElementById('openMonthEndModal').addEventListener('click', openMonthEndModal);
     document.getElementById('closeMonthEndModal').addEventListener('click', closeMonthEndModal);
     document.getElementById('monthEndModal').addEventListener('click', event => {

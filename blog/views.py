@@ -4,6 +4,7 @@ from datetime import datetime, timedelta, timezone
 import json
 import os
 import ssl
+import textwrap
 from decimal import Decimal, InvalidOperation
 from functools import wraps
 from hmac import compare_digest
@@ -737,6 +738,25 @@ def quarter_label(value):
     return 'Q%s %s' % (((value.month - 1) // 3) + 1, value.year)
 
 
+def report_month_label(value):
+    return value.strftime('%B %Y')
+
+
+def report_period_start(start_nav_date):
+    return start_nav_date + timedelta(days=1)
+
+
+def report_period_display(kind, start_nav_date, end_date):
+    start_date = report_period_start(start_nav_date)
+    if kind == 'monthly':
+        label = report_month_label(end_date)
+    elif kind == 'quarterly':
+        label = quarter_label(end_date)
+    else:
+        label = str(end_date.year)
+    return '%s (%s-%s)' % (label, display_report_date(start_date), display_report_date(end_date))
+
+
 def asset_report_rows(start_period, end_period):
     start_total = period_total(start_period)
     end_total = period_total(end_period)
@@ -757,6 +777,14 @@ def asset_report_rows(start_period, end_period):
     return rows
 
 
+def quote_history_on_or_after(holding, date_obj):
+    return StockQuoteHistory.objects.filter(
+        ticker=normalize_ticker(holding['ticker']),
+        symbol=(holding['symbol'] or '').strip().upper(),
+        quote_date__gte=date_obj,
+    ).order_by('quote_date').first()
+
+
 def quote_history_at_or_before(holding, date_obj):
     return StockQuoteHistory.objects.filter(
         ticker=normalize_ticker(holding['ticker']),
@@ -765,85 +793,108 @@ def quote_history_at_or_before(holding, date_obj):
     ).order_by('-quote_date').first()
 
 
-def latest_saved_quote_for_report(holding):
-    return _saved_quote(holding['ticker'], holding['symbol'])
+def saved_report_price_points(holding, start_date, end_date):
+    start_history = quote_history_on_or_after(holding, start_date)
+    end_history = quote_history_at_or_before(holding, end_date)
+    if not start_history or not end_history or start_history.currency != end_history.currency:
+        return None
+    if start_history.quote_date > end_history.quote_date:
+        return None
+    return (
+        start_history.price,
+        end_history.price,
+        end_history.currency,
+        start_history.quote_date,
+        end_history.quote_date,
+    )
 
 
-def report_price_point(holding, date_obj, use_latest_saved=False, allow_baseline=True):
-    historical = quote_history_at_or_before(holding, date_obj)
-    if historical:
-        return historical.price, historical.currency, 'saved %s' % display_report_date(historical.quote_date)
-
-    if use_latest_saved:
-        saved = latest_saved_quote_for_report(holding)
-        if saved:
-            return saved.price, saved.currency, 'latest saved %s' % display_report_date(django_timezone.localtime(saved.updated_at).date())
-
-    if not allow_baseline:
-        return None, None, 'unavailable'
-
-    reference_price = holding.get('reference_price') or holding['average_price']
-    reference_currency = holding.get('cost_currency') or holding.get('fallback_currency') or 'USD'
-    if reference_price:
-        return reference_price, reference_currency, 'average cost baseline'
-
-    if holding.get('fallback_value') and holding.get('shares'):
-        return holding['fallback_value'] / holding['shares'], holding.get('fallback_currency') or reference_currency, 'fallback baseline'
-
-    return None, None, 'unavailable'
+def close_on_or_after(points, target_date):
+    for point in points:
+        if point['date'] >= target_date:
+            return point
+    return None
 
 
-def stock_movers_for_report(start_date, end_date, latest_report_date=None):
+def close_on_or_before(points, target_date):
+    for point in reversed(points):
+        if point['date'] <= target_date:
+            return point
+    return None
+
+
+def yahoo_report_price_points(holding, start_date, end_date):
+    start_string = start_date.strftime('%Y-%m-%d')
+    points = _fetch_yahoo_daily_series(holding['symbol'], start_string)
+    start_point = close_on_or_after(points, start_date)
+    end_point = close_on_or_before(points, end_date)
+    if not start_point or not end_point:
+        raise ValueError('Missing period prices for %s' % holding['symbol'])
+    return (
+        Decimal(str(start_point['close'])),
+        Decimal(str(end_point['close'])),
+        holding.get('fallback_currency') or holding.get('cost_currency') or 'USD',
+        start_point['date'],
+        end_point['date'],
+    )
+
+
+def stock_movers_for_report(start_date, end_date):
     movers = []
-    use_latest_saved = latest_report_date is not None and end_date == latest_report_date
     for holding in configured_stock_holdings():
-        start_price, start_currency, start_source = report_price_point(holding, start_date)
-        end_price, end_currency, end_source = report_price_point(
-            holding,
-            end_date,
-            use_latest_saved=use_latest_saved,
-            allow_baseline=False,
-        )
-        if not start_price or not end_price or start_currency != end_currency:
+        try:
+            start_price, end_price, currency, actual_start, actual_end = yahoo_report_price_points(holding, start_date, end_date)
+        except (HTTPError, URLError, TimeoutError, KeyError, IndexError, ValueError, json.JSONDecodeError):
+            saved_points = saved_report_price_points(holding, start_date, end_date)
+            if not saved_points:
+                continue
+            start_price, end_price, currency, actual_start, actual_end = saved_points
+        if not start_price:
             continue
-        change_pct = (end_price - start_price) / start_price * Decimal('100') if start_price else Decimal('0')
+        change_pct = (end_price - start_price) / start_price * Decimal('100')
         movers.append({
             'ticker': holding['ticker'],
             'name': holding['name'],
             'start_price': start_price,
             'end_price': end_price,
-            'currency': end_currency,
+            'currency': currency,
             'change_pct': change_pct,
-            'start_source': start_source,
-            'end_source': end_source,
+            'start_date': actual_start,
+            'end_date': actual_end,
         })
 
     ordered = sorted(movers, key=lambda item: item['change_pct'], reverse=True)
     return ordered[:5], ordered[-5:][::-1]
 
 
-def build_period_report(kind, start_row, end_row, latest_report_date=None):
+def build_period_report(kind, start_row, end_row, include_movers=False):
     start_period = start_row['period']
     end_period = end_row['period']
-    start_date = start_row['date']
+    start_nav_date = start_row['date']
+    start_date = report_period_start(start_nav_date)
     end_date = end_row['date']
     beginning_nav = period_total(start_period)
     ending_nav = period_total(end_period)
-    winners, losers = stock_movers_for_report(start_date, end_date, latest_report_date=latest_report_date)
+    winners, losers = stock_movers_for_report(start_date, end_date) if include_movers else ([], [])
     label = display_report_date(end_date)
     if kind == 'quarterly':
         label = quarter_label(end_date)
+    elif kind == 'monthly':
+        label = report_month_label(end_date)
     elif kind == 'yearly':
         label = str(end_date.year)
 
     return {
         'kind': kind,
         'label': label,
+        'period_display': report_period_display(kind, start_nav_date, end_date),
         'date': end_date,
         'date_iso': end_date.isoformat(),
         'date_label': display_report_date(end_date),
         'start_date': start_date,
         'start_date_label': display_report_date(start_date),
+        'start_nav_date': start_nav_date,
+        'start_nav_date_label': display_report_date(start_nav_date),
         'beginning_nav': beginning_nav,
         'ending_nav': ending_nav,
         'change_nav': ending_nav - beginning_nav,
@@ -855,7 +906,7 @@ def build_period_report(kind, start_row, end_row, latest_report_date=None):
     }
 
 
-def generated_portfolio_reports():
+def generated_portfolio_reports(include_movers=False):
     rows = report_period_rows(include_pending=True)
     reports = {
         'monthly': [],
@@ -864,10 +915,9 @@ def generated_portfolio_reports():
     }
     by_date = {row['date']: row for row in rows}
     sorted_rows = rows
-    latest_report_date = sorted_rows[-1]['date'] if sorted_rows else None
 
     for index, row in enumerate(sorted_rows[1:], 1):
-        reports['monthly'].append(build_period_report('monthly', sorted_rows[index - 1], row, latest_report_date=latest_report_date))
+        reports['monthly'].append(build_period_report('monthly', sorted_rows[index - 1], row, include_movers=include_movers))
 
     for row in sorted_rows:
         date_obj = row['date']
@@ -884,32 +934,32 @@ def generated_portfolio_reports():
             calendar.monthrange(previous_year, previous_quarter_month)[1],
         ).date()
         if previous_quarter_end in by_date:
-            reports['quarterly'].append(build_period_report('quarterly', by_date[previous_quarter_end], row, latest_report_date=latest_report_date))
+            reports['quarterly'].append(build_period_report('quarterly', by_date[previous_quarter_end], row, include_movers=include_movers))
 
         if date_obj.month == 12:
             previous_year_end = datetime(date_obj.year - 1, 12, 31).date()
             if previous_year_end in by_date:
-                reports['yearly'].append(build_period_report('yearly', by_date[previous_year_end], row, latest_report_date=latest_report_date))
+                reports['yearly'].append(build_period_report('yearly', by_date[previous_year_end], row, include_movers=include_movers))
 
     for kind in reports:
         reports[kind].sort(key=lambda report: report['date'], reverse=True)
     return reports
 
 
-def find_generated_report(kind, date_iso):
-    reports = generated_portfolio_reports().get(kind, [])
+def find_generated_report(kind, date_iso, include_movers=False):
+    reports = generated_portfolio_reports(include_movers=include_movers).get(kind, [])
     for report in reports:
         if report['date_iso'] == date_iso:
             return report
     raise Http404('Report not found')
 
 
-def format_money(value, currency='CHF'):
-    return "%s %s" % (currency, "{:,.2f}".format(value).replace(",", "'"))
-
-
 def format_pct(value):
     return "%.2f%%" % value
+
+
+def format_decimal(value):
+    return "{:,.2f}".format(value).replace(",", "'")
 
 
 def chf(value):
@@ -921,17 +971,55 @@ def pdf_escape(value):
 
 
 def build_simple_pdf(lines):
-    content_lines = ['BT', '/F1 11 Tf', '50 790 Td', '16 TL']
-    for line in lines:
-        content_lines.append('(%s) Tj' % pdf_escape(line))
-        content_lines.append('T*')
+    heading_lines = {
+        'NAV',
+        'Portfolio summary and asset allocation',
+        'Five biggest stock winners by percentage gain',
+        'Five biggest stock losers by percentage loss',
+        'Notes',
+    }
+    content_lines = ['BT', '50 790 Td']
+    y_position = 790
+    for index, line in enumerate(lines):
+        if line == '':
+            content_lines.append('0 -10 Td')
+            y_position -= 10
+            continue
+
+        if index == 0:
+            font = '/F2 18 Tf'
+            leading = 23
+            wrap_width = 58
+        elif line in heading_lines:
+            font = '/F2 13 Tf'
+            leading = 19
+            wrap_width = 76
+            content_lines.append('0 -5 Td')
+            y_position -= 5
+        else:
+            font = '/F1 10 Tf'
+            leading = 15
+            wrap_width = 92
+
+        wrapped_lines = textwrap.wrap(str(line), width=wrap_width) or ['']
+        for wrapped in wrapped_lines:
+            if y_position < 64:
+                content_lines.append('ET')
+                content_lines.append('BT')
+                content_lines.append('50 790 Td')
+                y_position = 790
+            content_lines.append(font)
+            content_lines.append('(%s) Tj' % pdf_escape(wrapped))
+            content_lines.append('0 -%s Td' % leading)
+            y_position -= leading
     content_lines.append('ET')
     stream = '\n'.join(content_lines).encode('latin-1', 'replace')
     objects = [
         b'<< /Type /Catalog /Pages 2 0 R >>',
         b'<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
-        b'<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>',
+        b'<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >>',
         b'<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>',
+        b'<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>',
         b'<< /Length %d >>\nstream\n%s\nendstream' % (len(stream), stream),
     ]
     pdf = bytearray(b'%PDF-1.4\n')
@@ -1418,8 +1506,6 @@ def portfolio_reports(request):
         'reports': reports,
         'latest_monthly': latest_monthly,
         'has_new_report': has_new_report,
-        'money': format_money,
-        'pct': format_pct,
     }
     return render(request, 'blog/portfolio_reports.html', context)
 
@@ -1428,12 +1514,12 @@ def report_pdf_lines(report):
     lines = [
         'Hashen - Portfolio Report',
         'Report type: %s' % report['kind'].title(),
-        'Period: %s to %s' % (report['start_date_label'], report['date_label']),
+        'Period: %s' % report['period_display'],
         'Status: %s' % ('Final' if report['locked'] else 'New report available - pending lock'),
         '',
         'NAV',
-        'Beginning NAV: %s' % chf(report['beginning_nav']),
-        'Ending NAV: %s' % chf(report['ending_nav']),
+        'Beginning NAV (%s): %s' % (report['start_nav_date_label'], chf(report['beginning_nav'])),
+        'Ending NAV (%s): %s' % (report['date_label'], chf(report['ending_nav'])),
         'Change: %s / %s' % (chf(report['change_nav']), format_pct(report['change_pct'])),
         '',
         'Portfolio summary and asset allocation',
@@ -1454,23 +1540,43 @@ def report_pdf_lines(report):
     ])
     if report['winners']:
         for mover in report['winners']:
-            lines.append('%s: %s' % (mover['ticker'], format_pct(mover['change_pct'])))
+            lines.append(
+                '%s: %s (%s %s to %s, %s-%s)' % (
+                    mover['ticker'],
+                    format_pct(mover['change_pct']),
+                    mover['currency'],
+                    format_decimal(mover['start_price']),
+                    format_decimal(mover['end_price']),
+                    display_report_date(mover['start_date']),
+                    display_report_date(mover['end_date']),
+                )
+            )
     else:
-        lines.append('Unavailable until saved quote history exists.')
+        lines.append('Unavailable because no share-price data was returned for this period.')
     lines.extend([
         '',
         'Five biggest stock losers by percentage loss',
     ])
     if report['losers']:
         for mover in report['losers']:
-            lines.append('%s: %s' % (mover['ticker'], format_pct(mover['change_pct'])))
+            lines.append(
+                '%s: %s (%s %s to %s, %s-%s)' % (
+                    mover['ticker'],
+                    format_pct(mover['change_pct']),
+                    mover['currency'],
+                    format_decimal(mover['start_price']),
+                    format_decimal(mover['end_price']),
+                    display_report_date(mover['start_date']),
+                    display_report_date(mover['end_date']),
+                )
+            )
     else:
-        lines.append('Unavailable until saved quote history exists.')
+        lines.append('Unavailable because no share-price data was returned for this period.')
     lines.extend([
         '',
         'Notes',
         'Values are shown in CHF unless an individual stock price currency is shown.',
-        'Stock movers use saved quote history where available and average-cost baseline otherwise.',
+        'Stock movers show share-price performance for the report period, not gain since purchase.',
     ])
     return lines
 
@@ -1479,7 +1585,7 @@ def report_pdf_lines(report):
 def portfolio_period_report_pdf(request, kind, date):
     if kind not in ('monthly', 'quarterly', 'yearly'):
         raise Http404('Report type not found')
-    report = find_generated_report(kind, date)
+    report = find_generated_report(kind, date, include_movers=True)
     lines = report_pdf_lines(report)
     response = HttpResponse(build_simple_pdf(lines), content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="hashen-%s-report-%s.pdf"' % (kind, report['date_iso'])
@@ -1488,7 +1594,7 @@ def portfolio_period_report_pdf(request, kind, date):
 
 @require_dashboard_auth
 def portfolio_report_pdf(request):
-    reports = generated_portfolio_reports()
+    reports = generated_portfolio_reports(include_movers=True)
     if not reports['monthly']:
         raise Http404('Report not found')
     report = reports['monthly'][0]

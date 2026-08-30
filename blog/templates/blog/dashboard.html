@@ -221,10 +221,10 @@
     }
 
     .hero-panel {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 18px;
-      align-items: start;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
     }
 
     .label {
@@ -236,30 +236,32 @@
     }
 
     .value-large {
-      font-size: 38px;
+      font-size: 34px;
       line-height: 1.05;
       font-weight: 700;
       margin-top: 10px;
+      max-width: 100%;
       min-width: 0;
-      overflow-wrap: anywhere;
+      white-space: nowrap;
     }
 
     .metric-value {
-      font-size: 24px;
+      font-size: 23px;
       line-height: 1.15;
       font-weight: 700;
       margin-top: 10px;
+      max-width: 100%;
       min-width: 0;
-      overflow-wrap: anywhere;
+      white-space: nowrap;
     }
 
     .value-large.tight-value {
-      font-size: 30px;
+      font-size: 27px;
       line-height: 1.1;
     }
 
     .metric-value.tight-value {
-      font-size: 19px;
+      font-size: 18px;
       line-height: 1.18;
     }
 
@@ -280,7 +282,16 @@
       font-size: 12px;
       font-weight: 700;
       max-width: 100%;
-      overflow-wrap: anywhere;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .pill span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .site-link {
@@ -298,7 +309,11 @@
       display: grid;
       grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);
       gap: 22px;
-      align-items: start;
+      align-items: stretch;
+    }
+
+    .section-grid > .panel {
+      height: 100%;
     }
 
     .panel-header {
@@ -321,17 +336,20 @@
       font-size: 13px;
     }
 
-    .allocation {
+    .allocation-list {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
+      gap: 12px;
     }
 
-    .asset-block {
+    .allocation-row {
       border: 1px solid var(--line);
       border-radius: 8px;
-      padding: 16px;
+      padding: 12px;
       background: #fff;
+    }
+
+    .allocation-row .asset-topline {
+      margin-bottom: 0;
     }
 
     .asset-topline {
@@ -410,6 +428,15 @@
       gap: 12px;
     }
 
+    .edit-form {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: start;
+    }
+
+    .edit-form .form-wide {
+      grid-column: 1 / -1;
+    }
+
     .field-group label {
       display: block;
       color: var(--muted);
@@ -442,6 +469,14 @@
       background: #fffbf3;
     }
 
+    .month-end-panel.compact {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 14px 18px;
+    }
+
     .month-end-panel[hidden] {
       display: none;
     }
@@ -456,6 +491,46 @@
 
     .month-end-actions .btn-local {
       min-width: 160px;
+    }
+
+    .modal-backdrop-local {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(17, 24, 39, 0.42);
+      z-index: 30;
+    }
+
+    .modal-backdrop-local.open {
+      display: flex;
+    }
+
+    .modal-panel-local {
+      width: min(620px, 100%);
+      max-height: calc(100vh - 40px);
+      overflow-y: auto;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 24px 70px rgba(18, 48, 68, 0.22);
+    }
+
+    .modal-title-local {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .modal-title-local h2 {
+      margin: 0;
+      font-size: 19px;
+      font-weight: 700;
     }
 
     .integrations {
@@ -812,12 +887,7 @@
 
       .summary-grid,
       .section-grid,
-      .mstr-workbench,
-      .allocation {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-panel {
+      .mstr-workbench {
         grid-template-columns: 1fr;
       }
     }
@@ -839,7 +909,16 @@
       }
 
       .value-large {
-        font-size: 31px;
+        font-size: 29px;
+      }
+
+      .edit-form {
+        grid-template-columns: 1fr;
+      }
+
+      .month-end-panel.compact {
+        align-items: flex-start;
+        flex-direction: column;
       }
 
       .report-table,
@@ -927,38 +1006,43 @@
           </section>
         </div>
 
+        <section id="monthEndPrompt" class="panel month-end-panel compact" hidden>
+          <div>
+            <div class="label">Month-end close needed</div>
+            <p id="monthEndPromptText" class="subtle mb-0">Add the final month-end values before locking the report.</p>
+          </div>
+          <button id="openMonthEndModal" class="btn-local" type="button">Lock month end</button>
+        </section>
+
         <div class="section-grid">
           <section class="panel">
             <div class="panel-header">
               <div>
                 <h2>Capital Allocation</h2>
-                <p>Cash, listed securities, and Bitcoin arranged for owner-level review.</p>
+                <p>Current portfolio mix by saved value.</p>
               </div>
               <span class="pill">Live BTC</span>
             </div>
-            <div class="allocation">
-              <div class="asset-block">
+            <div class="allocation-list">
+              <div class="allocation-row">
                 <div class="asset-topline">
                   <strong><span class="asset-dot cash"></span> Cash</strong>
                   <span id="cashWeight" class="subtle">0%</span>
                 </div>
-                <div id="cashBlockValue" class="metric-value">Loading</div>
                 <div class="allocation-bar"><div id="cashBar" class="allocation-fill" style="background: var(--accent);"></div></div>
               </div>
-              <div class="asset-block">
+              <div class="allocation-row">
                 <div class="asset-topline">
                   <strong><span class="asset-dot stocks"></span> Stocks</strong>
                   <span id="stocksWeight" class="subtle">0%</span>
                 </div>
-                <div id="stocksBlockValue" class="metric-value">Loading</div>
                 <div class="allocation-bar"><div id="stocksBar" class="allocation-fill" style="background: var(--blue);"></div></div>
               </div>
-              <div class="asset-block">
+              <div class="allocation-row">
                 <div class="asset-topline">
                   <strong><span class="asset-dot bitcoin"></span> Bitcoin</strong>
                   <span id="bitcoinWeight" class="subtle">0%</span>
                 </div>
-                <div id="bitcoinBlockValue" class="metric-value">Loading</div>
                 <div class="allocation-bar"><div id="bitcoinBar" class="allocation-fill" style="background: var(--gold);"></div></div>
               </div>
             </div>
@@ -971,7 +1055,7 @@
                 <p>Current working values before the next month-end lock.</p>
               </div>
             </div>
-            <div class="form-grid">
+            <div class="form-grid edit-form">
               <div class="field-group">
                 <label id="cashInputLabel" for="cashInput">Current cash position toward 31.08.2026 close</label>
                 <input id="cashInput" class="field-input" type="number" min="0" step="0.01" value="7626.39">
@@ -990,44 +1074,8 @@
                 <input id="bitcoinAmountInput" class="field-input" type="number" min="0" step="0.00000001" value="0.42082719">
                 <div class="input-hint">Optional context for BTC-specific notes and charts.</div>
               </div>
-              <button id="applyPositions" class="btn-local secondary" type="button">Save month-to-date values</button>
-              <div id="snapshotSaveStatus" class="save-status">Values are loaded from the saved month-to-date snapshot.</div>
-            </div>
-          </section>
-
-          <section id="monthEndPrompt" class="panel month-end-panel" hidden>
-            <div class="panel-header">
-              <div>
-                <h2>Month-End Close Needed</h2>
-                <p id="monthEndPromptText">Add the final month-end values before locking the report.</p>
-              </div>
-              <span id="monthEndDatePill" class="pill">Month end</span>
-            </div>
-            <div class="form-grid">
-              <div class="field-group">
-                <label for="lockCashInput">Final cash</label>
-                <input id="lockCashInput" class="field-input" type="number" min="0" step="0.01">
-              </div>
-              <div class="field-group">
-                <label for="lockStocksInput">Final stocks</label>
-                <input id="lockStocksInput" class="field-input" type="number" min="0" step="0.01">
-              </div>
-              <div class="field-group">
-                <label for="lockBitcoinInput">Final Bitcoin value</label>
-                <input id="lockBitcoinInput" class="field-input" type="number" min="0" step="0.01">
-              </div>
-              <div class="field-group">
-                <label for="lockBitcoinAmountInput">Final Bitcoin amount</label>
-                <input id="lockBitcoinAmountInput" class="field-input" type="number" min="0" step="0.00000001">
-              </div>
-              <div class="field-group">
-                <label for="lockNotesInput">Close notes</label>
-                <input id="lockNotesInput" class="field-input" type="text" value="User-confirmed month-end close.">
-              </div>
-              <div class="month-end-actions">
-                <div id="monthEndLockStatus" class="save-status">This will add a locked bar to Wealth Progression.</div>
-                <button id="lockMonthEndButton" class="btn-local" type="button">Lock month end</button>
-              </div>
+              <button id="applyPositions" class="btn-local secondary form-wide" type="button">Save month-to-date values</button>
+              <div id="snapshotSaveStatus" class="save-status form-wide">Values are loaded from the saved month-to-date snapshot.</div>
             </div>
           </section>
         </div>
@@ -1223,6 +1271,44 @@
       <button class="btn-local" type="submit">Add to portfolio</button>
     </form>
   </aside>
+
+  <div id="monthEndModal" class="modal-backdrop-local" aria-hidden="true">
+    <section class="modal-panel-local month-end-panel" role="dialog" aria-modal="true" aria-labelledby="monthEndModalTitle">
+      <div class="modal-title-local">
+        <div>
+          <h2 id="monthEndModalTitle">Lock Month-End Close</h2>
+          <p id="monthEndModalText" class="subtle mb-0">Review final values before saving the month-end report snapshot.</p>
+        </div>
+        <button id="closeMonthEndModal" class="close-btn" type="button" aria-label="Close">x</button>
+      </div>
+      <div class="form-grid edit-form">
+        <div class="field-group">
+          <label for="lockCashInput">Final cash</label>
+          <input id="lockCashInput" class="field-input" type="number" min="0" step="0.01">
+        </div>
+        <div class="field-group">
+          <label for="lockStocksInput">Final stocks</label>
+          <input id="lockStocksInput" class="field-input" type="number" min="0" step="0.01">
+        </div>
+        <div class="field-group">
+          <label for="lockBitcoinInput">Final Bitcoin value</label>
+          <input id="lockBitcoinInput" class="field-input" type="number" min="0" step="0.01">
+        </div>
+        <div class="field-group">
+          <label for="lockBitcoinAmountInput">Final Bitcoin amount</label>
+          <input id="lockBitcoinAmountInput" class="field-input" type="number" min="0" step="0.00000001">
+        </div>
+        <div class="field-group form-wide">
+          <label for="lockNotesInput">Close notes</label>
+          <input id="lockNotesInput" class="field-input" type="text" value="User-confirmed month-end close.">
+        </div>
+        <div class="month-end-actions form-wide">
+          <div id="monthEndLockStatus" class="save-status">This will add a locked bar to Wealth Progression.</div>
+          <button id="lockMonthEndButton" class="btn-local" type="button">Save close</button>
+        </div>
+      </div>
+    </section>
+  </div>
   <div id="progressionTooltip" class="progression-tooltip" role="status" aria-live="polite"></div>
 
   <script>
@@ -1439,9 +1525,6 @@
       setText('cashValue', money(cash));
       setText('stocksValue', money(stocks));
       setText('bitcoinValue', money(btc));
-      setText('cashBlockValue', money(cash));
-      setText('stocksBlockValue', money(stocks));
-      setText('bitcoinBlockValue', money(btc));
       setText('bitcoinMeta', `${btcAmount(state.btcAmount)} BTC`);
       setText('reportTotal', money(total));
       setText('reportAllocation', `${Math.round((cash / denominator) * 100)}% cash / ${Math.round((stocks / denominator) * 100)}% stocks / ${Number.isFinite(btc) ? Math.round((btc / denominator) * 100) : 0}% BTC`);
@@ -1765,15 +1848,45 @@
       const prompt = document.getElementById('monthEndPrompt');
       prompt.hidden = !state.pendingMonthEnd;
       if (!state.pendingMonthEnd) {
+        closeMonthEndModal();
         return;
       }
 
-      setText('monthEndDatePill', state.pendingMonthEndDateLabel);
-      setText('monthEndPromptText', `Review final values for ${state.pendingMonthEndDateLabel}. They are shown in Wealth Progression now and become final once you press lock.`);
+      setText('monthEndPromptText', `Review final values for ${state.pendingMonthEndDateLabel}. The close is saved once and then used for reports.`);
+      setText('monthEndModalTitle', `Lock ${state.pendingMonthEndDateLabel}`);
+      setText('monthEndModalText', 'Confirm cash, stocks, and Bitcoin values before saving the official month-end close.');
       document.getElementById('lockCashInput').value = formatNumberInput(state.cashChf);
       document.getElementById('lockStocksInput').value = formatNumberInput(state.stocksChf);
       document.getElementById('lockBitcoinInput').value = formatNumberInput(state.bitcoinReportChf);
       document.getElementById('lockBitcoinAmountInput').value = state.btcAmount ? formatNumberInput(state.btcAmount, 8) : '';
+
+      const seenKey = `hashen-month-end-lock-${state.pendingMonthEndDateIso || state.pendingMonthEndDateLabel}`;
+      try {
+        if (!window.localStorage.getItem(seenKey)) {
+          openMonthEndModal();
+          window.localStorage.setItem(seenKey, 'seen');
+        }
+      } catch (error) {
+        openMonthEndModal();
+      }
+    }
+
+    function openMonthEndModal() {
+      const modal = document.getElementById('monthEndModal');
+      if (!modal) {
+        return;
+      }
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeMonthEndModal() {
+      const modal = document.getElementById('monthEndModal');
+      if (!modal) {
+        return;
+      }
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
     }
 
     async function fetchPortfolioSnapshot() {
@@ -1833,6 +1946,7 @@
           state.lockedReportDateLabel = result.snapshot.date_label;
           state.pendingMonthEnd = false;
           document.getElementById('monthEndPrompt').hidden = true;
+          closeMonthEndModal();
           const priceLock = result.price_history_lock;
           const priceLockText = priceLock
             ? ` Historical stock prices saved for ${priceLock.saved} rows${priceLock.failed ? `; ${priceLock.failed} symbols need retry` : ''}.`
@@ -1978,6 +2092,13 @@
     ['cashInput', 'stocksInput', 'bitcoinInput', 'bitcoinAmountInput'].forEach(id => {
       document.getElementById(id).addEventListener('input', scheduleSnapshotSave);
     });
+    document.getElementById('openMonthEndModal').addEventListener('click', openMonthEndModal);
+    document.getElementById('closeMonthEndModal').addEventListener('click', closeMonthEndModal);
+    document.getElementById('monthEndModal').addEventListener('click', event => {
+      if (event.target.id === 'monthEndModal') {
+        closeMonthEndModal();
+      }
+    });
     document.getElementById('lockMonthEndButton').addEventListener('click', () => savePortfolioSnapshot('lock_month_end'));
     document.getElementById('addAssetButton').addEventListener('click', openDrawer);
     document.getElementById('closeDrawer').addEventListener('click', closeDrawer);
@@ -1989,6 +2110,12 @@
       const chart = document.getElementById(id);
       chart.addEventListener('mousemove', showChartTooltip);
       chart.addEventListener('mouseleave', hideDashboardTooltip);
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        closeMonthEndModal();
+        closeDrawer();
+      }
     });
 
     render();

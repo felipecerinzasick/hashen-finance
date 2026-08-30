@@ -10,7 +10,7 @@ from hmac import compare_digest
 from urllib import parse, request as urlrequest
 from urllib.error import URLError, HTTPError
 
-from .models import Post, Comment, Resource, StockHolding, MemoNote, PortfolioSnapshot
+from .models import Post, Comment, Resource, StockHolding, StockQuoteSnapshot, StockQuoteHistory, MemoNote, PortfolioSnapshot
 from newsletter.models import Newsletter
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404, HttpResponse, JsonResponse
@@ -33,6 +33,7 @@ from django.views.generic import (
 )
 
 SATOSHIS_PER_BTC = 100000000
+STOCK_QUOTE_STALE_AFTER = timedelta(hours=12)
 
 MEMOS = [
     {
@@ -703,6 +704,214 @@ def serialize_period(period, locked=True):
     }
 
 
+def report_period_rows(include_pending=True):
+    rows = {}
+    for period in PORTFOLIO_HISTORY:
+        date_obj = parse_report_date(period['date'])
+        rows[date_obj] = {
+            'date': date_obj,
+            'period': dict(period),
+            'locked': True,
+        }
+
+    for snapshot in PortfolioSnapshot.objects.filter(locked=True):
+        rows[snapshot.snapshot_date] = {
+            'date': snapshot.snapshot_date,
+            'period': snapshot_to_period(snapshot),
+            'locked': True,
+        }
+
+    if include_pending:
+        pending_snapshot = get_pending_month_end_snapshot()
+        if pending_snapshot:
+            rows[pending_snapshot.snapshot_date] = {
+                'date': pending_snapshot.snapshot_date,
+                'period': snapshot_to_period(pending_snapshot),
+                'locked': pending_snapshot.locked,
+            }
+
+    return [rows[date] for date in sorted(rows)]
+
+
+def quarter_label(value):
+    return 'Q%s %s' % (((value.month - 1) // 3) + 1, value.year)
+
+
+def asset_report_rows(start_period, end_period):
+    start_total = period_total(start_period)
+    end_total = period_total(end_period)
+    rows = []
+    for key, label in (('cash', 'Cash'), ('bitcoin', 'Bitcoin'), ('stocks', 'Stocks')):
+        start_value = start_period[key]
+        end_value = end_period[key]
+        start_weight = start_value / start_total * Decimal('100') if start_total else Decimal('0')
+        end_weight = end_value / end_total * Decimal('100') if end_total else Decimal('0')
+        rows.append({
+            'key': key,
+            'label': label,
+            'value': end_value,
+            'value_change': end_value - start_value,
+            'weight': end_weight,
+            'weight_change': end_weight - start_weight,
+        })
+    return rows
+
+
+def quote_history_at_or_before(holding, date_obj):
+    return StockQuoteHistory.objects.filter(
+        ticker=normalize_ticker(holding['ticker']),
+        symbol=(holding['symbol'] or '').strip().upper(),
+        quote_date__lte=date_obj,
+    ).order_by('-quote_date').first()
+
+
+def latest_saved_quote_for_report(holding):
+    return _saved_quote(holding['ticker'], holding['symbol'])
+
+
+def report_price_point(holding, date_obj, use_latest_saved=False, allow_baseline=True):
+    historical = quote_history_at_or_before(holding, date_obj)
+    if historical:
+        return historical.price, historical.currency, 'saved %s' % display_report_date(historical.quote_date)
+
+    if use_latest_saved:
+        saved = latest_saved_quote_for_report(holding)
+        if saved:
+            return saved.price, saved.currency, 'latest saved %s' % display_report_date(django_timezone.localtime(saved.updated_at).date())
+
+    if not allow_baseline:
+        return None, None, 'unavailable'
+
+    reference_price = holding.get('reference_price') or holding['average_price']
+    reference_currency = holding.get('cost_currency') or holding.get('fallback_currency') or 'USD'
+    if reference_price:
+        return reference_price, reference_currency, 'average cost baseline'
+
+    if holding.get('fallback_value') and holding.get('shares'):
+        return holding['fallback_value'] / holding['shares'], holding.get('fallback_currency') or reference_currency, 'fallback baseline'
+
+    return None, None, 'unavailable'
+
+
+def stock_movers_for_report(start_date, end_date, latest_report_date=None):
+    movers = []
+    use_latest_saved = latest_report_date is not None and end_date == latest_report_date
+    for holding in configured_stock_holdings():
+        start_price, start_currency, start_source = report_price_point(holding, start_date)
+        end_price, end_currency, end_source = report_price_point(
+            holding,
+            end_date,
+            use_latest_saved=use_latest_saved,
+            allow_baseline=False,
+        )
+        if not start_price or not end_price or start_currency != end_currency:
+            continue
+        change_pct = (end_price - start_price) / start_price * Decimal('100') if start_price else Decimal('0')
+        movers.append({
+            'ticker': holding['ticker'],
+            'name': holding['name'],
+            'start_price': start_price,
+            'end_price': end_price,
+            'currency': end_currency,
+            'change_pct': change_pct,
+            'start_source': start_source,
+            'end_source': end_source,
+        })
+
+    ordered = sorted(movers, key=lambda item: item['change_pct'], reverse=True)
+    return ordered[:5], ordered[-5:][::-1]
+
+
+def build_period_report(kind, start_row, end_row, latest_report_date=None):
+    start_period = start_row['period']
+    end_period = end_row['period']
+    start_date = start_row['date']
+    end_date = end_row['date']
+    beginning_nav = period_total(start_period)
+    ending_nav = period_total(end_period)
+    winners, losers = stock_movers_for_report(start_date, end_date, latest_report_date=latest_report_date)
+    label = display_report_date(end_date)
+    if kind == 'quarterly':
+        label = quarter_label(end_date)
+    elif kind == 'yearly':
+        label = str(end_date.year)
+
+    return {
+        'kind': kind,
+        'label': label,
+        'date': end_date,
+        'date_iso': end_date.isoformat(),
+        'date_label': display_report_date(end_date),
+        'start_date': start_date,
+        'start_date_label': display_report_date(start_date),
+        'beginning_nav': beginning_nav,
+        'ending_nav': ending_nav,
+        'change_nav': ending_nav - beginning_nav,
+        'change_pct': (ending_nav - beginning_nav) / beginning_nav * Decimal('100') if beginning_nav else Decimal('0'),
+        'asset_rows': asset_report_rows(start_period, end_period),
+        'winners': winners,
+        'losers': losers,
+        'locked': end_row['locked'],
+    }
+
+
+def generated_portfolio_reports():
+    rows = report_period_rows(include_pending=True)
+    reports = {
+        'monthly': [],
+        'quarterly': [],
+        'yearly': [],
+    }
+    by_date = {row['date']: row for row in rows}
+    sorted_rows = rows
+    latest_report_date = sorted_rows[-1]['date'] if sorted_rows else None
+
+    for index, row in enumerate(sorted_rows[1:], 1):
+        reports['monthly'].append(build_period_report('monthly', sorted_rows[index - 1], row, latest_report_date=latest_report_date))
+
+    for row in sorted_rows:
+        date_obj = row['date']
+        if date_obj.month not in (3, 6, 9, 12):
+            continue
+        previous_quarter_month = date_obj.month - 3
+        previous_year = date_obj.year
+        if previous_quarter_month <= 0:
+            previous_quarter_month += 12
+            previous_year -= 1
+        previous_quarter_end = datetime(
+            previous_year,
+            previous_quarter_month,
+            calendar.monthrange(previous_year, previous_quarter_month)[1],
+        ).date()
+        if previous_quarter_end in by_date:
+            reports['quarterly'].append(build_period_report('quarterly', by_date[previous_quarter_end], row, latest_report_date=latest_report_date))
+
+        if date_obj.month == 12:
+            previous_year_end = datetime(date_obj.year - 1, 12, 31).date()
+            if previous_year_end in by_date:
+                reports['yearly'].append(build_period_report('yearly', by_date[previous_year_end], row, latest_report_date=latest_report_date))
+
+    for kind in reports:
+        reports[kind].sort(key=lambda report: report['date'], reverse=True)
+    return reports
+
+
+def find_generated_report(kind, date_iso):
+    reports = generated_portfolio_reports().get(kind, [])
+    for report in reports:
+        if report['date_iso'] == date_iso:
+            return report
+    raise Http404('Report not found')
+
+
+def format_money(value, currency='CHF'):
+    return "%s %s" % (currency, "{:,.2f}".format(value).replace(",", "'"))
+
+
+def format_pct(value):
+    return "%.2f%%" % value
+
+
 def chf(value):
     return "CHF {:,.2f}".format(value).replace(",", "'")
 
@@ -1038,10 +1247,11 @@ def stock_holding_detail(request, ticker):
     holding = find_stock_holding(ticker)
     error = None
     try:
-        quote = _fetch_yahoo_quote(holding['symbol'])
+        quote, quote_status, quote_error = _quote_for_symbol(holding['ticker'], holding['symbol'], auto_refresh=True)
         price = quote['price']
         currency = quote['currency']
-        live = True
+        live = quote_status == 'live'
+        error = quote_error
     except (HTTPError, URLError, TimeoutError, KeyError, IndexError, ValueError, json.JSONDecodeError) as exc:
         price = holding['fallback_value'] / holding['shares']
         currency = holding['fallback_currency']
@@ -1199,30 +1409,92 @@ def portfolio_snapshot(request):
 
 
 @require_dashboard_auth
-def portfolio_report_pdf(request):
-    report = latest_locked_period()
-    total = period_total(report)
+def portfolio_reports(request):
+    reports = generated_portfolio_reports()
+    latest_monthly = reports['monthly'][0] if reports['monthly'] else None
+    has_new_report = bool(latest_monthly and not latest_monthly['locked'])
+    context = {
+        'title': 'Reports',
+        'reports': reports,
+        'latest_monthly': latest_monthly,
+        'has_new_report': has_new_report,
+        'money': format_money,
+        'pct': format_pct,
+    }
+    return render(request, 'blog/portfolio_reports.html', context)
+
+
+def report_pdf_lines(report):
     lines = [
         'Hashen - Portfolio Report',
-        'Reporting date: %s' % report['date'],
+        'Report type: %s' % report['kind'].title(),
+        'Period: %s to %s' % (report['start_date_label'], report['date_label']),
+        'Status: %s' % ('Final' if report['locked'] else 'New report available - pending lock'),
         '',
-        'Portfolio summary',
-        'Cash: %s' % chf(report['cash']),
-        'Bitcoin: %s' % chf(report['bitcoin']),
-        'Stocks: %s' % chf(report['stocks']),
-        'Total portfolio value: %s' % chf(total),
+        'NAV',
+        'Beginning NAV: %s' % chf(report['beginning_nav']),
+        'Ending NAV: %s' % chf(report['ending_nav']),
+        'Change: %s / %s' % (chf(report['change_nav']), format_pct(report['change_pct'])),
         '',
-        'Allocation',
-        'Cash: %.2f%%' % (report['cash'] / total * Decimal('100')),
-        'Bitcoin: %.2f%%' % (report['bitcoin'] / total * Decimal('100')),
-        'Stocks: %.2f%%' % (report['stocks'] / total * Decimal('100')),
+        'Portfolio summary and asset allocation',
+    ]
+    for row in report['asset_rows']:
+        lines.append(
+            '%s: %s (%s), %s (%s)' % (
+                row['label'],
+                chf(row['value']),
+                chf(row['value_change']),
+                format_pct(row['weight']),
+                format_pct(row['weight_change']),
+            )
+        )
+    lines.extend([
+        '',
+        'Five biggest stock winners by percentage gain',
+    ])
+    if report['winners']:
+        for mover in report['winners']:
+            lines.append('%s: %s' % (mover['ticker'], format_pct(mover['change_pct'])))
+    else:
+        lines.append('Unavailable until saved quote history exists.')
+    lines.extend([
+        '',
+        'Five biggest stock losers by percentage loss',
+    ])
+    if report['losers']:
+        for mover in report['losers']:
+            lines.append('%s: %s' % (mover['ticker'], format_pct(mover['change_pct'])))
+    else:
+        lines.append('Unavailable until saved quote history exists.')
+    lines.extend([
         '',
         'Notes',
-        'This report reflects user-provided figures for the month-end reporting date.',
-        'Values are shown in CHF and are intended for local portfolio reporting.',
-    ]
+        'Values are shown in CHF unless an individual stock price currency is shown.',
+        'Stock movers use saved quote history where available and average-cost baseline otherwise.',
+    ])
+    return lines
+
+
+@require_dashboard_auth
+def portfolio_period_report_pdf(request, kind, date):
+    if kind not in ('monthly', 'quarterly', 'yearly'):
+        raise Http404('Report type not found')
+    report = find_generated_report(kind, date)
+    lines = report_pdf_lines(report)
     response = HttpResponse(build_simple_pdf(lines), content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="hashen-portfolio-report-2026-06-30.pdf"'
+    response['Content-Disposition'] = 'attachment; filename="hashen-%s-report-%s.pdf"' % (kind, report['date_iso'])
+    return response
+
+
+@require_dashboard_auth
+def portfolio_report_pdf(request):
+    reports = generated_portfolio_reports()
+    if not reports['monthly']:
+        raise Http404('Report not found')
+    report = reports['monthly'][0]
+    lines = report_pdf_lines(report)
+    response = HttpResponse(build_simple_pdf(lines), content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="hashen-monthly-report-%s.pdf"' % report['date_iso']
     return response
 
 
@@ -1360,6 +1632,80 @@ def _fetch_yahoo_quote(symbol):
     }
 
 
+def _quote_market_datetime(timestamp):
+    if not timestamp:
+        return None
+    try:
+        return datetime.fromtimestamp(int(timestamp), tz=timezone.utc)
+    except (TypeError, ValueError, OverflowError):
+        return None
+
+
+def _saved_quote(ticker, symbol):
+    return StockQuoteSnapshot.objects.filter(
+        ticker=normalize_ticker(ticker),
+        symbol=(symbol or '').strip().upper(),
+    ).first()
+
+
+def _quote_is_stale(snapshot):
+    if not snapshot or not snapshot.updated_at:
+        return True
+    return django_timezone.now() - snapshot.updated_at > STOCK_QUOTE_STALE_AFTER
+
+
+def _save_quote_snapshot(ticker, symbol, quote):
+    normalized_ticker = normalize_ticker(ticker)
+    normalized_symbol = (symbol or '').strip().upper()
+    snapshot, _created = StockQuoteSnapshot.objects.update_or_create(
+        ticker=normalized_ticker,
+        symbol=normalized_symbol,
+        defaults={
+            'price': quote['price'].quantize(Decimal('0.000001')),
+            'currency': quote['currency'],
+            'exchange': quote.get('exchange', ''),
+            'market_time': _quote_market_datetime(quote.get('time')),
+            'source': 'Yahoo Finance',
+        }
+    )
+    StockQuoteHistory.objects.update_or_create(
+        ticker=normalized_ticker,
+        symbol=normalized_symbol,
+        quote_date=django_timezone.localdate(),
+        defaults={
+            'price': quote['price'].quantize(Decimal('0.000001')),
+            'currency': quote['currency'],
+            'source': 'Yahoo Finance',
+        }
+    )
+    return snapshot
+
+
+def _snapshot_to_quote(snapshot):
+    return {
+        'price': snapshot.price,
+        'currency': snapshot.currency,
+        'exchange': snapshot.exchange,
+        'time': snapshot.market_time,
+    }
+
+
+def _quote_for_symbol(ticker, symbol, force_refresh=False, auto_refresh=True):
+    snapshot = _saved_quote(ticker, symbol)
+    should_refresh = force_refresh or (auto_refresh and _quote_is_stale(snapshot))
+    if should_refresh:
+        try:
+            quote = _fetch_yahoo_quote(symbol)
+            return _snapshot_to_quote(_save_quote_snapshot(ticker, symbol, quote)), 'live', None
+        except (HTTPError, URLError, TimeoutError, KeyError, IndexError, ValueError, json.JSONDecodeError) as exc:
+            if snapshot:
+                return _snapshot_to_quote(snapshot), 'saved', str(exc)
+            raise
+    if snapshot:
+        return _snapshot_to_quote(snapshot), 'saved', None
+    raise ValueError('No saved quote for %s' % symbol)
+
+
 def _fx_rate_to_chf(currency):
     currency = (currency or 'CHF').upper()
     if currency == 'CHF':
@@ -1371,6 +1717,15 @@ def _fx_rate_to_chf(currency):
     else:
         symbol = '%sCHF=X' % currency
     return _fetch_yahoo_quote(symbol)['price']
+
+
+def _fx_rate_to_chf_saved(currency, force_refresh=False, auto_refresh=True):
+    currency = (currency or 'CHF').upper()
+    if currency == 'CHF':
+        return Decimal('1'), 'fixed', None
+    symbol = 'USDCHF=X' if currency == 'USD' else 'EURCHF=X' if currency == 'EUR' else '%sCHF=X' % currency
+    quote, status, error = _quote_for_symbol('%sCHF' % currency, symbol, force_refresh=force_refresh, auto_refresh=auto_refresh)
+    return quote['price'], status, error
 
 
 def _snapshot_fx_rate_to_chf(currency):
@@ -1467,7 +1822,7 @@ def find_stock_holding(ticker):
     raise Http404('Stock holding not found')
 
 
-def serialize_stock_holding(holding, price, currency, value, value_chf, cost_value, cost_chf, unrealized_chf, live, error):
+def serialize_stock_holding(holding, price, currency, value, value_chf, cost_value, cost_chf, unrealized_chf, quote_status, error, updated_at=None):
     target_price = holding.get('target_price')
     target_currency = holding.get('target_currency') or currency
     target_quantity = holding.get('target_quantity') or holding['shares']
@@ -1486,8 +1841,10 @@ def serialize_stock_holding(holding, price, currency, value, value_chf, cost_val
         'cost_value': float(cost_value),
         'cost_chf': float(cost_chf),
         'unrealized_chf': float(unrealized_chf),
-        'live': live,
+        'live': quote_status == 'live',
+        'quote_status': quote_status,
         'error': error,
+        'quote_updated_at': updated_at.isoformat() if updated_at else None,
         'category': holding.get('category', ''),
         'why_own': holding.get('why_own', ''),
         'bought_at': holding.get('bought_at', ''),
@@ -1506,7 +1863,8 @@ def serialize_stock_holding(holding, price, currency, value, value_chf, cost_val
 
 @require_dashboard_auth
 def stock_portfolio(request):
-    use_live_prices = request.GET.get('live') == '1'
+    force_refresh = request.GET.get('live') == '1' or request.GET.get('refresh') == '1'
+    auto_refresh = request.GET.get('auto') != '0'
     fx_cache = {}
     holdings = []
     totals = {
@@ -1516,42 +1874,60 @@ def stock_portfolio(request):
         'cost_chf': Decimal('0'),
     }
     live_count = 0
+    saved_count = 0
+    fallback_count = 0
+    quote_updated_times = []
 
     stock_configs = configured_stock_holdings()
     for holding in stock_configs:
         error = None
-        if use_live_prices:
-            try:
-                quote = _fetch_yahoo_quote(holding['symbol'])
-                price = quote['price']
-                currency = quote['currency']
-                value = price * holding['shares']
-                live = True
+        quote_updated_at = None
+        try:
+            quote, quote_status, quote_error = _quote_for_symbol(
+                holding['ticker'],
+                holding['symbol'],
+                force_refresh=force_refresh,
+                auto_refresh=auto_refresh,
+            )
+            price = quote['price']
+            currency = quote['currency']
+            value = price * holding['shares']
+            error = quote_error
+            saved_snapshot = _saved_quote(holding['ticker'], holding['symbol'])
+            quote_updated_at = saved_snapshot.updated_at if saved_snapshot else None
+            if quote_updated_at:
+                quote_updated_times.append(quote_updated_at)
+            if quote_status == 'live':
                 live_count += 1
-            except (HTTPError, URLError, TimeoutError, KeyError, IndexError, ValueError, json.JSONDecodeError) as exc:
-                price = holding['fallback_value'] / holding['shares']
-                currency = holding['fallback_currency']
-                value = holding['fallback_value']
-                live = False
-                error = str(exc)
-        else:
+            elif quote_status == 'saved':
+                saved_count += 1
+        except (HTTPError, URLError, TimeoutError, KeyError, IndexError, ValueError, json.JSONDecodeError) as exc:
             price = holding['fallback_value'] / holding['shares'] if holding['shares'] else Decimal('0')
             currency = holding['fallback_currency']
             value = holding['fallback_value']
-            live = False
-            error = 'Stored IBKR snapshot'
+            quote_status = 'fallback'
+            fallback_count += 1
+            error = str(exc) if force_refresh or auto_refresh else 'Stored IBKR snapshot'
 
         fx_key = currency
         if fx_key not in fx_cache:
             try:
-                fx_cache[fx_key] = _fx_rate_to_chf(fx_key) if use_live_prices else _snapshot_fx_rate_to_chf(fx_key)
+                fx_cache[fx_key], _fx_status, _fx_error = _fx_rate_to_chf_saved(
+                    fx_key,
+                    force_refresh=force_refresh,
+                    auto_refresh=auto_refresh,
+                )
             except (HTTPError, URLError, TimeoutError, KeyError, IndexError, ValueError, json.JSONDecodeError):
                 fx_cache[fx_key] = Decimal('0.89') if fx_key == 'EUR' else Decimal('0.80') if fx_key == 'USD' else Decimal('1')
 
         cost_currency = holding['cost_currency']
         if cost_currency not in fx_cache:
             try:
-                fx_cache[cost_currency] = _fx_rate_to_chf(cost_currency) if use_live_prices else _snapshot_fx_rate_to_chf(cost_currency)
+                fx_cache[cost_currency], _fx_status, _fx_error = _fx_rate_to_chf_saved(
+                    cost_currency,
+                    force_refresh=force_refresh,
+                    auto_refresh=auto_refresh,
+                )
             except (HTTPError, URLError, TimeoutError, KeyError, IndexError, ValueError, json.JSONDecodeError):
                 fx_cache[cost_currency] = Decimal('0.89') if cost_currency == 'EUR' else Decimal('0.80') if cost_currency == 'USD' else Decimal('1')
 
@@ -1565,26 +1941,40 @@ def stock_portfolio(request):
             totals[currency] += value
 
         holdings.append(serialize_stock_holding(
-            holding, price, currency, value, value_chf, cost_value, cost_chf, unrealized_chf, live, error
+            holding, price, currency, value, value_chf, cost_value, cost_chf, unrealized_chf, quote_status, error, quote_updated_at
         ))
 
-    if use_live_prices:
-        response_total_chf = totals['CHF']
-        response_total_cost_chf = totals['cost_chf']
-        response_unrealized_chf = totals['CHF'] - totals['cost_chf']
-    else:
+    if not holdings:
         response_total_chf = STOCK_SNAPSHOT['ibkr_nav_eur'] * STOCK_SNAPSHOT['eur_chf']
         response_total_cost_chf = STOCK_SNAPSHOT['table_cost_eur'] * STOCK_SNAPSHOT['eur_chf']
         response_unrealized_chf = STOCK_SNAPSHOT['table_unrealized_eur'] * STOCK_SNAPSHOT['eur_chf']
+    else:
+        response_total_chf = totals['CHF']
+        response_total_cost_chf = totals['cost_chf']
+        response_unrealized_chf = totals['CHF'] - totals['cost_chf']
 
-    chf_to_eur = Decimal('1') / STOCK_SNAPSHOT['eur_chf']
-    chf_to_usd = Decimal('1') / STOCK_SNAPSHOT_FX_TO_CHF['USD']
+    chf_to_eur = Decimal('1') / fx_cache.get('EUR', _snapshot_fx_rate_to_chf('EUR'))
+    chf_to_usd = Decimal('1') / fx_cache.get('USD', _snapshot_fx_rate_to_chf('USD'))
+    latest_quote_updated_at = max(quote_updated_times) if quote_updated_times else None
+    if live_count:
+        pricing_mode = 'live'
+    elif saved_count:
+        pricing_mode = 'saved'
+    else:
+        pricing_mode = 'fallback'
+    if live_count:
+        current_snapshot = get_current_portfolio_snapshot()
+        current_snapshot.stocks_chf = response_total_chf.quantize(Decimal('0.01'))
+        current_snapshot.save(update_fields=['stocks_chf', 'updated_at'])
     return JsonResponse({
         'status': 'ok',
-        'source': 'Yahoo Finance' if use_live_prices else STOCK_SNAPSHOT['label'],
-        'pricing_mode': 'live' if use_live_prices else 'snapshot',
+        'source': 'Yahoo Finance' if live_count or saved_count else STOCK_SNAPSHOT['label'],
+        'pricing_mode': pricing_mode,
         'live_count': live_count,
+        'saved_count': saved_count,
+        'fallback_count': fallback_count,
         'total_count': len(stock_configs),
+        'latest_quote_updated_at': latest_quote_updated_at.isoformat() if latest_quote_updated_at else None,
         'total_chf': float(response_total_chf),
         'total_cost_chf': float(response_total_cost_chf),
         'unrealized_chf': float(response_unrealized_chf),

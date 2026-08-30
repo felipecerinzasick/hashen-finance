@@ -387,6 +387,11 @@
       color: #9a6a16;
     }
 
+    .status-pill.saved {
+      background: #eef4fb;
+      color: var(--blue);
+    }
+
     .gain {
       color: var(--green);
       font-weight: 700;
@@ -718,7 +723,7 @@
           <a href="{% url 'treasury_stock_dashboard' 'asst' %}"><span>ASST</span><span>3</span></a>
           <a href="{% url 'treasury_stock_dashboard' 'bitmine' %}"><span>BitMine</span><span>4</span></a>
         </div>
-        <a class="nav-link-local" href="{% url 'portfolio_report_pdf' %}"><span>Report PDF</span><span>PDF</span></a>
+        <a class="nav-link-local" href="{% url 'portfolio_reports' %}"><span>Reports</span><span>03</span></a>
         <a class="nav-link-local" href="{% url 'memos' %}"><span>Memos</span><span>M</span></a>
         <a class="nav-link-local" href="{% url 'index' %}"><span>Landing page</span><span>H</span></a>
       </nav>
@@ -1019,6 +1024,8 @@
       const target = holding.target_price
         ? `${holding.target_currency} ${numberFormatter.format(holding.target_price)}`
         : 'Unset';
+      const statusClass = holding.quote_status === 'fallback' ? 'fallback' : holding.quote_status === 'saved' ? 'saved' : '';
+      const statusLabel = holding.quote_status === 'fallback' ? 'Fallback' : holding.quote_status === 'saved' ? 'Saved' : 'Live';
       row.className = 'holding-row';
       row.title = 'Open investment detail';
       row.addEventListener('click', () => {
@@ -1033,7 +1040,7 @@
         <td data-label="Avg cost" class="right">${money(holding.average_price, holding.cost_currency)}</td>
         <td data-label="Unrealized" class="right ${pnlClass}">${displayMoneyFromChf(holding.unrealized_chf)}</td>
         <td data-label="Target" class="right">${target}</td>
-        <td data-label="Status"><span class="status-pill ${holding.live ? '' : 'fallback'}">${holding.live ? 'Live' : 'Fallback'}</span></td>
+        <td data-label="Status"><span class="status-pill ${statusClass}">${statusLabel}</span></td>
         <td data-label="Detail"><a class="detail-link" href="${holding.detail_url}" onclick="event.stopPropagation()">Open</a></td>
       `;
       return row;
@@ -1052,10 +1059,14 @@
       document.getElementById('unrealizedChf').className = `metric-value ${payload.unrealized_chf >= 0 ? 'gain' : 'loss'}`;
       setText('totalUsd', money(payload.totals.USD, 'USD'));
       setText('totalEur', money(payload.totals.EUR, 'EUR'));
-      setText('liveCoverage', payload.pricing_mode === 'live' ? `${payload.live_count}/${payload.total_count}` : 'Snapshot');
-      setText('quoteStatus', `${payload.source}. ${payload.pricing_mode === 'live' ? `${payload.live_count} holdings priced live.` : 'Stored close prices shown.'}`);
+      setText('liveCoverage', `${payload.live_count} live / ${payload.saved_count || 0} saved`);
+      const fallbackText = payload.fallback_count ? ` ${payload.fallback_count} fallback.` : '';
+      setText('quoteStatus', `${payload.source}. ${payload.live_count} live, ${payload.saved_count || 0} saved.${fallbackText}`);
       setText('convertedValueHeader', `Value ${state.currency}`);
       setText('unrealizedHeader', `Unrealized ${state.currency}`);
+      if (payload.latest_quote_updated_at) {
+        setText('lastUpdated', `Last saved ${new Date(payload.latest_quote_updated_at).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}`);
+      }
       updateSortHeaders();
 
       const table = document.getElementById('holdingsTable');
@@ -1079,7 +1090,7 @@
 
     async function fetchPortfolio(useLivePrices = false) {
       setLoading(true, useLivePrices ? 'Refreshing live prices' : 'Loading holdings');
-      setText('quoteStatus', useLivePrices ? 'Fetching live prices.' : 'Loading stored IBKR snapshot.');
+      setText('quoteStatus', useLivePrices ? 'Fetching live prices.' : 'Loading latest saved prices.');
       try {
         const response = await fetch(`{% url "stock_portfolio" %}${useLivePrices ? '?live=1' : ''}`);
         const payload = await response.json();
@@ -1088,7 +1099,9 @@
         }
 
         state.portfolio = payload;
-        setText('lastUpdated', `Updated ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`);
+        if (!payload.latest_quote_updated_at) {
+          setText('lastUpdated', `Checked ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`);
+        }
         renderPortfolio();
       } catch (error) {
         setText('quoteStatus', 'Live prices unavailable. Showing stored fallback values after refresh.');

@@ -856,7 +856,7 @@
           <a href="{% url 'treasury_stock_dashboard' 'asst' %}"><span>ASST</span><span>3</span></a>
           <a href="{% url 'treasury_stock_dashboard' 'bitmine' %}"><span>BitMine</span><span>4</span></a>
         </div>
-        <a class="nav-link-local" href="#reports"><span>Reports</span><span>03</span></a>
+        <a class="nav-link-local" href="{% url 'portfolio_reports' %}"><span>Reports</span><span>03</span></a>
         <a class="nav-link-local" href="{% url 'memos' %}"><span>Memos</span><span>M</span></a>
         <a class="nav-link-local" href="{% url 'index' %}"><span>Landing page</span><span>H</span></a>
       </nav>
@@ -876,7 +876,7 @@
             <option value="GBP">GBP</option>
             <option value="BTC">BTC</option>
           </select>
-          <a class="btn-local secondary" href="{% url 'portfolio_report_pdf' %}">Download PDF</a>
+          <a class="btn-local secondary" href="{% url 'portfolio_reports' %}">Reports</a>
           <button id="addAssetButton" class="btn-local" type="button">Add asset</button>
         </div>
       </header>
@@ -1086,7 +1086,7 @@
               </div>
               <div class="topbar-actions">
                 <span id="reportPeriodPill" class="pill">30.06.2026</span>
-                <a class="btn-local secondary" href="{% url 'portfolio_report_pdf' %}">Download PDF</a>
+                <a class="btn-local secondary" href="{% url 'portfolio_reports' %}">Open Reports</a>
               </div>
             </div>
             <div class="allocation-chart">
@@ -1912,8 +1912,12 @@
           throw new Error('Stock quotes unavailable');
         }
         const value = Number(payload.total_chf);
-        state.stockQuoteStatus = payload.live_count > 0 ? 'live' : 'fallback';
-        setText('stockQuoteStatus', `${payload.live_count}/${payload.total_count} holdings priced live`);
+        if (Number.isFinite(value)) {
+          state.stocksChf = value;
+          document.getElementById('stocksInput').value = formatNumberInput(value);
+        }
+        state.stockQuoteStatus = payload.live_count > 0 ? 'live' : payload.saved_count > 0 ? 'saved' : 'fallback';
+        setText('stockQuoteStatus', `${payload.live_count} live / ${payload.saved_count || 0} saved`);
         setText('stockQuoteValue', Number.isFinite(value) ? money(value, 'CHF') : 'Loaded');
       } catch (error) {
         state.stockQuoteStatus = 'fallback';

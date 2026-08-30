@@ -1,0 +1,408 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hashen Reports</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <style>
+    :root {
+      --ink: #123044;
+      --muted: #607285;
+      --line: #dfe5ec;
+      --panel: #ffffff;
+      --page: #f5f8fb;
+      --accent: #2487ce;
+      --blue: #124265;
+      --gold: #b68a35;
+      --green: #2f8f5b;
+      --red: #b84a4a;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--ink);
+      font-family: Inter, Arial, sans-serif;
+      letter-spacing: 0;
+    }
+
+    a { color: inherit; }
+
+    .dashboard-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 248px minmax(0, 1fr);
+    }
+
+    .sidebar {
+      background: #0f2638;
+      color: #f8fafc;
+      padding: 28px 22px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 34px;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      background: #f8fafc;
+      color: var(--blue);
+    }
+
+    .brand strong,
+    .brand span { display: block; }
+
+    .brand span {
+      color: #aab4c3;
+      font-size: 12px;
+    }
+
+    .nav-list { display: grid; gap: 6px; }
+
+    .nav-link-local {
+      color: #d8dee9;
+      padding: 10px 12px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .nav-link-local.active,
+    .nav-link-local:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+      text-decoration: none;
+    }
+
+    .content { min-width: 0; }
+
+    .topbar {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 16px 32px;
+      background: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      backdrop-filter: blur(10px);
+    }
+
+    .topbar h1 {
+      font-size: 22px;
+      margin: 0;
+      font-weight: 800;
+    }
+
+    .topbar p {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .btn-local {
+      border: 1px solid var(--line);
+      min-height: 38px;
+      border-radius: 6px;
+      padding: 8px 13px;
+      background: #fff;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .btn-local.primary {
+      border-color: transparent;
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .main-grid {
+      padding: 28px 32px 40px;
+      display: grid;
+      gap: 22px;
+    }
+
+    .notice {
+      border: 1px solid rgba(182, 138, 53, 0.42);
+      border-radius: 8px;
+      background: #fffaf0;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .notice strong {
+      display: block;
+      font-size: 15px;
+    }
+
+    .notice span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .report-section {
+      display: grid;
+      gap: 14px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .section-heading p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .report-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 18px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .report-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .report-head h3 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .report-head p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: #eef4fb;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .pill.new {
+      background: #fff3dd;
+      color: #9a6a16;
+    }
+
+    .metric-grid,
+    .allocation-grid,
+    .mover-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric,
+    .allocation-item,
+    .mover-list {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 13px;
+      min-width: 0;
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .value {
+      margin-top: 6px;
+      color: var(--blue);
+      font-size: 21px;
+      font-weight: 800;
+      line-height: 1.15;
+    }
+
+    .gain { color: var(--green); }
+    .loss { color: var(--red); }
+
+    .allocation-item strong,
+    .mover-list strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .allocation-item span,
+    .mover-list span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .mover-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .mover-list ul {
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+
+    .mover-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 13px;
+      border-bottom: 1px solid #edf2f7;
+      padding-bottom: 8px;
+    }
+
+    .mover-list li:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .empty-note {
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+      color: var(--muted);
+      padding: 16px;
+    }
+
+    @media (max-width: 1100px) {
+      .dashboard-shell { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .metric-grid,
+      .allocation-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .topbar,
+      .notice,
+      .report-head,
+      .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .topbar { padding: 18px; }
+      .main-grid { padding: 18px; }
+      .mover-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link rel="stylesheet" href="{% static 'css/wealth-console.css' %}">
+</head>
+<body>
+  <div class="dashboard-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">H</div>
+        <div>
+          <strong>Hashen</strong>
+          <span>Private wealth console</span>
+        </div>
+      </div>
+      <nav class="nav-list">
+        <a class="nav-link-local" href="{% url 'dashboard' %}"><span>Overview</span><span>01</span></a>
+        <a class="nav-link-local" href="{% url 'stocks_dashboard' %}"><span>Stocks</span><span>02</span></a>
+        <a class="nav-link-local active" href="{% url 'portfolio_reports' %}"><span>Reports</span><span>03</span></a>
+        <a class="nav-link-local" href="{% url 'memos' %}"><span>Memos</span><span>M</span></a>
+        <a class="nav-link-local" href="{% url 'index' %}"><span>Landing page</span><span>H</span></a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <header class="topbar">
+        <div>
+          <h1>Reports</h1>
+          <p>Month-end, quarter-end, and year-end portfolio reports.</p>
+        </div>
+        <div class="topbar-actions">
+          <a class="btn-local" href="{% url 'dashboard' %}">Overview</a>
+          {% if latest_monthly %}
+            <a class="btn-local primary" href="{% url 'portfolio_period_report_pdf' latest_monthly.kind latest_monthly.date_iso %}">Download Latest PDF</a>
+          {% endif %}
+        </div>
+      </header>
+
+      <section class="main-grid">
+        {% if has_new_report and latest_monthly %}
+          <div class="notice">
+            <div>
+              <strong>A new report is available</strong>
+              <span>{{ latest_monthly.date_label }} has ended. Review the report and lock the month-end values from the overview when ready.</span>
+            </div>
+            <a class="btn-local primary" href="{% url 'portfolio_period_report_pdf' latest_monthly.kind latest_monthly.date_iso %}">Download PDF</a>
+          </div>
+        {% endif %}
+
+        {% include "blog/report_section.html" with title="Monthly Reports" subtitle="Generated from each month-end close." items=reports.monthly %}
+        {% include "blog/report_section.html" with title="Quarterly Reports" subtitle="Generated at March, June, September, and December closes." items=reports.quarterly %}
+        {% include "blog/report_section.html" with title="Yearly Reports" subtitle="Generated after a year-end close is available." items=reports.yearly %}
+      </section>
+    </main>
+  </div>
+</body>
+</html>

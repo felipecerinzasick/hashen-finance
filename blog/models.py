@@ -60,6 +60,43 @@ class StockHolding(models.Model):
         return '%s %s' % (self.ticker, self.shares)
 
 
+class StockQuoteSnapshot(models.Model):
+    ticker = models.CharField(max_length=20)
+    symbol = models.CharField(max_length=40)
+    price = models.DecimalField(max_digits=18, decimal_places=6)
+    currency = models.CharField(max_length=3, default='USD')
+    exchange = models.CharField(max_length=120, blank=True)
+    market_time = models.DateTimeField(blank=True, null=True)
+    source = models.CharField(max_length=80, default='Yahoo Finance')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ('ticker', 'symbol')
+        unique_together = ('ticker', 'symbol')
+
+    def __str__(self):
+        return '%s %s %s' % (self.ticker, self.price, self.currency)
+
+
+class StockQuoteHistory(models.Model):
+    ticker = models.CharField(max_length=20)
+    symbol = models.CharField(max_length=40)
+    quote_date = models.DateField()
+    price = models.DecimalField(max_digits=18, decimal_places=6)
+    currency = models.CharField(max_length=3, default='USD')
+    source = models.CharField(max_length=80, default='Yahoo Finance')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ('quote_date', 'ticker', 'symbol')
+        unique_together = ('ticker', 'symbol', 'quote_date')
+
+    def __str__(self):
+        return '%s %s %s %s' % (self.quote_date, self.ticker, self.price, self.currency)
+
+
 class MemoNote(models.Model):
     title = models.CharField(max_length=180)
     slug = models.SlugField(max_length=220, unique=True)

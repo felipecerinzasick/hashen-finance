@@ -35,6 +35,7 @@ from django.views.generic import (
 
 SATOSHIS_PER_BTC = 100000000
 STOCK_QUOTE_STALE_AFTER = timedelta(hours=12)
+REPORTS_START_DATE = datetime(2026, 1, 1).date()
 
 MEMOS = [
     {
@@ -809,46 +810,13 @@ def saved_report_price_points(holding, start_date, end_date):
     )
 
 
-def close_on_or_after(points, target_date):
-    for point in points:
-        if point['date'] >= target_date:
-            return point
-    return None
-
-
-def close_on_or_before(points, target_date):
-    for point in reversed(points):
-        if point['date'] <= target_date:
-            return point
-    return None
-
-
-def yahoo_report_price_points(holding, start_date, end_date):
-    start_string = start_date.strftime('%Y-%m-%d')
-    points = _fetch_yahoo_daily_series(holding['symbol'], start_string)
-    start_point = close_on_or_after(points, start_date)
-    end_point = close_on_or_before(points, end_date)
-    if not start_point or not end_point:
-        raise ValueError('Missing period prices for %s' % holding['symbol'])
-    return (
-        Decimal(str(start_point['close'])),
-        Decimal(str(end_point['close'])),
-        holding.get('fallback_currency') or holding.get('cost_currency') or 'USD',
-        start_point['date'],
-        end_point['date'],
-    )
-
-
 def stock_movers_for_report(start_date, end_date):
     movers = []
     for holding in configured_stock_holdings():
-        try:
-            start_price, end_price, currency, actual_start, actual_end = yahoo_report_price_points(holding, start_date, end_date)
-        except (HTTPError, URLError, TimeoutError, KeyError, IndexError, ValueError, json.JSONDecodeError):
-            saved_points = saved_report_price_points(holding, start_date, end_date)
-            if not saved_points:
-                continue
-            start_price, end_price, currency, actual_start, actual_end = saved_points
+        saved_points = saved_report_price_points(holding, start_date, end_date)
+        if not saved_points:
+            continue
+        start_price, end_price, currency, actual_start, actual_end = saved_points
         if not start_price:
             continue
         change_pct = (end_price - start_price) / start_price * Decimal('100')
@@ -917,10 +885,13 @@ def generated_portfolio_reports(include_movers=False):
     sorted_rows = rows
 
     for index, row in enumerate(sorted_rows[1:], 1):
-        reports['monthly'].append(build_period_report('monthly', sorted_rows[index - 1], row, include_movers=include_movers))
+        if row['date'] >= REPORTS_START_DATE:
+            reports['monthly'].append(build_period_report('monthly', sorted_rows[index - 1], row, include_movers=include_movers))
 
     for row in sorted_rows:
         date_obj = row['date']
+        if date_obj < REPORTS_START_DATE:
+            continue
         if date_obj.month not in (3, 6, 9, 12):
             continue
         previous_quarter_month = date_obj.month - 3
@@ -1552,7 +1523,7 @@ def report_pdf_lines(report):
                 )
             )
     else:
-        lines.append('Unavailable because no share-price data was returned for this period.')
+        lines.append('Unavailable until saved share-price history exists for this period.')
     lines.extend([
         '',
         'Five biggest stock losers by percentage loss',
@@ -1571,12 +1542,13 @@ def report_pdf_lines(report):
                 )
             )
     else:
-        lines.append('Unavailable because no share-price data was returned for this period.')
+        lines.append('Unavailable until saved share-price history exists for this period.')
     lines.extend([
         '',
         'Notes',
         'Values are shown in CHF unless an individual stock price currency is shown.',
         'Stock movers show share-price performance for the report period, not gain since purchase.',
+        'Report downloads use saved data only so PDFs remain fast and do not wait on external market APIs.',
     ])
     return lines
 

@@ -316,21 +316,7 @@
 </head>
 <body>
   <div class="memo-shell">
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-mark">H</div>
-        <div>
-          <strong>Hashen</strong>
-          <span>Private Wealth Console</span>
-        </div>
-      </div>
-      <nav class="nav-list">
-        <a class="nav-link-local" href="{% url 'dashboard' %}"><span>Overview</span><span>01</span></a>
-        <a class="nav-link-local" href="{% url 'stocks_dashboard' %}"><span>Stocks</span><span>02</span></a>
-        <a class="nav-link-local active" href="{% url 'memos' %}"><span>Memos</span><span>03</span></a>
-        <a class="nav-link-local" href="{% url 'index' %}"><span>Landing page</span><span>H</span></a>
-      </nav>
-    </aside>
+    {% include "blog/private_sidebar.html" with active_page="memos" %}
 
     <main class="content">
       <article class="memo-document">

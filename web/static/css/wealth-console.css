@@ -60,10 +60,52 @@ body {
   border-right: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+.brand {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.brand:hover {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
 .brand-mark {
   background: var(--wc-gold) !important;
   color: #172421 !important;
   border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.nav-list {
+  gap: 6px !important;
+}
+
+.nav-link-local {
+  min-height: 38px !important;
+  border: 0 !important;
+  border-radius: 6px !important;
+  justify-content: flex-start !important;
+  font-size: 14px !important;
+  font-weight: 650 !important;
+}
+
+.nav-sublist {
+  display: grid !important;
+  gap: 4px !important;
+  margin: -2px 0 8px 14px !important;
+  padding-left: 10px !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.16) !important;
+}
+
+.nav-sublist a {
+  min-height: 30px !important;
+  border-radius: 6px !important;
+  padding: 7px 9px !important;
+  display: flex !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  font-size: 12px !important;
+  text-decoration: none !important;
 }
 
 .brand span,

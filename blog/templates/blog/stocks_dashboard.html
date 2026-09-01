@@ -713,28 +713,7 @@
 </head>
 <body>
   <div class="dashboard-shell">
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-mark">H</div>
-        <div>
-          <strong>Hashen</strong>
-          <span>Private wealth console</span>
-        </div>
-      </div>
-      <nav class="nav-list">
-        <a class="nav-link-local" href="{% url 'dashboard' %}"><span>Overview</span><span>01</span></a>
-        <a class="nav-link-local active" href="{% url 'stocks_dashboard' %}"><span>Stocks</span><span>02</span></a>
-        <div class="nav-sublist" aria-label="Treasury stock pages">
-          <a href="{% url 'mstr_dashboard' %}"><span>MSTR</span><span>1</span></a>
-          <a href="{% url 'treasury_stock_dashboard' 'metaplanet' %}"><span>Metaplanet</span><span>2</span></a>
-          <a href="{% url 'treasury_stock_dashboard' 'asst' %}"><span>ASST</span><span>3</span></a>
-          <a href="{% url 'treasury_stock_dashboard' 'bitmine' %}"><span>BitMine</span><span>4</span></a>
-        </div>
-        <a class="nav-link-local" href="{% url 'portfolio_reports' %}"><span>Reports</span><span>03</span></a>
-        <a class="nav-link-local" href="{% url 'memos' %}"><span>Memos</span><span>M</span></a>
-        <a class="nav-link-local" href="{% url 'index' %}"><span>Landing page</span><span>H</span></a>
-      </nav>
-    </aside>
+    {% include "blog/private_sidebar.html" with active_page="stocks" %}
 
     <main class="content">
       <header class="topbar">

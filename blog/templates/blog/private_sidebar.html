@@ -1,0 +1,21 @@
+<aside class="sidebar">
+  <a class="brand" href="{% url 'index' %}" aria-label="Open Hashen landing page">
+    <div class="brand-mark">H</div>
+    <div>
+      <strong>Hashen</strong>
+      <span>Private wealth console</span>
+    </div>
+  </a>
+  <nav class="nav-list">
+    <a class="nav-link-local {% if active_page == 'overview' %}active{% endif %}" href="{% url 'dashboard' %}"><span>Overview</span></a>
+    <a class="nav-link-local {% if active_page == 'stocks' %}active{% endif %}" href="{% url 'stocks_dashboard' %}"><span>Stocks</span></a>
+    <div class="nav-sublist" aria-label="Treasury stock pages">
+      <a class="{% if active_treasury == 'mstr' %}active{% endif %}" href="{% url 'mstr_dashboard' %}"><span>MSTR</span></a>
+      <a class="{% if active_treasury == 'metaplanet' %}active{% endif %}" href="{% url 'treasury_stock_dashboard' 'metaplanet' %}"><span>Metaplanet</span></a>
+      <a class="{% if active_treasury == 'asst' %}active{% endif %}" href="{% url 'treasury_stock_dashboard' 'asst' %}"><span>ASST</span></a>
+      <a class="{% if active_treasury == 'bitmine' %}active{% endif %}" href="{% url 'treasury_stock_dashboard' 'bitmine' %}"><span>BitMine</span></a>
+    </div>
+    <a class="nav-link-local {% if active_page == 'reports' %}active{% endif %}" href="{% url 'portfolio_reports' %}"><span>Reports</span></a>
+    <a class="nav-link-local {% if active_page == 'memos' %}active{% endif %}" href="{% url 'memos' %}"><span>Memos</span></a>
+  </nav>
+</aside>

@@ -293,22 +293,7 @@
 </head>
 <body>
   <div class="dashboard-shell">
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-mark">H</div>
-        <div>
-          <strong>Hashen</strong>
-          <span>Private wealth console</span>
-        </div>
-      </div>
-      <nav class="nav-list">
-        <a class="nav-link-local" href="{% url 'dashboard' %}"><span>Overview</span><span>01</span></a>
-        <a class="nav-link-local" href="{% url 'stocks_dashboard' %}"><span>Stocks</span><span>02</span></a>
-        <a class="nav-link-local active" href="{% url 'portfolio_reports' %}"><span>Reports</span><span>03</span></a>
-        <a class="nav-link-local" href="{% url 'memos' %}"><span>Memos</span><span>M</span></a>
-        <a class="nav-link-local" href="{% url 'index' %}"><span>Landing page</span><span>H</span></a>
-      </nav>
-    </aside>
+    {% include "blog/private_sidebar.html" with active_page="reports" %}
 
     <main class="content">
       <header class="topbar">

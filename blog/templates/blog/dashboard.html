@@ -1977,6 +1977,9 @@
           state.pendingMonthEnd = false;
           document.getElementById('monthEndPrompt').hidden = true;
           closeMonthEndModal();
+          if (result.current) {
+            applySnapshot(result.current);
+          }
           const priceLock = result.price_history_lock;
           const priceLockText = priceLock
             ? ` Historical stock prices saved for ${priceLock.saved} rows${priceLock.failed ? `; ${priceLock.failed} symbols need retry` : ''}.`

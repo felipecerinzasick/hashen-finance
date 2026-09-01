@@ -6,7 +6,7 @@ import json
 import os
 import ssl
 import textwrap
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from functools import wraps
 from hmac import compare_digest
 from urllib import parse, request as urlrequest
@@ -575,6 +575,10 @@ def decimal_from_request(value, default='0'):
         return Decimal(default)
 
 
+def whole_chf_from_request(value, default='0'):
+    return decimal_from_request(value, default).quantize(Decimal('1'), rounding=ROUND_HALF_UP)
+
+
 def static_period_map():
     periods = {}
     for period in PORTFOLIO_HISTORY:
@@ -677,6 +681,26 @@ def get_current_portfolio_snapshot():
         locked=False,
         notes=initial.get('notes', ''),
     )
+
+
+def sync_current_snapshot_from_locked_close(locked_snapshot, today=None):
+    today = today or django_timezone.localdate()
+    current_end = month_end_for(today)
+    if current_end <= locked_snapshot.snapshot_date:
+        return None
+
+    current_snapshot, _created = PortfolioSnapshot.objects.update_or_create(
+        snapshot_date=current_end,
+        defaults={
+            'cash_chf': locked_snapshot.cash_chf,
+            'bitcoin_chf': locked_snapshot.bitcoin_chf,
+            'stocks_chf': locked_snapshot.stocks_chf,
+            'bitcoin_amount': locked_snapshot.bitcoin_amount,
+            'locked': False,
+            'notes': 'Seeded from the confirmed %s close.' % display_report_date(locked_snapshot.snapshot_date),
+        }
+    )
+    return current_snapshot
 
 
 def serialize_snapshot(snapshot):
@@ -1662,18 +1686,20 @@ def portfolio_snapshot(request):
 
     bitcoin_amount = payload.get('bitcoin_amount')
     price_history_lock = None
+    current_snapshot = None
     snapshot, _created = PortfolioSnapshot.objects.update_or_create(
         snapshot_date=snapshot_date,
         defaults={
-            'cash_chf': decimal_from_request(payload.get('cash_chf')).quantize(Decimal('0.01')),
-            'bitcoin_chf': decimal_from_request(payload.get('bitcoin_chf')).quantize(Decimal('0.01')),
-            'stocks_chf': decimal_from_request(payload.get('stocks_chf')).quantize(Decimal('0.01')),
+            'cash_chf': whole_chf_from_request(payload.get('cash_chf')),
+            'bitcoin_chf': whole_chf_from_request(payload.get('bitcoin_chf')),
+            'stocks_chf': whole_chf_from_request(payload.get('stocks_chf')),
             'bitcoin_amount': decimal_from_request(bitcoin_amount).quantize(Decimal('0.00000001')) if bitcoin_amount not in (None, '') else None,
             'locked': locked,
             'notes': (payload.get('notes') or '').strip(),
         }
     )
     if locked:
+        current_snapshot = sync_current_snapshot_from_locked_close(snapshot, today=today)
         prior_rows = [row for row in report_period_rows(include_pending=False) if row['date'] < snapshot_date]
         if prior_rows:
             price_history_lock = capture_report_share_price_history(
@@ -1683,6 +1709,7 @@ def portfolio_snapshot(request):
     return JsonResponse({
         'status': 'ok',
         'snapshot': serialize_snapshot(snapshot),
+        'current': serialize_snapshot(current_snapshot) if current_snapshot else None,
         'price_history_lock': price_history_lock,
     })
 

@@ -45,4 +45,5 @@ urlpatterns = [
     path('resources/', views.resources_view, name='resources'),
     path('post/<int:pk>/comment/', add_comment, name='add_comment'),
     path('privacy-policy/', views.privacy_policy, name='privacy-policy'),
+    path('legal/', views.legal, name='legal'),
 ]

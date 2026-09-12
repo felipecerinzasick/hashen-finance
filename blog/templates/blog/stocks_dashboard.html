@@ -311,16 +311,17 @@
       white-space: normal;
     }
 
-    th:nth-child(1) { width: 15%; }
-    th:nth-child(2) { width: 8%; }
-    th:nth-child(3) { width: 9%; }
-    th:nth-child(4) { width: 11%; }
-    th:nth-child(5) { width: 11%; }
-    th:nth-child(6) { width: 9%; }
-    th:nth-child(7) { width: 11%; }
-    th:nth-child(8) { width: 9%; }
-    th:nth-child(9) { width: 8%; }
-    th:nth-child(10) { width: 9%; }
+    th:nth-child(1) { width: 14%; }
+    th:nth-child(2) { width: 7%; }
+    th:nth-child(3) { width: 8%; }
+    th:nth-child(4) { width: 10%; }
+    th:nth-child(5) { width: 10%; }
+    th:nth-child(6) { width: 8%; }
+    th:nth-child(7) { width: 10%; }
+    th:nth-child(8) { width: 8%; }
+    th:nth-child(9) { width: 9%; }
+    th:nth-child(10) { width: 7%; }
+    th:nth-child(11) { width: 9%; }
 
     th.sortable {
       cursor: pointer;
@@ -781,6 +782,7 @@
                     <th id="convertedValueHeader" class="right sortable" data-sort="value_chf">Value CHF</th>
                     <th class="right sortable" data-sort="average_price">Avg cost</th>
                     <th id="unrealizedHeader" class="right sortable" data-sort="unrealized_chf">Unrealized CHF</th>
+                    <th class="right sortable" data-sort="trailing_30d_pct">30d %</th>
                     <th class="right">Target</th>
                     <th>Status</th>
                     <th>Detail</th>
@@ -788,7 +790,7 @@
                 </thead>
                 <tbody id="holdingsTable">
                   <tr>
-                    <td colspan="10">Loading holdings.</td>
+                    <td colspan="11">Loading holdings.</td>
                   </tr>
                 </tbody>
               </table>
@@ -942,6 +944,14 @@
       return numberFormatter.format(value);
     }
 
+    function percent(value) {
+      if (!Number.isFinite(Number(value))) {
+        return '-';
+      }
+      const sign = Number(value) > 0 ? '+' : '';
+      return `${sign}${Number(value).toFixed(1)}%`;
+    }
+
     function setText(id, value) {
       const element = document.getElementById(id);
       if (element) {
@@ -977,6 +987,9 @@
       if (key === 'value') {
         return holding.value;
       }
+      if (key === 'trailing_30d_pct') {
+        return Number.isFinite(Number(holding.trailing_30d_pct)) ? Number(holding.trailing_30d_pct) : -Infinity;
+      }
       return holding[key];
     }
 
@@ -1010,6 +1023,8 @@
     function renderHoldingRow(holding) {
       const row = document.createElement('tr');
       const pnlClass = holding.unrealized_chf >= 0 ? 'gain' : 'loss';
+      const trailingValue = Number(holding.trailing_30d_pct);
+      const trailingClass = Number.isFinite(trailingValue) ? (trailingValue >= 0 ? 'gain' : 'loss') : '';
       const target = holding.target_price
         ? `${holding.target_currency} ${numberFormatter.format(holding.target_price)}`
         : 'Unset';
@@ -1028,6 +1043,7 @@
         <td data-label="Converted value" class="right">${displayMoneyFromChf(holding.value_chf)}</td>
         <td data-label="Avg cost" class="right">${money(holding.average_price, holding.cost_currency)}</td>
         <td data-label="Unrealized" class="right ${pnlClass}">${displayMoneyFromChf(holding.unrealized_chf)}</td>
+        <td data-label="30d %" class="right ${trailingClass}" title="${holding.trailing_30d_start_date ? `Since ${holding.trailing_30d_start_date}` : 'No 30-day price history'}">${percent(holding.trailing_30d_pct)}</td>
         <td data-label="Target" class="right">${target}</td>
         <td data-label="Status"><span class="status-pill ${statusClass}">${statusLabel}</span></td>
         <td data-label="Detail"><a class="detail-link" href="${holding.detail_url}" onclick="event.stopPropagation()">Open</a></td>

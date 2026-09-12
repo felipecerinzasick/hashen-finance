@@ -1249,6 +1249,10 @@ def get_default_newsletter():
 def privacy_policy(request):
     return render(request, 'blog/privacy.html')
 
+
+def legal(request):
+    return render(request, 'blog/legal.html', {'title': 'Legal'})
+
 def contact_view(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -1860,9 +1864,14 @@ def _month_end_points(points):
 
 
 def _fetch_yahoo_quote(symbol):
+    period1 = int((datetime.now(timezone.utc) - timedelta(days=45)).timestamp())
+    period2 = int((datetime.now(timezone.utc) + timedelta(days=1)).timestamp())
     params = parse.urlencode({
-        'range': '1d',
-        'interval': '1m',
+        'period1': period1,
+        'period2': period2,
+        'interval': '1d',
+        'events': 'history',
+        'includeAdjustedClose': 'true',
     })
     url = 'https://query1.finance.yahoo.com/v8/finance/chart/%s?%s' % (parse.quote(symbol), params)
     req = urlrequest.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
@@ -1875,11 +1884,22 @@ def _fetch_yahoo_quote(symbol):
     price = meta.get('regularMarketPrice') or meta.get('previousClose') or (closes[-1] if closes else None)
     if price is None:
         raise ValueError('No price returned for %s' % symbol)
+    timestamps = result.get('timestamp') or []
+    adjusted = result.get('indicators', {}).get('adjclose', [{}])[0].get('adjclose') or quote.get('close') or []
+    daily_points = []
+    for timestamp, close in zip(timestamps, adjusted):
+        if close is None:
+            continue
+        daily_points.append({
+            'date': datetime.fromtimestamp(timestamp, tz=timezone.utc).date(),
+            'close': float(close),
+        })
     return {
         'price': Decimal(str(price)),
         'currency': (meta.get('currency') or 'USD').upper(),
         'exchange': meta.get('exchangeName') or meta.get('fullExchangeName') or '',
         'time': meta.get('regularMarketTime'),
+        'daily_points': daily_points,
     }
 
 
@@ -1932,6 +1952,71 @@ def _save_quote_snapshot(ticker, symbol, quote):
     return snapshot
 
 
+def _save_stock_quote_history(ticker, symbol, quote_date, price, currency, source):
+    StockQuoteHistory.objects.update_or_create(
+        ticker=normalize_ticker(ticker),
+        symbol=(symbol or '').strip().upper(),
+        quote_date=quote_date,
+        defaults={
+            'price': Decimal(str(price)).quantize(Decimal('0.000001')),
+            'currency': (currency or 'USD').upper(),
+            'source': source,
+        }
+    )
+
+
+def _quote_history_near_date(ticker, symbol, currency, target_date, tolerance_days=7):
+    filters = {
+        'ticker': normalize_ticker(ticker),
+        'symbol': (symbol or '').strip().upper(),
+        'currency': (currency or '').upper(),
+    }
+    start_window = target_date - timedelta(days=tolerance_days)
+    end_window = target_date + timedelta(days=tolerance_days)
+    history = StockQuoteHistory.objects.filter(
+        **filters,
+        quote_date__gte=start_window,
+        quote_date__lte=target_date,
+    ).order_by('-quote_date').first()
+    if history:
+        return history
+    return StockQuoteHistory.objects.filter(
+        **filters,
+        quote_date__gt=target_date,
+        quote_date__lte=end_window,
+    ).order_by('quote_date').first()
+
+
+def stock_trailing_30d_performance(holding, current_price, currency, daily_points=None):
+    if not current_price or current_price <= 0:
+        return None
+
+    target_date = django_timezone.localdate() - timedelta(days=30)
+    history = _quote_history_near_date(holding['ticker'], holding['symbol'], currency, target_date)
+    if not history and daily_points:
+        point = close_on_or_before(daily_points, target_date) or close_on_or_after(daily_points, target_date)
+        if point and abs((point['date'] - target_date).days) <= 7:
+            _save_stock_quote_history(
+                holding['ticker'],
+                holding['symbol'],
+                point['date'],
+                point['close'],
+                currency,
+                'Yahoo Finance 30-day close',
+            )
+            history = _quote_history_near_date(holding['ticker'], holding['symbol'], currency, target_date)
+
+    if not history or not history.price:
+        return None
+
+    change_pct = (current_price - history.price) / history.price * Decimal('100')
+    return {
+        'pct': change_pct,
+        'start_price': history.price,
+        'start_date': history.quote_date,
+    }
+
+
 def _snapshot_to_quote(snapshot):
     return {
         'price': snapshot.price,
@@ -1947,7 +2032,9 @@ def _quote_for_symbol(ticker, symbol, force_refresh=False, auto_refresh=True):
     if should_refresh:
         try:
             quote = _fetch_yahoo_quote(symbol)
-            return _snapshot_to_quote(_save_quote_snapshot(ticker, symbol, quote)), 'live', None
+            saved_quote = _snapshot_to_quote(_save_quote_snapshot(ticker, symbol, quote))
+            saved_quote['daily_points'] = quote.get('daily_points') or []
+            return saved_quote, 'live', None
         except (HTTPError, URLError, TimeoutError, KeyError, IndexError, ValueError, json.JSONDecodeError) as exc:
             if snapshot:
                 return _snapshot_to_quote(snapshot), 'saved', str(exc)
@@ -2073,7 +2160,7 @@ def find_stock_holding(ticker):
     raise Http404('Stock holding not found')
 
 
-def serialize_stock_holding(holding, price, currency, value, value_chf, cost_value, cost_chf, unrealized_chf, quote_status, error, updated_at=None):
+def serialize_stock_holding(holding, price, currency, value, value_chf, cost_value, cost_chf, unrealized_chf, quote_status, error, updated_at=None, trailing_30d=None):
     target_price = holding.get('target_price')
     target_currency = holding.get('target_currency') or currency
     target_quantity = holding.get('target_quantity') or holding['shares']
@@ -2096,6 +2183,9 @@ def serialize_stock_holding(holding, price, currency, value, value_chf, cost_val
         'quote_status': quote_status,
         'error': error,
         'quote_updated_at': updated_at.isoformat() if updated_at else None,
+        'trailing_30d_pct': float(trailing_30d['pct']) if trailing_30d else None,
+        'trailing_30d_start_price': float(trailing_30d['start_price']) if trailing_30d else None,
+        'trailing_30d_start_date': trailing_30d['start_date'].isoformat() if trailing_30d else None,
         'category': holding.get('category', ''),
         'why_own': holding.get('why_own', ''),
         'bought_at': holding.get('bought_at', ''),
@@ -2186,13 +2276,19 @@ def stock_portfolio(request):
         cost_value = holding['shares'] * holding['average_price']
         cost_chf = cost_value * fx_cache[cost_currency]
         unrealized_chf = value_chf - cost_chf
+        trailing_30d = stock_trailing_30d_performance(
+            holding,
+            price,
+            currency,
+            daily_points=quote.get('daily_points') if quote_status == 'live' else None,
+        )
         totals['CHF'] += value_chf
         totals['cost_chf'] += cost_chf
         if currency in totals:
             totals[currency] += value
 
         holdings.append(serialize_stock_holding(
-            holding, price, currency, value, value_chf, cost_value, cost_chf, unrealized_chf, quote_status, error, quote_updated_at
+            holding, price, currency, value, value_chf, cost_value, cost_chf, unrealized_chf, quote_status, error, quote_updated_at, trailing_30d
         ))
 
     if not holdings:

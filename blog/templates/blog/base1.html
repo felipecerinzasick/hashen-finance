@@ -723,13 +723,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarToggle">
           <div class="navbar-nav ml-auto align-items-lg-center">
-            <a class="nav-item nav-link active" href="{% url 'index' %}">Home</a>
-            <a class="nav-item nav-link" href="{% url 'about' %}">About</a>
-            <a class="nav-item nav-link" href="{% url 'blog' %}">Blog</a>
-            {% if not PUBLIC_SITE_ONLY %}
-            <a class="nav-item nav-link" href="{% url 'dashboard' %}">Dashboard</a>
-            <a class="nav-item nav-link" href="{% url 'memos' %}">Memos</a>
-            {% endif %}
+            <a class="nav-item nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}" href="{% url 'index' %}">Home</a>
+            <a class="nav-item nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}">About</a>
+            <a class="nav-item nav-link {% if request.resolver_match.url_name == 'blog' %}active{% endif %}" href="{% url 'blog' %}">Blog</a>
             {% if user.is_authenticated %}
               <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
               <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
@@ -886,10 +882,8 @@
         <div class="col-lg-3 mb-4">
           <h4>Links</h4>
           <p><a href="{% url 'index' %}">Home</a></p>
-          {% if not PUBLIC_SITE_ONLY %}
-          <p><a href="{% url 'dashboard' %}">Dashboard</a></p>
-          {% endif %}
           <p><a href="{% url 'about' %}">About</a></p>
+          <p><a href="{% url 'legal' %}">Legal</a></p>
           <p><a href="{% url 'privacy-policy' %}">Privacy policy</a></p>
         </div>
         <div class="col-lg-5 footer-newsletter mb-4">
@@ -903,7 +897,7 @@
         </div>
       </div>
       <div class="legal-copy">
-        The content on this website is for informational purposes only. Hashen does not provide investment advice, portfolio management, banking, custody, legal, tax, audit, accounting, company formation, domicile, fiduciary, board, nominee, or regulated financial services. Where specialist advice, execution, custody, financing, or regulated services are required, qualified or regulated partners are involved. Nothing on this website constitutes an offer, solicitation, or recommendation to buy or sell any financial instrument or digital asset.
+        The content on this website is for informational purposes only and does not constitute investment, legal, tax, custody, banking, or other regulated advice. Where specialist advice, execution, custody, financing, or regulated services are required, qualified partners are involved. <a href="{% url 'legal' %}">Legal information</a>.
         <div class="mt-3">&copy; Copyright <strong>Hashen</strong>. All Rights Reserved.</div>
       </div>
     </div>

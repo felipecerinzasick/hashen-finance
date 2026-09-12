@@ -1,10 +1,12 @@
 import base64
 from datetime import date
+from decimal import Decimal
 from unittest.mock import patch
 
 from django.test import TestCase
 
-from .models import PortfolioSnapshot
+from .models import PortfolioSnapshot, StockQuoteHistory
+from .views import stock_trailing_30d_performance
 
 
 class PortfolioSnapshotLockTests(TestCase):
@@ -61,3 +63,27 @@ class PortfolioSnapshotLockTests(TestCase):
         self.assertEqual(len(mtd_periods), 1)
         self.assertEqual(mtd_periods[0]['date'], '30.09.2026')
         self.assertEqual(mtd_periods[0]['total_chf'], 602.0)
+
+
+class StockPerformanceTests(TestCase):
+    @patch('blog.views.django_timezone.localdate')
+    def test_trailing_30_day_performance_uses_saved_history(self, localdate):
+        localdate.return_value = date(2026, 9, 12)
+        StockQuoteHistory.objects.create(
+            ticker='MSTR',
+            symbol='MSTR',
+            quote_date=date(2026, 8, 13),
+            price='100.000000',
+            currency='USD',
+            source='Test',
+        )
+
+        performance = stock_trailing_30d_performance(
+            {'ticker': 'MSTR', 'symbol': 'MSTR'},
+            Decimal('125'),
+            'USD',
+        )
+
+        self.assertIsNotNone(performance)
+        self.assertEqual(performance['start_date'], date(2026, 8, 13))
+        self.assertEqual(performance['pct'], Decimal('25.00'))

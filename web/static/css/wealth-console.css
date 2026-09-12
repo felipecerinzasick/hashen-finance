@@ -485,6 +485,20 @@ h3 {
   margin: 0;
 }
 
+.wc-action-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 260px;
+}
+
+.wc-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
 .wc-stage {
   display: inline-block;
   font-size: 11px;

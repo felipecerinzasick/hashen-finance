@@ -1251,7 +1251,8 @@ def privacy_policy(request):
 
 
 def legal(request):
-    return render(request, 'blog/legal.html', {'title': 'Legal'})
+    newsletter = get_default_newsletter()
+    return render(request, 'blog/legal.html', {'title': 'Legal', 'newsletter': newsletter})
 
 def contact_view(request):
     if request.method == 'POST':
@@ -1311,6 +1312,11 @@ class PostListView(ListView):
             object_list = self.model.objects.all()
         return object_list
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['newsletter'] = get_default_newsletter()
+        return context
+
 
 class UserPostListView(ListView):
     model = Post
@@ -1363,7 +1369,8 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 def about(request):
-    return render(request, 'blog/about.html', {'title': 'About'})
+    newsletter = get_default_newsletter()
+    return render(request, 'blog/about.html', {'title': 'About', 'newsletter': newsletter})
 
 def bitcoin(request):
     return render(request, 'blog/bitcoin.html', {'title': 'Bitcoin'})

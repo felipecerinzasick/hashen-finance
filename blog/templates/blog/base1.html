@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hashen{% if title %} {{ title }}{% endif %}</title>
+  <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -19,6 +20,10 @@
       --sv-line: #dce5ec;
       --sv-soft: #f4f8fb;
       --sv-white: #ffffff;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
@@ -715,7 +720,11 @@
   <header class="sv-navbar">
     <nav class="navbar navbar-expand-lg navbar-light">
       <div class="container">
-        <a class="navbar-brand" href="{% url 'index' %}">
+        <a class="navbar-brand wc-brand" href="{% url 'index' %}">
+          <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+            <rect width="26" height="26" rx="5" fill="#b68a35"/>
+            <path d="M7 6h3v6h6V6h3v14h-3v-6h-6v6H7z" fill="#172421"/>
+          </svg>
           <span>Hashen</span>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
@@ -746,8 +755,8 @@
         {% endfor %}
         <span class="eyebrow">Bitcoin-native owner infrastructure</span>
         <h1>Bitcoin-aware reporting and governance records for long-term owners.</h1>
-        <p>Hashen helps entrepreneurs, family offices, privately held companies, and advisers understand, document, and coordinate Bitcoin treasury and digital-asset infrastructure questions.</p>
-        <p>The focus is practical: clearer owner reporting, custody-governance records, treasury context, research notes, and coordination with qualified specialist partners where execution or regulated advice is required.</p>
+        <p>Hashen helps entrepreneurs, family offices, privately held companies, and advisers document Bitcoin exposure, custody models, access rights, and reserve policy.</p>
+        <p>The focus is practical: consolidated owner reporting, custody-governance records, treasury research notes, and review with qualified specialist partners where execution or regulated advice is required.</p>
         <div class="hero-actions">
           {% if not PUBLIC_SITE_ONLY %}
           <a class="sv-btn" href="{% url 'dashboard' %}">Open dashboard</a>
@@ -757,7 +766,7 @@
         <div class="hero-metrics">
           <div class="metric-card"><strong>Bitcoin treasury</strong><span>Non-discretionary research and reporting around Bitcoin, liquidity, reserves, and market structure.</span></div>
           <div class="metric-card"><strong>Custody governance</strong><span>Records for custody models, access rights, approval flows, and key-person risks.</span></div>
-          <div class="metric-card"><strong>Owner context</strong><span>Structured summaries for owners, boards, advisers, and specialist partners.</span></div>
+          <div class="metric-card"><strong>Owner records</strong><span>Structured summaries for owners, boards, advisers, and specialist partners.</span></div>
         </div>
       </div>
     </section>
@@ -768,10 +777,10 @@
           <div>
             <div class="section-kicker">Owner layer</div>
             <div class="section-title">
-              <h2>Practical context before Bitcoin infrastructure becomes hard to explain.</h2>
+              <h2>Practical records before Bitcoin infrastructure becomes hard to explain.</h2>
               <p>Owners and boards need more than balances and screenshots. They need records that explain exposure, custody responsibilities, reserve policy, approval flows, and partner roles.</p>
               <p>Hashen creates a reporting and documentation layer around Bitcoin-related ownership questions, so advisers, banks, custodians, lawyers, and tax specialists can work from the same base.</p>
-              <p>The goal is clearer context, better handovers, and fewer blind spots around digital-asset infrastructure.</p>
+              <p>The goal is cleaner month-end records, better handovers, and fewer blind spots around digital-asset infrastructure.</p>
             </div>
             {% if not PUBLIC_SITE_ONLY %}
             <a class="sv-btn" href="{% url 'dashboard' %}">View dashboard</a>
@@ -785,10 +794,10 @@
               </div>
               <span class="preview-pill">Structured</span>
             </div>
-            <div class="preview-row"><strong>Bitcoin treasury</strong><span>Liquidity, reserves, market structure, and long-term capital allocation context.</span></div>
+            <div class="preview-row"><strong>Bitcoin treasury</strong><span>Liquidity, reserves, market structure, and long-term capital allocation records.</span></div>
             <div class="preview-row"><strong>Custody governance</strong><span>Wallet architecture, custody responsibilities, access rights, and approval flows.</span></div>
             <div class="preview-row"><strong>Owner reporting</strong><span>Structured summaries for entrepreneurs, owners, boards, and advisers.</span></div>
-            <div class="preview-row"><strong>Partner coordination</strong><span>Banks, custodians, lawyers, tax advisers, auditors, and regulated partners.</span></div>
+            <div class="preview-row"><strong>Specialist review</strong><span>Banks, custodians, lawyers, tax advisers, auditors, and regulated partners.</span></div>
           </div>
         </div>
       </div>
@@ -799,11 +808,11 @@
         <div class="section-title">
           <div class="section-kicker">Focus</div>
           <h2>Bitcoin-native owner infrastructure.</h2>
-          <p>Hashen supports clients with Bitcoin treasury research, custody-governance documentation, owner reporting, reserve-policy context, non-discretionary research, and partner coordination around digital-asset infrastructure.</p>
+          <p>Hashen supports clients with Bitcoin treasury research, custody-governance documentation, owner reporting, reserve-policy records, non-discretionary research, and specialist review around digital-asset infrastructure.</p>
         </div>
         <div class="feature-grid">
           <div class="feature-card">
-            <h3>Bitcoin treasury context</h3>
+            <h3>Bitcoin treasury records</h3>
             <p>Non-discretionary research and reporting around Bitcoin, liquidity, reserves, market structure, custody models, and long-term capital allocation themes.</p>
           </div>
           <div class="feature-card">
@@ -815,8 +824,8 @@
             <p>Structured summaries for entrepreneurs, owners, boards, and advisers who need to understand digital-asset exposure without unnecessary noise.</p>
           </div>
           <div class="feature-card">
-            <h3>Partner coordination</h3>
-            <p>Coordination with banks, custodians, lawyers, tax advisers, auditors, and regulated partners where specialist execution, review, or advice is required.</p>
+            <h3>Specialist review</h3>
+            <p>Work with banks, custodians, lawyers, tax advisers, auditors, and regulated partners where specialist execution, review, or advice is required.</p>
           </div>
         </div>
       </div>
@@ -826,7 +835,7 @@
       <div class="container d-flex flex-column flex-lg-row align-items-lg-center justify-content-between">
         <div>
           <h2>Clarity around Bitcoin-related ownership questions.</h2>
-          <p>The goal is not to replace regulated professionals. The goal is to create a clearer operating layer around Bitcoin-related ownership, reporting, and infrastructure questions.</p>
+          <p>The goal is not to replace regulated professionals. The goal is to keep cleaner records around Bitcoin-related ownership, reporting, and infrastructure questions.</p>
         </div>
         <button class="sv-btn mt-4 mt-lg-0" type="button" data-toggle="modal" data-target="#contactModal">Get in touch</button>
       </div>
@@ -874,8 +883,16 @@
   <footer id="footer">
     <div class="container">
       <div class="row">
-        <div class="col-lg-4 mb-4">
-          <h3>Hashen</h3>
+        <div class="col-lg-4 mb-4 footer-contact">
+          <h3>
+            <a class="wc-brand footer-brand" href="{% url 'index' %}">
+              <svg width="22" height="22" viewBox="0 0 26 26" aria-hidden="true">
+                <rect width="26" height="26" rx="5" fill="#b68a35"/>
+                <path d="M7 6h3v6h6V6h3v14h-3v-6h-6v6H7z" fill="#172421"/>
+              </svg>
+              <span>Hashen</span>
+            </a>
+          </h3>
           <p>Bitcoin-aware reporting and governance records.</p>
           <p><strong>Email:</strong> contact@hashen.finance</p>
         </div>
@@ -889,11 +906,15 @@
         <div class="col-lg-5 footer-newsletter mb-4">
           <h4>Research notes</h4>
           <p>Research notes and market observations.</p>
+          {% if newsletter %}
           <form action="/newsletter/{{ newsletter.slug }}/subscribe/" method="post">
             {% csrf_token %}
             <input type="email" name="email" placeholder="Email address" required>
             <input type="submit" value="Subscribe">
           </form>
+          {% else %}
+          <a class="sv-btn" href="{% url 'blog' %}">Read the notes</a>
+          {% endif %}
         </div>
       </div>
       <div class="legal-copy">

@@ -208,8 +208,8 @@ h3 {
 }
 
 .wc-product-hero {
-  min-height: 94vh;
-  padding: 112px 0 58px;
+  min-height: auto;
+  padding: 96px 0 72px;
   background: #172421;
   color: #fff;
 }
@@ -232,8 +232,8 @@ h3 {
 
 .wc-product-hero h1 {
   color: #fff !important;
-  font-size: clamp(42px, 5.6vw, 76px);
-  line-height: 1.02;
+  font-size: clamp(38px, 4.4vw, 60px);
+  line-height: 1.06;
   font-weight: 850;
   margin: 0;
   max-width: 880px;
@@ -252,6 +252,12 @@ h3 {
   gap: 12px;
   flex-wrap: wrap;
   margin-top: 28px;
+}
+
+.wc-hero-note {
+  font-size: 14px !important;
+  color: #9fb0a8 !important;
+  margin-top: 16px !important;
 }
 
 .wc-screen {
@@ -362,6 +368,11 @@ h3 {
   padding-bottom: 8px;
 }
 
+.wc-row strong {
+  color: var(--wc-ink);
+  font-size: 14px;
+}
+
 .wc-row:last-child {
   border-bottom: 0;
   padding-bottom: 0;
@@ -419,6 +430,29 @@ h3 {
   color: var(--wc-muted);
   line-height: 1.65;
   margin: 0;
+}
+
+.wc-stage {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--wc-gold);
+  margin-bottom: 10px;
+}
+
+.wc-note-signup {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.wc-note-signup input[type="email"] {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid var(--wc-line);
+  border-radius: 6px;
+  padding: 9px 11px;
 }
 
 .wc-shot-grid {

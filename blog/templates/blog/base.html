@@ -58,10 +58,6 @@
 	                    <a class="nav-item nav-link" href="{% url 'index' %}">Home</a>
 	                    <a class="nav-item nav-link" href="{% url 'about' %}">About</a>
 	                    <a class="nav-item nav-link" href="{% url 'blog' %}">Blog</a>
-	                    {% if not PUBLIC_SITE_ONLY %}
-	                    <a class="nav-item nav-link" href="{% url 'dashboard' %}">Dashboard</a>
-	                    <a class="nav-item nav-link" href="{% url 'memos' %}">Memos</a>
-	                    {% endif %}
                 </div>
                 <!-- Navbar Right Side -->
                 <div class="navbar-nav">

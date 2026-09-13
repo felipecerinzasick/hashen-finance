@@ -2,6 +2,7 @@ import base64
 import calendar
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
+import hashlib
 import json
 import os
 import ssl
@@ -514,8 +515,21 @@ PORTFOLIO_HISTORY = [
     PORTFOLIO_REPORT,
 ]
 
-DASHBOARD_USERNAME = os.environ.get('HASHEN_DASHBOARD_USERNAME', 'hashen')
-DASHBOARD_PASSWORD = os.environ.get('HASHEN_DASHBOARD_PASSWORD', 'hashen123')
+DEFAULT_DASHBOARD_USERNAME = 'hashen'
+DEFAULT_DASHBOARD_PASSWORD_HASH = 'sha256$719cda178c9e8876b2a6fc696303754aee1dedf202ee5f043f8a96c9f8e12dee'
+
+
+def dashboard_password_hash(password):
+    return 'sha256$%s' % hashlib.sha256(password.encode('utf-8')).hexdigest()
+
+
+def dashboard_credentials_valid(username, password):
+    expected_username = os.environ.get('HASHEN_DASHBOARD_USERNAME') or DEFAULT_DASHBOARD_USERNAME
+    expected_hash = os.environ.get('HASHEN_DASHBOARD_PASSWORD_HASH') or DEFAULT_DASHBOARD_PASSWORD_HASH
+    return (
+        compare_digest(username, expected_username) and
+        compare_digest(dashboard_password_hash(password), expected_hash)
+    )
 
 
 def require_dashboard_auth(view_func):
@@ -529,10 +543,7 @@ def require_dashboard_auth(view_func):
                 encoded = auth_header.split(' ', 1)[1].strip()
                 decoded = base64.b64decode(encoded).decode('utf-8')
                 username, password = decoded.split(':', 1)
-                if (
-                    compare_digest(username, DASHBOARD_USERNAME) and
-                    compare_digest(password, DASHBOARD_PASSWORD)
-                ):
+                if dashboard_credentials_valid(username, password):
                     return view_func(request, *args, **kwargs)
             except (ValueError, UnicodeDecodeError):
                 pass

@@ -39,7 +39,7 @@ SECRET_KEY=replace-with-a-long-random-secret
 DEBUG=False
 DJANGO_SETTINGS_MODULE=web.local_settings
 HASHEN_DASHBOARD_USERNAME=hashen
-HASHEN_DASHBOARD_PASSWORD=replace-before-production
+HASHEN_DASHBOARD_PASSWORD_HASH=sha256$replace-with-password-sha256
 ```
 
 ## Django setup

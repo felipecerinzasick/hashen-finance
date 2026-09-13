@@ -18,7 +18,7 @@ services:
         generateValue: true
       - key: HASHEN_DASHBOARD_USERNAME
         value: hashen
-      - key: HASHEN_DASHBOARD_PASSWORD
+      - key: HASHEN_DASHBOARD_PASSWORD_HASH
         sync: false
       - key: DATABASE_URL
         fromDatabase:

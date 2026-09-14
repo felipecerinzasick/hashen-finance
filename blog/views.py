@@ -2183,6 +2183,7 @@ def serialize_stock_holding(holding, price, currency, value, value_chf, cost_val
     target_currency = holding.get('target_currency') or currency
     target_quantity = holding.get('target_quantity') or holding['shares']
     target_value = target_price * target_quantity if target_price else None
+    total_gain_loss_pct = (unrealized_chf / cost_chf * Decimal('100')) if cost_chf else None
     return {
         'name': holding['name'],
         'ticker': holding['ticker'],
@@ -2197,6 +2198,7 @@ def serialize_stock_holding(holding, price, currency, value, value_chf, cost_val
         'cost_value': float(cost_value),
         'cost_chf': float(cost_chf),
         'unrealized_chf': float(unrealized_chf),
+        'total_gain_loss_pct': float(total_gain_loss_pct) if total_gain_loss_pct is not None else None,
         'live': quote_status == 'live',
         'quote_status': quote_status,
         'error': error,

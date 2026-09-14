@@ -782,6 +782,7 @@
                     <th id="convertedValueHeader" class="right sortable" data-sort="value_chf">Value CHF</th>
                     <th class="right sortable" data-sort="average_price">Avg cost</th>
                     <th id="unrealizedHeader" class="right sortable" data-sort="unrealized_chf">Unrealized CHF</th>
+                    <th class="right sortable" data-sort="total_gain_loss_pct">Total %</th>
                     <th class="right sortable" data-sort="trailing_30d_pct">30d %</th>
                     <th class="right">Target</th>
                     <th>Status</th>
@@ -790,7 +791,7 @@
                 </thead>
                 <tbody id="holdingsTable">
                   <tr>
-                    <td colspan="11">Loading holdings.</td>
+                    <td colspan="12">Loading holdings.</td>
                   </tr>
                 </tbody>
               </table>
@@ -990,6 +991,9 @@
       if (key === 'trailing_30d_pct') {
         return Number.isFinite(Number(holding.trailing_30d_pct)) ? Number(holding.trailing_30d_pct) : -Infinity;
       }
+      if (key === 'total_gain_loss_pct') {
+        return Number.isFinite(Number(holding.total_gain_loss_pct)) ? Number(holding.total_gain_loss_pct) : -Infinity;
+      }
       return holding[key];
     }
 
@@ -1023,6 +1027,8 @@
     function renderHoldingRow(holding) {
       const row = document.createElement('tr');
       const pnlClass = holding.unrealized_chf >= 0 ? 'gain' : 'loss';
+      const totalPctValue = Number(holding.total_gain_loss_pct);
+      const totalPctClass = Number.isFinite(totalPctValue) ? (totalPctValue >= 0 ? 'gain' : 'loss') : '';
       const trailingValue = Number(holding.trailing_30d_pct);
       const trailingClass = Number.isFinite(trailingValue) ? (trailingValue >= 0 ? 'gain' : 'loss') : '';
       const target = holding.target_price
@@ -1043,6 +1049,7 @@
         <td data-label="Converted value" class="right">${displayMoneyFromChf(holding.value_chf)}</td>
         <td data-label="Avg cost" class="right">${money(holding.average_price, holding.cost_currency)}</td>
         <td data-label="Unrealized" class="right ${pnlClass}">${displayMoneyFromChf(holding.unrealized_chf)}</td>
+        <td data-label="Total %" class="right ${totalPctClass}">${percent(holding.total_gain_loss_pct)}</td>
         <td data-label="30d %" class="right ${trailingClass}" title="${holding.trailing_30d_start_date ? `Since ${holding.trailing_30d_start_date}` : 'No 30-day price history'}">${percent(holding.trailing_30d_pct)}</td>
         <td data-label="Target" class="right">${target}</td>
         <td data-label="Status"><span class="status-pill ${statusClass}">${statusLabel}</span></td>

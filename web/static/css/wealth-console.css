@@ -651,6 +651,11 @@ h3 {
 }
 
 @media (max-width: 640px) {
+  .wc-product-hero {
+    background: linear-gradient(180deg, #172421 0%, #1f6f56 62%, var(--wc-page) 100%);
+    padding-bottom: 54px;
+  }
+
   .wc-mini-grid,
   .wc-mini-grid.compact {
     grid-template-columns: 1fr;

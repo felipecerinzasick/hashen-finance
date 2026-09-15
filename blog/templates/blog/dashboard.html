@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hashen Private Wealth Console</title>
+  <title>Hashen Overview</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
   <style>
@@ -895,13 +895,24 @@
     @media (max-width: 720px) {
       .topbar {
         height: auto;
-        align-items: flex-start;
-        flex-direction: column;
-        padding: 18px;
+        align-items: center;
+        flex-direction: row;
+        padding: 14px 18px;
+        position: static;
+      }
+
+      .topbar h1 {
+        font-size: 20px;
+      }
+
+      .topbar p {
+        display: none;
       }
 
       .topbar-actions {
-        justify-content: flex-start;
+        justify-content: flex-end;
+        flex-wrap: nowrap;
+        margin-left: auto;
       }
 
       .main-grid {
@@ -942,8 +953,7 @@
     <main class="content">
       <header class="topbar">
         <div>
-          <h1>Private Wealth Console</h1>
-          <p>Long-term capital preservation view as at <strong id="reportDateText">31.08.2026</strong> · <a class="site-link" href="{% url 'index' %}">Hashen</a></p>
+          <h1>Overview</h1>
         </div>
         <div class="topbar-actions">
           <select id="currencySelect" class="currency-select" aria-label="Display currency">
@@ -953,8 +963,6 @@
             <option value="GBP">GBP</option>
             <option value="BTC">BTC</option>
           </select>
-          <a class="btn-local secondary" href="{% url 'portfolio_reports' %}">Reports</a>
-          <button id="addAssetButton" class="btn-local" type="button">Add asset</button>
         </div>
       </header>
 
@@ -1200,6 +1208,7 @@
               <h2>Holdings</h2>
               <p>Private assets added here stay in this browser session for now.</p>
             </div>
+            <button id="addAssetButton" class="btn-local secondary" type="button">Add private asset</button>
           </div>
           <table class="holdings-table">
             <thead>

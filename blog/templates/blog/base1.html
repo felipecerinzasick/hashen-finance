@@ -732,14 +732,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarToggle">
           <div class="navbar-nav ml-auto align-items-lg-center">
-            <a class="nav-item nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}" href="{% url 'index' %}">Home</a>
-            <a class="nav-item nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}">About</a>
-            <a class="nav-item nav-link {% if request.resolver_match.url_name == 'blog' %}active{% endif %}" href="{% url 'blog' %}">Blog</a>
+            <a class="nav-item nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}">Thesis</a>
+            <a class="nav-item nav-link {% if request.resolver_match.url_name == 'blog' %}active{% endif %}" href="{% url 'blog' %}">Research</a>
             {% if user.is_authenticated %}
               <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
               <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
             {% endif %}
-            <button class="sv-btn ml-lg-3 mt-2 mt-lg-0" type="button" data-toggle="modal" data-target="#contactModal">Contact</button>
+            <button class="sv-btn ml-lg-3 mt-2 mt-lg-0" type="button" data-toggle="modal" data-target="#contactModal">Request access</button>
           </div>
         </div>
       </div>
@@ -842,8 +841,8 @@
       <div class="modal-content">
         <div class="modal-header">
           <div>
-            <h5 class="modal-title" id="contactModalLabel">Get in touch</h5>
-            <p class="mb-0" style="color: #d8e6ef;">Tell me what you want to understand, document, or coordinate.</p>
+            <h5 class="modal-title" id="contactModalLabel">Request access</h5>
+            <p class="mb-0" style="color: #d8e6ef;">Tell us what you want to report, document, or govern.</p>
           </div>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -892,8 +891,8 @@
         </div>
         <div class="col-lg-3 mb-4">
           <h4>Links</h4>
-          <p><a href="{% url 'index' %}">Home</a></p>
-          <p><a href="{% url 'about' %}">About</a></p>
+          <p><a href="{% url 'index' %}">Landing</a></p>
+          <p><a href="{% url 'about' %}">Thesis</a></p>
           <p><a href="{% url 'legal' %}">Legal</a></p>
           <p><a href="{% url 'privacy-policy' %}">Privacy policy</a></p>
         </div>

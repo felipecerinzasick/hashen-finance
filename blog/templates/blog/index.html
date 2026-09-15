@@ -1,11 +1,15 @@
 {% extends "blog/base1.html" %}
 
 {% block main %}
-<main>
+<main class="wc-landing">
   <section class="wc-product-hero">
     <div class="container">
       <div class="wc-product-grid">
-        <div>
+        <div class="wc-hero-copy">
+          <div class="wc-live-ribbon">
+            <span>Private beta</span>
+            <strong>Month-end reporting · governance records · Bitcoin treasury</strong>
+          </div>
           <div class="wc-kicker">Bitcoin-native capital infrastructure</div>
           <h1>One clear view of your Bitcoin exposure.</h1>
           <p>Spot, ETFs, treasury equities, cash, and collateral, consolidated into a month-end record your advisers and board can read. Plus the governance record of who holds it, who can move it, and why.</p>
@@ -45,6 +49,10 @@
               <div class="wc-row"><strong>ETF exposure</strong><span>Broker/custodian</span><span>Cost basis</span><span class="wc-status">Pending</span></div>
               <div class="wc-row"><strong>Treasury equities</strong><span>MSTR and peers</span><span>Thesis linked</span><span class="wc-status">Pending</span></div>
             </div>
+            <div class="wc-close-strip">
+              <span>Close status</span>
+              <strong>Ready for adviser review</strong>
+            </div>
           </div>
         </div>
       </div>
@@ -60,14 +68,17 @@
       </div>
       <div class="wc-shot-grid">
         <div class="wc-feature">
+          <span class="wc-card-number">01</span>
           <h3>Exposure is scattered</h3>
           <p>Spot Bitcoin, ETFs, treasury equities, cash, and collateral do not arrive as one clean Bitcoin exposure number from a private bank statement.</p>
         </div>
         <div class="wc-feature">
+          <span class="wc-card-number">02</span>
           <h3>Custody needs explaining</h3>
           <p>Advisers and boards need to understand wallets, access rights, recovery paths, approval flows, and who can move what under which conditions.</p>
         </div>
         <div class="wc-feature">
+          <span class="wc-card-number">03</span>
           <h3>The reasoning disappears</h3>
           <p>Reserve policy, concentration limits, treasury-stock exposure, and loan decisions are often made in meetings, messages, and memory.</p>
         </div>
@@ -84,6 +95,7 @@
       </div>
       <div class="wc-shot-grid">
         <div class="wc-shot">
+          <span class="wc-card-number">Record</span>
           <h3>Consolidated exposure</h3>
           <div class="wc-mini-grid">
             <div class="wc-mini-card"><span>Spot</span><strong>48%</strong></div>
@@ -93,6 +105,7 @@
           <p>One owner view across direct Bitcoin, brokerage-held instruments, treasury-company equities, and liquidity.</p>
         </div>
         <div class="wc-shot">
+          <span class="wc-card-number">Govern</span>
           <h3>Governance record</h3>
           <div class="wc-table-shot">
             <div class="wc-row"><strong>Custody</strong><span>Multi-sig</span><span>Reviewed</span></div>
@@ -102,6 +115,7 @@
           <p>Records for custody setup, key-person risk, approval logic, access changes, and investment rationale.</p>
         </div>
         <div class="wc-shot">
+          <span class="wc-card-number">Model</span>
           <h3>Treasury equities</h3>
           <div class="wc-mini-grid compact">
             <div class="wc-mini-card"><span>MSTR</span><strong>BTC/share 0.0012</strong></div>
@@ -135,6 +149,22 @@
           <span class="wc-stage">Research</span>
           <h3>Settlement rails</h3>
           <p>Cross-border final settlement on Bitcoin for owners and businesses moving value between jurisdictions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wc-section wc-process-section">
+    <div class="container">
+      <div class="wc-process">
+        <div>
+          <div class="wc-kicker">How it feels</div>
+          <h2>From scattered statements to one closing file.</h2>
+        </div>
+        <div class="wc-process-steps">
+          <div><span>01</span><strong>Import the exposure</strong><p>Brokerage, custody, treasury equities, cash, and collateral come into one month-end view.</p></div>
+          <div><span>02</span><strong>Review the controls</strong><p>Custody setup, access rights, recovery paths, and policy changes sit beside the numbers.</p></div>
+          <div><span>03</span><strong>Export the record</strong><p>A clean PDF gives owners, advisers, and boards the same closing narrative.</p></div>
         </div>
       </div>
     </div>

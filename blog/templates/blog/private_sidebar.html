@@ -4,6 +4,12 @@
       grid-template-columns: 1fr !important;
     }
 
+    body {
+      background:
+        linear-gradient(180deg, rgba(235, 243, 238, 0.9) 0, rgba(245, 248, 251, 0) 260px),
+        #f5f8fb !important;
+    }
+
     .sidebar {
       display: block !important;
       position: sticky;
@@ -12,9 +18,11 @@
       height: auto;
       max-width: 100vw;
       padding: 8px 10px 9px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      background:
+        linear-gradient(135deg, #10231f 0%, #173c32 58%, #4a381d 100%) !important;
+      border-bottom: 1px solid rgba(217, 182, 106, 0.2);
       overflow: visible;
-      box-shadow: 0 8px 24px rgba(15, 38, 56, 0.16);
+      box-shadow: 0 12px 30px rgba(15, 38, 56, 0.2);
     }
 
     .sidebar .brand {
@@ -47,10 +55,10 @@
       height: 34px !important;
       min-height: 34px !important;
       padding: 0 12px !important;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.16);
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.06);
-      color: #d8dee9;
+      background: rgba(255, 255, 255, 0.09);
+      color: #e4ece8;
       font-size: 13px;
       font-weight: 700;
       line-height: 1;
@@ -61,13 +69,21 @@
     .sidebar .nav-link-local:hover,
     .sidebar .nav-sublist a.active,
     .sidebar .nav-sublist a:hover {
-      background: #ffffff;
-      border-color: #ffffff;
-      color: #123044;
+      background: #d9b66a;
+      border-color: #d9b66a;
+      color: #172421;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
     }
 
     .sidebar .nav-sublist {
       display: contents !important;
+    }
+
+    .content .topbar {
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(239, 247, 242, 0.92)) !important;
+      border-bottom-color: rgba(31, 111, 86, 0.14) !important;
+      box-shadow: 0 10px 26px rgba(29, 47, 42, 0.08);
     }
   }
 

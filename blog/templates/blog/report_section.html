@@ -9,19 +9,26 @@
 
   <div class="download-panel">
     {% for report in items %}
-      <div class="download-row">
+      <article class="download-row">
         <div class="download-title">
           <strong>{{ report.label }}</strong>
-          <span>{{ report.kind|title }} report</span>
+          <span class="report-kind">{{ report.kind|title }}</span>
         </div>
         <div class="download-period">{{ report.period_display }}</div>
+        <div class="report-nav">
+          <span>{{ report.beginning_nav_display }} &rarr; {{ report.ending_nav_display }}</span>
+          <strong class="{{ report.change_direction }}">{{ report.change_nav_display }} / {{ report.change_pct_display }}</strong>
+        </div>
         {% if report.locked %}
           <span class="pill">Final</span>
         {% else %}
           <span class="pill new">New report available</span>
         {% endif %}
-        <a class="btn-local primary" href="{% url 'portfolio_period_report_pdf' report.kind report.date_iso %}">Download PDF</a>
-      </div>
+        <a class="btn-local primary" href="{% url 'portfolio_period_report_pdf' report.kind report.date_iso %}">
+          <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4h2v8l3-3 1.4 1.4L12 15.8l-5.4-5.4L8 9l3 3V4Zm-5 14h12v2H6v-2Z" fill="currentColor"/></svg>
+          <span>Download PDF</span>
+        </a>
+      </article>
     {% empty %}
       <div class="empty-note">No reports are available yet.</div>
     {% endfor %}

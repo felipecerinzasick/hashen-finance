@@ -568,7 +568,12 @@ h3 {
   display: grid;
   place-items: center;
   padding: 34px;
-  background: var(--wc-charcoal) !important;
+  background:
+    linear-gradient(135deg, rgba(23, 36, 33, 0.94), rgba(23, 36, 33, 0.68) 56%, rgba(182, 138, 53, 0.28)),
+    url("/static/img/digital-horizon.png"),
+    var(--wc-charcoal) !important;
+  background-size: cover !important;
+  background-position: center !important;
   border-color: rgba(182, 138, 53, 0.25) !important;
   box-shadow: 0 20px 70px rgba(29, 47, 42, 0.16) !important;
 }

@@ -1,4 +1,15 @@
 <style>
+  .sidebar .nav-link-local {
+    justify-content: flex-start !important;
+    gap: 9px;
+  }
+
+  .sidebar .nav-icon {
+    width: 15px;
+    height: 15px;
+    flex: 0 0 auto;
+  }
+
   @media (max-width: 1100px) {
     .dashboard-shell {
       grid-template-columns: 1fr !important;
@@ -65,6 +76,11 @@
       white-space: nowrap;
     }
 
+    .sidebar .nav-icon {
+      width: 14px;
+      height: 14px;
+    }
+
     .sidebar .nav-link-local.active,
     .sidebar .nav-link-local:hover,
     .sidebar .nav-sublist a.active,
@@ -114,15 +130,27 @@
     </div>
   </a>
   <nav class="nav-list" aria-label="Private console navigation">
-    <a class="nav-link-local {% if active_page == 'overview' %}active{% endif %}" href="{% url 'dashboard' %}"><span>Overview</span></a>
-    <a class="nav-link-local {% if active_page == 'stocks' %}active{% endif %}" href="{% url 'stocks_dashboard' %}"><span>Stocks</span></a>
+    <a class="nav-link-local {% if active_page == 'overview' %}active{% endif %}" href="{% url 'dashboard' %}">
+      <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13h7V4H4v9Zm0 7h7v-5H4v5Zm9 0h7v-9h-7v9Zm0-11h7V4h-7v5Z" fill="currentColor"/></svg>
+      <span>Overview</span>
+    </a>
+    <a class="nav-link-local {% if active_page == 'stocks' %}active{% endif %}" href="{% url 'stocks_dashboard' %}">
+      <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19h16v2H4v-2Zm1-3 4-5 4 3 5-8 2 1-6 10-4-3-3 4-2-2Z" fill="currentColor"/></svg>
+      <span>Stocks</span>
+    </a>
     <div class="nav-sublist" aria-label="Treasury stock pages">
       <a class="{% if active_treasury == 'mstr' %}active{% endif %}" href="{% url 'mstr_dashboard' %}"><span>MSTR</span></a>
       <a class="{% if active_treasury == 'metaplanet' %}active{% endif %}" href="{% url 'treasury_stock_dashboard' 'metaplanet' %}"><span>Metaplanet</span></a>
       <a class="{% if active_treasury == 'asst' %}active{% endif %}" href="{% url 'treasury_stock_dashboard' 'asst' %}"><span>ASST</span></a>
       <a class="{% if active_treasury == 'bitmine' %}active{% endif %}" href="{% url 'treasury_stock_dashboard' 'bitmine' %}"><span>BitMine</span></a>
     </div>
-    <a class="nav-link-local {% if active_page == 'reports' %}active{% endif %}" href="{% url 'portfolio_reports' %}"><span>Reports</span></a>
-    <a class="nav-link-local {% if active_page == 'memos' %}active{% endif %}" href="{% url 'memos' %}"><span>Memos</span></a>
+    <a class="nav-link-local {% if active_page == 'reports' %}active{% endif %}" href="{% url 'portfolio_reports' %}">
+      <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6V2Zm8 1.5V8h4.5L14 3.5ZM8 12h8v2H8v-2Zm0 4h8v2H8v-2Z" fill="currentColor"/></svg>
+      <span>Reports</span>
+    </a>
+    <a class="nav-link-local {% if active_page == 'memos' %}active{% endif %}" href="{% url 'memos' %}">
+      <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v18H5V3Zm3 4v2h8V7H8Zm0 4v2h8v-2H8Zm0 4v2h5v-2H8Z" fill="currentColor"/></svg>
+      <span>Memos</span>
+    </a>
   </nav>
 </aside>

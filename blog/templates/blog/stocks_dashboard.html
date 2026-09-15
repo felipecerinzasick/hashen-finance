@@ -9,16 +9,16 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
   <style>
     :root {
-      --ink: #123044;
-      --muted: #607285;
-      --line: #dfe5ec;
+      --ink: #1d2f2a;
+      --muted: #65746f;
+      --line: #d9e1dc;
       --panel: #ffffff;
-      --page: #f5f8fb;
-      --accent: #2487ce;
-      --blue: #124265;
+      --page: #f4f6f1;
+      --accent: #1f6f56;
+      --blue: #315f7d;
       --gold: #b68a35;
-      --green: #2f8f5b;
-      --red: #b84a4a;
+      --green: #1f6f56;
+      --red: #a94c45;
     }
 
     * {
@@ -148,7 +148,7 @@
       justify-content: space-between;
       gap: 18px;
       padding: 16px 32px;
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(250, 251, 247, 0.92);
       border-bottom: 1px solid var(--line);
       position: sticky;
       top: 0;
@@ -174,6 +174,12 @@
       text-decoration: none;
     }
 
+    .btn-icon {
+      width: 15px;
+      height: 15px;
+      flex: 0 0 auto;
+    }
+
     .btn-local {
       border: 1px solid var(--line);
       min-height: 38px;
@@ -183,6 +189,11 @@
       color: var(--ink);
       text-decoration: none;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 700;
     }
 
     .btn-local:hover {
@@ -227,6 +238,7 @@
       border-radius: 8px;
       padding: 18px;
       min-width: 0;
+      box-shadow: 0 14px 34px rgba(29, 47, 42, 0.05);
     }
 
     .panel-header {
@@ -278,6 +290,31 @@
       margin: 6px 0 0;
     }
 
+    .metric-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      margin-top: 10px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--page);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .metric-chip.gain {
+      background: #e8f4ee;
+      color: var(--green);
+    }
+
+    .metric-chip.loss {
+      background: #faeeed;
+      color: var(--red);
+    }
+
     .portfolio-layout {
       display: block;
     }
@@ -311,17 +348,18 @@
       white-space: normal;
     }
 
-    th:nth-child(1) { width: 14%; }
+    th:nth-child(1) { width: 13%; }
     th:nth-child(2) { width: 7%; }
     th:nth-child(3) { width: 8%; }
-    th:nth-child(4) { width: 10%; }
-    th:nth-child(5) { width: 10%; }
+    th:nth-child(4) { width: 9%; }
+    th:nth-child(5) { width: 9%; }
     th:nth-child(6) { width: 8%; }
-    th:nth-child(7) { width: 10%; }
-    th:nth-child(8) { width: 8%; }
-    th:nth-child(9) { width: 9%; }
-    th:nth-child(10) { width: 7%; }
-    th:nth-child(11) { width: 9%; }
+    th:nth-child(7) { width: 9%; }
+    th:nth-child(8) { width: 7%; }
+    th:nth-child(9) { width: 7%; }
+    th:nth-child(10) { width: 8%; }
+    th:nth-child(11) { width: 7%; }
+    th:nth-child(12) { width: 9%; }
 
     th.sortable {
       cursor: pointer;
@@ -398,6 +436,25 @@
     .status-pill.saved {
       background: #eef4fb;
       color: var(--blue);
+    }
+
+    .skeleton-cell {
+      display: block;
+      height: 14px;
+      width: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #edf2ec 0%, #f8faf6 48%, #edf2ec 100%);
+      background-size: 220% 100%;
+      animation: skeleton-pulse 1.15s ease-in-out infinite;
+    }
+
+    .skeleton-cell.short {
+      width: 58%;
+    }
+
+    @keyframes skeleton-pulse {
+      0% { background-position: 100% 0; }
+      100% { background-position: -100% 0; }
     }
 
     .gain {
@@ -687,22 +744,176 @@
 
     @media (max-width: 720px) {
       .topbar {
-        align-items: flex-start;
-        flex-direction: column;
-        padding: 16px 20px;
+        align-items: center;
+        flex-direction: row;
+        padding: 14px 18px;
+        position: static;
+      }
+
+      .topbar h1 {
+        font-size: 20px;
+      }
+
+      .topbar p {
+        display: none;
       }
 
       .topbar-actions {
-        width: 100%;
-        justify-content: flex-start;
+        width: auto;
+        justify-content: flex-end;
+        flex-wrap: nowrap;
+        margin-left: auto;
+      }
+
+      .topbar-actions .btn-local {
+        width: 38px;
+        padding: 0;
+      }
+
+      .topbar-actions .btn-local span {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
       }
 
       .main-grid {
-        padding: 20px;
+        padding: 14px;
+        gap: 14px;
       }
 
       .summary-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .summary-grid .panel {
+        padding: 14px;
+        min-height: 106px;
+        border-color: rgba(31, 111, 86, 0.13);
+      }
+
+      .summary-grid .panel:first-child {
+        grid-column: 1 / -1;
+        color: #fff;
+        background:
+          linear-gradient(135deg, rgba(16, 35, 31, 0.98), rgba(49, 95, 125, 0.92) 62%, rgba(182, 138, 53, 0.76)),
+          #172421;
+        border-color: rgba(217, 182, 106, 0.28);
+        box-shadow: 0 18px 42px rgba(23, 36, 33, 0.2);
+      }
+
+      .summary-grid .panel:first-child .label,
+      .summary-grid .panel:first-child .subtle {
+        color: rgba(255, 255, 255, 0.74);
+      }
+
+      .summary-grid .panel:not(:first-child) {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .summary-grid .panel:not(:first-child)::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto;
+        height: 3px;
+        background: var(--accent);
+      }
+
+      .summary-grid .panel:nth-child(3)::before {
+        background: var(--gold);
+      }
+
+      .summary-grid .panel:nth-child(4)::before {
+        background: var(--blue);
+      }
+
+      .summary-grid .panel:nth-child(5)::before {
+        background: var(--green);
+      }
+
+      .summary-grid .panel:not(:first-child) .subtle {
+        display: none;
+      }
+
+      .metric-chip {
+        margin-top: 8px;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .metric-value {
+        font-size: 21px;
+      }
+
+      .summary-grid .panel:first-child .metric-value {
+        color: #fff;
+        font-size: 34px;
+      }
+
+      .panel {
+        padding: 15px;
+      }
+
+      .panel-header {
+        align-items: center;
+        margin-bottom: 12px;
+      }
+
+      .panel-header p {
+        display: none;
+      }
+
+      tr.holding-row {
+        padding: 12px;
+        box-shadow: 0 10px 24px rgba(29, 47, 42, 0.06);
+      }
+
+      td {
+        grid-template-columns: 86px minmax(0, 1fr);
+        gap: 8px;
+        padding: 7px 0;
+      }
+
+      td:nth-child(2),
+      td:nth-child(3),
+      td:nth-child(4),
+      td:nth-child(6),
+      td:nth-child(10) {
+        display: none;
+      }
+
+      td:first-child {
+        border-bottom-color: transparent;
+        padding-bottom: 2px;
+      }
+
+      td:first-child::before {
+        content: "";
+      }
+
+      td:first-child strong {
+        font-size: 16px;
+      }
+
+      td:first-child span {
+        font-size: 12px;
+      }
+
+      td[data-label="Detail"] {
+        border-bottom: 0;
+      }
+
+      .status-pill {
+        min-height: 22px;
+        padding: 2px 7px;
+      }
+
+      .loading-overlay {
+        display: none !important;
       }
 
       .form-grid-local {
@@ -730,7 +941,10 @@
             <option value="GBP">GBP</option>
             <option value="BTC">BTC</option>
           </select>
-          <button id="refreshButton" class="btn-local" type="button">Refresh prices</button>
+          <button id="refreshButton" class="btn-local" type="button">
+            <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 8a7 7 0 0 0-12.1-3.9L5 6h4v4L7.9 8.9A5 5 0 1 1 7 14H5a7 7 0 1 0 14-6Z" fill="currentColor"/></svg>
+            <span>Refresh prices</span>
+          </button>
         </div>
       </header>
 
@@ -739,11 +953,13 @@
           <div class="panel">
             <div class="label">Total value</div>
             <div id="totalChf" class="metric-value">Loading</div>
+            <div id="totalStockChip" class="metric-chip">Loading holdings</div>
             <p id="quoteStatus" class="subtle">Fetching live prices.</p>
           </div>
           <div class="panel">
             <div class="label">Unrealized P/L</div>
             <div id="unrealizedChf" class="metric-value">Loading</div>
+            <div id="unrealizedChip" class="metric-chip">Against cost</div>
             <p class="subtle">Against stored average cost.</p>
           </div>
           <div class="panel">
@@ -759,6 +975,7 @@
           <div class="panel">
             <div class="label">Live coverage</div>
             <div id="liveCoverage" class="metric-value">Loading</div>
+            <div id="coverageChip" class="metric-chip">Quote status</div>
             <p id="lastUpdated" class="subtle">Waiting for quotes.</p>
           </div>
         </section>
@@ -790,14 +1007,23 @@
                   </tr>
                 </thead>
                 <tbody id="holdingsTable">
-                  <tr>
-                    <td colspan="12">Loading holdings.</td>
+                  <tr class="skeleton-row">
+                    <td colspan="12"><span class="skeleton-cell"></span></td>
+                  </tr>
+                  <tr class="skeleton-row">
+                    <td colspan="12"><span class="skeleton-cell short"></span></td>
+                  </tr>
+                  <tr class="skeleton-row">
+                    <td colspan="12"><span class="skeleton-cell"></span></td>
                   </tr>
                 </tbody>
               </table>
             </div>
             <div class="table-actions">
-              <button id="openAddHoldingBottom" class="btn-local" type="button">Add holding</button>
+              <button id="openAddHoldingBottom" class="btn-local" type="button">
+                <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6V5Z" fill="currentColor"/></svg>
+                <span>Add holding</span>
+              </button>
             </div>
           </div>
         </section>
@@ -805,7 +1031,7 @@
     </main>
   </div>
 
-  <div id="loadingOverlay" class="loading-overlay visible" role="status" aria-live="polite">
+  <div id="loadingOverlay" class="loading-overlay" role="status" aria-live="polite">
     <div class="loading-card">
       <div class="spinner"></div>
       <div>Loading holdings</div>
@@ -946,11 +1172,23 @@
     }
 
     function percent(value) {
-      if (!Number.isFinite(Number(value))) {
+      if (value === null || value === undefined || !Number.isFinite(Number(value))) {
         return '-';
       }
       const sign = Number(value) > 0 ? '+' : '';
       return `${sign}${Number(value).toFixed(1)}%`;
+    }
+
+    function setChip(id, text, tone = '') {
+      const element = document.getElementById(id);
+      if (!element) {
+        return;
+      }
+      element.textContent = text;
+      element.classList.remove('gain', 'loss');
+      if (tone) {
+        element.classList.add(tone);
+      }
     }
 
     function setText(id, value) {
@@ -965,11 +1203,19 @@
 
     function setLoading(isLoading, label = 'Loading holdings') {
       const overlay = document.getElementById('loadingOverlay');
-      if (!overlay) {
-        return;
+      const table = document.getElementById('holdingsTable');
+      if (table && isLoading && !state.portfolio) {
+        table.innerHTML = `
+          <tr class="skeleton-row"><td colspan="12"><span class="skeleton-cell"></span></td></tr>
+          <tr class="skeleton-row"><td colspan="12"><span class="skeleton-cell short"></span></td></tr>
+          <tr class="skeleton-row"><td colspan="12"><span class="skeleton-cell"></span></td></tr>
+          <tr class="skeleton-row"><td colspan="12"><span class="skeleton-cell short"></span></td></tr>
+        `;
       }
-      overlay.querySelector('.loading-card div:last-child').textContent = label;
-      overlay.classList.toggle('visible', isLoading);
+      if (overlay) {
+        overlay.querySelector('.loading-card div:last-child').textContent = label;
+        overlay.classList.remove('visible');
+      }
     }
 
     function openAddHoldingModal() {
@@ -1069,10 +1315,16 @@
       setText('totalChf', displayMoneyFromChf(payload.total_chf));
       setText('unrealizedChf', displayMoneyFromChf(payload.unrealized_chf));
       const unrealizedText = displayMoneyFromChf(payload.unrealized_chf);
+      const totalCost = Number(payload.total_cost_chf);
+      const unrealizedPct = totalCost ? (Number(payload.unrealized_chf) / totalCost) * 100 : null;
+      const unrealizedTone = Number(payload.unrealized_chf) >= 0 ? 'gain' : 'loss';
       document.getElementById('unrealizedChf').className = `metric-value ${payload.unrealized_chf >= 0 ? 'gain' : 'loss'} ${unrealizedText.length > 17 ? 'tight-value' : ''}`;
+      setChip('totalStockChip', `${payload.total_count || payload.holdings.length} holdings`);
+      setChip('unrealizedChip', `${percent(unrealizedPct)} vs cost`, unrealizedTone);
       setText('totalUsd', money(payload.totals.USD, 'USD'));
       setText('totalEur', money(payload.totals.EUR, 'EUR'));
       setText('liveCoverage', `${payload.live_count} live / ${payload.saved_count || 0} saved`);
+      setChip('coverageChip', payload.pricing_mode === 'live' ? 'Live pricing' : payload.pricing_mode === 'saved' ? 'Saved pricing' : 'Fallback pricing');
       const fallbackText = payload.fallback_count ? ` ${payload.fallback_count} fallback.` : '';
       setText('quoteStatus', `${payload.source}. ${payload.live_count} live, ${payload.saved_count || 0} saved.${fallbackText}`);
       setText('convertedValueHeader', `Value ${state.currency}`);

@@ -8,16 +8,16 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
   <style>
     :root {
-      --ink: #123044;
-      --muted: #607285;
-      --line: #dfe5ec;
+      --ink: #1d2f2a;
+      --muted: #65746f;
+      --line: #d9e1dc;
       --panel: #ffffff;
-      --page: #f5f8fb;
-      --accent: #2487ce;
-      --blue: #124265;
+      --page: #f4f6f1;
+      --accent: #1f6f56;
+      --blue: #315f7d;
       --gold: #b68a35;
-      --green: #2f8f5b;
-      --red: #b84a4a;
+      --green: #1f6f56;
+      --red: #a94c45;
     }
 
     * { box-sizing: border-box; }
@@ -139,12 +139,22 @@
       text-decoration: none;
       font-weight: 700;
       white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
 
     .btn-local.primary {
       border-color: transparent;
       background: var(--accent);
       color: #fff;
+    }
+
+    .btn-icon {
+      width: 15px;
+      height: 15px;
+      flex: 0 0 auto;
     }
 
     .main-grid {
@@ -201,23 +211,22 @@
     }
 
     .download-panel {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--panel);
-      overflow: hidden;
+      display: grid;
+      gap: 12px;
     }
 
     .download-row {
       display: grid;
-      grid-template-columns: minmax(180px, 0.8fr) minmax(240px, 1fr) auto auto;
-      gap: 16px;
+      grid-template-columns: minmax(150px, 0.8fr) minmax(210px, 1fr) minmax(190px, 0.95fr) auto auto;
+      gap: 14px;
       align-items: center;
-      padding: 14px 16px;
-      border-top: 1px solid var(--line);
-    }
-
-    .download-row:first-child {
-      border-top: 0;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, rgba(31, 111, 86, 0.04), rgba(255, 255, 255, 0) 42%),
+        var(--panel);
+      box-shadow: 0 14px 34px rgba(29, 47, 42, 0.05);
     }
 
     .download-title {
@@ -230,7 +239,20 @@
       font-weight: 800;
     }
 
-    .download-title span,
+    .report-kind {
+      justify-self: start;
+      display: inline-flex;
+      min-height: 22px;
+      align-items: center;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #f4ead4;
+      color: #7c5a1f !important;
+      font-size: 11px !important;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
     .download-period {
       color: var(--muted);
       font-size: 13px;
@@ -238,6 +260,27 @@
 
     .download-period {
       line-height: 1.4;
+    }
+
+    .report-nav {
+      display: grid;
+      gap: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .report-nav strong {
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .gain {
+      color: var(--green);
+    }
+
+    .loss {
+      color: var(--red);
     }
 
     .pill {
@@ -270,7 +313,8 @@
       .dashboard-shell { grid-template-columns: 1fr; }
       .sidebar { display: none; }
       .download-row { grid-template-columns: minmax(0, 1fr) auto; }
-      .download-period { grid-column: 1 / -1; }
+      .download-period,
+      .report-nav { grid-column: 1 / -1; }
     }
 
     @media (max-width: 720px) {
@@ -287,6 +331,10 @@
         grid-template-columns: 1fr;
         gap: 10px;
       }
+
+      .download-row .btn-local {
+        width: 100%;
+      }
     }
   </style>
   <link rel="stylesheet" href="{% static 'css/wealth-console.css' %}">
@@ -302,9 +350,15 @@
           <p>Month-end, quarter-end, and year-end portfolio reports.</p>
         </div>
         <div class="topbar-actions">
-          <a class="btn-local" href="{% url 'dashboard' %}">Overview</a>
+          <a class="btn-local" href="{% url 'dashboard' %}">
+            <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13h7V4H4v9Zm0 7h7v-5H4v5Zm9 0h7v-9h-7v9Zm0-11h7V4h-7v5Z" fill="currentColor"/></svg>
+            <span>Overview</span>
+          </a>
           {% if latest_monthly %}
-            <a class="btn-local primary" href="{% url 'portfolio_period_report_pdf' latest_monthly.kind latest_monthly.date_iso %}">Download Latest PDF</a>
+            <a class="btn-local primary" href="{% url 'portfolio_period_report_pdf' latest_monthly.kind latest_monthly.date_iso %}">
+              <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4h2v8l3-3 1.4 1.4L12 15.8l-5.4-5.4L8 9l3 3V4Zm-5 14h12v2H6v-2Z" fill="currentColor"/></svg>
+              <span>Download latest PDF</span>
+            </a>
           {% endif %}
         </div>
       </header>
@@ -316,7 +370,10 @@
               <strong>A new report is available</strong>
               <span>{{ latest_monthly.period_display }} is ready. Review the PDF and lock the month-end values from the overview when ready.</span>
             </div>
-            <a class="btn-local primary" href="{% url 'portfolio_period_report_pdf' latest_monthly.kind latest_monthly.date_iso %}">Download PDF</a>
+            <a class="btn-local primary" href="{% url 'portfolio_period_report_pdf' latest_monthly.kind latest_monthly.date_iso %}">
+              <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4h2v8l3-3 1.4 1.4L12 15.8l-5.4-5.4L8 9l3 3V4Zm-5 14h12v2H6v-2Z" fill="currentColor"/></svg>
+              <span>Download PDF</span>
+            </a>
           </div>
         {% endif %}
 

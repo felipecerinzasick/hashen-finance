@@ -223,12 +223,14 @@ h3 {
   min-height: auto;
   padding: 96px 0 72px;
   background:
-    linear-gradient(90deg, rgba(23, 36, 33, 0.97), rgba(23, 36, 33, 0.78) 54%, rgba(23, 36, 33, 0.34)),
-    radial-gradient(1200px 600px at 80% 20%, rgba(31, 111, 86, 0.35), transparent 60%),
+    linear-gradient(180deg, rgba(23, 36, 33, 0.72) 0%, rgba(23, 36, 33, 0.9) 67%, var(--wc-page) 100%),
+    linear-gradient(90deg, rgba(23, 36, 33, 0.98), rgba(23, 36, 33, 0.72) 48%, rgba(23, 36, 33, 0.18)),
+    radial-gradient(900px 460px at 80% 16%, rgba(217, 182, 106, 0.24), transparent 64%),
+    radial-gradient(1200px 600px at 82% 28%, rgba(31, 111, 86, 0.44), transparent 60%),
     url("/static/img/digital-horizon.png"),
     #172421;
   background-size: cover;
-  background-position: center;
+  background-position: center bottom;
   color: #fff;
 }
 
@@ -278,6 +280,39 @@ h3 {
   margin-top: 16px !important;
 }
 
+.wc-proof-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  max-width: 710px;
+  margin-top: 24px;
+}
+
+.wc-proof-strip div {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.wc-proof-strip span {
+  display: block;
+  color: #d9b66a;
+  font-size: 11px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.wc-proof-strip strong {
+  display: block;
+  margin-top: 6px;
+  color: #f6faf8;
+  font-size: 13px;
+  line-height: 1.25;
+}
+
 .blog-hero .section-kicker {
   color: var(--wc-gold) !important;
 }
@@ -297,7 +332,10 @@ h3 {
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.34);
+  box-shadow:
+    0 34px 90px rgba(0, 0, 0, 0.34),
+    0 0 0 1px rgba(217, 182, 106, 0.14),
+    0 0 80px rgba(217, 182, 106, 0.12);
   animation: wc-rise 0.8s ease-out both;
 }
 
@@ -678,7 +716,7 @@ h3 {
 @media (max-width: 640px) {
   .wc-product-hero {
     background:
-      linear-gradient(180deg, rgba(23, 36, 33, 0.93) 0%, rgba(29, 77, 63, 0.82) 48%, rgba(220, 235, 228, 0.88) 88%, var(--wc-page) 100%),
+      linear-gradient(180deg, rgba(23, 36, 33, 0.9) 0%, rgba(29, 77, 63, 0.74) 48%, rgba(238, 246, 241, 0.92) 88%, var(--wc-page) 100%),
       linear-gradient(160deg, rgba(217, 182, 106, 0.2) 0%, rgba(217, 182, 106, 0) 38%),
       url("/static/img/digital-horizon.png"),
       #172421;
@@ -693,6 +731,10 @@ h3 {
 
   .wc-mini-grid,
   .wc-mini-grid.compact {
+    grid-template-columns: 1fr;
+  }
+
+  .wc-proof-strip {
     grid-template-columns: 1fr;
   }
 

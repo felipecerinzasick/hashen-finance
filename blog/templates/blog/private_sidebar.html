@@ -1,12 +1,26 @@
 <style>
   .sidebar .nav-link-local {
+    display: flex !important;
+    align-items: center !important;
     justify-content: flex-start !important;
     gap: 9px;
+    min-height: 38px !important;
+    height: auto !important;
+  }
+
+  .sidebar .nav-list {
+    align-content: start !important;
+    grid-auto-rows: max-content !important;
   }
 
   .sidebar .nav-icon {
     width: 15px;
     height: 15px;
+    min-width: 15px;
+    min-height: 15px !important;
+    max-width: 15px;
+    max-height: 15px;
+    display: block !important;
     flex: 0 0 auto;
   }
 
@@ -79,6 +93,10 @@
     .sidebar .nav-icon {
       width: 14px;
       height: 14px;
+      min-width: 14px;
+      min-height: 14px !important;
+      max-width: 14px;
+      max-height: 14px;
     }
 
     .sidebar .nav-link-local.active,

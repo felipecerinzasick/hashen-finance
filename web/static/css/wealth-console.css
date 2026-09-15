@@ -222,7 +222,13 @@ h3 {
 .wc-product-hero {
   min-height: auto;
   padding: 96px 0 72px;
-  background: radial-gradient(1200px 600px at 80% 20%, rgba(31, 111, 86, 0.35), transparent 60%), #172421;
+  background:
+    linear-gradient(90deg, rgba(23, 36, 33, 0.97), rgba(23, 36, 33, 0.78) 54%, rgba(23, 36, 33, 0.34)),
+    radial-gradient(1200px 600px at 80% 20%, rgba(31, 111, 86, 0.35), transparent 60%),
+    url("/static/img/digital-horizon.png"),
+    #172421;
+  background-size: cover;
+  background-position: center;
   color: #fff;
 }
 
@@ -270,6 +276,20 @@ h3 {
   font-size: 14px !important;
   color: #9fb0a8 !important;
   margin-top: 16px !important;
+}
+
+.blog-hero .section-kicker {
+  color: var(--wc-gold) !important;
+}
+
+.blog-hero h1,
+.blog-hero p {
+  color: #f6faf8 !important;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.36);
+}
+
+.blog-hero h1 {
+  opacity: 1 !important;
 }
 
 .wc-screen {
@@ -653,8 +673,12 @@ h3 {
 @media (max-width: 640px) {
   .wc-product-hero {
     background:
-      linear-gradient(160deg, rgba(217, 182, 106, 0.18) 0%, rgba(217, 182, 106, 0) 38%),
-      linear-gradient(180deg, #172421 0%, #1d4d3f 48%, #dcebe4 88%, var(--wc-page) 100%);
+      linear-gradient(180deg, rgba(23, 36, 33, 0.93) 0%, rgba(29, 77, 63, 0.82) 48%, rgba(220, 235, 228, 0.88) 88%, var(--wc-page) 100%),
+      linear-gradient(160deg, rgba(217, 182, 106, 0.2) 0%, rgba(217, 182, 106, 0) 38%),
+      url("/static/img/digital-horizon.png"),
+      #172421;
+    background-size: cover;
+    background-position: center bottom;
     padding-bottom: 54px;
   }
 

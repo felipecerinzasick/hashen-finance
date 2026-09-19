@@ -28,6 +28,8 @@ MODEL = os.environ.get("CLAUDE_MODEL", "claude-sonnet-5")
 MODE = os.environ.get("MODE", "alert").lower()
 LOOKBACK_DAYS = int(os.environ.get("LOOKBACK_DAYS", "3" if MODE == "alert" else "8"))
 MAX_SEARCHES = int(os.environ.get("MAX_SEARCHES", "14"))
+MAX_TOKENS = int(os.environ.get("MAX_TOKENS", "8000"))
+MAX_PAUSE_TURNS = int(os.environ.get("MAX_PAUSE_TURNS", "8"))
 BASE_URL = os.environ.get("BASE_URL", "https://hashen-finance.onrender.com").rstrip("/")
 
 HOLDINGS = [
@@ -114,15 +116,15 @@ HOLDINGS = [
     },
 ]
 
-SYSTEM = """You are a disciplined equity research assistant for a private owner.
+COMPANY_SYSTEM = """You are a disciplined equity research assistant for a private owner.
 
 Today's date is {today}. Search the web for developments from the last {days}
-days only. Monitor these holdings:
+days only. Monitor this holding only:
 
-{holdings}
+{holding}
 
 Rules:
-- Search primary sources first for each company: company IR disclosures and press
+- Search primary sources first: company IR disclosures and press
   releases, metaplanet.jp IR disclosures for Metaplanet, SEC EDGAR, TSE timely
   disclosures, EDINET, and other exchange filings.
 - Use reputable financial news only when no primary source is available.
@@ -134,8 +136,8 @@ Rules:
   shareholder changes, strategy shifts, regulation, earnings, and capital markets.
 - Do not report ordinary share-price moves as items. Put share price only in the
   company snapshot.
-- Put sector-wide macro news once in the separate "sector" section, not repeated
-  under every company.
+- Do not include sector-wide macro news unless it directly names this company and
+  changes this company's thesis.
 - Assess whether each item is positive, negative, or neutral for the stock thesis.
 - Cross-check figures across items. If two sources conflict on the same figure
   such as BTC holdings, share count, mNAV, financing size, strike price, or index
@@ -143,29 +145,52 @@ Rules:
 
 Finish with ONE fenced ```json block and nothing after it, in this schema:
 {{
-  "reports": [
-    {{
-      "slug": "mstr|metaplanet|asst|bitmine",
-      "snapshot": {{"holdings": string|null, "share_price": number|null,
-                    "mnav": number|null, "as_of": "YYYY-MM-DD"|null}},
-      "overall_verdict": "positive" | "negative" | "neutral",
-      "email_summary": "one short sentence for an email preview",
-      "bottom_line": "2 sentences max on the net effect for the thesis",
-      "source_conflicts": ["short conflict note"],
-      "updates": [
-        {{
-          "date": "YYYY-MM-DD",
-          "headline": "max 12 words",
-          "what_happened": "2-3 concrete sentences in your own words",
-          "assessment": "positive" | "negative" | "neutral",
-          "thesis_fit": "one sentence tying it to the holding thesis",
-          "severity": "alert" | "digest",
-          "confidence": "primary source" | "secondary only" | "unconfirmed",
-          "source_url": "https://..."
-        }}
-      ]
-    }}
-  ],
+  "report": {{
+    "slug": "{slug}",
+    "snapshot": {{"holdings": string|null, "share_price": number|null,
+                  "mnav": number|null, "as_of": "YYYY-MM-DD"|null}},
+    "overall_verdict": "positive" | "negative" | "neutral",
+    "email_summary": "one short sentence for an email preview",
+    "bottom_line": "2 sentences max on the net effect for the thesis",
+    "source_conflicts": ["short conflict note"],
+    "updates": [
+      {{
+        "date": "YYYY-MM-DD",
+        "headline": "max 12 words",
+        "what_happened": "2-3 concrete sentences in your own words",
+        "assessment": "positive" | "negative" | "neutral",
+        "thesis_fit": "one sentence tying it to the holding thesis",
+        "severity": "alert" | "digest",
+        "confidence": "primary source" | "secondary only" | "unconfirmed",
+        "source_url": "https://..."
+      }}
+    ]
+  }}
+}}
+
+Use "severity": "alert" for material thesis-changing positives or negatives.
+Use "digest" for routine but relevant updates. Empty updates are fine.
+"""
+
+SECTOR_SYSTEM = """You are a disciplined equity research assistant for a private owner.
+
+Today's date is {today}. Search the web for sector-wide developments from the
+last {days} days only. Focus on Bitcoin treasury companies, Ethereum treasury
+companies, index rules, digital-asset regulation, capital markets access,
+custody rules, and macro financing conditions. Do not report ordinary share
+price moves and do not repeat company-specific items.
+
+Rules:
+- Search primary sources first: regulator releases, exchange/index-provider
+  releases, official filings, and company releases.
+- Use reputable financial news only when no primary source is available.
+- Label "primary source" only when the source is a filing, company release,
+  company IR disclosure, exchange disclosure, regulator release, EDGAR, EDINET,
+  or index-provider release.
+- Skip items in ALREADY REPORTED unless there is a material update.
+
+Finish with ONE fenced ```json block and nothing after it, in this schema:
+{{
   "sector": {{
     "bottom_line": "one sentence on relevant sector-wide macro news or empty string",
     "updates": [
@@ -187,16 +212,17 @@ Use "digest" for routine but relevant updates. Empty updates are fine.
 """
 
 
-def holdings_prompt() -> str:
-    chunks = []
-    for holding in HOLDINGS:
-        chunks.append(
-            f"- {holding['slug']} / {holding['name']} / {holding['ticker']}\n"
-            f"  Thesis: {holding['thesis']}\n"
-            f"  Checklist: {'; '.join(holding['checklist'])}\n"
-            f"  Dashboard: {BASE_URL}{holding['dashboard_path']}"
-        )
-    return "\n".join(chunks)
+class MonitorParseError(RuntimeError):
+    pass
+
+
+def holding_prompt(holding: dict[str, Any]) -> str:
+    return (
+        f"- {holding['slug']} / {holding['name']} / {holding['ticker']}\n"
+        f"  Thesis: {holding['thesis']}\n"
+        f"  Checklist: {'; '.join(holding['checklist'])}\n"
+        f"  Dashboard: {BASE_URL}{holding['dashboard_path']}"
+    )
 
 
 def load_state() -> dict[str, Any]:
@@ -220,10 +246,51 @@ def item_id(slug: str, item: dict[str, Any]) -> str:
     return hashlib.sha1(key.encode("utf-8")).hexdigest()[:14]
 
 
-def parse_json(text: str) -> dict[str, Any]:
+def text_tail(text: str, size: int = 500) -> str:
+    return text[-size:] if text else ""
+
+
+def response_text(response: Any) -> str:
+    return "\n".join(block.text for block in response.content if getattr(block, "type", None) == "text")
+
+
+def format_usage(response: Any) -> str:
+    usage = getattr(response, "usage", None)
+    if usage is None:
+        return "usage=unavailable"
+    if hasattr(usage, "model_dump_json"):
+        return usage.model_dump_json()
+    if hasattr(usage, "model_dump"):
+        return json.dumps(usage.model_dump(), default=str)
+    return str(usage)
+
+
+def log_claude_response(label: str, response: Any) -> str:
+    text = response_text(response)
+    print(f"[monitor] {label} stop_reason={getattr(response, 'stop_reason', None)}")
+    print(f"[monitor] {label} usage={format_usage(response)}")
+    print(f"[monitor] {label} text_tail={text_tail(text)!r}")
+    return text
+
+
+def parse_json(text: str, stop_reason: str | None = None) -> dict[str, Any]:
     blocks = re.findall(r"```json\s*(.*?)```", text, flags=re.S)
-    raw = blocks[-1] if blocks else text[text.find("{"): text.rfind("}") + 1]
-    data = json.loads(raw)
+    if blocks:
+        raw = blocks[-1].strip()
+    else:
+        start = text.find("{")
+        end = text.rfind("}")
+        raw = text[start:end + 1].strip() if start != -1 and end != -1 and end > start else ""
+    if not raw:
+        raise MonitorParseError(
+            f"No JSON found; stop_reason={stop_reason}; text tail={text_tail(text)!r}"
+        )
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError as exc:
+        raise MonitorParseError(
+            f"Invalid JSON; stop_reason={stop_reason}; error={exc}; text tail={text_tail(text)!r}"
+        ) from exc
     data.setdefault("reports", [])
     data.setdefault("sector", {"bottom_line": "", "updates": []})
     return data
@@ -239,42 +306,148 @@ def normalize_snapshot(snapshot: dict[str, Any] | None) -> dict[str, Any]:
     }
 
 
-def ask_claude(already_reported: list[str]) -> dict[str, Any]:
+def create_message(
+    client: Any,
+    system: str,
+    messages: list[dict[str, Any]],
+    *,
+    tools_enabled: bool,
+) -> Any:
+    kwargs: dict[str, Any] = {
+        "model": MODEL,
+        "max_tokens": MAX_TOKENS,
+        "system": system,
+        "messages": messages,
+    }
+    if tools_enabled:
+        kwargs["tools"] = [{
+            "type": "web_search_20250305",
+            "name": "web_search",
+            "max_uses": MAX_SEARCHES,
+        }]
+    return client.messages.create(**kwargs)
+
+
+def claude_json_call(
+    client: Any,
+    *,
+    label: str,
+    system: str,
+    user_content: str,
+) -> dict[str, Any]:
+    messages = [{
+        "role": "user",
+        "content": user_content,
+    }]
+
+    response = None
+    text = ""
+    for turn in range(MAX_PAUSE_TURNS + 1):
+        response = create_message(client, system, messages, tools_enabled=True)
+        text = log_claude_response(f"{label} turn={turn + 1}", response)
+        if getattr(response, "stop_reason", None) != "pause_turn":
+            break
+        messages.append({"role": "assistant", "content": response.content})
+    stop_reason = getattr(response, "stop_reason", None)
+
+    try:
+        return parse_json(text, stop_reason=stop_reason)
+    except MonitorParseError as exc:
+        print(f"[monitor] {label} parse failed: {exc}")
+
+    if response is not None:
+        messages.append({"role": "assistant", "content": response.content})
+    messages.append({
+        "role": "user",
+        "content": "Output only the final JSON block now, no searching, no prose.",
+    })
+    repair = create_message(client, system, messages, tools_enabled=False)
+    repair_text = log_claude_response(f"{label} repair", repair)
+    return parse_json(repair_text, stop_reason=getattr(repair, "stop_reason", None))
+
+
+def company_user_content(holding: dict[str, Any], already_reported: list[str]) -> str:
+    relevant = [
+        item for item in already_reported[-160:]
+        if item.startswith(f"{holding['slug']}:") or item.startswith("sector:")
+    ]
+    return (
+        f"Run the monitoring sweep for {holding['name']} only.\n\n"
+        "ALREADY REPORTED (skip these unless materially updated):\n"
+        + ("\n".join(f"- {item}" for item in relevant[-80:]) or "- none")
+    )
+
+
+def sector_user_content(already_reported: list[str]) -> str:
+    relevant = [item for item in already_reported[-160:] if item.startswith("sector:")]
+    return (
+        "Run the sector-wide macro monitoring sweep now.\n\n"
+        "ALREADY REPORTED (skip these unless materially updated):\n"
+        + ("\n".join(f"- {item}" for item in relevant[-80:]) or "- none")
+    )
+
+
+def ask_company(client: Any, holding: dict[str, Any], already_reported: list[str]) -> dict[str, Any]:
+    today = dt.date.today().isoformat()
+    data = claude_json_call(
+        client,
+        label=holding["slug"],
+        system=COMPANY_SYSTEM.format(
+            today=today,
+            days=LOOKBACK_DAYS,
+            holding=holding_prompt(holding),
+            slug=holding["slug"],
+        ),
+        user_content=company_user_content(holding, already_reported),
+    )
+    report = data.get("report")
+    if report is None:
+        reports = data.get("reports") or []
+        report = reports[0] if reports else None
+    if not isinstance(report, dict):
+        raise MonitorParseError(f"No company report object returned for {holding['slug']}")
+    report["slug"] = holding["slug"]
+    return report
+
+
+def ask_sector(client: Any, already_reported: list[str]) -> dict[str, Any]:
+    today = dt.date.today().isoformat()
+    data = claude_json_call(
+        client,
+        label="sector",
+        system=SECTOR_SYSTEM.format(today=today, days=LOOKBACK_DAYS),
+        user_content=sector_user_content(already_reported),
+    )
+    sector = data.get("sector") or {"bottom_line": "", "updates": []}
+    if not isinstance(sector, dict):
+        raise MonitorParseError("No sector object returned")
+    sector.setdefault("bottom_line", "")
+    sector.setdefault("updates", [])
+    return sector
+
+
+def ask_claude(already_reported: list[str]) -> tuple[list[dict[str, Any]], dict[str, Any], list[str]]:
     import anthropic
 
     client = anthropic.Anthropic()
-    today = dt.date.today().isoformat()
-    messages = [{
-        "role": "user",
-        "content": (
-            "Run the holdings monitoring sweep now.\n\n"
-            "ALREADY REPORTED (skip these unless materially updated):\n"
-            + ("\n".join(f"- {item}" for item in already_reported[-120:]) or "- none")
-        ),
-    }]
+    reports = []
+    failures = []
+    for holding in HOLDINGS:
+        try:
+            reports.append(ask_company(client, holding, already_reported))
+        except Exception as exc:  # noqa: BLE001 - one failed holding must not abort the sweep
+            message = f"{holding['name']}: sweep failed, see Actions log ({exc})"
+            failures.append(message)
+            print(f"[monitor] {message}")
 
-    for _ in range(5):
-        response = client.messages.create(
-            model=MODEL,
-            max_tokens=7000,
-            system=SYSTEM.format(
-                today=today,
-                days=LOOKBACK_DAYS,
-                holdings=holdings_prompt(),
-            ),
-            messages=messages,
-            tools=[{
-                "type": "web_search_20250305",
-                "name": "web_search",
-                "max_uses": MAX_SEARCHES,
-            }],
-        )
-        if response.stop_reason != "pause_turn":
-            break
-        messages.append({"role": "assistant", "content": response.content})
-
-    text = "\n".join(block.text for block in response.content if block.type == "text")
-    return parse_json(text)
+    sector = {"bottom_line": "", "updates": []}
+    try:
+        sector = ask_sector(client, already_reported)
+    except Exception as exc:  # noqa: BLE001 - sector failure should not abort company reports
+        message = f"Sector: sweep failed, see Actions log ({exc})"
+        failures.append(message)
+        print(f"[monitor] {message}")
+    return reports, sector, failures
 
 
 def normalize_report(report: dict[str, Any]) -> dict[str, Any]:
@@ -297,13 +470,14 @@ def normalize_report(report: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def write_reports(reports: list[dict[str, Any]], sector: dict[str, Any]) -> None:
+def write_reports(reports: list[dict[str, Any]], sector: dict[str, Any], failures: list[str]) -> None:
     REPORT_DIR.mkdir(exist_ok=True)
     latest = {
         "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(),
         "lookback_days": LOOKBACK_DAYS,
         "reports": reports,
         "sector": sector,
+        "failures": failures,
     }
     (REPORT_DIR / "latest.json").write_text(json.dumps(latest, indent=2, ensure_ascii=False), encoding="utf-8")
     (REPORT_DIR / "sector.json").write_text(json.dumps(sector, indent=2, ensure_ascii=False), encoding="utf-8")
@@ -320,6 +494,7 @@ def render_email(
     new_updates: list[tuple[dict[str, Any], dict[str, Any]]],
     sector: dict[str, Any],
     new_sector_updates: list[dict[str, Any]],
+    failures: list[str],
 ) -> tuple[str, str]:
     assessments = [update.get("assessment") for _, update in new_updates]
     assessments += [update.get("assessment") for update in new_sector_updates]
@@ -327,12 +502,21 @@ def render_email(
     negatives = sum(assessment == "negative" for assessment in assessments)
     neutrals = len(assessments) - positives - negatives
     subject = f"Holdings monitor: {positives} positive / {negatives} negative / {neutrals} neutral"
+    if failures:
+        subject += f" / {len(failures)} failed"
 
     lines = [
         f"Holdings monitor - {dt.date.today():%d %b %Y}",
         "",
-        "SHORT VERSION",
     ]
+    if failures:
+        lines += [
+            "SWEEP FAILURES",
+            *[f"- {failure}" for failure in failures],
+            "",
+        ]
+
+    lines.append("SHORT VERSION")
     for report in reports:
         report_updates = [update for item_report, update in new_updates if item_report["slug"] == report["slug"]]
         if report_updates:
@@ -463,11 +647,16 @@ def main() -> int:
     seen_ids = {entry.get("id") for entry in state.get("seen", [])}
     already_reported = [entry.get("label", "") for entry in state.get("seen", [])]
 
-    data = load_sample() if os.environ.get("SAMPLE_DATA") else ask_claude(already_reported)
-    reports = [normalize_report(report) for report in data.get("reports", []) if report.get("slug")]
-    sector = data.get("sector") or {"bottom_line": "", "updates": []}
+    if os.environ.get("SAMPLE_DATA"):
+        data = load_sample()
+        raw_reports = data.get("reports", [])
+        sector = data.get("sector") or {"bottom_line": "", "updates": []}
+        failures: list[str] = []
+    else:
+        raw_reports, sector, failures = ask_claude(already_reported)
+    reports = [normalize_report(report) for report in raw_reports if report.get("slug")]
     sector.setdefault("updates", [])
-    write_reports(reports, sector)
+    write_reports(reports, sector, failures)
 
     new_updates: list[tuple[dict[str, Any], dict[str, Any]]] = []
     for report in reports:
@@ -482,8 +671,8 @@ def main() -> int:
             new_sector_updates.append(update)
 
     to_send = new_updates
-    if to_send or new_sector_updates:
-        subject, body = render_email(reports, to_send, sector, new_sector_updates)
+    if to_send or new_sector_updates or failures:
+        subject, body = render_email(reports, to_send, sector, new_sector_updates, failures)
         if os.environ.get("DRY_RUN"):
             print(subject)
             print()
@@ -505,6 +694,9 @@ def main() -> int:
         save_state(state)
     else:
         print("No new holding updates. Reports were refreshed; no email sent.")
+    if not os.environ.get("SAMPLE_DATA") and not reports:
+        print("[monitor] All company sweeps failed.")
+        return 1
     return 0
 
 

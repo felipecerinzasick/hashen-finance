@@ -1,4 +1,59 @@
 {
-  "bottom_line": "No sector-wide monitoring report has been generated yet.",
-  "updates": []
+  "bottom_line": "A failed Senate crypto market-structure vote and a surprise Fed rate hike to 3.75%-4.00% raised financing costs and regulatory uncertainty for treasury companies, even as the SEC and CFTC moved unilaterally to advance tokenization and crypto market-structure rules via executive authority.",
+  "updates": [
+    {
+      "date": "2026-09-15",
+      "headline": "Senate blocks CLARITY Act crypto market-structure bill",
+      "what_happened": "The Senate cloture vote on the Digital Asset Market CLARITY Act failed 49-50, well short of the 60 votes needed to advance the bill, with three Republicans breaking ranks and Democratic negotiators who had worked on the bill all voting no. The failure stalls the first comprehensive federal crypto market-structure framework and pushes prospects for passage into 2027.",
+      "assessment": "negative",
+      "severity": "alert",
+      "confidence": "secondary only",
+      "source_url": "https://www.cnbc.com/2026/09/15/senate-cloture-vote-on-clarity-act-fails-dealing-regulatory-setback-to-crypto-industry.html"
+    },
+    {
+      "date": "2026-09-17",
+      "headline": "SEC issues Innovation Exemption for tokenized stock trading",
+      "what_happened": "The SEC issued a temporary, five-year conditional exemption allowing \"Tokenized Securities Venues\" (TSVs) to trade tokenized NMS stocks via permissioned automated market makers without registering as exchanges, and separately exempted qualifying liquidity providers from dealer registration. Chair Atkins framed the move as a direct response to the Senate's failure to pass crypto legislation, positioning the SEC to advance capital-markets modernization using existing statutory authority.",
+      "assessment": "positive",
+      "severity": "alert",
+      "confidence": "primary source",
+      "source_url": "https://www.sec.gov/newsroom/press-releases/2026-90-sec-issues-innovation-exemption-facilitate-trading-tokenized-nms-stock-request-comment"
+    },
+    {
+      "date": "2026-09-17",
+      "headline": "CFTC files crypto market-structure rulemaking with White House",
+      "what_happened": "Two days after the CLARITY Act failure, the CFTC submitted a prerule filing (RIN 3038-AF80, \"Regulation of Crypto Asset Transactions and Crypto Asset Markets\") to the White House OIRA, invoking Dodd-Frank authority to create a new registration category for crypto trading venues without new legislation. Chairman Selig said the agency is \"locked in and ready to ship\" rules, though the process could take until late 2027 to become final and binding.",
+      "assessment": "neutral",
+      "severity": "digest",
+      "confidence": "primary source",
+      "source_url": "https://gokhshtein.com/news/2026-09-19-cftc-files-crypto-rulemaking-after-clarity-act-fails"
+    },
+    {
+      "date": "2026-09-16",
+      "headline": "Fed raises rates 25bp to 3.75%-4.00%, first hike since 2023",
+      "what_happened": "The Federal Reserve raised its benchmark rate by 25 basis points to a target range of 3.75%-4.00%, its first increase in over three years, with updated projections pointing to a possible further hike this year. The decision, driven by elevated inflation and Middle East tension, raises financing and carry costs for leveraged treasury-company balance sheets.",
+      "assessment": "negative",
+      "severity": "alert",
+      "confidence": "secondary only",
+      "source_url": "https://www.cnbc.com/2026/09/16/fed-rate-decision-september-2026.html"
+    },
+    {
+      "date": "2026-09-14",
+      "headline": "Bitcoin ETFs post $463M outflows, Ether ETFs draw $197M inflows",
+      "what_happened": "US spot Bitcoin ETFs recorded $462.7 million in net outflows for the week of Sept 8-11, ending a three-week inflow streak, led by ARK 21Shares and Grayscale redemptions, while spot Ether ETFs reversed course with $196.9 million in net inflows, led by BlackRock's ETHA. The divergence suggests institutional rotation between the two largest crypto assets rather than a broad sector exit.",
+      "assessment": "neutral",
+      "severity": "digest",
+      "confidence": "secondary only",
+      "source_url": "https://www.fxstreet.com/cryptocurrencies/news/bitcoin-etfs-shed-463m-in-weekly-reversal-as-ether-etfs-gain-197m-202609141058"
+    },
+    {
+      "date": "2026-09-17",
+      "headline": "Bitcoin treasury sector market value down sharply from peak",
+      "what_happened": "Reports citing sector trackers indicate the roughly 179 listed Bitcoin treasury companies have collectively lost tens of billions of dollars in market value since mid-2025, with commentators flagging tightening financing conditions and rising investor scrutiny of the model's sustainability as the number of competing issuers has grown.",
+      "assessment": "negative",
+      "severity": "digest",
+      "confidence": "secondary only",
+      "source_url": "https://thecurrencyanalytics.com/bitcoin/bitcoin-treasury-firms-shed-83-billion-as-179-companies-fight-to-survive-294530"
+    }
+  ]
 }

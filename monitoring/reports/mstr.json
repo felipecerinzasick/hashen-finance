@@ -3,17 +3,40 @@
   "name": "Strategy",
   "ticker": "MSTR",
   "dashboard_url": "https://hashen-finance.onrender.com/dashboard/mstr/",
-  "generated_at": null,
-  "lookback_days": 3,
+  "generated_at": "2026-09-19T15:52:31.676804+00:00",
+  "lookback_days": 8,
   "snapshot": {
-    "holdings": null,
-    "share_price": null,
-    "mnav": null,
-    "as_of": null
+    "holdings": "845,050 BTC (unchanged since Aug 31, 2026; cost basis $63.73B, avg $75,412/BTC per Sept 14 8-K)",
+    "share_price": 153.92,
+    "mnav": 1.04,
+    "as_of": "2026-09-18"
   },
   "overall_verdict": "neutral",
-  "email_summary": "No monitoring report has been generated yet.",
-  "bottom_line": "No monitoring report has been generated yet.",
-  "source_conflicts": [],
-  "updates": []
+  "email_summary": "No new BTC bought in two weeks; MSTR rallied 16% on Sept 18 as analysts raised targets and mNAV firmed near 1.04x.",
+  "bottom_line": "Strategy remains in a capital-preservation posture — repurchasing STRC preferred with USD cash rather than buying BTC — while Wall Street sell-side turned more constructive as the stock rallied off multi-month lows. BTC-per-share is flat this period; the thesis hinges on whether the improved mNAV/sentiment translates into resumed accretive bitcoin buying rather than just preferred buybacks.",
+  "source_conflicts": [
+    "Multiple Sept 18 secondary sources (KuCoin, Timothy Sykes/Yahoo aggregator) cite Strategy's BTC holdings as '840,050 BTC,' which conflicts with the primary Sept 14 8-K and other Sept 18 secondary sources (Alliance Global note, StocksToTrade) that confirm 845,050 BTC as of Sept 13; the 845,050 figure is better supported by the primary filing."
+  ],
+  "updates": [
+    {
+      "date": "2026-09-18",
+      "headline": "Wall Street turns bullish, MSTR jumps 16% on new coverage",
+      "what_happened": "Alliance Global initiated coverage with a Buy rating and $217 target citing the roughly 845,050 BTC stack, while B. Riley, Canaccord and Barclays raised price targets into the $160–$179 range and Bernstein maintained an Outperform rating. Multiple secondary sources reported MSTR closed at $153.92 on Sept 18, up over 16% on the day, aided by a broader bitcoin rally and favorable regulatory sentiment.",
+      "assessment": "positive",
+      "thesis_fit": "Improving sell-side sentiment and a firming mNAV (back toward parity/premium) matter for the treasury flywheel, since Strategy's ability to issue equity/preferreds accretively depends on trading at or above NAV.",
+      "severity": "digest",
+      "confidence": "secondary only",
+      "source_url": "https://www.kucoin.com/news/flash/strategy-stock-mstr-surges-16-39-amid-bitcoin-rally-and-regulatory-developments"
+    },
+    {
+      "date": "2026-09-18",
+      "headline": "CEO Phong Le reaffirms accumulation stance, leaves door open to sales",
+      "what_happened": "In a public statement, CEO Phong Le confirmed Strategy's large BTC treasury position and reiterated the company's primary objective as a long-term bitcoin accumulator. He also noted management would consider selling small amounts of bitcoin if market conditions or capital needs warranted it, consistent with the pattern of small tactical BTC sales seen earlier in 2026.",
+      "assessment": "neutral",
+      "thesis_fit": "Reaffirms the now-established shift away from a strict 'never sell' policy toward tactical liquidity management, a known risk factor for the treasury thesis rather than a new development.",
+      "severity": "digest",
+      "confidence": "secondary only",
+      "source_url": "https://www.kucoin.com/news/flash/strategy-stock-mstr-surges-16-39-amid-bitcoin-rally-and-regulatory-developments"
+    }
+  ]
 }

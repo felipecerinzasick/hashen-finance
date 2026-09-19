@@ -3,17 +3,31 @@
   "name": "Asset Entities / Strive",
   "ticker": "ASST",
   "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/asst/",
-  "generated_at": null,
-  "lookback_days": 3,
+  "generated_at": "2026-09-19T15:52:31.676838+00:00",
+  "lookback_days": 8,
   "snapshot": {
-    "holdings": null,
-    "share_price": null,
-    "mnav": null,
-    "as_of": null
+    "holdings": "25,000 BTC (as of Sept 11, 2026)",
+    "share_price": 30.11,
+    "mnav": 1.56,
+    "as_of": "2026-09-18"
   },
   "overall_verdict": "neutral",
-  "email_summary": "No monitoring report has been generated yet.",
-  "bottom_line": "No monitoring report has been generated yet.",
-  "source_conflicts": [],
-  "updates": []
+  "email_summary": "ASST shares climb above $27 warrant strike as $718M PIPE warrant deadline nears Oct 13.",
+  "bottom_line": "The stock's move above the $27 PIPE warrant strike puts roughly $718M of potential fresh capital in play for further BTC purchases, but exercise would also add ~26.6M shares, so the net effect on Bitcoin-per-share depends on execution and timing. No new treasury purchases, financing terms, or governance changes emerged beyond items already reported.",
+  "source_conflicts": [
+    "Reported ASST closing price on Sept 18, 2026 varies across sources: StockTitan cites $30.11/$30.13, MarketBeat cites prior close $28.28 with shares trading near $29.51, and Kraken cites a prior close of $28.32 with an intraday price near $30.02 — all consistent with a sharp single-day move but with imprecise agreement on the exact closing print.",
+    "Outstanding PIPE warrant notional is cited as 'more than $700 million' in early-September commentary versus a more precise $718 million figure disclosed by the CEO as of September 11, 2026 — likely the same instrument with rounding differences rather than a true conflict."
+  ],
+  "updates": [
+    {
+      "date": "2026-09-18",
+      "headline": "ASST shares clear $27 warrant strike; deadline moves to Oct 13",
+      "what_happened": "Strive's CEO disclosed that as of September 11, 2026 approximately $718 million in PIPE warrants with a $27 exercise price remained outstanding, and the exercise deadline was pushed from October 12 to 5:00 p.m. Eastern on October 13, 2026 because of the Columbus Day bank holiday, with all other terms unchanged. Separately, ASST shares closed at $30.11 on September 18, 2026, up sharply from a prior close near $28.28, putting the stock clearly above the $27 strike for the first time as the deadline approaches.",
+      "assessment": "neutral",
+      "thesis_fit": "If warrant holders exercise, the roughly $718 million in proceeds tied to about 26.6 million shares could fund a large step-up in Bitcoin purchases, but the added share count is a direct dilution event whose net effect on Bitcoin-per-share depends on how quickly and profitably proceeds are deployed.",
+      "severity": "alert",
+      "confidence": "secondary only",
+      "source_url": "https://www.kucoin.com/news/flash/strive-extends-exercise-deadline-for-718m-pipe-warrants-to-october-13"
+    }
+  ]
 }

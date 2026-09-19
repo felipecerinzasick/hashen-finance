@@ -1,10 +1,267 @@
 {
-  "generated_at": null,
-  "lookback_days": 3,
-  "reports": [],
+  "generated_at": "2026-09-19T15:52:31.676913+00:00",
+  "lookback_days": 8,
+  "reports": [
+    {
+      "slug": "mstr",
+      "name": "Strategy",
+      "ticker": "MSTR",
+      "dashboard_url": "https://hashen-finance.onrender.com/dashboard/mstr/",
+      "generated_at": "2026-09-19T15:52:31.676804+00:00",
+      "lookback_days": 8,
+      "snapshot": {
+        "holdings": "845,050 BTC (unchanged since Aug 31, 2026; cost basis $63.73B, avg $75,412/BTC per Sept 14 8-K)",
+        "share_price": 153.92,
+        "mnav": 1.04,
+        "as_of": "2026-09-18"
+      },
+      "overall_verdict": "neutral",
+      "email_summary": "No new BTC bought in two weeks; MSTR rallied 16% on Sept 18 as analysts raised targets and mNAV firmed near 1.04x.",
+      "bottom_line": "Strategy remains in a capital-preservation posture — repurchasing STRC preferred with USD cash rather than buying BTC — while Wall Street sell-side turned more constructive as the stock rallied off multi-month lows. BTC-per-share is flat this period; the thesis hinges on whether the improved mNAV/sentiment translates into resumed accretive bitcoin buying rather than just preferred buybacks.",
+      "source_conflicts": [
+        "Multiple Sept 18 secondary sources (KuCoin, Timothy Sykes/Yahoo aggregator) cite Strategy's BTC holdings as '840,050 BTC,' which conflicts with the primary Sept 14 8-K and other Sept 18 secondary sources (Alliance Global note, StocksToTrade) that confirm 845,050 BTC as of Sept 13; the 845,050 figure is better supported by the primary filing."
+      ],
+      "updates": [
+        {
+          "date": "2026-09-18",
+          "headline": "Wall Street turns bullish, MSTR jumps 16% on new coverage",
+          "what_happened": "Alliance Global initiated coverage with a Buy rating and $217 target citing the roughly 845,050 BTC stack, while B. Riley, Canaccord and Barclays raised price targets into the $160–$179 range and Bernstein maintained an Outperform rating. Multiple secondary sources reported MSTR closed at $153.92 on Sept 18, up over 16% on the day, aided by a broader bitcoin rally and favorable regulatory sentiment.",
+          "assessment": "positive",
+          "thesis_fit": "Improving sell-side sentiment and a firming mNAV (back toward parity/premium) matter for the treasury flywheel, since Strategy's ability to issue equity/preferreds accretively depends on trading at or above NAV.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://www.kucoin.com/news/flash/strategy-stock-mstr-surges-16-39-amid-bitcoin-rally-and-regulatory-developments"
+        },
+        {
+          "date": "2026-09-18",
+          "headline": "CEO Phong Le reaffirms accumulation stance, leaves door open to sales",
+          "what_happened": "In a public statement, CEO Phong Le confirmed Strategy's large BTC treasury position and reiterated the company's primary objective as a long-term bitcoin accumulator. He also noted management would consider selling small amounts of bitcoin if market conditions or capital needs warranted it, consistent with the pattern of small tactical BTC sales seen earlier in 2026.",
+          "assessment": "neutral",
+          "thesis_fit": "Reaffirms the now-established shift away from a strict 'never sell' policy toward tactical liquidity management, a known risk factor for the treasury thesis rather than a new development.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://www.kucoin.com/news/flash/strategy-stock-mstr-surges-16-39-amid-bitcoin-rally-and-regulatory-developments"
+        }
+      ]
+    },
+    {
+      "slug": "metaplanet",
+      "name": "Metaplanet",
+      "ticker": "3350.T / MTPLF / DN3.F",
+      "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/metaplanet/",
+      "generated_at": "2026-09-19T15:52:31.676832+00:00",
+      "lookback_days": 8,
+      "snapshot": {
+        "holdings": "43,000 BTC (unchanged this period)",
+        "share_price": 251,
+        "mnav": 0.66,
+        "as_of": "2026-09-15"
+      },
+      "overall_verdict": "neutral",
+      "email_summary": "Metaplanet cut its dilutive Series 10 warrant pool 41% but Capital Research quietly sold ~¥4.8B of stock, dropping below the 10% major-shareholder threshold.",
+      "bottom_line": "Management's 41% cut to the Series 10 warrant pool is a genuine (if partial) governance win that reduces future dilution, but it was overshadowed by Capital Research's ~¥4.8B share sale that pushed its stake below 10% during a sharp stock decline. Net effect on thesis is mixed: incentive alignment improved, but a major institutional holder is trimming exposure and analysts remain cautious on residual dilution overhang.",
+      "source_conflicts": [
+        "mNAV estimates diverge across sources: a Japanese retail-focused article implies ~0.66x (share price vs BTC value basis) as of Sep 15, while Seeking Alpha cites a 0.79x EV/mNAV discount the same day — likely different denominators (market cap vs enterprise value).",
+        "Share price snapshots conflict across trackers: Investing.com showed ¥293 (Sep 6), MSN showed ¥233 (Aug 10, stale), TradingView cached a figure of ¥461, while primary Japanese reporting places the close at ¥251 on Sep 15 and an intraday low of ¥232 on Sep 16 — the ¥251/¥232 figures from Japanese-language reporting citing TDnet disclosures are treated as most current."
+      ],
+      "updates": [
+        {
+          "date": "2026-09-11",
+          "headline": "Board cuts Series 10 warrant pool by 41%",
+          "what_happened": "Metaplanet's board resolved to cut the potential share pool under its 10th Series Stock Acquisition Rights by 41.1%, from 319,464,000 to 188,190,000 shares, lowering the conversion ratio from 696 to 410 shares per right. The company also scrapped a plan to transfer up to 90,000 rights into an employee incentive vehicle, opting to cancel them and design a new compensation plan with an external consultant instead.",
+          "assessment": "positive",
+          "thesis_fit": "Directly addresses the checklist's warrant/dilution concern by materially shrinking a controversial option pool that shareholders had criticized as amplifying dilution, though the pool remains over four times its original size per one analyst.",
+          "severity": "alert",
+          "confidence": "primary source",
+          "source_url": "https://www.kucoin.com/news/flash/metaplanet-cuts-series-10-stock-rights-pool-by-41-to-boost-bitcoin-per-share"
+        },
+        {
+          "date": "2026-09-15",
+          "headline": "Capital Research stake falls below 10%, exits major-shareholder status",
+          "what_happened": "An EDINET change report (No.30) disclosed that Capital Research and Management Company's voting ratio fell from 10.63% (July 13) to 9.32% (as of Sep 8, 2026), causing it to lose \"major shareholder\" status. Aggregated sales between Aug 3 and Sep 8 totaled roughly 18.4 million shares (~¥4.84 billion), with the firm's holding dropping from 136,059,120 to 125,455,820 shares; Capital Research remains Metaplanet's largest overall shareholder by ranking despite the reduction.",
+          "assessment": "negative",
+          "thesis_fit": "This is precisely the checklist's flagged risk — a reduction by Capital Research/Capital Group — and it coincided with a roughly 25% share-price decline over the same window, raising concern about institutional confidence.",
+          "severity": "alert",
+          "confidence": "primary source",
+          "source_url": "https://news.yahoo.co.jp/articles/672d65a0ce3b34c4c20d70d7079aebaa544d9fad"
+        },
+        {
+          "date": "2026-09-11",
+          "headline": "CFO reshuffle: capital markets head promoted to CFO",
+          "what_happened": "Metaplanet's board resolved an executive officer reshuffle effective September 11: outgoing CFO moved to a newly created Director of Administration role, while the former head of Capital Markets & IR, Shimpei Okuno, was promoted to Executive Officer, CFO. The company stated the change aims to strengthen finance and capital markets functions as the group's business scale expands.",
+          "assessment": "neutral",
+          "thesis_fit": "A capital-markets-focused CFO could support better financing discipline going forward, but this is a routine leadership change rather than a capital-allocation or governance decision by itself.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://www.release.tdnet.info/inbs/140120260911535177.pdf"
+        },
+        {
+          "date": "2026-09-11",
+          "headline": "Proposed capital reduction to ¥1 and new Hong Kong unit",
+          "what_happened": "Metaplanet's board proposed reducing capital stock from roughly ¥27.8 billion to ¥1 and zeroing capital reserves at a December 18, 2026 extraordinary general meeting, aiming to eliminate an approximately ¥1.8 billion accumulated deficit and create room for future dividends and buybacks. The board separately approved a wholly owned Hong Kong subsidiary, Metaplanet Asset Management Asia Limited.",
+          "assessment": "neutral",
+          "thesis_fit": "This is a procedural balance-sheet cleanup that could eventually enable buybacks or dividends per the checklist, but it has no immediate effect on BTC-per-share or dilution and its ultimate impact depends on future execution.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://www.cryptotimes.io/2026/09/11/metaplanet-shares-fall-3-86-as-firm-proposes-%C2%A527-8b-capital-cut-hong-kong-unit/"
+        },
+        {
+          "date": "2026-09-15",
+          "headline": "Seeking Alpha initiates cautious Hold on governance concerns",
+          "what_happened": "A Seeking Alpha analyst initiated coverage with a cautious Hold, noting that the September 11 Series 10 amendment reduced the warrant pool to 188.2 million shares but that this remains over four times the original pool size, and that governance and capital-structure concerns outweigh the stock's roughly 0.79x EV/mNAV discount.",
+          "assessment": "negative",
+          "thesis_fit": "Directly engages the checklist's concern about analyst critiques of dilution and governance, tempering the positive read on the warrant-pool cut.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://seekingalpha.com/article/4946503-metaplanets-bitcoin-discount-is-complicated-by-stock-acquisition-rights-and-governance"
+        }
+      ]
+    },
+    {
+      "slug": "asst",
+      "name": "Asset Entities / Strive",
+      "ticker": "ASST",
+      "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/asst/",
+      "generated_at": "2026-09-19T15:52:31.676838+00:00",
+      "lookback_days": 8,
+      "snapshot": {
+        "holdings": "25,000 BTC (as of Sept 11, 2026)",
+        "share_price": 30.11,
+        "mnav": 1.56,
+        "as_of": "2026-09-18"
+      },
+      "overall_verdict": "neutral",
+      "email_summary": "ASST shares climb above $27 warrant strike as $718M PIPE warrant deadline nears Oct 13.",
+      "bottom_line": "The stock's move above the $27 PIPE warrant strike puts roughly $718M of potential fresh capital in play for further BTC purchases, but exercise would also add ~26.6M shares, so the net effect on Bitcoin-per-share depends on execution and timing. No new treasury purchases, financing terms, or governance changes emerged beyond items already reported.",
+      "source_conflicts": [
+        "Reported ASST closing price on Sept 18, 2026 varies across sources: StockTitan cites $30.11/$30.13, MarketBeat cites prior close $28.28 with shares trading near $29.51, and Kraken cites a prior close of $28.32 with an intraday price near $30.02 — all consistent with a sharp single-day move but with imprecise agreement on the exact closing print.",
+        "Outstanding PIPE warrant notional is cited as 'more than $700 million' in early-September commentary versus a more precise $718 million figure disclosed by the CEO as of September 11, 2026 — likely the same instrument with rounding differences rather than a true conflict."
+      ],
+      "updates": [
+        {
+          "date": "2026-09-18",
+          "headline": "ASST shares clear $27 warrant strike; deadline moves to Oct 13",
+          "what_happened": "Strive's CEO disclosed that as of September 11, 2026 approximately $718 million in PIPE warrants with a $27 exercise price remained outstanding, and the exercise deadline was pushed from October 12 to 5:00 p.m. Eastern on October 13, 2026 because of the Columbus Day bank holiday, with all other terms unchanged. Separately, ASST shares closed at $30.11 on September 18, 2026, up sharply from a prior close near $28.28, putting the stock clearly above the $27 strike for the first time as the deadline approaches.",
+          "assessment": "neutral",
+          "thesis_fit": "If warrant holders exercise, the roughly $718 million in proceeds tied to about 26.6 million shares could fund a large step-up in Bitcoin purchases, but the added share count is a direct dilution event whose net effect on Bitcoin-per-share depends on how quickly and profitably proceeds are deployed.",
+          "severity": "alert",
+          "confidence": "secondary only",
+          "source_url": "https://www.kucoin.com/news/flash/strive-extends-exercise-deadline-for-718m-pipe-warrants-to-october-13"
+        }
+      ]
+    },
+    {
+      "slug": "bitmine",
+      "name": "BitMine Immersion",
+      "ticker": "BMNR",
+      "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/bitmine/",
+      "generated_at": "2026-09-19T15:52:31.676842+00:00",
+      "lookback_days": 8,
+      "snapshot": {
+        "holdings": "5,956,378 ETH (~4.9% of ETH supply), 212 BTC, $180M Beast Industries stake, $98M Eightco (ORBS) stake, $549M cash & marketable securities as of Sept 13, 2026",
+        "share_price": 25.74,
+        "mnav": 1.02,
+        "as_of": "2026-09-18"
+      },
+      "overall_verdict": "neutral",
+      "email_summary": "BitMine kept buying ETH toward its 5% target, but a validator-advisor swap raised staking-transparency questions.",
+      "bottom_line": "Accumulation, staking scale, and analyst price-target hikes remain thesis-supportive, but an unexplained validator-advisor change and lack of signing-key disclosure add a governance/custody overhang worth monitoring. Net effect this period is roughly neutral: positive treasury/financing news offset by a fresh disclosure gap on staking control.",
+      "source_conflicts": [
+        "Stock price differs slightly across trackers for the same period: Robinhood shows $25.74 (range $24.59-$25.89 on 9/18) while Kraken shows $24.98 (range $24.28-$26.97), likely reflecting different snapshot times.",
+        "Analyst price-target action (B. Riley to $30, Cantor Fitzgerald to $63.60) is dated September 10, 2026 by MarketBeat/KuCoin sources but was still being actively cited in market commentary through September 17-18, creating some ambiguity on whether this falls inside the 8-day window."
+      ],
+      "updates": [
+        {
+          "date": "2026-09-14",
+          "headline": "BitMine adds ETH, holdings near $15.8B, 4.9% of supply",
+          "what_happened": "BitMine's 8-K/press release disclosed ETH holdings of 5,956,378 tokens (about 4.9% of ETH supply) as of September 13, 2026, with total crypto, cash and 'moonshot' holdings of $15.8 billion. The company reported 5,067,309 staked ETH generating a 2.62% seven-day annualized yield, with projected annualized staking revenue of $334 million, rising to $392 million if fully staked.",
+          "assessment": "positive",
+          "thesis_fit": "Continued weekly ETH accumulation and rising staking-revenue disclosure directly support the credible-accumulation and staking-economics pillars of the thesis, though it is largely a continuation of the already-reported 5% supply push.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://www.prnewswire.com/news-releases/bitmine-immersion-technologies-bmnr-announces-eth-holdings-reach-5-96-million-tokens-and-total-crypto-and-total-cash-holdings-of-15-8-billion-302877149.html"
+        },
+        {
+          "date": "2026-09-11",
+          "headline": "Validator advisor swap raises staking-transparency questions",
+          "what_happened": "Reporting based on an 8-K disclosure showed BitMine ended a management-services agreement with Ethereum Tower on September 3 and appointed its affiliate, American Validator, to advise MAVAN the next day, with American Validator receiving a 1.5% fee on staking rewards. Coverage noted BitMine's staked ETH now equals roughly 11.8% of Ethereum's active stake, but the company has not disclosed how validator operations or signing-key control are split among MAVAN and outside operators.",
+          "assessment": "negative",
+          "thesis_fit": "This is a governance/custody-disclosure gap: as BitMine's staking footprint grows toward a material share of Ethereum's consensus stake, the lack of validator/signing-key transparency and an unexplained related-party advisor change weakens confidence in staking-risk disclosure discipline.",
+          "severity": "alert",
+          "confidence": "secondary only",
+          "source_url": "https://cryptoslate.com/bitmines-staked-eth-equals-nearly-12-of-ethereums-active-stake-but-who-controls-it/"
+        },
+        {
+          "date": "2026-09-10",
+          "headline": "Cantor Fitzgerald, B. Riley hike BMNR price targets",
+          "what_happened": "Cantor Fitzgerald more than doubled its BMNR price target from $30.60 to $63.60 while maintaining an Overweight rating, citing Ethereum's DeFi role and an expected crypto-market bottom by October 2026. B. Riley raised its target to $30 from $25 with a Buy rating, pointing to rising digital-asset prices and improving liquidity conditions.",
+          "assessment": "positive",
+          "thesis_fit": "Sell-side upgrades reflect growing Wall Street confidence in BitMine's ETH treasury and staking model, though the moves are narrative/valuation-driven rather than new operational disclosure.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://www.kucoin.com/news/flash/cantor-fitzgerald-doubles-bitmine-price-target-to-63-60-amid-ethereum-treasury-strategy"
+        }
+      ]
+    }
+  ],
   "sector": {
-    "bottom_line": "No sector-wide monitoring report has been generated yet.",
-    "updates": []
+    "bottom_line": "A failed Senate crypto market-structure vote and a surprise Fed rate hike to 3.75%-4.00% raised financing costs and regulatory uncertainty for treasury companies, even as the SEC and CFTC moved unilaterally to advance tokenization and crypto market-structure rules via executive authority.",
+    "updates": [
+      {
+        "date": "2026-09-15",
+        "headline": "Senate blocks CLARITY Act crypto market-structure bill",
+        "what_happened": "The Senate cloture vote on the Digital Asset Market CLARITY Act failed 49-50, well short of the 60 votes needed to advance the bill, with three Republicans breaking ranks and Democratic negotiators who had worked on the bill all voting no. The failure stalls the first comprehensive federal crypto market-structure framework and pushes prospects for passage into 2027.",
+        "assessment": "negative",
+        "severity": "alert",
+        "confidence": "secondary only",
+        "source_url": "https://www.cnbc.com/2026/09/15/senate-cloture-vote-on-clarity-act-fails-dealing-regulatory-setback-to-crypto-industry.html"
+      },
+      {
+        "date": "2026-09-17",
+        "headline": "SEC issues Innovation Exemption for tokenized stock trading",
+        "what_happened": "The SEC issued a temporary, five-year conditional exemption allowing \"Tokenized Securities Venues\" (TSVs) to trade tokenized NMS stocks via permissioned automated market makers without registering as exchanges, and separately exempted qualifying liquidity providers from dealer registration. Chair Atkins framed the move as a direct response to the Senate's failure to pass crypto legislation, positioning the SEC to advance capital-markets modernization using existing statutory authority.",
+        "assessment": "positive",
+        "severity": "alert",
+        "confidence": "primary source",
+        "source_url": "https://www.sec.gov/newsroom/press-releases/2026-90-sec-issues-innovation-exemption-facilitate-trading-tokenized-nms-stock-request-comment"
+      },
+      {
+        "date": "2026-09-17",
+        "headline": "CFTC files crypto market-structure rulemaking with White House",
+        "what_happened": "Two days after the CLARITY Act failure, the CFTC submitted a prerule filing (RIN 3038-AF80, \"Regulation of Crypto Asset Transactions and Crypto Asset Markets\") to the White House OIRA, invoking Dodd-Frank authority to create a new registration category for crypto trading venues without new legislation. Chairman Selig said the agency is \"locked in and ready to ship\" rules, though the process could take until late 2027 to become final and binding.",
+        "assessment": "neutral",
+        "severity": "digest",
+        "confidence": "primary source",
+        "source_url": "https://gokhshtein.com/news/2026-09-19-cftc-files-crypto-rulemaking-after-clarity-act-fails"
+      },
+      {
+        "date": "2026-09-16",
+        "headline": "Fed raises rates 25bp to 3.75%-4.00%, first hike since 2023",
+        "what_happened": "The Federal Reserve raised its benchmark rate by 25 basis points to a target range of 3.75%-4.00%, its first increase in over three years, with updated projections pointing to a possible further hike this year. The decision, driven by elevated inflation and Middle East tension, raises financing and carry costs for leveraged treasury-company balance sheets.",
+        "assessment": "negative",
+        "severity": "alert",
+        "confidence": "secondary only",
+        "source_url": "https://www.cnbc.com/2026/09/16/fed-rate-decision-september-2026.html"
+      },
+      {
+        "date": "2026-09-14",
+        "headline": "Bitcoin ETFs post $463M outflows, Ether ETFs draw $197M inflows",
+        "what_happened": "US spot Bitcoin ETFs recorded $462.7 million in net outflows for the week of Sept 8-11, ending a three-week inflow streak, led by ARK 21Shares and Grayscale redemptions, while spot Ether ETFs reversed course with $196.9 million in net inflows, led by BlackRock's ETHA. The divergence suggests institutional rotation between the two largest crypto assets rather than a broad sector exit.",
+        "assessment": "neutral",
+        "severity": "digest",
+        "confidence": "secondary only",
+        "source_url": "https://www.fxstreet.com/cryptocurrencies/news/bitcoin-etfs-shed-463m-in-weekly-reversal-as-ether-etfs-gain-197m-202609141058"
+      },
+      {
+        "date": "2026-09-17",
+        "headline": "Bitcoin treasury sector market value down sharply from peak",
+        "what_happened": "Reports citing sector trackers indicate the roughly 179 listed Bitcoin treasury companies have collectively lost tens of billions of dollars in market value since mid-2025, with commentators flagging tightening financing conditions and rising investor scrutiny of the model's sustainability as the number of competing issuers has grown.",
+        "assessment": "negative",
+        "severity": "digest",
+        "confidence": "secondary only",
+        "source_url": "https://thecurrencyanalytics.com/bitcoin/bitcoin-treasury-firms-shed-83-billion-as-179-companies-fight-to-survive-294530"
+      }
+    ]
   },
   "failures": []
 }

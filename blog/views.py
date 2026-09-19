@@ -1507,6 +1507,11 @@ def load_monitoring_report(slug):
         report = json.loads(report_path.read_text(encoding='utf-8'))
     except (OSError, json.JSONDecodeError):
         return None
+    if not isinstance(report.get('snapshot'), dict):
+        report['snapshot'] = {}
+    for key in ('holdings', 'share_price', 'mnav', 'as_of'):
+        report['snapshot'].setdefault(key, None)
+    report.setdefault('source_conflicts', [])
     report['has_updates'] = bool(report.get('updates'))
     report['verdict_class'] = {
         'positive': 'gain',

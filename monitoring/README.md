@@ -36,8 +36,10 @@ Each report includes:
 - short email summary
 - overall verdict
 - bottom-line thesis assessment
-- likely price-impact assessment
+- company snapshot: holdings, share price, mNAV, and as-of date where available
+- source-conflict notes when reported figures disagree
 - source-linked updates
+- one separate sector section for macro news that affects the group
 
 ## Manual test
 
@@ -56,5 +58,9 @@ SAMPLE_DATA=1 DRY_RUN=1 python monitoring/monitor.py
 
 ## Notes
 
-This is a research monitor, not trading advice. It can miss items, misread
-filings, or overstate market impact. Verify primary sources before acting.
+The monitor is instructed to search primary sources first: company IR releases,
+filings, SEC EDGAR, EDINET, and exchange disclosures. It labels an item as
+"primary source" only when it comes from a filing or company/exchange release.
+
+This is a research monitor, not trading advice. It can miss items or misread
+filings. Verify primary sources before acting.

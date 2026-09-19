@@ -13,14 +13,33 @@
       <strong>{{ monitoring_report.bottom_line }}</strong>
     </div>
     <div>
-      <span>Possible price impact</span>
-      <strong>{{ monitoring_report.price_impact }}</strong>
+      <span>Snapshot</span>
+      <strong>
+        Holdings: {{ monitoring_report.snapshot.holdings|default:"n/a" }}<br>
+        Share price: {{ monitoring_report.snapshot.share_price|default:"n/a" }}<br>
+        mNAV: {{ monitoring_report.snapshot.mnav|default:"n/a" }}<br>
+        As of: {{ monitoring_report.snapshot.as_of|default:"n/a" }}
+      </strong>
     </div>
     <div>
       <span>Last checked</span>
       <strong>{% if monitoring_report.generated_at %}{{ monitoring_report.generated_at }}{% else %}Waiting for first run{% endif %}</strong>
     </div>
   </div>
+
+  {% if monitoring_report.source_conflicts %}
+    <div class="monitor-item">
+      <div class="monitor-item-top">
+        <div>
+          <span>Source conflicts</span>
+          <h3>Figures need manual review</h3>
+        </div>
+      </div>
+      {% for conflict in monitoring_report.source_conflicts %}
+        <p>{{ conflict }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
 
   {% if monitoring_report.has_updates %}
     <div class="monitor-list">
@@ -35,7 +54,6 @@
           </div>
           <p>{{ update.what_happened }}</p>
           <p><b>Thesis fit:</b> {{ update.thesis_fit }}</p>
-          <p><b>Price:</b> {{ update.price_impact }}</p>
           <div class="monitor-meta">
             <span>{{ update.confidence }}</span>
             {% if update.source_url %}

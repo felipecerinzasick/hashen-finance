@@ -1,0 +1,52 @@
+{% if monitoring_report %}
+<section class="panel monitor-panel">
+  <div class="panel-header">
+    <div>
+      <h2>Management Monitor</h2>
+      <p>Automatically checked every other day for thesis-relevant management, financing, treasury, and filing updates.</p>
+    </div>
+    <span class="pill {{ monitoring_report.verdict_class }}">{{ monitoring_report.overall_verdict|title }}</span>
+  </div>
+  <div class="monitor-summary">
+    <div>
+      <span>Bottom line</span>
+      <strong>{{ monitoring_report.bottom_line }}</strong>
+    </div>
+    <div>
+      <span>Possible price impact</span>
+      <strong>{{ monitoring_report.price_impact }}</strong>
+    </div>
+    <div>
+      <span>Last checked</span>
+      <strong>{% if monitoring_report.generated_at %}{{ monitoring_report.generated_at }}{% else %}Waiting for first run{% endif %}</strong>
+    </div>
+  </div>
+
+  {% if monitoring_report.has_updates %}
+    <div class="monitor-list">
+      {% for update in monitoring_report.updates %}
+        <article class="monitor-item">
+          <div class="monitor-item-top">
+            <div>
+              <span>{{ update.date }}</span>
+              <h3>{{ update.headline }}</h3>
+            </div>
+            <strong class="{{ update.assessment_class }}">{{ update.assessment|title }}</strong>
+          </div>
+          <p>{{ update.what_happened }}</p>
+          <p><b>Thesis fit:</b> {{ update.thesis_fit }}</p>
+          <p><b>Price:</b> {{ update.price_impact }}</p>
+          <div class="monitor-meta">
+            <span>{{ update.confidence }}</span>
+            {% if update.source_url %}
+              <a href="{{ update.source_url }}" target="_blank" rel="noopener noreferrer">Source</a>
+            {% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-note">No monitoring items have been generated yet. The next scheduled GitHub Action will update this panel if anything new appears.</div>
+  {% endif %}
+</section>
+{% endif %}

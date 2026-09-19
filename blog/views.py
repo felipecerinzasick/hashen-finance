@@ -10,6 +10,7 @@ import textwrap
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from functools import wraps
 from hmac import compare_digest
+from pathlib import Path
 from urllib import parse, request as urlrequest
 from urllib.error import URLError, HTTPError
 
@@ -1500,9 +1501,31 @@ def dashboard(request):
     return render(request, 'blog/dashboard.html', {'title': 'Dashboard'})
 
 
+def load_monitoring_report(slug):
+    report_path = Path(settings.BASE_DIR) / 'monitoring' / 'reports' / ('%s.json' % slug)
+    try:
+        report = json.loads(report_path.read_text(encoding='utf-8'))
+    except (OSError, json.JSONDecodeError):
+        return None
+    report['has_updates'] = bool(report.get('updates'))
+    report['verdict_class'] = {
+        'positive': 'gain',
+        'negative': 'loss',
+    }.get(report.get('overall_verdict'), '')
+    for update in report.get('updates', []):
+        update['assessment_class'] = {
+            'positive': 'gain',
+            'negative': 'loss',
+        }.get(update.get('assessment'), '')
+    return report
+
+
 @require_dashboard_auth
 def mstr_dashboard(request):
-    return render(request, 'blog/mstr_dashboard.html', {'title': 'MSTR'})
+    return render(request, 'blog/mstr_dashboard.html', {
+        'title': 'MSTR',
+        'monitoring_report': load_monitoring_report('mstr'),
+    })
 
 
 @require_dashboard_auth
@@ -1605,6 +1628,7 @@ def treasury_stock_dashboard(request, slug):
         'stock_json': json.dumps(config),
         'slug': slug,
         'treasury_stocks': TREASURY_STOCKS,
+        'monitoring_report': load_monitoring_report(slug),
     }
     return render(request, 'blog/treasury_stock_dashboard.html', context)
 

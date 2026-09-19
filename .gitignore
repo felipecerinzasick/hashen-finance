@@ -1,4 +1,5 @@
 .DS_STORE
+.DS_Store
 src/db.sqlite3
 .vscode
 profile_pics

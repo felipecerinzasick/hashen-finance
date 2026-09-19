@@ -430,6 +430,81 @@
       opacity: 1;
     }
 
+    .monitor-panel {
+      border-color: rgba(182, 138, 53, 0.28);
+      background:
+        linear-gradient(135deg, rgba(31, 111, 86, 0.05), rgba(182, 138, 53, 0.06)),
+        #fff;
+    }
+
+    .monitor-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .monitor-summary div,
+    .monitor-item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.88);
+      padding: 14px;
+    }
+
+    .monitor-summary span,
+    .monitor-item-top span,
+    .monitor-meta {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .monitor-summary strong {
+      display: block;
+      margin-top: 6px;
+      color: var(--ink);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .monitor-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .monitor-item-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .monitor-item h3 {
+      margin: 4px 0 0;
+      font-size: 16px;
+    }
+
+    .monitor-item p {
+      margin: 8px 0 0;
+      color: var(--ink);
+      line-height: 1.55;
+      font-size: 13px;
+    }
+
+    .monitor-meta {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .monitor-meta a {
+      color: var(--accent);
+      font-weight: 800;
+    }
+
     @media (max-width: 1100px) {
       .dashboard-shell,
       .mstr-workbench {
@@ -459,6 +534,10 @@
       .scenario-table {
         display: block;
         overflow-x: auto;
+      }
+
+      .monitor-summary {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -607,6 +686,7 @@
             <p>DCA rule for the next 4-6 months: 2 units BTC / 1 unit MSTR. Do not sell BTC to buy MSTR. Only buy MSTR from new cash.</p>
           </div>
         </section>
+        {% include "blog/monitoring_panel.html" %}
       </section>
     </main>
   </div>

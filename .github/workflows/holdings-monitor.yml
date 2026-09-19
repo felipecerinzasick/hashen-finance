@@ -1,0 +1,45 @@
+name: Holdings monitor
+
+on:
+  schedule:
+    # Every other day at 08:20 UTC. Good enough for management/news monitoring.
+    - cron: "20 8 */2 * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "alert or digest"
+        default: "alert"
+      sample_data:
+        description: "Use sample data instead of Claude search"
+        default: "0"
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install monitor dependencies
+        run: pip install -r monitoring/requirements.txt
+      - name: Run holdings monitor
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
+          MODE: ${{ github.event.inputs.mode || 'alert' }}
+          SAMPLE_DATA: ${{ github.event.inputs.sample_data == '1' && '1' || '' }}
+          BASE_URL: https://hashen-finance.onrender.com
+        run: python monitoring/monitor.py
+      - name: Save monitoring state and dashboard reports
+        run: |
+          git config user.name "holdings-monitor"
+          git config user.email "bot@users.noreply.github.com"
+          git add monitoring/state.json monitoring/reports/*.json
+          git diff --cached --quiet || git commit -m "update holdings monitor"
+          git push

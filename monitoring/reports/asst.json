@@ -3,12 +3,62 @@
   "name": "Asset Entities / Strive",
   "ticker": "ASST",
   "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/asst/",
-  "generated_at": null,
-  "lookback_days": 3,
-  "snapshot": {},
-  "overall_verdict": "neutral",
-  "email_summary": "No monitoring report has been generated yet.",
-  "bottom_line": "No monitoring report has been generated yet.",
-  "price_impact": "No price-impact assessment is available yet.",
-  "updates": []
+  "generated_at": "2026-09-19T15:07:42.266855+00:00",
+  "lookback_days": 8,
+  "snapshot": {
+    "market_price": 30.11,
+    "treasury_holdings": "25,000 BTC (as of Sept 11, 2026)",
+    "mnav": 1.56,
+    "as_of": "2026-09-18"
+  },
+  "overall_verdict": "positive",
+  "email_summary": "Strive added 469 BTC and held its 13% SATA dividend, though a leveraged ETF launch and the Clarity Act failure add volatility.",
+  "bottom_line": "Strive's small, steady BTC accumulation (469 BTC added Sept 8-11) and maintained 13% preferred dividend show continued financing discipline, keeping the BTC-per-share story intact. The Clarity Act failure and a new 2x leveraged retail ETF add near-term volatility unrelated to fundamentals.",
+  "price_impact": "Mixed: routine BTC accretion is a modest positive, but macro/regulatory headlines (Clarity Act) and new leveraged trading vehicles will likely dominate short-term price action.",
+  "updates": [
+    {
+      "date": "2026-09-14",
+      "headline": "Strive buys 469 BTC, holdings reach 25,000 BTC",
+      "what_happened": "Between September 8-11, Strive purchased 469 bitcoin at an average price of about $77,954, lifting total holdings from 24,531 to 25,000 BTC. Cash and cash equivalents rose slightly to $204.2 million over the same period.",
+      "assessment": "positive",
+      "thesis_fit": "Continued, modest BTC accumulation funded from cash rather than heavy dilution supports the BTC-per-share thesis.",
+      "price_impact": "No immediate effect; a routine accretive purchase consistent with prior weeks.",
+      "severity": "digest",
+      "confidence": "primary source",
+      "source_url": "https://www.tipranks.com/news/company-announcements/strive-inc-expands-bitcoin-holdings-and-adjusts-equity"
+    },
+    {
+      "date": "2026-09-14",
+      "headline": "Strive maintains 13% SATA preferred dividend rate",
+      "what_happened": "Strive's board maintained the SATA perpetual preferred dividend rate at 13.00% for periods starting October 1, 2026, declaring daily cash dividends of $0.0516 per share for the month.",
+      "assessment": "neutral",
+      "thesis_fit": "Stable preferred financing costs indicate the capital structure supporting BTC accumulation remains steady, without new dilution signals this period.",
+      "price_impact": "No immediate effect; routine capital-structure maintenance.",
+      "severity": "digest",
+      "confidence": "primary source",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/0001920406/000162828026061949/asst-20260914.htm"
+    },
+    {
+      "date": "2026-09-15",
+      "headline": "ASST falls over 5% as Clarity Act fails Senate vote",
+      "what_happened": "ASST shares declined more than 5% alongside broader crypto weakness after the Clarity Act failed a Senate procedural vote. Strive CEO Matt Cole called the outcome bad for the U.S. and crypto but said it may ultimately be good for Bitcoin.",
+      "assessment": "negative",
+      "thesis_fit": "A regulatory setback for the industry adds sentiment risk but does not alter Strive's underlying BTC-per-share execution.",
+      "price_impact": "Likely down short-term on risk-off crypto sentiment.",
+      "severity": "digest",
+      "confidence": "secondary only",
+      "source_url": "https://finance.yahoo.com/markets/crypto/articles/bitcoin-slides-crypto-stocks-decline-011426654.html"
+    },
+    {
+      "date": "2026-09-18",
+      "headline": "REX Shares launches 2x leveraged ASSX ETF on ASST",
+      "what_happened": "REX Shares launched ASSX, a T-REX 2X Long ETF targeting 200% of ASST's daily performance via swap agreements, designed for single-day trading. The product does not invest directly in Bitcoin and carries leverage, compounding, and liquidity risks.",
+      "assessment": "neutral",
+      "thesis_fit": "A derivative product increases trading liquidity and speculative interest in ASST shares but has no direct effect on the company's BTC treasury or per-share metrics.",
+      "price_impact": "Likely increases intraday volatility in ASST without changing fundamental value.",
+      "severity": "digest",
+      "confidence": "secondary only",
+      "source_url": "https://www.stocktitan.net/news/ASST/"
+    }
+  ]
 }

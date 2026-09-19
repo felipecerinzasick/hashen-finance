@@ -3,12 +3,40 @@
   "name": "BitMine Immersion",
   "ticker": "BMNR",
   "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/bitmine/",
-  "generated_at": null,
-  "lookback_days": 3,
-  "snapshot": {},
-  "overall_verdict": "neutral",
-  "email_summary": "No monitoring report has been generated yet.",
-  "bottom_line": "No monitoring report has been generated yet.",
-  "price_impact": "No price-impact assessment is available yet.",
-  "updates": []
+  "generated_at": "2026-09-19T15:07:42.266859+00:00",
+  "lookback_days": 8,
+  "snapshot": {
+    "market_price": 25.74,
+    "treasury_holdings": "5.96 million ETH (4.9% of ETH supply, as of Sept 13, 2026)",
+    "mnav": null,
+    "as_of": "2026-09-18"
+  },
+  "overall_verdict": "positive",
+  "email_summary": "BitMine is within striking distance of its 5% ETH supply target, with 85% of holdings staked, though Clarity Act failure hit the stock.",
+  "bottom_line": "BitMine's ETH treasury reached 5.96 million tokens (4.9% of supply) with over 85% staked, putting Tom Lee's '5%' accumulation goal about 144,000 ETH away. The Clarity Act failure caused a sharp but likely temporary pullback in the stock, unrelated to treasury execution.",
+  "price_impact": "Likely up on continued progress toward the 5% ETH supply milestone and high staking ratio, offset by near-term volatility from crypto regulatory headlines.",
+  "updates": [
+    {
+      "date": "2026-09-16",
+      "headline": "BitMine nears Tom Lee's 5% Ethereum supply target",
+      "what_happened": "BitMine held 5.96 million ETH as of Sept 13, equal to 4.9% of Ethereum's 122 million-token supply, leaving it roughly 144,000 ETH short of the 5% goal. The company reported 5,067,309 ETH staked, over 85% of holdings, valued at about $12.7 billion.",
+      "assessment": "positive",
+      "thesis_fit": "Continued accumulation toward the 5% supply target combined with a high staking ratio supports the thesis of credible ETH accumulation paired with staking economics.",
+      "price_impact": "Likely up as the company approaches a widely-watched accumulation milestone.",
+      "severity": "digest",
+      "confidence": "secondary only",
+      "source_url": "https://www.benzinga.com/crypto/cryptocurrency/26/09/61823316/bmnr-5-percent-ethereum"
+    },
+    {
+      "date": "2026-09-15",
+      "headline": "BMNR slumps over 8% as Clarity Act fails in Senate",
+      "what_happened": "BitMine shares fell more than 8% after the Clarity Act failed to advance in the Senate, part of a broader selloff in crypto-linked equities including Coinbase, Robinhood, Strategy and Strive.",
+      "assessment": "negative",
+      "thesis_fit": "A regulatory setback for digital assets broadly weighs on sentiment but does not change BitMine's ETH accumulation or staking economics.",
+      "price_impact": "Likely down short-term on risk-off sentiment tied to the failed legislation.",
+      "severity": "digest",
+      "confidence": "secondary only",
+      "source_url": "https://finance.yahoo.com/markets/crypto/articles/bitcoin-slides-crypto-stocks-decline-011426654.html"
+    }
+  ]
 }

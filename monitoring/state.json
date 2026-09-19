@@ -1,3 +1,59 @@
 {
-  "seen": []
+  "seen": [
+    {
+      "id": "6e50677c5b9619",
+      "label": "mstr: Strategy buys back $139.3M of STRC preferred, no BTC trades",
+      "date": "2026-09-14"
+    },
+    {
+      "id": "e5ed2cd41fb82c",
+      "label": "mstr: Clarity Act fails Senate cloture, crypto stocks slide",
+      "date": "2026-09-15"
+    },
+    {
+      "id": "e9175eec2d8818",
+      "label": "mstr: MSTR surges 16% on SEC tokenized-stock exemption",
+      "date": "2026-09-18"
+    },
+    {
+      "id": "5c6405bd822f1b",
+      "label": "mstr: MSCI index-exclusion consultation nears Sept 30 deadline",
+      "date": "2026-09-19"
+    },
+    {
+      "id": "e9992b978e96f9",
+      "label": "metaplanet: MSCI weighs excluding Metaplanet from global indexes",
+      "date": "2026-09-19"
+    },
+    {
+      "id": "5ea7eeab75e57b",
+      "label": "asst: Strive buys 469 BTC, holdings reach 25,000 BTC",
+      "date": "2026-09-14"
+    },
+    {
+      "id": "738ca79a6e9f42",
+      "label": "asst: Strive maintains 13% SATA preferred dividend rate",
+      "date": "2026-09-14"
+    },
+    {
+      "id": "64e2132602220a",
+      "label": "asst: ASST falls over 5% as Clarity Act fails Senate vote",
+      "date": "2026-09-15"
+    },
+    {
+      "id": "3dd2142eb54223",
+      "label": "asst: REX Shares launches 2x leveraged ASSX ETF on ASST",
+      "date": "2026-09-18"
+    },
+    {
+      "id": "62cd7e1e4ff744",
+      "label": "bitmine: BitMine nears Tom Lee's 5% Ethereum supply target",
+      "date": "2026-09-16"
+    },
+    {
+      "id": "3249844fb8afec",
+      "label": "bitmine: BMNR slumps over 8% as Clarity Act fails in Senate",
+      "date": "2026-09-15"
+    }
+  ]
 }

@@ -3,12 +3,29 @@
   "name": "Metaplanet",
   "ticker": "3350.T / MTPLF / DN3.F",
   "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/metaplanet/",
-  "generated_at": null,
-  "lookback_days": 3,
-  "snapshot": {},
-  "overall_verdict": "neutral",
-  "email_summary": "No monitoring report has been generated yet.",
-  "bottom_line": "No monitoring report has been generated yet.",
-  "price_impact": "No price-impact assessment is available yet.",
-  "updates": []
+  "generated_at": "2026-09-19T15:07:42.266849+00:00",
+  "lookback_days": 8,
+  "snapshot": {
+    "market_price": null,
+    "treasury_holdings": "~43,000 BTC (last publicly reaffirmed figure, 2026)",
+    "mnav": null,
+    "as_of": "2026-09-19"
+  },
+  "overall_verdict": "negative",
+  "email_summary": "No new BTC purchase disclosed this week; MSCI exclusion risk is the dominant near-term overhang.",
+  "bottom_line": "Metaplanet had no fresh weekly Bitcoin purchase disclosure in this 8-day window, leaving the accumulation pace opaque, while the pending MSCI 'non-operating company' index screen threatens forced passive-fund outflows if finalized in the November review. Rising Japanese superlong bond yields are also cited as a headwind to the funding environment for future BTC purchases.",
+  "price_impact": "Likely down/mixed on index-exclusion overhang and financing-cost concerns; a lack of confirmed new purchases this week removes a typical positive catalyst.",
+  "updates": [
+    {
+      "date": "2026-09-19",
+      "headline": "MSCI weighs excluding Metaplanet from global indexes",
+      "what_happened": "MSCI's consultation on a new 'non-operating company' screen, which flagged Metaplanet based on May 2026 balance-sheet data, remains open for feedback through September 30 with a decision due by October 16. If adopted, changes would take effect in the November 2026 index review, with estimates of up to roughly $2 billion in combined forced passive outflows for Strategy and Metaplanet.",
+      "assessment": "negative",
+      "thesis_fit": "Loss of index eligibility would reduce passive-fund demand for shares, a governance/market-structure risk that is independent of BTC-per-share execution.",
+      "price_impact": "Likely down if the exclusion is finalized; near-term effect is speculative positioning and hedging ahead of the Oct 16 decision.",
+      "severity": "alert",
+      "confidence": "secondary only",
+      "source_url": "https://www.kucoin.com/blog/msci-proposal-strategy-metaplanet-index-exclusion"
+    }
+  ]
 }

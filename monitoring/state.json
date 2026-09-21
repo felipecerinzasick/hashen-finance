@@ -139,6 +139,61 @@
       "id": "836e87f43497a8",
       "label": "sector: Bitcoin treasury sector market value down sharply from peak",
       "date": "2026-09-17"
+    },
+    {
+      "id": "470015dab34b9a",
+      "label": "mstr: Strategy resumes BTC buys, 950 BTC funded by cash",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "e4705bddd48fcd",
+      "label": "mstr: STRC preferred buyback grows to $174M for the week",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "d93114537a9ca9",
+      "label": "mstr: MSTR stock surges over 8% on BTC purchase news",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "48a0f2675329eb",
+      "label": "metaplanet: VanEck rates Metaplanet 'Bad' on executive pay, dilution",
+      "date": "2026-09-18"
+    },
+    {
+      "id": "29656ab3883082",
+      "label": "asst: Strive buys 1,355 BTC for $107.7M, holdings hit 26,355",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "7760c06d5b8344",
+      "label": "asst: Warrant exercises begin, add $21.2M, diversify funding mix",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "e68655fdb6aa94",
+      "label": "bitmine: BitMine's weekly 8-K: ETH holdings hit 5.98M, 98% to 5% goal",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "e78b3b46938ce6",
+      "label": "bitmine: Tom Lee to keynote Korea Blockchain Week Sept 30",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "1060b73dad31ff",
+      "label": "sector: CFTC broadens no-action relief for crypto wallet software",
+      "date": "2026-09-17"
+    },
+    {
+      "id": "663aafd413da55",
+      "label": "sector: Coinbase, Kalshi, Bitnomial file for single-stock perpetual futures",
+      "date": "2026-09-18"
+    },
+    {
+      "id": "aa416ba11cd4e5",
+      "label": "sector: Bastion wins conditional OCC national trust bank charter",
+      "date": "2026-09-18"
     }
   ]
 }

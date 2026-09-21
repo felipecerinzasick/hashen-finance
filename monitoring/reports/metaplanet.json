@@ -3,71 +3,31 @@
   "name": "Metaplanet",
   "ticker": "3350.T / MTPLF / DN3.F",
   "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/metaplanet/",
-  "generated_at": "2026-09-19T15:52:31.676832+00:00",
-  "lookback_days": 8,
+  "generated_at": "2026-09-21T15:14:43.847009+00:00",
+  "lookback_days": 3,
   "snapshot": {
-    "holdings": "43,000 BTC (unchanged this period)",
-    "share_price": 251,
-    "mnav": 0.66,
-    "as_of": "2026-09-15"
+    "holdings": "43,000 BTC (last confirmed purchase disclosed July 2, 2026; no new purchase confirmed in the last 3 days)",
+    "share_price": 243.0,
+    "mnav": null,
+    "as_of": "2026-09-21"
   },
-  "overall_verdict": "neutral",
-  "email_summary": "Metaplanet cut its dilutive Series 10 warrant pool 41% but Capital Research quietly sold ~¥4.8B of stock, dropping below the 10% major-shareholder threshold.",
-  "bottom_line": "Management's 41% cut to the Series 10 warrant pool is a genuine (if partial) governance win that reduces future dilution, but it was overshadowed by Capital Research's ~¥4.8B share sale that pushed its stake below 10% during a sharp stock decline. Net effect on thesis is mixed: incentive alignment improved, but a major institutional holder is trimming exposure and analysts remain cautious on residual dilution overhang.",
+  "overall_verdict": "negative",
+  "email_summary": "VanEck's mid-September ChainCheck rates Metaplanet the only 'Bad' governance grade among top-10 Bitcoin treasuries, reiterating dilution concerns.",
+  "bottom_line": "No new BTC purchases, financing, or shareholder-change filings emerged in the last three days; the sole development is a VanEck research note doubling down on prior dilution/governance criticism and arguing the September 11 pool cut is insufficient. This keeps governance risk in the spotlight without materially changing BTC-per-share economics.",
   "source_conflicts": [
-    "mNAV estimates diverge across sources: a Japanese retail-focused article implies ~0.66x (share price vs BTC value basis) as of Sep 15, while Seeking Alpha cites a 0.79x EV/mNAV discount the same day — likely different denominators (market cap vs enterprise value).",
-    "Share price snapshots conflict across trackers: Investing.com showed ¥293 (Sep 6), MSN showed ¥233 (Aug 10, stale), TradingView cached a figure of ¥461, while primary Japanese reporting places the close at ¥251 on Sep 15 and an intraday low of ¥232 on Sep 16 — the ¥251/¥232 figures from Japanese-language reporting citing TDnet disclosures are treated as most current."
+    "mNAV figures are stale and inconsistent across trackers as of Sept 21: mnav.com shows 1.21x based on a ~40,177 BTC snapshot roughly a month old, while other June 2026 sources cite readings near 0.90x-0.92x; no reliable same-day figure was found, so mNAV is reported as null.",
+    "BTC treasury ranking is inconsistent across sources: some (VanEck-linked and July 2026 press) still call Metaplanet the 3rd-largest corporate holder at 43,000 BTC, while CoinGecko's treasury tracker lists it as 6th-largest with 43,000 BTC worth $3.65B — likely reflecting differing peer-set cutoff dates rather than a change in Metaplanet's own holdings."
   ],
   "updates": [
     {
-      "date": "2026-09-11",
-      "headline": "Board cuts Series 10 warrant pool by 41%",
-      "what_happened": "Metaplanet's board resolved to cut the potential share pool under its 10th Series Stock Acquisition Rights by 41.1%, from 319,464,000 to 188,190,000 shares, lowering the conversion ratio from 696 to 410 shares per right. The company also scrapped a plan to transfer up to 90,000 rights into an employee incentive vehicle, opting to cancel them and design a new compensation plan with an external consultant instead.",
-      "assessment": "positive",
-      "thesis_fit": "Directly addresses the checklist's warrant/dilution concern by materially shrinking a controversial option pool that shareholders had criticized as amplifying dilution, though the pool remains over four times its original size per one analyst.",
-      "severity": "alert",
-      "confidence": "primary source",
-      "source_url": "https://www.kucoin.com/news/flash/metaplanet-cuts-series-10-stock-rights-pool-by-41-to-boost-bitcoin-per-share"
-    },
-    {
-      "date": "2026-09-15",
-      "headline": "Capital Research stake falls below 10%, exits major-shareholder status",
-      "what_happened": "An EDINET change report (No.30) disclosed that Capital Research and Management Company's voting ratio fell from 10.63% (July 13) to 9.32% (as of Sep 8, 2026), causing it to lose \"major shareholder\" status. Aggregated sales between Aug 3 and Sep 8 totaled roughly 18.4 million shares (~¥4.84 billion), with the firm's holding dropping from 136,059,120 to 125,455,820 shares; Capital Research remains Metaplanet's largest overall shareholder by ranking despite the reduction.",
+      "date": "2026-09-18",
+      "headline": "VanEck rates Metaplanet 'Bad' on executive pay, dilution",
+      "what_happened": "VanEck's mid-September 2026 Bitcoin ChainCheck report singled out Metaplanet as the only company among the ten largest digital-asset treasuries it grades 'Bad' on executive compensation practices, saying its option pool equals roughly 14.7% of fully diluted shares and officer exposure is about 8.2% — far above peer averages. The report acknowledges the board's August 18 removal of the automatic pool-growth clause and the September 11 cut of the option pool by 41% to 188.2 million shares, but argues these fixes still fall short and calls for a full reversal of the roughly 273 million shares added via the prior mechanism plus a shareholder-approved replacement plan.",
       "assessment": "negative",
-      "thesis_fit": "This is precisely the checklist's flagged risk — a reduction by Capital Research/Capital Group — and it coincided with a roughly 25% share-price decline over the same window, raising concern about institutional confidence.",
-      "severity": "alert",
-      "confidence": "primary source",
-      "source_url": "https://news.yahoo.co.jp/articles/672d65a0ce3b34c4c20d70d7079aebaa544d9fad"
-    },
-    {
-      "date": "2026-09-11",
-      "headline": "CFO reshuffle: capital markets head promoted to CFO",
-      "what_happened": "Metaplanet's board resolved an executive officer reshuffle effective September 11: outgoing CFO moved to a newly created Director of Administration role, while the former head of Capital Markets & IR, Shimpei Okuno, was promoted to Executive Officer, CFO. The company stated the change aims to strengthen finance and capital markets functions as the group's business scale expands.",
-      "assessment": "neutral",
-      "thesis_fit": "A capital-markets-focused CFO could support better financing discipline going forward, but this is a routine leadership change rather than a capital-allocation or governance decision by itself.",
-      "severity": "digest",
-      "confidence": "primary source",
-      "source_url": "https://www.release.tdnet.info/inbs/140120260911535177.pdf"
-    },
-    {
-      "date": "2026-09-11",
-      "headline": "Proposed capital reduction to ¥1 and new Hong Kong unit",
-      "what_happened": "Metaplanet's board proposed reducing capital stock from roughly ¥27.8 billion to ¥1 and zeroing capital reserves at a December 18, 2026 extraordinary general meeting, aiming to eliminate an approximately ¥1.8 billion accumulated deficit and create room for future dividends and buybacks. The board separately approved a wholly owned Hong Kong subsidiary, Metaplanet Asset Management Asia Limited.",
-      "assessment": "neutral",
-      "thesis_fit": "This is a procedural balance-sheet cleanup that could eventually enable buybacks or dividends per the checklist, but it has no immediate effect on BTC-per-share or dilution and its ultimate impact depends on future execution.",
-      "severity": "digest",
-      "confidence": "primary source",
-      "source_url": "https://www.cryptotimes.io/2026/09/11/metaplanet-shares-fall-3-86-as-firm-proposes-%C2%A527-8b-capital-cut-hong-kong-unit/"
-    },
-    {
-      "date": "2026-09-15",
-      "headline": "Seeking Alpha initiates cautious Hold on governance concerns",
-      "what_happened": "A Seeking Alpha analyst initiated coverage with a cautious Hold, noting that the September 11 Series 10 amendment reduced the warrant pool to 188.2 million shares but that this remains over four times the original pool size, and that governance and capital-structure concerns outweigh the stock's roughly 0.79x EV/mNAV discount.",
-      "assessment": "negative",
-      "thesis_fit": "Directly engages the checklist's concern about analyst critiques of dilution and governance, tempering the positive read on the warrant-pool cut.",
+      "thesis_fit": "This is a direct governance/incentive-alignment critique from a reputable crypto-focused asset manager, reinforcing the checklist concern that compensation structures may not be genuinely performance-linked despite the already-reported 41% pool cut.",
       "severity": "digest",
       "confidence": "secondary only",
-      "source_url": "https://seekingalpha.com/article/4946503-metaplanets-bitcoin-discount-is-complicated-by-stock-acquisition-rights-and-governance"
+      "source_url": "https://www.vaneck.com/us/en/blogs/digital-assets/matthew-sigel-vaneck-mid-september-2026-bitcoin-chaincheck/"
     }
   ]
 }

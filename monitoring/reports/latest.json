@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-21T15:14:43.847090+00:00",
+  "generated_at": "2026-09-23T13:47:25.226138+00:00",
   "lookback_days": 3,
   "reports": [
     {
@@ -7,50 +7,40 @@
       "name": "Strategy",
       "ticker": "MSTR",
       "dashboard_url": "https://hashen-finance.onrender.com/dashboard/mstr/",
-      "generated_at": "2026-09-21T15:14:43.846983+00:00",
+      "generated_at": "2026-09-23T13:47:25.225995+00:00",
       "lookback_days": 3,
       "snapshot": {
-        "holdings": "846,000 BTC",
-        "share_price": 166.6,
-        "mnav": 1.04,
-        "as_of": "2026-09-21"
+        "holdings": "846,000 BTC (as of Sept 20, 2026), acquired for $63.80B at avg $75,416/BTC",
+        "share_price": 167.33,
+        "mnav": 1.17,
+        "as_of": "2026-09-22"
       },
       "overall_verdict": "positive",
-      "email_summary": "Strategy resumes BTC buying with cash (not new shares) after 3-week pause; stock jumps ~8-16%.",
-      "bottom_line": "Strategy funded its return to Bitcoin accumulation entirely from existing USD Cash rather than dilutive ATM issuance, a mild positive for BTC-per-share math, while continuing to retire STRC preferred toward par. The moves, paired with a supportive week for BTC price, drove a sharp share-price recovery, though mNAV remains near parity (~1.04x), limiting the accretive power of any future equity-funded purchases.",
+      "email_summary": "MSTR's mNAV climbs to a 3-month high and unrealized BTC losses flip to ~$8-9B in gains as Bitcoin tops $85K.",
+      "bottom_line": "No new capital-markets or governance items beyond already-reported BTC buys and STRC buybacks; the incremental news is a BTC-price-driven improvement in mNAV and unrealized P&L that strengthens the balance sheet without new dilution. Thesis remains intact but unchanged mechanically — the gains are mark-to-market, not from accretive per-share BTC growth this week.",
       "source_conflicts": [
-        "mNAV estimates vary by source and date: mnav.com shows a live 1.04x, bitcointreasuries.net showed 1.06x (EV) / 0.78-0.79x (basic/diluted) as of Aug 31, and other trackers cited 0.68x basic as of Aug 3 — figures are not directly comparable due to differing dates and methodologies (EV vs basic vs diluted)."
+        "Unrealized profit estimates vary across sources ($8B, $8.59B, $8.75B, $8.9B, $9B) depending on exact BTC price snapshot used and timing of the article; all describe the same directional swing from a prior ~$10-13B unrealized loss."
       ],
       "updates": [
         {
           "date": "2026-09-21",
-          "headline": "Strategy resumes BTC buys, 950 BTC funded by cash",
-          "what_happened": "Strategy filed an 8-K disclosing it purchased 950 BTC for $75.7 million (avg $79,670/BTC) during September 14-20, ending a roughly three-week pause. Critically, the purchase was funded entirely from existing USD Cash rather than new share or ATM issuance, and total holdings rose to 846,000 BTC at an average cost of $75,416.",
+          "headline": "MSTR mNAV climbs to 1.17x, highest since June",
+          "what_happened": "Strategy's mNAV multiple rose to 1.17x, meaning investors are paying $1.17 for every $1 of BTC held, as MSTR stock closed at $168 on September 21, its highest close since May 15. The rise came after the stock added roughly $32 billion in market value over three months, a figure Strategy itself highlighted on X.",
           "assessment": "positive",
-          "thesis_fit": "Accumulation funded from cash rather than new equity increases BTC per diluted share without adding dilution, directly supporting the core treasury-flywheel thesis.",
-          "severity": "alert",
-          "confidence": "primary source",
-          "source_url": "https://www.sec.gov/Archives/edgar/data/0001050446/000119312526396093/mstr-20260914.htm"
-        },
-        {
-          "date": "2026-09-21",
-          "headline": "STRC preferred buyback grows to $174M for the week",
-          "what_happened": "The same 8-K disclosed Strategy repurchased 1,771,238 shares of STRC preferred for $174.0 million during September 14-20, up from $139.3 million the prior week, funded from USD Cash. As of September 20, USD Reserve stood at $5.04 billion and USD Cash at $1.05 billion, after also using $57.4 million of the USD Reserve for preferred dividends and debt interest.",
-          "assessment": "neutral",
-          "thesis_fit": "Continued STRC buybacks push the preferred back toward par and stabilize the digital-credit stack, but draw down cash that could otherwise fund additional BTC purchases.",
-          "severity": "digest",
-          "confidence": "primary source",
-          "source_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526396093/mstr-20260914.htm"
-        },
-        {
-          "date": "2026-09-21",
-          "headline": "MSTR stock surges over 8% on BTC purchase news",
-          "what_happened": "MSTR shares rose more than 8% in premarket trading Monday, extending a prior week's 17% weekly gain, after the company disclosed the resumed bitcoin buying and preferred repurchase. The move pushed the stock back into positive territory for the year, following weeks of pressure tied to forced BTC/stock sales to meet preferred dividend obligations.",
-          "assessment": "positive",
-          "thesis_fit": "Share price reaction reflects renewed confidence in the accumulation flywheel, though the stock remains a high-beta BTC proxy far below its 52-week high.",
+          "thesis_fit": "A rising mNAV premium improves the economics of any future ATM/equity issuance for BTC purchases, directly supporting the 'financing priced attractively vs mNAV' checklist item.",
           "severity": "digest",
           "confidence": "secondary only",
-          "source_url": "https://finance.yahoo.com/markets/article/michael-saylors-strategy-jumps-as-the-company-says-it-bought-more-bitcoin-133538866.html"
+          "source_url": "https://coingape.com/markets/mstr-stock-forecast-analyst-eyes-rally-to-225-as-strategys-bitcoin-premium-hits-3-month-high/"
+        },
+        {
+          "date": "2026-09-22",
+          "headline": "Unrealized BTC loss flips to ~$8-9B gain",
+          "what_happened": "Strategy's 846,000 BTC holdings swung from an unrealized loss of roughly $10-13B earlier this year to an unrealized gain of approximately $8-9 billion as Bitcoin rallied above $85,000. The reversal follows an $8.2 billion net loss reported for Q2 2026 driven largely by unrealized BTC losses.",
+          "assessment": "positive",
+          "thesis_fit": "Improves BTC NAV coverage and eases pressure on the STRC/preferred credit stack, though it is purely price-driven rather than from per-share BTC accretion this week.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://finance.yahoo.com/markets/crypto/articles/strategy-swings-10b-unrealized-loss-095854130.html"
         }
       ]
     },
@@ -59,73 +49,62 @@
       "name": "Metaplanet",
       "ticker": "3350.T / MTPLF / DN3.F",
       "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/metaplanet/",
-      "generated_at": "2026-09-21T15:14:43.847009+00:00",
+      "generated_at": "2026-09-23T13:47:25.226023+00:00",
       "lookback_days": 3,
       "snapshot": {
-        "holdings": "43,000 BTC (last confirmed purchase disclosed July 2, 2026; no new purchase confirmed in the last 3 days)",
+        "holdings": "43,000 BTC (last disclosed as of June 30, 2026 quarterly update; no new purchase reported since)",
         "share_price": 243.0,
-        "mnav": null,
-        "as_of": "2026-09-21"
+        "mnav": 0.77,
+        "as_of": "2026-09-23"
       },
-      "overall_verdict": "negative",
-      "email_summary": "VanEck's mid-September ChainCheck rates Metaplanet the only 'Bad' governance grade among top-10 Bitcoin treasuries, reiterating dilution concerns.",
-      "bottom_line": "No new BTC purchases, financing, or shareholder-change filings emerged in the last three days; the sole development is a VanEck research note doubling down on prior dilution/governance criticism and arguing the September 11 pool cut is insufficient. This keeps governance risk in the spotlight without materially changing BTC-per-share economics.",
+      "overall_verdict": "neutral",
+      "email_summary": "No new material Metaplanet disclosures in the past 3 days; stock trades near 243 yen with mNAV below 1.0x amid unresolved governance overhang.",
+      "bottom_line": "No fresh primary-source filings emerged in the September 20-23 window beyond items already reported; the stock continues to trade at a discount to BTC NAV (~0.77x EV-based mNAV) while the MSCI non-operating-company consultation (closes Sept 30, decision Oct 16) and unresolved Series 10/MMXX governance questions remain the dominant overhangs. Net effect on thesis is unchanged from prior sweep — watch for the Q3 BTC purchase disclosure and MSCI outcome as the next catalysts.",
       "source_conflicts": [
-        "mNAV figures are stale and inconsistent across trackers as of Sept 21: mnav.com shows 1.21x based on a ~40,177 BTC snapshot roughly a month old, while other June 2026 sources cite readings near 0.90x-0.92x; no reliable same-day figure was found, so mNAV is reported as null.",
-        "BTC treasury ranking is inconsistent across sources: some (VanEck-linked and July 2026 press) still call Metaplanet the 3rd-largest corporate holder at 43,000 BTC, while CoinGecko's treasury tracker lists it as 6th-largest with 43,000 BTC worth $3.65B — likely reflecting differing peer-set cutoff dates rather than a change in Metaplanet's own holdings."
+        "Bitcointreasuries.net shows two different mNAV readings as of ~Sept 21, 2026 (EV-based 0.77x vs. Basic 0.57x); report uses the EV-based figure but the gap should be reconciled against the dashboard's own methodology."
       ],
-      "updates": [
-        {
-          "date": "2026-09-18",
-          "headline": "VanEck rates Metaplanet 'Bad' on executive pay, dilution",
-          "what_happened": "VanEck's mid-September 2026 Bitcoin ChainCheck report singled out Metaplanet as the only company among the ten largest digital-asset treasuries it grades 'Bad' on executive compensation practices, saying its option pool equals roughly 14.7% of fully diluted shares and officer exposure is about 8.2% — far above peer averages. The report acknowledges the board's August 18 removal of the automatic pool-growth clause and the September 11 cut of the option pool by 41% to 188.2 million shares, but argues these fixes still fall short and calls for a full reversal of the roughly 273 million shares added via the prior mechanism plus a shareholder-approved replacement plan.",
-          "assessment": "negative",
-          "thesis_fit": "This is a direct governance/incentive-alignment critique from a reputable crypto-focused asset manager, reinforcing the checklist concern that compensation structures may not be genuinely performance-linked despite the already-reported 41% pool cut.",
-          "severity": "digest",
-          "confidence": "secondary only",
-          "source_url": "https://www.vaneck.com/us/en/blogs/digital-assets/matthew-sigel-vaneck-mid-september-2026-bitcoin-chaincheck/"
-        }
-      ]
+      "updates": []
     },
     {
       "slug": "asst",
       "name": "Asset Entities / Strive",
       "ticker": "ASST",
       "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/asst/",
-      "generated_at": "2026-09-21T15:14:43.847016+00:00",
+      "generated_at": "2026-09-23T13:47:25.226031+00:00",
       "lookback_days": 3,
       "snapshot": {
-        "holdings": "26,355 BTC as of September 18, 2026 (up from 25,000 BTC reported the prior week)",
-        "share_price": 30.11,
-        "mnav": null,
-        "as_of": "2026-09-18"
+        "holdings": "26,355 BTC (as of 2026-09-18, per Form 8-K)",
+        "share_price": 29.97,
+        "mnav": 1.25,
+        "as_of": "2026-09-22"
       },
-      "overall_verdict": "neutral",
-      "email_summary": "Strive bought another 1,355 BTC ($107.7M) to reach 26,355 BTC, funded partly by newly-active warrant exercises alongside SATA preferred sales.",
-      "bottom_line": "Strive continued its weekly accumulation cadence, adding 1,355 BTC and diversifying financing with $21.2M of warrant-exercise proceeds alongside SATA preferred sales, which modestly eases reliance on dilutive preferred issuance. Continued share-count growth and an elevated market premium to Bitcoin NAV keep dilution and valuation-support risk as the key swing factors for the thesis.",
+      "overall_verdict": "positive",
+      "email_summary": "TD Cowen hikes ASST price target to $44 on faster BTC accumulation; no new dilution or governance red flags this window.",
+      "bottom_line": "The only new development this window is a sell-side price target increase reinforcing the accumulation-driven bull case already priced into recent 8-Ks; no new financing, dilution, or governance issues emerged beyond items already reported.",
       "source_conflicts": [
-        "mNAV/premium figures vary by source and date: mnav.com cites 1.67x (as of ~21,356 BTC, three weeks old), an M1 summary cites 1.69x, and Yahoo Finance references a '90% NAV premium' tied to the 25,000 BTC disclosure — no single up-to-date mNAV figure could be confirmed for the 26,355 BTC holding as of Sept 18-21."
+        "Intraday ASST price quotes on 2026-09-22 varied slightly across sources ($29.68 on Robinhood vs. $29.97 on Investing.com vs. $29.66 on Yahoo real-time), likely reflecting different snapshot times rather than a data conflict.",
+        "mNAV figures (1.25x basic / 1.68x diluted per bitcointreasuries.net) are dated Sep 14, 2026 and predate the latest 1,355 BTC purchase and subsequent share price rally, so current mNAV is likely different and should be treated as stale."
       ],
       "updates": [
         {
           "date": "2026-09-21",
-          "headline": "Strive buys 1,355 BTC for $107.7M, holdings hit 26,355",
-          "what_happened": "Strive disclosed via 8-K that it purchased 1,355 bitcoin between September 14 and September 18, 2026 at an average price of about $79,475 per coin, inclusive of fees, taking total holdings to 26,355 BTC. Class A common shares outstanding rose by 2,073,760 to 87,804,613 and cash grew to $229.6 million, a $25.4 million increase from September 11, while SATA preferred shares outstanding rose by 786,194 to 11,184,160.",
-          "assessment": "neutral",
-          "thesis_fit": "Continues the core Bitcoin-accumulation narrative that underpins the treasury-wrapper thesis, but the accompanying rise in Class A shares outstanding is an ongoing dilution data point to track against Bitcoin-per-share growth.",
-          "severity": "digest",
-          "confidence": "primary source",
-          "source_url": "https://www.sec.gov/Archives/edgar/data/0001920406/000162828026062806/asst-20260921.htm"
-        },
-        {
-          "date": "2026-09-21",
-          "headline": "Warrant exercises begin, add $21.2M, diversify funding mix",
-          "what_happened": "CEO Matt Cole disclosed that warrant exercises began during the week and generated $21.2 million in gross proceeds, with SATA preferred sales supplying the remainder of capital for the latest BTC purchase. Including the warrant proceeds, SATA accounted for 57.7% of total capital raised for the week, a lower share than in prior all-preferred weeks.",
+          "headline": "TD Cowen raises ASST price target to $44 from $32",
+          "what_happened": "TD Cowen analysts Lance Vitanza and Jonnathan Navarrete lifted their price target on ASST, citing bitcoin accumulation that has outpaced their model and stronger growth in bitcoin held per fully diluted share. The firm now projects Strive will end 2026 with 32,105 BTC (up from a prior 27,156 estimate) and raised its full-year BTC Yield forecast from 54.1% to 70.1%.",
           "assessment": "positive",
-          "thesis_fit": "Warrant exercises give Strive a second capital-raising lever beyond the daily-paying 13% SATA preferred, which can reduce dependence on high-cost preferred dividends versus existing shareholders over time.",
+          "thesis_fit": "A raised sell-side target grounded in accelerating BTC-per-share growth supports the thesis that Strive can build a durable, market-trusted Bitcoin-per-share story.",
           "severity": "digest",
           "confidence": "secondary only",
-          "source_url": "https://www.cryptopolitan.com/strive-outbuy-strategy-bitcoin-lifts-asst/"
+          "source_url": "https://www.theblock.co/news/markets/2026-09-21-strive-adds-1355-bitcoin-picks-up-pace-year-end-second-place-treasury-goal-415940"
+        },
+        {
+          "date": "2026-09-22",
+          "headline": "Strive CEO discusses bitcoin outlook on Bloomberg Crypto",
+          "what_happened": "Strive Chairman/CEO Matt Cole appeared on Bloomberg Crypto to discuss the broader digital-asset market, which had reclaimed roughly $3 trillion in value amid a bitcoin rally, alongside growing use of leveraged perpetual futures by traders. The segment was general market commentary rather than a company-specific disclosure.",
+          "assessment": "neutral",
+          "thesis_fit": "Routine media commentary from management with no new treasury, financing, or governance information; does not change the thesis.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://www.marketscreener.com/news/bitcoin-go-to-moon-dats-not-broken-strive-ceo-ce785ad8d080f72c"
         }
       ]
     },
@@ -134,74 +113,41 @@
       "name": "BitMine Immersion",
       "ticker": "BMNR",
       "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/bitmine/",
-      "generated_at": "2026-09-21T15:14:43.847020+00:00",
+      "generated_at": "2026-09-23T13:47:25.226038+00:00",
       "lookback_days": 3,
       "snapshot": {
-        "holdings": "5,983,940 ETH (~4.9% of ETH supply); 5,067,309 ETH staked (85% of holdings); 212 BTC; $180M Beast Industries stake; $105M Eightco (ORBS) stake; $714M cash & marketable securities; total crypto+cash+moonshots $17.1B",
-        "share_price": 25.99,
-        "mnav": null,
-        "as_of": "2026-09-21"
+        "holdings": "5,983,940 ETH (~4.9% of ETH supply); 212 BTC; $17.1B total crypto+cash+moonshots",
+        "share_price": 28.76,
+        "mnav": 1.0,
+        "as_of": "2026-09-23"
       },
-      "overall_verdict": "positive",
-      "email_summary": "BitMine's Sept 21 weekly 8-K shows ETH holdings and staking revenue projections both rising as it nears its 5% supply target.",
-      "bottom_line": "The latest primary-source treasury update shows continued disciplined weekly ETH accumulation and rising projected staking revenue, reinforcing the core accumulation thesis. No new financing, dilution, or governance red flags surfaced in the window, though the company remains a high-risk, loss-making vehicle whose value is entirely tied to ETH price and execution.",
-      "source_conflicts": [
-        "Share price snapshots conflict across sources in the window: CNN/bmnr.rocks show a close of $25.99-$27.26 (+8.79%) while Robinhood shows $25.85 as of Sept 19 and other trackers show $20.98-$22.47 on different dates; these appear to reflect different intraday/closing snapshots rather than a single conflicting figure.",
-        "ETH holdings value is quoted variably at $16.1B-$16.3B for the same 5,983,940 ETH figure depending on the ETH spot price used (~$2,688 per Coinbase vs. other timestamps), which is a pricing-timestamp difference rather than a substantive holdings discrepancy."
-      ],
-      "updates": [
-        {
-          "date": "2026-09-21",
-          "headline": "BitMine's weekly 8-K: ETH holdings hit 5.98M, 98% to 5% goal",
-          "what_happened": "In a Form 8-K filed September 21, 2026, BitMine disclosed it bought 27,562 ETH over the prior week, lifting total holdings to 5,983,940 ETH (4.9% of the 122.1M ETH supply) and total crypto/cash/moonshot holdings to $17.1 billion. The company said it is now 98% of the way to Tom Lee's 'Alchemy of 5%' target after 15 months, and staked ETH remained at 5,067,309 tokens (85% of holdings), with annualized staking revenue projections rising to $357 million from $334 million the prior week, and a theoretical fully-staked run rate of $421 million.",
-          "assessment": "positive",
-          "thesis_fit": "Continued weekly ETH accumulation funded without new dilutive share issuance disclosed this week, plus rising staking-yield economics, directly supports the credible-accumulation and staking-economics pillars of the thesis.",
-          "severity": "digest",
-          "confidence": "primary source",
-          "source_url": "https://www.sec.gov/Archives/edgar/data/0001829311/000149315226043486/ex99-1.htm"
-        },
-        {
-          "date": "2026-09-21",
-          "headline": "Tom Lee to keynote Korea Blockchain Week Sept 30",
-          "what_happened": "The same Sept 21 press release confirmed Chairman Tom Lee will deliver a keynote at Korea Blockchain Week on September 30, 2026, in Seoul, reiterating his view that a new crypto bull market began in late June 2026 and that ETH has outperformed the S&P 500 by 6,519 basis points quarter-to-date.",
-          "assessment": "neutral",
-          "thesis_fit": "A high-visibility public appearance reinforces the narrative/marketing side of the thesis but is not itself a treasury, financing, or governance action.",
-          "severity": "digest",
-          "confidence": "primary source",
-          "source_url": "https://www.prnewswire.com/news-releases/bitmine-immersion-technologies-bmnr-announces-eth-holdings-reach-5-98-million-tokens-and-total-crypto-and-total-cash-holdings-of-17-1-billion-302884434.html"
-        }
-      ]
+      "overall_verdict": "neutral",
+      "email_summary": "No new material BitMine developments beyond already-reported weekly ETH treasury update and Tom Lee commentary.",
+      "bottom_line": "The past three days brought only routine continuation of previously reported items (5.98M ETH holdings, Korea Blockchain Week keynote, institutional-underweight commentary) with no new financing, governance, or custody disclosures. Thesis remains unchanged pending BitMine's next weekly 8-K or any dilution/financing news.",
+      "source_conflicts": [],
+      "updates": []
     }
   ],
   "sector": {
-    "bottom_line": "With the CLARITY Act stalled in the Senate, U.S. regulators (CFTC, SEC, OCC) are advancing crypto market-structure and capital-markets access piecemeal via existing authority, expanding derivatives products and stablecoin bank charters rather than waiting for comprehensive legislation.",
+    "bottom_line": "The dominant sector-wide overhang remains MSCI's live consultation on excluding Bitcoin/digital-asset treasury companies from its Global Investable Market Indexes, with the comment window closing September 30 and results due October 16, 2026, while regulators continue advancing custody and market-structure rules in the wake of the stalled CLARITY Act.",
     "updates": [
       {
-        "date": "2026-09-17",
-        "headline": "CFTC broadens no-action relief for crypto wallet software",
-        "what_happened": "The CFTC's Market Participants Division issued Staff Letter 26-25, expanding a no-action position previously limited to Phantom Technologies to cover any qualifying 'passive software' provider (wallets, DeFi front ends, apps) that routes users to CFTC-registered derivatives venues without requiring introducing-broker registration. The relief lasts until the Commission finalizes formal rulemaking and does not shield providers from other laws such as money-transmission or DOJ criminal statutes.",
-        "assessment": "positive",
-        "severity": "digest",
+        "date": "2026-09-30",
+        "headline": "MSCI index-exclusion consultation for Bitcoin treasuries nears close",
+        "what_happened": "MSCI's renewed consultation would classify certain 'non-operating' companies — explicitly naming Strategy and Metaplanet based on a May 2026 simulation, with uranium holder Yellow Cake also swept in — as ineligible for its Global Investable Market Indexes. Public feedback closes September 30, 2026, with results expected October 16, and any changes would take effect in the November 2026 index review, potentially forcing passive-fund selling.",
+        "assessment": "negative",
+        "severity": "alert",
         "confidence": "primary source",
-        "source_url": "https://www.theblock.co/news/regulation/2026-09-17-regulators-keep-moving-crypto-cftc-follows-sec-developer-friendly-no-action-stance-415425"
+        "source_url": "https://crypto.jobs/news/msci-proposal-threatens-index-removal-for-bitcoin-treasury-companies"
       },
       {
-        "date": "2026-09-18",
-        "headline": "Coinbase, Kalshi, Bitnomial file for single-stock perpetual futures",
-        "what_happened": "Coinbase Derivatives, Kalshi, and Kraken-linked Bitnomial each filed proposed rule changes with the SEC/CFTC on September 18 to list cash-settled, no-expiry perpetual futures on individual U.S. stocks and ETFs (Apple, Tesla, Nvidia, Microsoft, Amazon, SPY, QQQ among proposed underliers). CFTC approval remains pending for all three filings, and the products would give price exposure only, without ownership, dividend, or voting rights.",
-        "assessment": "neutral",
-        "severity": "digest",
-        "confidence": "primary source",
-        "source_url": "https://www.crowdfundinsider.com/2026/09/311525-kalshi-files-with-sec-and-cftc-to-list-us-single-stock-perpetual-futures/"
-      },
-      {
-        "date": "2026-09-18",
-        "headline": "Bastion wins conditional OCC national trust bank charter",
-        "what_happened": "Stablecoin infrastructure provider Bastion received preliminary conditional OCC approval to convert its New York trust charter into a national trust bank charter (Bastion Platforms National Trust Company), covering GENIUS Act-compliant stablecoin custody, wallets, payment infrastructure, and white-label issuance. The charter bars deposit-taking and lending and is not FDIC-insured, joining Ripple, Circle, and BitGo among firms securing similar federal stablecoin charters.",
+        "date": "2026-09-22",
+        "headline": "SEC signals crypto custody rulemaking proceeding despite CLARITY stall",
+        "what_happened": "Following the Senate's failure to advance the CLARITY Act, SEC Chair Paul Atkins publicly reiterated that the agency will act on crypto market structure 'with or without legislation,' with a crypto custody rule proposal — sent to OMB in late August — cited as a near-term priority alongside continuing work on Regulation Crypto Assets.",
         "assessment": "positive",
         "severity": "digest",
-        "confidence": "primary source",
-        "source_url": "https://www.globenewswire.com/news-release/2026/09/18/3364956/0/en/bastion-receives-conditional-occ-approval-for-a-national-trust-bank-charter.html"
+        "confidence": "secondary only",
+        "source_url": "https://www.cryptotimes.io/2026/09/22/sec-moves-to-clear-up-crypto-custody-rules/"
       }
     ]
   },

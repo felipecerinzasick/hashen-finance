@@ -1,32 +1,23 @@
 {
-  "bottom_line": "With the CLARITY Act stalled in the Senate, U.S. regulators (CFTC, SEC, OCC) are advancing crypto market-structure and capital-markets access piecemeal via existing authority, expanding derivatives products and stablecoin bank charters rather than waiting for comprehensive legislation.",
+  "bottom_line": "The dominant sector-wide overhang remains MSCI's live consultation on excluding Bitcoin/digital-asset treasury companies from its Global Investable Market Indexes, with the comment window closing September 30 and results due October 16, 2026, while regulators continue advancing custody and market-structure rules in the wake of the stalled CLARITY Act.",
   "updates": [
     {
-      "date": "2026-09-17",
-      "headline": "CFTC broadens no-action relief for crypto wallet software",
-      "what_happened": "The CFTC's Market Participants Division issued Staff Letter 26-25, expanding a no-action position previously limited to Phantom Technologies to cover any qualifying 'passive software' provider (wallets, DeFi front ends, apps) that routes users to CFTC-registered derivatives venues without requiring introducing-broker registration. The relief lasts until the Commission finalizes formal rulemaking and does not shield providers from other laws such as money-transmission or DOJ criminal statutes.",
-      "assessment": "positive",
-      "severity": "digest",
+      "date": "2026-09-30",
+      "headline": "MSCI index-exclusion consultation for Bitcoin treasuries nears close",
+      "what_happened": "MSCI's renewed consultation would classify certain 'non-operating' companies — explicitly naming Strategy and Metaplanet based on a May 2026 simulation, with uranium holder Yellow Cake also swept in — as ineligible for its Global Investable Market Indexes. Public feedback closes September 30, 2026, with results expected October 16, and any changes would take effect in the November 2026 index review, potentially forcing passive-fund selling.",
+      "assessment": "negative",
+      "severity": "alert",
       "confidence": "primary source",
-      "source_url": "https://www.theblock.co/news/regulation/2026-09-17-regulators-keep-moving-crypto-cftc-follows-sec-developer-friendly-no-action-stance-415425"
+      "source_url": "https://crypto.jobs/news/msci-proposal-threatens-index-removal-for-bitcoin-treasury-companies"
     },
     {
-      "date": "2026-09-18",
-      "headline": "Coinbase, Kalshi, Bitnomial file for single-stock perpetual futures",
-      "what_happened": "Coinbase Derivatives, Kalshi, and Kraken-linked Bitnomial each filed proposed rule changes with the SEC/CFTC on September 18 to list cash-settled, no-expiry perpetual futures on individual U.S. stocks and ETFs (Apple, Tesla, Nvidia, Microsoft, Amazon, SPY, QQQ among proposed underliers). CFTC approval remains pending for all three filings, and the products would give price exposure only, without ownership, dividend, or voting rights.",
-      "assessment": "neutral",
-      "severity": "digest",
-      "confidence": "primary source",
-      "source_url": "https://www.crowdfundinsider.com/2026/09/311525-kalshi-files-with-sec-and-cftc-to-list-us-single-stock-perpetual-futures/"
-    },
-    {
-      "date": "2026-09-18",
-      "headline": "Bastion wins conditional OCC national trust bank charter",
-      "what_happened": "Stablecoin infrastructure provider Bastion received preliminary conditional OCC approval to convert its New York trust charter into a national trust bank charter (Bastion Platforms National Trust Company), covering GENIUS Act-compliant stablecoin custody, wallets, payment infrastructure, and white-label issuance. The charter bars deposit-taking and lending and is not FDIC-insured, joining Ripple, Circle, and BitGo among firms securing similar federal stablecoin charters.",
+      "date": "2026-09-22",
+      "headline": "SEC signals crypto custody rulemaking proceeding despite CLARITY stall",
+      "what_happened": "Following the Senate's failure to advance the CLARITY Act, SEC Chair Paul Atkins publicly reiterated that the agency will act on crypto market structure 'with or without legislation,' with a crypto custody rule proposal — sent to OMB in late August — cited as a near-term priority alongside continuing work on Regulation Crypto Assets.",
       "assessment": "positive",
       "severity": "digest",
-      "confidence": "primary source",
-      "source_url": "https://www.globenewswire.com/news-release/2026/09/18/3364956/0/en/bastion-receives-conditional-occ-approval-for-a-national-trust-bank-charter.html"
+      "confidence": "secondary only",
+      "source_url": "https://www.cryptotimes.io/2026/09/22/sec-moves-to-clear-up-crypto-custody-rules/"
     }
   ]
 }

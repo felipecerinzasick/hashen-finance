@@ -3,31 +3,19 @@
   "name": "Metaplanet",
   "ticker": "3350.T / MTPLF / DN3.F",
   "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/metaplanet/",
-  "generated_at": "2026-09-21T15:14:43.847009+00:00",
+  "generated_at": "2026-09-23T13:47:25.226023+00:00",
   "lookback_days": 3,
   "snapshot": {
-    "holdings": "43,000 BTC (last confirmed purchase disclosed July 2, 2026; no new purchase confirmed in the last 3 days)",
+    "holdings": "43,000 BTC (last disclosed as of June 30, 2026 quarterly update; no new purchase reported since)",
     "share_price": 243.0,
-    "mnav": null,
-    "as_of": "2026-09-21"
+    "mnav": 0.77,
+    "as_of": "2026-09-23"
   },
-  "overall_verdict": "negative",
-  "email_summary": "VanEck's mid-September ChainCheck rates Metaplanet the only 'Bad' governance grade among top-10 Bitcoin treasuries, reiterating dilution concerns.",
-  "bottom_line": "No new BTC purchases, financing, or shareholder-change filings emerged in the last three days; the sole development is a VanEck research note doubling down on prior dilution/governance criticism and arguing the September 11 pool cut is insufficient. This keeps governance risk in the spotlight without materially changing BTC-per-share economics.",
+  "overall_verdict": "neutral",
+  "email_summary": "No new material Metaplanet disclosures in the past 3 days; stock trades near 243 yen with mNAV below 1.0x amid unresolved governance overhang.",
+  "bottom_line": "No fresh primary-source filings emerged in the September 20-23 window beyond items already reported; the stock continues to trade at a discount to BTC NAV (~0.77x EV-based mNAV) while the MSCI non-operating-company consultation (closes Sept 30, decision Oct 16) and unresolved Series 10/MMXX governance questions remain the dominant overhangs. Net effect on thesis is unchanged from prior sweep — watch for the Q3 BTC purchase disclosure and MSCI outcome as the next catalysts.",
   "source_conflicts": [
-    "mNAV figures are stale and inconsistent across trackers as of Sept 21: mnav.com shows 1.21x based on a ~40,177 BTC snapshot roughly a month old, while other June 2026 sources cite readings near 0.90x-0.92x; no reliable same-day figure was found, so mNAV is reported as null.",
-    "BTC treasury ranking is inconsistent across sources: some (VanEck-linked and July 2026 press) still call Metaplanet the 3rd-largest corporate holder at 43,000 BTC, while CoinGecko's treasury tracker lists it as 6th-largest with 43,000 BTC worth $3.65B — likely reflecting differing peer-set cutoff dates rather than a change in Metaplanet's own holdings."
+    "Bitcointreasuries.net shows two different mNAV readings as of ~Sept 21, 2026 (EV-based 0.77x vs. Basic 0.57x); report uses the EV-based figure but the gap should be reconciled against the dashboard's own methodology."
   ],
-  "updates": [
-    {
-      "date": "2026-09-18",
-      "headline": "VanEck rates Metaplanet 'Bad' on executive pay, dilution",
-      "what_happened": "VanEck's mid-September 2026 Bitcoin ChainCheck report singled out Metaplanet as the only company among the ten largest digital-asset treasuries it grades 'Bad' on executive compensation practices, saying its option pool equals roughly 14.7% of fully diluted shares and officer exposure is about 8.2% — far above peer averages. The report acknowledges the board's August 18 removal of the automatic pool-growth clause and the September 11 cut of the option pool by 41% to 188.2 million shares, but argues these fixes still fall short and calls for a full reversal of the roughly 273 million shares added via the prior mechanism plus a shareholder-approved replacement plan.",
-      "assessment": "negative",
-      "thesis_fit": "This is a direct governance/incentive-alignment critique from a reputable crypto-focused asset manager, reinforcing the checklist concern that compensation structures may not be genuinely performance-linked despite the already-reported 41% pool cut.",
-      "severity": "digest",
-      "confidence": "secondary only",
-      "source_url": "https://www.vaneck.com/us/en/blogs/digital-assets/matthew-sigel-vaneck-mid-september-2026-bitcoin-chaincheck/"
-    }
-  ]
+  "updates": []
 }

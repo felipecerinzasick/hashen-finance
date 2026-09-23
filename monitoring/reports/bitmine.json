@@ -3,41 +3,17 @@
   "name": "BitMine Immersion",
   "ticker": "BMNR",
   "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/bitmine/",
-  "generated_at": "2026-09-21T15:14:43.847020+00:00",
+  "generated_at": "2026-09-23T13:47:25.226038+00:00",
   "lookback_days": 3,
   "snapshot": {
-    "holdings": "5,983,940 ETH (~4.9% of ETH supply); 5,067,309 ETH staked (85% of holdings); 212 BTC; $180M Beast Industries stake; $105M Eightco (ORBS) stake; $714M cash & marketable securities; total crypto+cash+moonshots $17.1B",
-    "share_price": 25.99,
-    "mnav": null,
-    "as_of": "2026-09-21"
+    "holdings": "5,983,940 ETH (~4.9% of ETH supply); 212 BTC; $17.1B total crypto+cash+moonshots",
+    "share_price": 28.76,
+    "mnav": 1.0,
+    "as_of": "2026-09-23"
   },
-  "overall_verdict": "positive",
-  "email_summary": "BitMine's Sept 21 weekly 8-K shows ETH holdings and staking revenue projections both rising as it nears its 5% supply target.",
-  "bottom_line": "The latest primary-source treasury update shows continued disciplined weekly ETH accumulation and rising projected staking revenue, reinforcing the core accumulation thesis. No new financing, dilution, or governance red flags surfaced in the window, though the company remains a high-risk, loss-making vehicle whose value is entirely tied to ETH price and execution.",
-  "source_conflicts": [
-    "Share price snapshots conflict across sources in the window: CNN/bmnr.rocks show a close of $25.99-$27.26 (+8.79%) while Robinhood shows $25.85 as of Sept 19 and other trackers show $20.98-$22.47 on different dates; these appear to reflect different intraday/closing snapshots rather than a single conflicting figure.",
-    "ETH holdings value is quoted variably at $16.1B-$16.3B for the same 5,983,940 ETH figure depending on the ETH spot price used (~$2,688 per Coinbase vs. other timestamps), which is a pricing-timestamp difference rather than a substantive holdings discrepancy."
-  ],
-  "updates": [
-    {
-      "date": "2026-09-21",
-      "headline": "BitMine's weekly 8-K: ETH holdings hit 5.98M, 98% to 5% goal",
-      "what_happened": "In a Form 8-K filed September 21, 2026, BitMine disclosed it bought 27,562 ETH over the prior week, lifting total holdings to 5,983,940 ETH (4.9% of the 122.1M ETH supply) and total crypto/cash/moonshot holdings to $17.1 billion. The company said it is now 98% of the way to Tom Lee's 'Alchemy of 5%' target after 15 months, and staked ETH remained at 5,067,309 tokens (85% of holdings), with annualized staking revenue projections rising to $357 million from $334 million the prior week, and a theoretical fully-staked run rate of $421 million.",
-      "assessment": "positive",
-      "thesis_fit": "Continued weekly ETH accumulation funded without new dilutive share issuance disclosed this week, plus rising staking-yield economics, directly supports the credible-accumulation and staking-economics pillars of the thesis.",
-      "severity": "digest",
-      "confidence": "primary source",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/0001829311/000149315226043486/ex99-1.htm"
-    },
-    {
-      "date": "2026-09-21",
-      "headline": "Tom Lee to keynote Korea Blockchain Week Sept 30",
-      "what_happened": "The same Sept 21 press release confirmed Chairman Tom Lee will deliver a keynote at Korea Blockchain Week on September 30, 2026, in Seoul, reiterating his view that a new crypto bull market began in late June 2026 and that ETH has outperformed the S&P 500 by 6,519 basis points quarter-to-date.",
-      "assessment": "neutral",
-      "thesis_fit": "A high-visibility public appearance reinforces the narrative/marketing side of the thesis but is not itself a treasury, financing, or governance action.",
-      "severity": "digest",
-      "confidence": "primary source",
-      "source_url": "https://www.prnewswire.com/news-releases/bitmine-immersion-technologies-bmnr-announces-eth-holdings-reach-5-98-million-tokens-and-total-crypto-and-total-cash-holdings-of-17-1-billion-302884434.html"
-    }
-  ]
+  "overall_verdict": "neutral",
+  "email_summary": "No new material BitMine developments beyond already-reported weekly ETH treasury update and Tom Lee commentary.",
+  "bottom_line": "The past three days brought only routine continuation of previously reported items (5.98M ETH holdings, Korea Blockchain Week keynote, institutional-underweight commentary) with no new financing, governance, or custody disclosures. Thesis remains unchanged pending BitMine's next weekly 8-K or any dilution/financing news.",
+  "source_conflicts": [],
+  "updates": []
 }

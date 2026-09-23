@@ -3,40 +3,41 @@
   "name": "Asset Entities / Strive",
   "ticker": "ASST",
   "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/asst/",
-  "generated_at": "2026-09-21T15:14:43.847016+00:00",
+  "generated_at": "2026-09-23T13:47:25.226031+00:00",
   "lookback_days": 3,
   "snapshot": {
-    "holdings": "26,355 BTC as of September 18, 2026 (up from 25,000 BTC reported the prior week)",
-    "share_price": 30.11,
-    "mnav": null,
-    "as_of": "2026-09-18"
+    "holdings": "26,355 BTC (as of 2026-09-18, per Form 8-K)",
+    "share_price": 29.97,
+    "mnav": 1.25,
+    "as_of": "2026-09-22"
   },
-  "overall_verdict": "neutral",
-  "email_summary": "Strive bought another 1,355 BTC ($107.7M) to reach 26,355 BTC, funded partly by newly-active warrant exercises alongside SATA preferred sales.",
-  "bottom_line": "Strive continued its weekly accumulation cadence, adding 1,355 BTC and diversifying financing with $21.2M of warrant-exercise proceeds alongside SATA preferred sales, which modestly eases reliance on dilutive preferred issuance. Continued share-count growth and an elevated market premium to Bitcoin NAV keep dilution and valuation-support risk as the key swing factors for the thesis.",
+  "overall_verdict": "positive",
+  "email_summary": "TD Cowen hikes ASST price target to $44 on faster BTC accumulation; no new dilution or governance red flags this window.",
+  "bottom_line": "The only new development this window is a sell-side price target increase reinforcing the accumulation-driven bull case already priced into recent 8-Ks; no new financing, dilution, or governance issues emerged beyond items already reported.",
   "source_conflicts": [
-    "mNAV/premium figures vary by source and date: mnav.com cites 1.67x (as of ~21,356 BTC, three weeks old), an M1 summary cites 1.69x, and Yahoo Finance references a '90% NAV premium' tied to the 25,000 BTC disclosure — no single up-to-date mNAV figure could be confirmed for the 26,355 BTC holding as of Sept 18-21."
+    "Intraday ASST price quotes on 2026-09-22 varied slightly across sources ($29.68 on Robinhood vs. $29.97 on Investing.com vs. $29.66 on Yahoo real-time), likely reflecting different snapshot times rather than a data conflict.",
+    "mNAV figures (1.25x basic / 1.68x diluted per bitcointreasuries.net) are dated Sep 14, 2026 and predate the latest 1,355 BTC purchase and subsequent share price rally, so current mNAV is likely different and should be treated as stale."
   ],
   "updates": [
     {
       "date": "2026-09-21",
-      "headline": "Strive buys 1,355 BTC for $107.7M, holdings hit 26,355",
-      "what_happened": "Strive disclosed via 8-K that it purchased 1,355 bitcoin between September 14 and September 18, 2026 at an average price of about $79,475 per coin, inclusive of fees, taking total holdings to 26,355 BTC. Class A common shares outstanding rose by 2,073,760 to 87,804,613 and cash grew to $229.6 million, a $25.4 million increase from September 11, while SATA preferred shares outstanding rose by 786,194 to 11,184,160.",
-      "assessment": "neutral",
-      "thesis_fit": "Continues the core Bitcoin-accumulation narrative that underpins the treasury-wrapper thesis, but the accompanying rise in Class A shares outstanding is an ongoing dilution data point to track against Bitcoin-per-share growth.",
-      "severity": "digest",
-      "confidence": "primary source",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/0001920406/000162828026062806/asst-20260921.htm"
-    },
-    {
-      "date": "2026-09-21",
-      "headline": "Warrant exercises begin, add $21.2M, diversify funding mix",
-      "what_happened": "CEO Matt Cole disclosed that warrant exercises began during the week and generated $21.2 million in gross proceeds, with SATA preferred sales supplying the remainder of capital for the latest BTC purchase. Including the warrant proceeds, SATA accounted for 57.7% of total capital raised for the week, a lower share than in prior all-preferred weeks.",
+      "headline": "TD Cowen raises ASST price target to $44 from $32",
+      "what_happened": "TD Cowen analysts Lance Vitanza and Jonnathan Navarrete lifted their price target on ASST, citing bitcoin accumulation that has outpaced their model and stronger growth in bitcoin held per fully diluted share. The firm now projects Strive will end 2026 with 32,105 BTC (up from a prior 27,156 estimate) and raised its full-year BTC Yield forecast from 54.1% to 70.1%.",
       "assessment": "positive",
-      "thesis_fit": "Warrant exercises give Strive a second capital-raising lever beyond the daily-paying 13% SATA preferred, which can reduce dependence on high-cost preferred dividends versus existing shareholders over time.",
+      "thesis_fit": "A raised sell-side target grounded in accelerating BTC-per-share growth supports the thesis that Strive can build a durable, market-trusted Bitcoin-per-share story.",
       "severity": "digest",
       "confidence": "secondary only",
-      "source_url": "https://www.cryptopolitan.com/strive-outbuy-strategy-bitcoin-lifts-asst/"
+      "source_url": "https://www.theblock.co/news/markets/2026-09-21-strive-adds-1355-bitcoin-picks-up-pace-year-end-second-place-treasury-goal-415940"
+    },
+    {
+      "date": "2026-09-22",
+      "headline": "Strive CEO discusses bitcoin outlook on Bloomberg Crypto",
+      "what_happened": "Strive Chairman/CEO Matt Cole appeared on Bloomberg Crypto to discuss the broader digital-asset market, which had reclaimed roughly $3 trillion in value amid a bitcoin rally, alongside growing use of leveraged perpetual futures by traders. The segment was general market commentary rather than a company-specific disclosure.",
+      "assessment": "neutral",
+      "thesis_fit": "Routine media commentary from management with no new treasury, financing, or governance information; does not change the thesis.",
+      "severity": "digest",
+      "confidence": "secondary only",
+      "source_url": "https://www.marketscreener.com/news/bitcoin-go-to-moon-dats-not-broken-strive-ceo-ce785ad8d080f72c"
     }
   ]
 }

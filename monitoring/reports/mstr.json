@@ -3,50 +3,40 @@
   "name": "Strategy",
   "ticker": "MSTR",
   "dashboard_url": "https://hashen-finance.onrender.com/dashboard/mstr/",
-  "generated_at": "2026-09-21T15:14:43.846983+00:00",
+  "generated_at": "2026-09-23T13:47:25.225995+00:00",
   "lookback_days": 3,
   "snapshot": {
-    "holdings": "846,000 BTC",
-    "share_price": 166.6,
-    "mnav": 1.04,
-    "as_of": "2026-09-21"
+    "holdings": "846,000 BTC (as of Sept 20, 2026), acquired for $63.80B at avg $75,416/BTC",
+    "share_price": 167.33,
+    "mnav": 1.17,
+    "as_of": "2026-09-22"
   },
   "overall_verdict": "positive",
-  "email_summary": "Strategy resumes BTC buying with cash (not new shares) after 3-week pause; stock jumps ~8-16%.",
-  "bottom_line": "Strategy funded its return to Bitcoin accumulation entirely from existing USD Cash rather than dilutive ATM issuance, a mild positive for BTC-per-share math, while continuing to retire STRC preferred toward par. The moves, paired with a supportive week for BTC price, drove a sharp share-price recovery, though mNAV remains near parity (~1.04x), limiting the accretive power of any future equity-funded purchases.",
+  "email_summary": "MSTR's mNAV climbs to a 3-month high and unrealized BTC losses flip to ~$8-9B in gains as Bitcoin tops $85K.",
+  "bottom_line": "No new capital-markets or governance items beyond already-reported BTC buys and STRC buybacks; the incremental news is a BTC-price-driven improvement in mNAV and unrealized P&L that strengthens the balance sheet without new dilution. Thesis remains intact but unchanged mechanically — the gains are mark-to-market, not from accretive per-share BTC growth this week.",
   "source_conflicts": [
-    "mNAV estimates vary by source and date: mnav.com shows a live 1.04x, bitcointreasuries.net showed 1.06x (EV) / 0.78-0.79x (basic/diluted) as of Aug 31, and other trackers cited 0.68x basic as of Aug 3 — figures are not directly comparable due to differing dates and methodologies (EV vs basic vs diluted)."
+    "Unrealized profit estimates vary across sources ($8B, $8.59B, $8.75B, $8.9B, $9B) depending on exact BTC price snapshot used and timing of the article; all describe the same directional swing from a prior ~$10-13B unrealized loss."
   ],
   "updates": [
     {
       "date": "2026-09-21",
-      "headline": "Strategy resumes BTC buys, 950 BTC funded by cash",
-      "what_happened": "Strategy filed an 8-K disclosing it purchased 950 BTC for $75.7 million (avg $79,670/BTC) during September 14-20, ending a roughly three-week pause. Critically, the purchase was funded entirely from existing USD Cash rather than new share or ATM issuance, and total holdings rose to 846,000 BTC at an average cost of $75,416.",
+      "headline": "MSTR mNAV climbs to 1.17x, highest since June",
+      "what_happened": "Strategy's mNAV multiple rose to 1.17x, meaning investors are paying $1.17 for every $1 of BTC held, as MSTR stock closed at $168 on September 21, its highest close since May 15. The rise came after the stock added roughly $32 billion in market value over three months, a figure Strategy itself highlighted on X.",
       "assessment": "positive",
-      "thesis_fit": "Accumulation funded from cash rather than new equity increases BTC per diluted share without adding dilution, directly supporting the core treasury-flywheel thesis.",
-      "severity": "alert",
-      "confidence": "primary source",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/0001050446/000119312526396093/mstr-20260914.htm"
-    },
-    {
-      "date": "2026-09-21",
-      "headline": "STRC preferred buyback grows to $174M for the week",
-      "what_happened": "The same 8-K disclosed Strategy repurchased 1,771,238 shares of STRC preferred for $174.0 million during September 14-20, up from $139.3 million the prior week, funded from USD Cash. As of September 20, USD Reserve stood at $5.04 billion and USD Cash at $1.05 billion, after also using $57.4 million of the USD Reserve for preferred dividends and debt interest.",
-      "assessment": "neutral",
-      "thesis_fit": "Continued STRC buybacks push the preferred back toward par and stabilize the digital-credit stack, but draw down cash that could otherwise fund additional BTC purchases.",
-      "severity": "digest",
-      "confidence": "primary source",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526396093/mstr-20260914.htm"
-    },
-    {
-      "date": "2026-09-21",
-      "headline": "MSTR stock surges over 8% on BTC purchase news",
-      "what_happened": "MSTR shares rose more than 8% in premarket trading Monday, extending a prior week's 17% weekly gain, after the company disclosed the resumed bitcoin buying and preferred repurchase. The move pushed the stock back into positive territory for the year, following weeks of pressure tied to forced BTC/stock sales to meet preferred dividend obligations.",
-      "assessment": "positive",
-      "thesis_fit": "Share price reaction reflects renewed confidence in the accumulation flywheel, though the stock remains a high-beta BTC proxy far below its 52-week high.",
+      "thesis_fit": "A rising mNAV premium improves the economics of any future ATM/equity issuance for BTC purchases, directly supporting the 'financing priced attractively vs mNAV' checklist item.",
       "severity": "digest",
       "confidence": "secondary only",
-      "source_url": "https://finance.yahoo.com/markets/article/michael-saylors-strategy-jumps-as-the-company-says-it-bought-more-bitcoin-133538866.html"
+      "source_url": "https://coingape.com/markets/mstr-stock-forecast-analyst-eyes-rally-to-225-as-strategys-bitcoin-premium-hits-3-month-high/"
+    },
+    {
+      "date": "2026-09-22",
+      "headline": "Unrealized BTC loss flips to ~$8-9B gain",
+      "what_happened": "Strategy's 846,000 BTC holdings swung from an unrealized loss of roughly $10-13B earlier this year to an unrealized gain of approximately $8-9 billion as Bitcoin rallied above $85,000. The reversal follows an $8.2 billion net loss reported for Q2 2026 driven largely by unrealized BTC losses.",
+      "assessment": "positive",
+      "thesis_fit": "Improves BTC NAV coverage and eases pressure on the STRC/preferred credit stack, though it is purely price-driven rather than from per-share BTC accretion this week.",
+      "severity": "digest",
+      "confidence": "secondary only",
+      "source_url": "https://finance.yahoo.com/markets/crypto/articles/strategy-swings-10b-unrealized-loss-095854130.html"
     }
   ]
 }

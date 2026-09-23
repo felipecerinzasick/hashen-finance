@@ -194,6 +194,36 @@
       "id": "aa416ba11cd4e5",
       "label": "sector: Bastion wins conditional OCC national trust bank charter",
       "date": "2026-09-18"
+    },
+    {
+      "id": "f97ecba71b8522",
+      "label": "mstr: MSTR mNAV climbs to 1.17x, highest since June",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "ca42d3b78a2217",
+      "label": "mstr: Unrealized BTC loss flips to ~$8-9B gain",
+      "date": "2026-09-22"
+    },
+    {
+      "id": "7c5a8294e7bd98",
+      "label": "asst: TD Cowen raises ASST price target to $44 from $32",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "b70ed7e74f3f43",
+      "label": "asst: Strive CEO discusses bitcoin outlook on Bloomberg Crypto",
+      "date": "2026-09-22"
+    },
+    {
+      "id": "3b0aa471746ff8",
+      "label": "sector: MSCI index-exclusion consultation for Bitcoin treasuries nears close",
+      "date": "2026-09-30"
+    },
+    {
+      "id": "de0e45b5305b16",
+      "label": "sector: SEC signals crypto custody rulemaking proceeding despite CLARITY stall",
+      "date": "2026-09-22"
     }
   ]
 }

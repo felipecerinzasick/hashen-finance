@@ -3,41 +3,30 @@
   "name": "Asset Entities / Strive",
   "ticker": "ASST",
   "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/asst/",
-  "generated_at": "2026-09-23T13:47:25.226031+00:00",
+  "generated_at": "2026-09-25T14:00:52.835854+00:00",
   "lookback_days": 3,
   "snapshot": {
-    "holdings": "26,355 BTC (as of 2026-09-18, per Form 8-K)",
-    "share_price": 29.97,
-    "mnav": 1.25,
-    "as_of": "2026-09-22"
+    "holdings": "26,355 BTC (as of 2026-09-18, per 8-K)",
+    "share_price": 28.99,
+    "mnav": 1.56,
+    "as_of": "2026-09-23"
   },
-  "overall_verdict": "positive",
-  "email_summary": "TD Cowen hikes ASST price target to $44 on faster BTC accumulation; no new dilution or governance red flags this window.",
-  "bottom_line": "The only new development this window is a sell-side price target increase reinforcing the accumulation-driven bull case already priced into recent 8-Ks; no new financing, dilution, or governance issues emerged beyond items already reported.",
+  "overall_verdict": "neutral",
+  "email_summary": "No material new filings in the last 3 days; secondary sources estimate another ~$86M SATA raise funding ~1,000 more BTC, unconfirmed by 8-K.",
+  "bottom_line": "No new primary-source disclosures emerged in the last three days beyond the already-reported 26,355 BTC purchase and TD Cowen upgrade. Secondary trackers estimate Strive raised roughly $86M via SATA sales from Sept 21-23, which if confirmed would extend the accumulation pace but has not yet been disclosed in an 8-K.",
   "source_conflicts": [
-    "Intraday ASST price quotes on 2026-09-22 varied slightly across sources ($29.68 on Robinhood vs. $29.97 on Investing.com vs. $29.66 on Yahoo real-time), likely reflecting different snapshot times rather than a data conflict.",
-    "mNAV figures (1.25x basic / 1.68x diluted per bitcointreasuries.net) are dated Sep 14, 2026 and predate the latest 1,355 BTC purchase and subsequent share price rally, so current mNAV is likely different and should be treated as stale."
+    "Estimated SATA capital raise of ~$85.88M (Sept 21-23) and implied ~1,002 BTC purchase are based on third-party BitcoinTreasuries.net modeling, not yet confirmed by a Strive 8-K filing."
   ],
   "updates": [
     {
-      "date": "2026-09-21",
-      "headline": "TD Cowen raises ASST price target to $44 from $32",
-      "what_happened": "TD Cowen analysts Lance Vitanza and Jonnathan Navarrete lifted their price target on ASST, citing bitcoin accumulation that has outpaced their model and stronger growth in bitcoin held per fully diluted share. The firm now projects Strive will end 2026 with 32,105 BTC (up from a prior 27,156 estimate) and raised its full-year BTC Yield forecast from 54.1% to 70.1%.",
-      "assessment": "positive",
-      "thesis_fit": "A raised sell-side target grounded in accelerating BTC-per-share growth supports the thesis that Strive can build a durable, market-trusted Bitcoin-per-share story.",
-      "severity": "digest",
-      "confidence": "secondary only",
-      "source_url": "https://www.theblock.co/news/markets/2026-09-21-strive-adds-1355-bitcoin-picks-up-pace-year-end-second-place-treasury-goal-415940"
-    },
-    {
-      "date": "2026-09-22",
-      "headline": "Strive CEO discusses bitcoin outlook on Bloomberg Crypto",
-      "what_happened": "Strive Chairman/CEO Matt Cole appeared on Bloomberg Crypto to discuss the broader digital-asset market, which had reclaimed roughly $3 trillion in value amid a bitcoin rally, alongside growing use of leveraged perpetual futures by traders. The segment was general market commentary rather than a company-specific disclosure.",
+      "date": "2026-09-24",
+      "headline": "Trackers estimate ~$86M SATA raise, no 8-K yet",
+      "what_happened": "Secondary crypto-news outlets citing BitcoinTreasuries.net estimated that Strive raised roughly $85.88 million through SATA preferred stock sales over three trading sessions from September 21-23, 2026, which could fund purchase of approximately 1,002 more bitcoin. As of these reports, Strive's last confirmed SEC filing still showed 26,355 BTC as of September 18, with no new 8-K disclosing an updated bitcoin count.",
       "assessment": "neutral",
-      "thesis_fit": "Routine media commentary from management with no new treasury, financing, or governance information; does not change the thesis.",
+      "thesis_fit": "Continued reliance on the SATA ATM to fund accumulation supports the Bitcoin-per-share growth story, but the figure is an unconfirmed third-party estimate pending the company's next official balance-sheet update.",
       "severity": "digest",
-      "confidence": "secondary only",
-      "source_url": "https://www.marketscreener.com/news/bitcoin-go-to-moon-dats-not-broken-strive-ceo-ce785ad8d080f72c"
+      "confidence": "unconfirmed",
+      "source_url": "https://coincentral.com/strive-asst-stock-jumps-into-bitcoin-buying-spree-with-86m-raise"
     }
   ]
 }

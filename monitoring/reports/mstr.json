@@ -3,40 +3,40 @@
   "name": "Strategy",
   "ticker": "MSTR",
   "dashboard_url": "https://hashen-finance.onrender.com/dashboard/mstr/",
-  "generated_at": "2026-09-23T13:47:25.225995+00:00",
+  "generated_at": "2026-09-25T14:00:52.835821+00:00",
   "lookback_days": 3,
   "snapshot": {
-    "holdings": "846,000 BTC (as of Sept 20, 2026), acquired for $63.80B at avg $75,416/BTC",
-    "share_price": 167.33,
-    "mnav": 1.17,
-    "as_of": "2026-09-22"
+    "holdings": "846,000 BTC (as of 2026-09-20), cost basis $63.80B, avg $75,416/BTC",
+    "share_price": 160.41,
+    "mnav": 1.14,
+    "as_of": "2026-09-24"
   },
-  "overall_verdict": "positive",
-  "email_summary": "MSTR's mNAV climbs to a 3-month high and unrealized BTC losses flip to ~$8-9B in gains as Bitcoin tops $85K.",
-  "bottom_line": "No new capital-markets or governance items beyond already-reported BTC buys and STRC buybacks; the incremental news is a BTC-price-driven improvement in mNAV and unrealized P&L that strengthens the balance sheet without new dilution. Thesis remains intact but unchanged mechanically — the gains are mark-to-market, not from accretive per-share BTC growth this week.",
+  "overall_verdict": "neutral",
+  "email_summary": "Strategy proposes daily preferred dividends and draws scrutiny over Trump-linked account trades; no new BTC purchases disclosed this window.",
+  "bottom_line": "The daily-dividend proposal is a structural upgrade to the Digital Credit financing stack that could improve liquidity without adding to dividend obligations, a mild positive for financing quality. The Trump-account disclosure is a governance/optics sideshow with no balance-sheet impact and does not change BTC-per-share trajectory.",
   "source_conflicts": [
-    "Unrealized profit estimates vary across sources ($8B, $8.59B, $8.75B, $8.9B, $9B) depending on exact BTC price snapshot used and timing of the article; all describe the same directional swing from a prior ~$10-13B unrealized loss."
+    "mNAV readings diverge across trackers: bitcointreasuries.net shows mNAV(EV) 1.14x / diluted 0.90x as of Sept 21, versus the previously reported 1.17x figure — likely a methodology (EV vs. basic/diluted) difference rather than a data error."
   ],
   "updates": [
     {
-      "date": "2026-09-21",
-      "headline": "MSTR mNAV climbs to 1.17x, highest since June",
-      "what_happened": "Strategy's mNAV multiple rose to 1.17x, meaning investors are paying $1.17 for every $1 of BTC held, as MSTR stock closed at $168 on September 21, its highest close since May 15. The rise came after the stock added roughly $32 billion in market value over three months, a figure Strategy itself highlighted on X.",
+      "date": "2026-09-24",
+      "headline": "Board calls special vote on daily preferred dividends",
+      "what_happened": "Strategy's board approved a special shareholder meeting (Oct 28, record date Sept 25) to vote on amending STRC, STRF, STRK and STRD certificates of designations to pay dividends on a daily record-date/next-business-day basis instead of monthly or quarterly. The company filed an 8-K and preliminary proxy confirming the amendments do not change dividend rates or total obligations, only payment frequency and mechanics, with STRC switching first (initial record date Nov. 1, payment Nov. 2) if approved.",
       "assessment": "positive",
-      "thesis_fit": "A rising mNAV premium improves the economics of any future ATM/equity issuance for BTC purchases, directly supporting the 'financing priced attractively vs mNAV' checklist item.",
+      "thesis_fit": "A daily-accrual cadence is intended to enhance liquidity, trading efficiency and reinvestment timing for the Digital Credit preferreds, which could make future STRC/STRF/STRK/STRD issuance more attractive and support the financing engine used to fund BTC purchases without diluting BTC-per-share economics.",
       "severity": "digest",
-      "confidence": "secondary only",
-      "source_url": "https://coingape.com/markets/mstr-stock-forecast-analyst-eyes-rally-to-225-as-strategys-bitcoin-premium-hits-3-month-high/"
+      "confidence": "primary source",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/0001050446/000119312526401636/mstr-20260924.htm"
     },
     {
       "date": "2026-09-22",
-      "headline": "Unrealized BTC loss flips to ~$8-9B gain",
-      "what_happened": "Strategy's 846,000 BTC holdings swung from an unrealized loss of roughly $10-13B earlier this year to an unrealized gain of approximately $8-9 billion as Bitcoin rallied above $85,000. The reversal follows an $8.2 billion net loss reported for Q2 2026 driven largely by unrealized BTC losses.",
-      "assessment": "positive",
-      "thesis_fit": "Improves BTC NAV coverage and eases pressure on the STRC/preferred credit stack, though it is purely price-driven rather than from per-share BTC accretion this week.",
+      "headline": "Trump-linked accounts disclosed buying MSTR before rally",
+      "what_happened": "A federal ethics filing (OGE Form 278-T) posted Sept. 22 showed investment accounts associated with President Trump sold MSTR in June and then bought back shares in two tranches on July 24 and July 27, near the stock's summer lows; MSTR has since risen roughly 80-83%. The Trump Organization stated the accounts are managed on a discretionary basis by third parties with no involvement from Trump in trade selection.",
+      "assessment": "neutral",
+      "thesis_fit": "This is a disclosure about a politically-connected shareholder's trading pattern, not a change to Strategy's balance sheet, BTC holdings, or financing structure, though it has drawn prior Congressional scrutiny (Sen. Warren, Rep. Garcia) that could add headline/regulatory noise around the stock.",
       "severity": "digest",
       "confidence": "secondary only",
-      "source_url": "https://finance.yahoo.com/markets/crypto/articles/strategy-swings-10b-unrealized-loss-095854130.html"
+      "source_url": "https://www.tipranks.com/news/president-donald-trumps-investment-accounts-rebought-strategy-stock-before-83-price-jump"
     }
   ]
 }

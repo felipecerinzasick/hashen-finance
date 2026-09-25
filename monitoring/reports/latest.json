@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-23T13:47:25.226138+00:00",
+  "generated_at": "2026-09-25T14:00:52.835929+00:00",
   "lookback_days": 3,
   "reports": [
     {
@@ -7,40 +7,40 @@
       "name": "Strategy",
       "ticker": "MSTR",
       "dashboard_url": "https://hashen-finance.onrender.com/dashboard/mstr/",
-      "generated_at": "2026-09-23T13:47:25.225995+00:00",
+      "generated_at": "2026-09-25T14:00:52.835821+00:00",
       "lookback_days": 3,
       "snapshot": {
-        "holdings": "846,000 BTC (as of Sept 20, 2026), acquired for $63.80B at avg $75,416/BTC",
-        "share_price": 167.33,
-        "mnav": 1.17,
-        "as_of": "2026-09-22"
+        "holdings": "846,000 BTC (as of 2026-09-20), cost basis $63.80B, avg $75,416/BTC",
+        "share_price": 160.41,
+        "mnav": 1.14,
+        "as_of": "2026-09-24"
       },
-      "overall_verdict": "positive",
-      "email_summary": "MSTR's mNAV climbs to a 3-month high and unrealized BTC losses flip to ~$8-9B in gains as Bitcoin tops $85K.",
-      "bottom_line": "No new capital-markets or governance items beyond already-reported BTC buys and STRC buybacks; the incremental news is a BTC-price-driven improvement in mNAV and unrealized P&L that strengthens the balance sheet without new dilution. Thesis remains intact but unchanged mechanically — the gains are mark-to-market, not from accretive per-share BTC growth this week.",
+      "overall_verdict": "neutral",
+      "email_summary": "Strategy proposes daily preferred dividends and draws scrutiny over Trump-linked account trades; no new BTC purchases disclosed this window.",
+      "bottom_line": "The daily-dividend proposal is a structural upgrade to the Digital Credit financing stack that could improve liquidity without adding to dividend obligations, a mild positive for financing quality. The Trump-account disclosure is a governance/optics sideshow with no balance-sheet impact and does not change BTC-per-share trajectory.",
       "source_conflicts": [
-        "Unrealized profit estimates vary across sources ($8B, $8.59B, $8.75B, $8.9B, $9B) depending on exact BTC price snapshot used and timing of the article; all describe the same directional swing from a prior ~$10-13B unrealized loss."
+        "mNAV readings diverge across trackers: bitcointreasuries.net shows mNAV(EV) 1.14x / diluted 0.90x as of Sept 21, versus the previously reported 1.17x figure — likely a methodology (EV vs. basic/diluted) difference rather than a data error."
       ],
       "updates": [
         {
-          "date": "2026-09-21",
-          "headline": "MSTR mNAV climbs to 1.17x, highest since June",
-          "what_happened": "Strategy's mNAV multiple rose to 1.17x, meaning investors are paying $1.17 for every $1 of BTC held, as MSTR stock closed at $168 on September 21, its highest close since May 15. The rise came after the stock added roughly $32 billion in market value over three months, a figure Strategy itself highlighted on X.",
+          "date": "2026-09-24",
+          "headline": "Board calls special vote on daily preferred dividends",
+          "what_happened": "Strategy's board approved a special shareholder meeting (Oct 28, record date Sept 25) to vote on amending STRC, STRF, STRK and STRD certificates of designations to pay dividends on a daily record-date/next-business-day basis instead of monthly or quarterly. The company filed an 8-K and preliminary proxy confirming the amendments do not change dividend rates or total obligations, only payment frequency and mechanics, with STRC switching first (initial record date Nov. 1, payment Nov. 2) if approved.",
           "assessment": "positive",
-          "thesis_fit": "A rising mNAV premium improves the economics of any future ATM/equity issuance for BTC purchases, directly supporting the 'financing priced attractively vs mNAV' checklist item.",
+          "thesis_fit": "A daily-accrual cadence is intended to enhance liquidity, trading efficiency and reinvestment timing for the Digital Credit preferreds, which could make future STRC/STRF/STRK/STRD issuance more attractive and support the financing engine used to fund BTC purchases without diluting BTC-per-share economics.",
           "severity": "digest",
-          "confidence": "secondary only",
-          "source_url": "https://coingape.com/markets/mstr-stock-forecast-analyst-eyes-rally-to-225-as-strategys-bitcoin-premium-hits-3-month-high/"
+          "confidence": "primary source",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/0001050446/000119312526401636/mstr-20260924.htm"
         },
         {
           "date": "2026-09-22",
-          "headline": "Unrealized BTC loss flips to ~$8-9B gain",
-          "what_happened": "Strategy's 846,000 BTC holdings swung from an unrealized loss of roughly $10-13B earlier this year to an unrealized gain of approximately $8-9 billion as Bitcoin rallied above $85,000. The reversal follows an $8.2 billion net loss reported for Q2 2026 driven largely by unrealized BTC losses.",
-          "assessment": "positive",
-          "thesis_fit": "Improves BTC NAV coverage and eases pressure on the STRC/preferred credit stack, though it is purely price-driven rather than from per-share BTC accretion this week.",
+          "headline": "Trump-linked accounts disclosed buying MSTR before rally",
+          "what_happened": "A federal ethics filing (OGE Form 278-T) posted Sept. 22 showed investment accounts associated with President Trump sold MSTR in June and then bought back shares in two tranches on July 24 and July 27, near the stock's summer lows; MSTR has since risen roughly 80-83%. The Trump Organization stated the accounts are managed on a discretionary basis by third parties with no involvement from Trump in trade selection.",
+          "assessment": "neutral",
+          "thesis_fit": "This is a disclosure about a politically-connected shareholder's trading pattern, not a change to Strategy's balance sheet, BTC holdings, or financing structure, though it has drawn prior Congressional scrutiny (Sen. Warren, Rep. Garcia) that could add headline/regulatory noise around the stock.",
           "severity": "digest",
           "confidence": "secondary only",
-          "source_url": "https://finance.yahoo.com/markets/crypto/articles/strategy-swings-10b-unrealized-loss-095854130.html"
+          "source_url": "https://www.tipranks.com/news/president-donald-trumps-investment-accounts-rebought-strategy-stock-before-83-price-jump"
         }
       ]
     },
@@ -49,19 +49,20 @@
       "name": "Metaplanet",
       "ticker": "3350.T / MTPLF / DN3.F",
       "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/metaplanet/",
-      "generated_at": "2026-09-23T13:47:25.226023+00:00",
+      "generated_at": "2026-09-25T14:00:52.835848+00:00",
       "lookback_days": 3,
       "snapshot": {
-        "holdings": "43,000 BTC (last disclosed as of June 30, 2026 quarterly update; no new purchase reported since)",
-        "share_price": 243.0,
+        "holdings": "43,000 BTC",
+        "share_price": 288.0,
         "mnav": 0.77,
-        "as_of": "2026-09-23"
+        "as_of": "2026-09-24"
       },
       "overall_verdict": "neutral",
-      "email_summary": "No new material Metaplanet disclosures in the past 3 days; stock trades near 243 yen with mNAV below 1.0x amid unresolved governance overhang.",
-      "bottom_line": "No fresh primary-source filings emerged in the September 20-23 window beyond items already reported; the stock continues to trade at a discount to BTC NAV (~0.77x EV-based mNAV) while the MSCI non-operating-company consultation (closes Sept 30, decision Oct 16) and unresolved Series 10/MMXX governance questions remain the dominant overhangs. Net effect on thesis is unchanged from prior sweep — watch for the Q3 BTC purchase disclosure and MSCI outcome as the next catalysts.",
+      "email_summary": "No new material Metaplanet disclosures in the last 3 days; stock rebounded with bitcoin but governance/dilution overhangs remain unresolved.",
+      "bottom_line": "No fresh primary-source filings emerged in the Sept 22-25 window beyond routine price action tracking a bitcoin rally. The thesis remains under pressure from the still-unresolved Series 10 option pool, MMXX Ventures transparency questions, and prior Capital Research/insider ownership-ratio changes reported previously.",
       "source_conflicts": [
-        "Bitcointreasuries.net shows two different mNAV readings as of ~Sept 21, 2026 (EV-based 0.77x vs. Basic 0.57x); report uses the EV-based figure but the gap should be reconciled against the dashboard's own methodology."
+        "mNAV figures conflict across sources: bitcointreasuries.net shows mNAV (EV) of 0.77x and mNAV (Basic) of 0.57x as of ~Sep 21, 2026, while a company buyback disclosure from months earlier referenced mNAV near 1.03x; these reflect different dates/methodologies and should not be treated as contradictory same-day figures.",
+        "Share count and buyback progress: an August 3, 2026 TSE disclosure confirmed zero shares repurchased in July under the ¥75bn/150M-share authorization from Oct 2025, consistent with prior reporting that the buyback remains largely unexecuted despite authorization."
       ],
       "updates": []
     },
@@ -70,41 +71,30 @@
       "name": "Asset Entities / Strive",
       "ticker": "ASST",
       "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/asst/",
-      "generated_at": "2026-09-23T13:47:25.226031+00:00",
+      "generated_at": "2026-09-25T14:00:52.835854+00:00",
       "lookback_days": 3,
       "snapshot": {
-        "holdings": "26,355 BTC (as of 2026-09-18, per Form 8-K)",
-        "share_price": 29.97,
-        "mnav": 1.25,
-        "as_of": "2026-09-22"
+        "holdings": "26,355 BTC (as of 2026-09-18, per 8-K)",
+        "share_price": 28.99,
+        "mnav": 1.56,
+        "as_of": "2026-09-23"
       },
-      "overall_verdict": "positive",
-      "email_summary": "TD Cowen hikes ASST price target to $44 on faster BTC accumulation; no new dilution or governance red flags this window.",
-      "bottom_line": "The only new development this window is a sell-side price target increase reinforcing the accumulation-driven bull case already priced into recent 8-Ks; no new financing, dilution, or governance issues emerged beyond items already reported.",
+      "overall_verdict": "neutral",
+      "email_summary": "No material new filings in the last 3 days; secondary sources estimate another ~$86M SATA raise funding ~1,000 more BTC, unconfirmed by 8-K.",
+      "bottom_line": "No new primary-source disclosures emerged in the last three days beyond the already-reported 26,355 BTC purchase and TD Cowen upgrade. Secondary trackers estimate Strive raised roughly $86M via SATA sales from Sept 21-23, which if confirmed would extend the accumulation pace but has not yet been disclosed in an 8-K.",
       "source_conflicts": [
-        "Intraday ASST price quotes on 2026-09-22 varied slightly across sources ($29.68 on Robinhood vs. $29.97 on Investing.com vs. $29.66 on Yahoo real-time), likely reflecting different snapshot times rather than a data conflict.",
-        "mNAV figures (1.25x basic / 1.68x diluted per bitcointreasuries.net) are dated Sep 14, 2026 and predate the latest 1,355 BTC purchase and subsequent share price rally, so current mNAV is likely different and should be treated as stale."
+        "Estimated SATA capital raise of ~$85.88M (Sept 21-23) and implied ~1,002 BTC purchase are based on third-party BitcoinTreasuries.net modeling, not yet confirmed by a Strive 8-K filing."
       ],
       "updates": [
         {
-          "date": "2026-09-21",
-          "headline": "TD Cowen raises ASST price target to $44 from $32",
-          "what_happened": "TD Cowen analysts Lance Vitanza and Jonnathan Navarrete lifted their price target on ASST, citing bitcoin accumulation that has outpaced their model and stronger growth in bitcoin held per fully diluted share. The firm now projects Strive will end 2026 with 32,105 BTC (up from a prior 27,156 estimate) and raised its full-year BTC Yield forecast from 54.1% to 70.1%.",
-          "assessment": "positive",
-          "thesis_fit": "A raised sell-side target grounded in accelerating BTC-per-share growth supports the thesis that Strive can build a durable, market-trusted Bitcoin-per-share story.",
-          "severity": "digest",
-          "confidence": "secondary only",
-          "source_url": "https://www.theblock.co/news/markets/2026-09-21-strive-adds-1355-bitcoin-picks-up-pace-year-end-second-place-treasury-goal-415940"
-        },
-        {
-          "date": "2026-09-22",
-          "headline": "Strive CEO discusses bitcoin outlook on Bloomberg Crypto",
-          "what_happened": "Strive Chairman/CEO Matt Cole appeared on Bloomberg Crypto to discuss the broader digital-asset market, which had reclaimed roughly $3 trillion in value amid a bitcoin rally, alongside growing use of leveraged perpetual futures by traders. The segment was general market commentary rather than a company-specific disclosure.",
+          "date": "2026-09-24",
+          "headline": "Trackers estimate ~$86M SATA raise, no 8-K yet",
+          "what_happened": "Secondary crypto-news outlets citing BitcoinTreasuries.net estimated that Strive raised roughly $85.88 million through SATA preferred stock sales over three trading sessions from September 21-23, 2026, which could fund purchase of approximately 1,002 more bitcoin. As of these reports, Strive's last confirmed SEC filing still showed 26,355 BTC as of September 18, with no new 8-K disclosing an updated bitcoin count.",
           "assessment": "neutral",
-          "thesis_fit": "Routine media commentary from management with no new treasury, financing, or governance information; does not change the thesis.",
+          "thesis_fit": "Continued reliance on the SATA ATM to fund accumulation supports the Bitcoin-per-share growth story, but the figure is an unconfirmed third-party estimate pending the company's next official balance-sheet update.",
           "severity": "digest",
-          "confidence": "secondary only",
-          "source_url": "https://www.marketscreener.com/news/bitcoin-go-to-moon-dats-not-broken-strive-ceo-ce785ad8d080f72c"
+          "confidence": "unconfirmed",
+          "source_url": "https://coincentral.com/strive-asst-stock-jumps-into-bitcoin-buying-spree-with-86m-raise"
         }
       ]
     },
@@ -113,41 +103,59 @@
       "name": "BitMine Immersion",
       "ticker": "BMNR",
       "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/bitmine/",
-      "generated_at": "2026-09-23T13:47:25.226038+00:00",
+      "generated_at": "2026-09-25T14:00:52.835858+00:00",
       "lookback_days": 3,
       "snapshot": {
-        "holdings": "5,983,940 ETH (~4.9% of ETH supply); 212 BTC; $17.1B total crypto+cash+moonshots",
-        "share_price": 28.76,
-        "mnav": 1.0,
-        "as_of": "2026-09-23"
+        "holdings": "5,983,940 ETH (~4.9% of ETH supply), plus 212 BTC, $105M Eightco stake, $180M Beast Industries stake, $714M cash & marketable securities; total crypto+cash+moonshots ~$17.1B as of Sept 20, 2026",
+        "share_price": 27.88,
+        "mnav": null,
+        "as_of": "2026-09-24"
       },
       "overall_verdict": "neutral",
-      "email_summary": "No new material BitMine developments beyond already-reported weekly ETH treasury update and Tom Lee commentary.",
-      "bottom_line": "The past three days brought only routine continuation of previously reported items (5.98M ETH holdings, Korea Blockchain Week keynote, institutional-underweight commentary) with no new financing, governance, or custody disclosures. Thesis remains unchanged pending BitMine's next weekly 8-K or any dilution/financing news.",
+      "email_summary": "No new material BitMine developments in the last 3 days; thesis unchanged since last week's $17.1B ETH treasury update.",
+      "bottom_line": "No fresh filings, financing, custody, or governance events emerged for BitMine in the Sept 22-25 window beyond already-reported items; the stock saw only routine price volatility tied to ETH's move. Thesis remains intact pending the next scheduled weekly 8-K and Tom Lee's Sept 30 Korea Blockchain Week keynote.",
       "source_conflicts": [],
       "updates": []
     }
   ],
   "sector": {
-    "bottom_line": "The dominant sector-wide overhang remains MSCI's live consultation on excluding Bitcoin/digital-asset treasury companies from its Global Investable Market Indexes, with the comment window closing September 30 and results due October 16, 2026, while regulators continue advancing custody and market-structure rules in the wake of the stalled CLARITY Act.",
+    "bottom_line": "The Fed advanced GENIUS Act stablecoin capital/reserve rulemaking and the CFTC issued detailed crypto margin and capital-charge guidance, extending the post-CLARITY-Act regulatory-agency workaround while the MSCI treasury-index exclusion consultation heads toward its September 30 close.",
     "updates": [
       {
-        "date": "2026-09-30",
-        "headline": "MSCI index-exclusion consultation for Bitcoin treasuries nears close",
-        "what_happened": "MSCI's renewed consultation would classify certain 'non-operating' companies — explicitly naming Strategy and Metaplanet based on a May 2026 simulation, with uranium holder Yellow Cake also swept in — as ineligible for its Global Investable Market Indexes. Public feedback closes September 30, 2026, with results expected October 16, and any changes would take effect in the November 2026 index review, potentially forcing passive-fund selling.",
-        "assessment": "negative",
+        "date": "2026-09-24",
+        "headline": "Fed proposes GENIUS Act stablecoin reserve, capital rules",
+        "what_happened": "The Federal Reserve Board requested public comment on two proposals implementing its GENIUS Act supervisory role: the first would require Board-supervised payment stablecoin issuers to fully back tokens with permissible reserve assets such as short-term Treasury bills, plus standardized capital and risk-management requirements and custody rules; the second creates an application process for banks seeking to issue stablecoins through a subsidiary. Comments are due 60 days after Federal Register publication, ahead of the GENIUS Act's January 2027 effective date.",
+        "assessment": "neutral",
         "severity": "alert",
         "confidence": "primary source",
-        "source_url": "https://crypto.jobs/news/msci-proposal-threatens-index-removal-for-bitcoin-treasury-companies"
+        "source_url": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260924a.htm"
       },
       {
-        "date": "2026-09-22",
-        "headline": "SEC signals crypto custody rulemaking proceeding despite CLARITY stall",
-        "what_happened": "Following the Senate's failure to advance the CLARITY Act, SEC Chair Paul Atkins publicly reiterated that the agency will act on crypto market structure 'with or without legislation,' with a crypto custody rule proposal — sent to OMB in late August — cited as a near-term priority alongside continuing work on Regulation Crypto Assets.",
+        "date": "2026-09-24",
+        "headline": "CFTC issues detailed crypto margin, capital-charge guidance",
+        "what_happened": "The CFTC's Market Participants Division, Division of Market Oversight, and Division of Clearing and Risk published updated FAQs allowing FCMs to accept customer non-security crypto (including stablecoins) as margin, and setting a 20 percent capital charge on proprietary bitcoin and ether positions aligned with SEC broker-dealer haircuts. The guidance also permits derivatives clearing organizations to accept crypto assets as initial margin for cleared transactions.",
         "assessment": "positive",
         "severity": "digest",
         "confidence": "secondary only",
-        "source_url": "https://www.cryptotimes.io/2026/09/22/sec-moves-to-clear-up-crypto-custody-rules/"
+        "source_url": "https://www.lowenstein.com/news-insights/newsletters/crypto-brief-september-24-2026"
+      },
+      {
+        "date": "2026-09-23",
+        "headline": "CFTC reviews $5B pattern in Kalshi ETH perpetuals",
+        "what_happened": "The CFTC is examining nearly one million trades on Kalshi's Ethereum perpetual futures market since August 2026, with over a third clustering around identical order sizes totaling more than $5 billion in volume. Kalshi denies wash-trading allegations, attributing the pattern to standard market-making activity.",
+        "assessment": "neutral",
+        "severity": "digest",
+        "confidence": "secondary only",
+        "source_url": "https://coinmarketcap.com/cmc-ai/ethereum/latest-updates/"
+      },
+      {
+        "date": "2026-09-24",
+        "headline": "MoonPay to acquire broker-dealer North Capital for tokenized securities",
+        "what_happened": "MoonPay plans to acquire private-market platform North Capital in an all-stock transaction valued at more than $60 million. North Capital holds SEC-related broker-dealer and ATS licenses and has supported billions in transaction volume, which would give MoonPay added regulatory capability for issuance, custody, and secondary trading of private and tokenized securities.",
+        "assessment": "positive",
+        "severity": "digest",
+        "confidence": "secondary only",
+        "source_url": "https://www.kucoin.com/news/articles/crypto-daily-market-report-september-24-2026"
       }
     ]
   },

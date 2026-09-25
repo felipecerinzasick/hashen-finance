@@ -3,19 +3,20 @@
   "name": "Metaplanet",
   "ticker": "3350.T / MTPLF / DN3.F",
   "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/metaplanet/",
-  "generated_at": "2026-09-23T13:47:25.226023+00:00",
+  "generated_at": "2026-09-25T14:00:52.835848+00:00",
   "lookback_days": 3,
   "snapshot": {
-    "holdings": "43,000 BTC (last disclosed as of June 30, 2026 quarterly update; no new purchase reported since)",
-    "share_price": 243.0,
+    "holdings": "43,000 BTC",
+    "share_price": 288.0,
     "mnav": 0.77,
-    "as_of": "2026-09-23"
+    "as_of": "2026-09-24"
   },
   "overall_verdict": "neutral",
-  "email_summary": "No new material Metaplanet disclosures in the past 3 days; stock trades near 243 yen with mNAV below 1.0x amid unresolved governance overhang.",
-  "bottom_line": "No fresh primary-source filings emerged in the September 20-23 window beyond items already reported; the stock continues to trade at a discount to BTC NAV (~0.77x EV-based mNAV) while the MSCI non-operating-company consultation (closes Sept 30, decision Oct 16) and unresolved Series 10/MMXX governance questions remain the dominant overhangs. Net effect on thesis is unchanged from prior sweep — watch for the Q3 BTC purchase disclosure and MSCI outcome as the next catalysts.",
+  "email_summary": "No new material Metaplanet disclosures in the last 3 days; stock rebounded with bitcoin but governance/dilution overhangs remain unresolved.",
+  "bottom_line": "No fresh primary-source filings emerged in the Sept 22-25 window beyond routine price action tracking a bitcoin rally. The thesis remains under pressure from the still-unresolved Series 10 option pool, MMXX Ventures transparency questions, and prior Capital Research/insider ownership-ratio changes reported previously.",
   "source_conflicts": [
-    "Bitcointreasuries.net shows two different mNAV readings as of ~Sept 21, 2026 (EV-based 0.77x vs. Basic 0.57x); report uses the EV-based figure but the gap should be reconciled against the dashboard's own methodology."
+    "mNAV figures conflict across sources: bitcointreasuries.net shows mNAV (EV) of 0.77x and mNAV (Basic) of 0.57x as of ~Sep 21, 2026, while a company buyback disclosure from months earlier referenced mNAV near 1.03x; these reflect different dates/methodologies and should not be treated as contradictory same-day figures.",
+    "Share count and buyback progress: an August 3, 2026 TSE disclosure confirmed zero shares repurchased in July under the ¥75bn/150M-share authorization from Oct 2025, consistent with prior reporting that the buyback remains largely unexecuted despite authorization."
   ],
   "updates": []
 }

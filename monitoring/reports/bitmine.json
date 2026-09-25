@@ -3,17 +3,17 @@
   "name": "BitMine Immersion",
   "ticker": "BMNR",
   "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/bitmine/",
-  "generated_at": "2026-09-23T13:47:25.226038+00:00",
+  "generated_at": "2026-09-25T14:00:52.835858+00:00",
   "lookback_days": 3,
   "snapshot": {
-    "holdings": "5,983,940 ETH (~4.9% of ETH supply); 212 BTC; $17.1B total crypto+cash+moonshots",
-    "share_price": 28.76,
-    "mnav": 1.0,
-    "as_of": "2026-09-23"
+    "holdings": "5,983,940 ETH (~4.9% of ETH supply), plus 212 BTC, $105M Eightco stake, $180M Beast Industries stake, $714M cash & marketable securities; total crypto+cash+moonshots ~$17.1B as of Sept 20, 2026",
+    "share_price": 27.88,
+    "mnav": null,
+    "as_of": "2026-09-24"
   },
   "overall_verdict": "neutral",
-  "email_summary": "No new material BitMine developments beyond already-reported weekly ETH treasury update and Tom Lee commentary.",
-  "bottom_line": "The past three days brought only routine continuation of previously reported items (5.98M ETH holdings, Korea Blockchain Week keynote, institutional-underweight commentary) with no new financing, governance, or custody disclosures. Thesis remains unchanged pending BitMine's next weekly 8-K or any dilution/financing news.",
+  "email_summary": "No new material BitMine developments in the last 3 days; thesis unchanged since last week's $17.1B ETH treasury update.",
+  "bottom_line": "No fresh filings, financing, custody, or governance events emerged for BitMine in the Sept 22-25 window beyond already-reported items; the stock saw only routine price volatility tied to ETH's move. Thesis remains intact pending the next scheduled weekly 8-K and Tom Lee's Sept 30 Korea Blockchain Week keynote.",
   "source_conflicts": [],
   "updates": []
 }

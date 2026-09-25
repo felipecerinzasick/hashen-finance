@@ -1,23 +1,41 @@
 {
-  "bottom_line": "The dominant sector-wide overhang remains MSCI's live consultation on excluding Bitcoin/digital-asset treasury companies from its Global Investable Market Indexes, with the comment window closing September 30 and results due October 16, 2026, while regulators continue advancing custody and market-structure rules in the wake of the stalled CLARITY Act.",
+  "bottom_line": "The Fed advanced GENIUS Act stablecoin capital/reserve rulemaking and the CFTC issued detailed crypto margin and capital-charge guidance, extending the post-CLARITY-Act regulatory-agency workaround while the MSCI treasury-index exclusion consultation heads toward its September 30 close.",
   "updates": [
     {
-      "date": "2026-09-30",
-      "headline": "MSCI index-exclusion consultation for Bitcoin treasuries nears close",
-      "what_happened": "MSCI's renewed consultation would classify certain 'non-operating' companies — explicitly naming Strategy and Metaplanet based on a May 2026 simulation, with uranium holder Yellow Cake also swept in — as ineligible for its Global Investable Market Indexes. Public feedback closes September 30, 2026, with results expected October 16, and any changes would take effect in the November 2026 index review, potentially forcing passive-fund selling.",
-      "assessment": "negative",
+      "date": "2026-09-24",
+      "headline": "Fed proposes GENIUS Act stablecoin reserve, capital rules",
+      "what_happened": "The Federal Reserve Board requested public comment on two proposals implementing its GENIUS Act supervisory role: the first would require Board-supervised payment stablecoin issuers to fully back tokens with permissible reserve assets such as short-term Treasury bills, plus standardized capital and risk-management requirements and custody rules; the second creates an application process for banks seeking to issue stablecoins through a subsidiary. Comments are due 60 days after Federal Register publication, ahead of the GENIUS Act's January 2027 effective date.",
+      "assessment": "neutral",
       "severity": "alert",
       "confidence": "primary source",
-      "source_url": "https://crypto.jobs/news/msci-proposal-threatens-index-removal-for-bitcoin-treasury-companies"
+      "source_url": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260924a.htm"
     },
     {
-      "date": "2026-09-22",
-      "headline": "SEC signals crypto custody rulemaking proceeding despite CLARITY stall",
-      "what_happened": "Following the Senate's failure to advance the CLARITY Act, SEC Chair Paul Atkins publicly reiterated that the agency will act on crypto market structure 'with or without legislation,' with a crypto custody rule proposal — sent to OMB in late August — cited as a near-term priority alongside continuing work on Regulation Crypto Assets.",
+      "date": "2026-09-24",
+      "headline": "CFTC issues detailed crypto margin, capital-charge guidance",
+      "what_happened": "The CFTC's Market Participants Division, Division of Market Oversight, and Division of Clearing and Risk published updated FAQs allowing FCMs to accept customer non-security crypto (including stablecoins) as margin, and setting a 20 percent capital charge on proprietary bitcoin and ether positions aligned with SEC broker-dealer haircuts. The guidance also permits derivatives clearing organizations to accept crypto assets as initial margin for cleared transactions.",
       "assessment": "positive",
       "severity": "digest",
       "confidence": "secondary only",
-      "source_url": "https://www.cryptotimes.io/2026/09/22/sec-moves-to-clear-up-crypto-custody-rules/"
+      "source_url": "https://www.lowenstein.com/news-insights/newsletters/crypto-brief-september-24-2026"
+    },
+    {
+      "date": "2026-09-23",
+      "headline": "CFTC reviews $5B pattern in Kalshi ETH perpetuals",
+      "what_happened": "The CFTC is examining nearly one million trades on Kalshi's Ethereum perpetual futures market since August 2026, with over a third clustering around identical order sizes totaling more than $5 billion in volume. Kalshi denies wash-trading allegations, attributing the pattern to standard market-making activity.",
+      "assessment": "neutral",
+      "severity": "digest",
+      "confidence": "secondary only",
+      "source_url": "https://coinmarketcap.com/cmc-ai/ethereum/latest-updates/"
+    },
+    {
+      "date": "2026-09-24",
+      "headline": "MoonPay to acquire broker-dealer North Capital for tokenized securities",
+      "what_happened": "MoonPay plans to acquire private-market platform North Capital in an all-stock transaction valued at more than $60 million. North Capital holds SEC-related broker-dealer and ATS licenses and has supported billions in transaction volume, which would give MoonPay added regulatory capability for issuance, custody, and secondary trading of private and tokenized securities.",
+      "assessment": "positive",
+      "severity": "digest",
+      "confidence": "secondary only",
+      "source_url": "https://www.kucoin.com/news/articles/crypto-daily-market-report-september-24-2026"
     }
   ]
 }

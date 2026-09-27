@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-25T14:00:52.835929+00:00",
+  "generated_at": "2026-09-27T14:07:57.041957+00:00",
   "lookback_days": 3,
   "reports": [
     {
@@ -7,40 +7,50 @@
       "name": "Strategy",
       "ticker": "MSTR",
       "dashboard_url": "https://hashen-finance.onrender.com/dashboard/mstr/",
-      "generated_at": "2026-09-25T14:00:52.835821+00:00",
+      "generated_at": "2026-09-27T14:07:57.041856+00:00",
       "lookback_days": 3,
       "snapshot": {
-        "holdings": "846,000 BTC (as of 2026-09-20), cost basis $63.80B, avg $75,416/BTC",
-        "share_price": 160.41,
-        "mnav": 1.14,
-        "as_of": "2026-09-24"
+        "holdings": "846,000 BTC (unchanged since Sept 21, 2026; cost basis ~$63.8B, avg $75,416/BTC)",
+        "share_price": 158.87,
+        "mnav": 1.16,
+        "as_of": "2026-09-26"
       },
       "overall_verdict": "neutral",
-      "email_summary": "Strategy proposes daily preferred dividends and draws scrutiny over Trump-linked account trades; no new BTC purchases disclosed this window.",
-      "bottom_line": "The daily-dividend proposal is a structural upgrade to the Digital Credit financing stack that could improve liquidity without adding to dividend obligations, a mild positive for financing quality. The Trump-account disclosure is a governance/optics sideshow with no balance-sheet impact and does not change BTC-per-share trajectory.",
+      "email_summary": "Strategy files detailed proxy for daily preferred dividends; no new BTC buys, holdings steady at 846,000 BTC.",
+      "bottom_line": "The only new capital-markets action this window is a governance/mechanics change (daily dividend record dates for preferred stock) that leaves total payout and BTC per share unaffected. No new bitcoin purchases, sales, or dilutive issuance were disclosed in the last three days, so the treasury/BTC-per-share thesis is unchanged.",
       "source_conflicts": [
-        "mNAV readings diverge across trackers: bitcointreasuries.net shows mNAV(EV) 1.14x / diluted 0.90x as of Sept 21, versus the previously reported 1.17x figure — likely a methodology (EV vs. basic/diluted) difference rather than a data error."
+        "mNAV figures diverge by methodology: mnav.com reports 1.16x while bitcointreasuries.net shows 0.86x-0.87x (basic/diluted, market-cap based) versus 1.12x on an enterprise-value basis for the same Sept 20-21 BTC holdings figure of 846,000 — differences appear to stem from whether preferred stock/debt are included in the numerator, not from conflicting underlying data."
       ],
       "updates": [
         {
           "date": "2026-09-24",
-          "headline": "Board calls special vote on daily preferred dividends",
-          "what_happened": "Strategy's board approved a special shareholder meeting (Oct 28, record date Sept 25) to vote on amending STRC, STRF, STRK and STRD certificates of designations to pay dividends on a daily record-date/next-business-day basis instead of monthly or quarterly. The company filed an 8-K and preliminary proxy confirming the amendments do not change dividend rates or total obligations, only payment frequency and mechanics, with STRC switching first (initial record date Nov. 1, payment Nov. 2) if approved.",
-          "assessment": "positive",
-          "thesis_fit": "A daily-accrual cadence is intended to enhance liquidity, trading efficiency and reinvestment timing for the Digital Credit preferreds, which could make future STRC/STRF/STRK/STRD issuance more attractive and support the financing engine used to fund BTC purchases without diluting BTC-per-share economics.",
+          "headline": "Board files proxy for daily preferred-dividend record dates",
+          "what_happened": "Strategy's board approved putting proposed amendments to the certificates of designation for STRF, STRC, STRK and STRD to a shareholder vote, moving all four preferred series to daily dividend record dates with payment the next business day. A preliminary proxy (PRE 14A) was filed September 25 for an October 28, 2026 virtual special meeting, with September 25 set as the voting record date; first daily-schedule payments are expected November 2, 2026 for STRC and January 4, 2027 for STRF/STRK/STRD.",
+          "assessment": "neutral",
+          "thesis_fit": "Improves preferred-stock trading mechanics and could reduce STRC's swings around record dates, supporting the credit stack's stability, but it does not change dividend rates, total payout obligations, or BTC per share.",
           "severity": "digest",
           "confidence": "primary source",
           "source_url": "https://www.sec.gov/Archives/edgar/data/0001050446/000119312526401636/mstr-20260924.htm"
         },
         {
-          "date": "2026-09-22",
-          "headline": "Trump-linked accounts disclosed buying MSTR before rally",
-          "what_happened": "A federal ethics filing (OGE Form 278-T) posted Sept. 22 showed investment accounts associated with President Trump sold MSTR in June and then bought back shares in two tranches on July 24 and July 27, near the stock's summer lows; MSTR has since risen roughly 80-83%. The Trump Organization stated the accounts are managed on a discretionary basis by third parties with no involvement from Trump in trade selection.",
+          "date": "2026-09-25",
+          "headline": "Strategy launches shareholder campaign backing dividend vote",
+          "what_happened": "Strategy filed Rule 14a-12 soliciting material launching a shareholder-outreach campaign (dedicated voting site, investor presentation, social media push) supporting the daily-dividend proposal. Only common shareholders as of the September 25 record date may vote, and passage requires a majority of total common voting power, with Saylor controlling roughly 32.9% via Class B shares.",
           "assessment": "neutral",
-          "thesis_fit": "This is a disclosure about a politically-connected shareholder's trading pattern, not a change to Strategy's balance sheet, BTC holdings, or financing structure, though it has drawn prior Congressional scrutiny (Sen. Warren, Rep. Garcia) that could add headline/regulatory noise around the stock.",
+          "thesis_fit": "A governance/capital-structure mechanics change aimed at strengthening demand for the preferred 'digital credit' stack rather than a BTC accumulation or dilution event.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://unchainedcrypto.com/strategy-seeks-shareholder-vote-to-pay-daily-dividends-on-strc-and-three-other-preferreds/"
+        },
+        {
+          "date": "2026-09-26",
+          "headline": "Saylor pitches 'digital asset bill of rights' policy framework",
+          "what_happened": "Michael Saylor shared an essay on X over the weekend and discussed a proposed 'bill of digital rights' for crypto participants at the Bitcoin Policy Institute's Freedom Tech DC event, arguing the reforms could help catalyze a much larger digital-asset industry.",
+          "assessment": "neutral",
+          "thesis_fit": "Continued Saylor advocacy for favorable crypto policy is directionally supportive of the sector but is not a company-specific financing or treasury action affecting BTC per share.",
           "severity": "digest",
           "confidence": "secondary only",
-          "source_url": "https://www.tipranks.com/news/president-donald-trumps-investment-accounts-rebought-strategy-stock-before-83-price-jump"
+          "source_url": "https://blockonomi.com/strategy-mstr-stock-saylor-proposes-digital-asset-rights-framework"
         }
       ]
     },
@@ -49,115 +59,31 @@
       "name": "Metaplanet",
       "ticker": "3350.T / MTPLF / DN3.F",
       "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/metaplanet/",
-      "generated_at": "2026-09-25T14:00:52.835848+00:00",
+      "generated_at": "2026-09-27T14:07:57.041880+00:00",
       "lookback_days": 3,
       "snapshot": {
         "holdings": "43,000 BTC",
         "share_price": 288.0,
         "mnav": 0.77,
-        "as_of": "2026-09-24"
+        "as_of": "2026-09-25"
       },
       "overall_verdict": "neutral",
-      "email_summary": "No new material Metaplanet disclosures in the last 3 days; stock rebounded with bitcoin but governance/dilution overhangs remain unresolved.",
-      "bottom_line": "No fresh primary-source filings emerged in the Sept 22-25 window beyond routine price action tracking a bitcoin rally. The thesis remains under pressure from the still-unresolved Series 10 option pool, MMXX Ventures transparency questions, and prior Capital Research/insider ownership-ratio changes reported previously.",
+      "email_summary": "No new material Metaplanet disclosures in the last 3 days; stock rallied with broader crypto market.",
+      "bottom_line": "No fresh filings, financing actions, or shareholder changes emerged in the September 24–27 window beyond already-reported items; the stock's ~18% bounce appears tied to a broader Bitcoin market rally rather than company-specific news. Thesis stance is unchanged pending the next quarterly BTC purchase disclosure or EDINET large-holder filing.",
       "source_conflicts": [
-        "mNAV figures conflict across sources: bitcointreasuries.net shows mNAV (EV) of 0.77x and mNAV (Basic) of 0.57x as of ~Sep 21, 2026, while a company buyback disclosure from months earlier referenced mNAV near 1.03x; these reflect different dates/methodologies and should not be treated as contradictory same-day figures.",
-        "Share count and buyback progress: an August 3, 2026 TSE disclosure confirmed zero shares repurchased in July under the ¥75bn/150M-share authorization from Oct 2025, consistent with prior reporting that the buyback remains largely unexecuted despite authorization."
+        "mNAV figures vary by source and date: bitcointreasuries.net shows both 0.77x (EV basis) and 0.57x (basic) for the same 43,000 BTC holding, with page timestamps inconsistently dated Jul 2, 2026 and Sep 21, 2026 — treat current mNAV as indicative only.",
+        "Share price references conflict across sources for the same period: Investing.com shows 243 JPY as of Sep 23, while JinaCoin technical analysis shows 288 JPY as of Sep 25 following an 18.5% two-day rally."
       ],
-      "updates": []
-    },
-    {
-      "slug": "asst",
-      "name": "Asset Entities / Strive",
-      "ticker": "ASST",
-      "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/asst/",
-      "generated_at": "2026-09-25T14:00:52.835854+00:00",
-      "lookback_days": 3,
-      "snapshot": {
-        "holdings": "26,355 BTC (as of 2026-09-18, per 8-K)",
-        "share_price": 28.99,
-        "mnav": 1.56,
-        "as_of": "2026-09-23"
-      },
-      "overall_verdict": "neutral",
-      "email_summary": "No material new filings in the last 3 days; secondary sources estimate another ~$86M SATA raise funding ~1,000 more BTC, unconfirmed by 8-K.",
-      "bottom_line": "No new primary-source disclosures emerged in the last three days beyond the already-reported 26,355 BTC purchase and TD Cowen upgrade. Secondary trackers estimate Strive raised roughly $86M via SATA sales from Sept 21-23, which if confirmed would extend the accumulation pace but has not yet been disclosed in an 8-K.",
-      "source_conflicts": [
-        "Estimated SATA capital raise of ~$85.88M (Sept 21-23) and implied ~1,002 BTC purchase are based on third-party BitcoinTreasuries.net modeling, not yet confirmed by a Strive 8-K filing."
-      ],
-      "updates": [
-        {
-          "date": "2026-09-24",
-          "headline": "Trackers estimate ~$86M SATA raise, no 8-K yet",
-          "what_happened": "Secondary crypto-news outlets citing BitcoinTreasuries.net estimated that Strive raised roughly $85.88 million through SATA preferred stock sales over three trading sessions from September 21-23, 2026, which could fund purchase of approximately 1,002 more bitcoin. As of these reports, Strive's last confirmed SEC filing still showed 26,355 BTC as of September 18, with no new 8-K disclosing an updated bitcoin count.",
-          "assessment": "neutral",
-          "thesis_fit": "Continued reliance on the SATA ATM to fund accumulation supports the Bitcoin-per-share growth story, but the figure is an unconfirmed third-party estimate pending the company's next official balance-sheet update.",
-          "severity": "digest",
-          "confidence": "unconfirmed",
-          "source_url": "https://coincentral.com/strive-asst-stock-jumps-into-bitcoin-buying-spree-with-86m-raise"
-        }
-      ]
-    },
-    {
-      "slug": "bitmine",
-      "name": "BitMine Immersion",
-      "ticker": "BMNR",
-      "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/bitmine/",
-      "generated_at": "2026-09-25T14:00:52.835858+00:00",
-      "lookback_days": 3,
-      "snapshot": {
-        "holdings": "5,983,940 ETH (~4.9% of ETH supply), plus 212 BTC, $105M Eightco stake, $180M Beast Industries stake, $714M cash & marketable securities; total crypto+cash+moonshots ~$17.1B as of Sept 20, 2026",
-        "share_price": 27.88,
-        "mnav": null,
-        "as_of": "2026-09-24"
-      },
-      "overall_verdict": "neutral",
-      "email_summary": "No new material BitMine developments in the last 3 days; thesis unchanged since last week's $17.1B ETH treasury update.",
-      "bottom_line": "No fresh filings, financing, custody, or governance events emerged for BitMine in the Sept 22-25 window beyond already-reported items; the stock saw only routine price volatility tied to ETH's move. Thesis remains intact pending the next scheduled weekly 8-K and Tom Lee's Sept 30 Korea Blockchain Week keynote.",
-      "source_conflicts": [],
       "updates": []
     }
   ],
   "sector": {
-    "bottom_line": "The Fed advanced GENIUS Act stablecoin capital/reserve rulemaking and the CFTC issued detailed crypto margin and capital-charge guidance, extending the post-CLARITY-Act regulatory-agency workaround while the MSCI treasury-index exclusion consultation heads toward its September 30 close.",
-    "updates": [
-      {
-        "date": "2026-09-24",
-        "headline": "Fed proposes GENIUS Act stablecoin reserve, capital rules",
-        "what_happened": "The Federal Reserve Board requested public comment on two proposals implementing its GENIUS Act supervisory role: the first would require Board-supervised payment stablecoin issuers to fully back tokens with permissible reserve assets such as short-term Treasury bills, plus standardized capital and risk-management requirements and custody rules; the second creates an application process for banks seeking to issue stablecoins through a subsidiary. Comments are due 60 days after Federal Register publication, ahead of the GENIUS Act's January 2027 effective date.",
-        "assessment": "neutral",
-        "severity": "alert",
-        "confidence": "primary source",
-        "source_url": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260924a.htm"
-      },
-      {
-        "date": "2026-09-24",
-        "headline": "CFTC issues detailed crypto margin, capital-charge guidance",
-        "what_happened": "The CFTC's Market Participants Division, Division of Market Oversight, and Division of Clearing and Risk published updated FAQs allowing FCMs to accept customer non-security crypto (including stablecoins) as margin, and setting a 20 percent capital charge on proprietary bitcoin and ether positions aligned with SEC broker-dealer haircuts. The guidance also permits derivatives clearing organizations to accept crypto assets as initial margin for cleared transactions.",
-        "assessment": "positive",
-        "severity": "digest",
-        "confidence": "secondary only",
-        "source_url": "https://www.lowenstein.com/news-insights/newsletters/crypto-brief-september-24-2026"
-      },
-      {
-        "date": "2026-09-23",
-        "headline": "CFTC reviews $5B pattern in Kalshi ETH perpetuals",
-        "what_happened": "The CFTC is examining nearly one million trades on Kalshi's Ethereum perpetual futures market since August 2026, with over a third clustering around identical order sizes totaling more than $5 billion in volume. Kalshi denies wash-trading allegations, attributing the pattern to standard market-making activity.",
-        "assessment": "neutral",
-        "severity": "digest",
-        "confidence": "secondary only",
-        "source_url": "https://coinmarketcap.com/cmc-ai/ethereum/latest-updates/"
-      },
-      {
-        "date": "2026-09-24",
-        "headline": "MoonPay to acquire broker-dealer North Capital for tokenized securities",
-        "what_happened": "MoonPay plans to acquire private-market platform North Capital in an all-stock transaction valued at more than $60 million. North Capital holds SEC-related broker-dealer and ATS licenses and has supported billions in transaction volume, which would give MoonPay added regulatory capability for issuance, custody, and secondary trading of private and tokenized securities.",
-        "assessment": "positive",
-        "severity": "digest",
-        "confidence": "secondary only",
-        "source_url": "https://www.kucoin.com/news/articles/crypto-daily-market-report-september-24-2026"
-      }
-    ]
+    "bottom_line": "",
+    "updates": []
   },
-  "failures": []
+  "failures": [
+    "Asset Entities / Strive: sweep failed, see Actions log (Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CfU5G7ZzvkSVjDR8iVZBM'})",
+    "BitMine Immersion: sweep failed, see Actions log (Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CfU5JngXRHyqpTQscqdtx'})",
+    "Sector: sweep failed, see Actions log (Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CfU5JpQhkhQWcuRQchEMP'})"
+  ]
 }

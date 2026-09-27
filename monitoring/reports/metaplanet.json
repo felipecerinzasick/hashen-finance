@@ -3,20 +3,20 @@
   "name": "Metaplanet",
   "ticker": "3350.T / MTPLF / DN3.F",
   "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/metaplanet/",
-  "generated_at": "2026-09-25T14:00:52.835848+00:00",
+  "generated_at": "2026-09-27T14:07:57.041880+00:00",
   "lookback_days": 3,
   "snapshot": {
     "holdings": "43,000 BTC",
     "share_price": 288.0,
     "mnav": 0.77,
-    "as_of": "2026-09-24"
+    "as_of": "2026-09-25"
   },
   "overall_verdict": "neutral",
-  "email_summary": "No new material Metaplanet disclosures in the last 3 days; stock rebounded with bitcoin but governance/dilution overhangs remain unresolved.",
-  "bottom_line": "No fresh primary-source filings emerged in the Sept 22-25 window beyond routine price action tracking a bitcoin rally. The thesis remains under pressure from the still-unresolved Series 10 option pool, MMXX Ventures transparency questions, and prior Capital Research/insider ownership-ratio changes reported previously.",
+  "email_summary": "No new material Metaplanet disclosures in the last 3 days; stock rallied with broader crypto market.",
+  "bottom_line": "No fresh filings, financing actions, or shareholder changes emerged in the September 24–27 window beyond already-reported items; the stock's ~18% bounce appears tied to a broader Bitcoin market rally rather than company-specific news. Thesis stance is unchanged pending the next quarterly BTC purchase disclosure or EDINET large-holder filing.",
   "source_conflicts": [
-    "mNAV figures conflict across sources: bitcointreasuries.net shows mNAV (EV) of 0.77x and mNAV (Basic) of 0.57x as of ~Sep 21, 2026, while a company buyback disclosure from months earlier referenced mNAV near 1.03x; these reflect different dates/methodologies and should not be treated as contradictory same-day figures.",
-    "Share count and buyback progress: an August 3, 2026 TSE disclosure confirmed zero shares repurchased in July under the ¥75bn/150M-share authorization from Oct 2025, consistent with prior reporting that the buyback remains largely unexecuted despite authorization."
+    "mNAV figures vary by source and date: bitcointreasuries.net shows both 0.77x (EV basis) and 0.57x (basic) for the same 43,000 BTC holding, with page timestamps inconsistently dated Jul 2, 2026 and Sep 21, 2026 — treat current mNAV as indicative only.",
+    "Share price references conflict across sources for the same period: Investing.com shows 243 JPY as of Sep 23, while JinaCoin technical analysis shows 288 JPY as of Sep 25 following an 18.5% two-day rally."
   ],
   "updates": []
 }

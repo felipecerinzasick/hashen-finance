@@ -3,40 +3,50 @@
   "name": "Strategy",
   "ticker": "MSTR",
   "dashboard_url": "https://hashen-finance.onrender.com/dashboard/mstr/",
-  "generated_at": "2026-09-25T14:00:52.835821+00:00",
+  "generated_at": "2026-09-27T14:07:57.041856+00:00",
   "lookback_days": 3,
   "snapshot": {
-    "holdings": "846,000 BTC (as of 2026-09-20), cost basis $63.80B, avg $75,416/BTC",
-    "share_price": 160.41,
-    "mnav": 1.14,
-    "as_of": "2026-09-24"
+    "holdings": "846,000 BTC (unchanged since Sept 21, 2026; cost basis ~$63.8B, avg $75,416/BTC)",
+    "share_price": 158.87,
+    "mnav": 1.16,
+    "as_of": "2026-09-26"
   },
   "overall_verdict": "neutral",
-  "email_summary": "Strategy proposes daily preferred dividends and draws scrutiny over Trump-linked account trades; no new BTC purchases disclosed this window.",
-  "bottom_line": "The daily-dividend proposal is a structural upgrade to the Digital Credit financing stack that could improve liquidity without adding to dividend obligations, a mild positive for financing quality. The Trump-account disclosure is a governance/optics sideshow with no balance-sheet impact and does not change BTC-per-share trajectory.",
+  "email_summary": "Strategy files detailed proxy for daily preferred dividends; no new BTC buys, holdings steady at 846,000 BTC.",
+  "bottom_line": "The only new capital-markets action this window is a governance/mechanics change (daily dividend record dates for preferred stock) that leaves total payout and BTC per share unaffected. No new bitcoin purchases, sales, or dilutive issuance were disclosed in the last three days, so the treasury/BTC-per-share thesis is unchanged.",
   "source_conflicts": [
-    "mNAV readings diverge across trackers: bitcointreasuries.net shows mNAV(EV) 1.14x / diluted 0.90x as of Sept 21, versus the previously reported 1.17x figure — likely a methodology (EV vs. basic/diluted) difference rather than a data error."
+    "mNAV figures diverge by methodology: mnav.com reports 1.16x while bitcointreasuries.net shows 0.86x-0.87x (basic/diluted, market-cap based) versus 1.12x on an enterprise-value basis for the same Sept 20-21 BTC holdings figure of 846,000 — differences appear to stem from whether preferred stock/debt are included in the numerator, not from conflicting underlying data."
   ],
   "updates": [
     {
       "date": "2026-09-24",
-      "headline": "Board calls special vote on daily preferred dividends",
-      "what_happened": "Strategy's board approved a special shareholder meeting (Oct 28, record date Sept 25) to vote on amending STRC, STRF, STRK and STRD certificates of designations to pay dividends on a daily record-date/next-business-day basis instead of monthly or quarterly. The company filed an 8-K and preliminary proxy confirming the amendments do not change dividend rates or total obligations, only payment frequency and mechanics, with STRC switching first (initial record date Nov. 1, payment Nov. 2) if approved.",
-      "assessment": "positive",
-      "thesis_fit": "A daily-accrual cadence is intended to enhance liquidity, trading efficiency and reinvestment timing for the Digital Credit preferreds, which could make future STRC/STRF/STRK/STRD issuance more attractive and support the financing engine used to fund BTC purchases without diluting BTC-per-share economics.",
+      "headline": "Board files proxy for daily preferred-dividend record dates",
+      "what_happened": "Strategy's board approved putting proposed amendments to the certificates of designation for STRF, STRC, STRK and STRD to a shareholder vote, moving all four preferred series to daily dividend record dates with payment the next business day. A preliminary proxy (PRE 14A) was filed September 25 for an October 28, 2026 virtual special meeting, with September 25 set as the voting record date; first daily-schedule payments are expected November 2, 2026 for STRC and January 4, 2027 for STRF/STRK/STRD.",
+      "assessment": "neutral",
+      "thesis_fit": "Improves preferred-stock trading mechanics and could reduce STRC's swings around record dates, supporting the credit stack's stability, but it does not change dividend rates, total payout obligations, or BTC per share.",
       "severity": "digest",
       "confidence": "primary source",
       "source_url": "https://www.sec.gov/Archives/edgar/data/0001050446/000119312526401636/mstr-20260924.htm"
     },
     {
-      "date": "2026-09-22",
-      "headline": "Trump-linked accounts disclosed buying MSTR before rally",
-      "what_happened": "A federal ethics filing (OGE Form 278-T) posted Sept. 22 showed investment accounts associated with President Trump sold MSTR in June and then bought back shares in two tranches on July 24 and July 27, near the stock's summer lows; MSTR has since risen roughly 80-83%. The Trump Organization stated the accounts are managed on a discretionary basis by third parties with no involvement from Trump in trade selection.",
+      "date": "2026-09-25",
+      "headline": "Strategy launches shareholder campaign backing dividend vote",
+      "what_happened": "Strategy filed Rule 14a-12 soliciting material launching a shareholder-outreach campaign (dedicated voting site, investor presentation, social media push) supporting the daily-dividend proposal. Only common shareholders as of the September 25 record date may vote, and passage requires a majority of total common voting power, with Saylor controlling roughly 32.9% via Class B shares.",
       "assessment": "neutral",
-      "thesis_fit": "This is a disclosure about a politically-connected shareholder's trading pattern, not a change to Strategy's balance sheet, BTC holdings, or financing structure, though it has drawn prior Congressional scrutiny (Sen. Warren, Rep. Garcia) that could add headline/regulatory noise around the stock.",
+      "thesis_fit": "A governance/capital-structure mechanics change aimed at strengthening demand for the preferred 'digital credit' stack rather than a BTC accumulation or dilution event.",
+      "severity": "digest",
+      "confidence": "primary source",
+      "source_url": "https://unchainedcrypto.com/strategy-seeks-shareholder-vote-to-pay-daily-dividends-on-strc-and-three-other-preferreds/"
+    },
+    {
+      "date": "2026-09-26",
+      "headline": "Saylor pitches 'digital asset bill of rights' policy framework",
+      "what_happened": "Michael Saylor shared an essay on X over the weekend and discussed a proposed 'bill of digital rights' for crypto participants at the Bitcoin Policy Institute's Freedom Tech DC event, arguing the reforms could help catalyze a much larger digital-asset industry.",
+      "assessment": "neutral",
+      "thesis_fit": "Continued Saylor advocacy for favorable crypto policy is directionally supportive of the sector but is not a company-specific financing or treasury action affecting BTC per share.",
       "severity": "digest",
       "confidence": "secondary only",
-      "source_url": "https://www.tipranks.com/news/president-donald-trumps-investment-accounts-rebought-strategy-stock-before-83-price-jump"
+      "source_url": "https://blockonomi.com/strategy-mstr-stock-saylor-proposes-digital-asset-rights-framework"
     }
   ]
 }

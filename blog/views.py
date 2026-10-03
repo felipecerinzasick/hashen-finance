@@ -7,6 +7,7 @@ import hashlib
 import io
 import json
 import os
+import re
 import ssl
 import textwrap
 from collections import defaultdict
@@ -1543,12 +1544,82 @@ def statement_month(period_end):
     return period_end.replace(day=1)
 
 
+SPENDING_CATEGORIES = (
+    'Income',
+    'Refunds',
+    'Groceries',
+    'Dining',
+    'Transport',
+    'Shopping',
+    'Subscriptions & software',
+    'Car & maintenance',
+    'Housing & bills',
+    'Rent & shared expenses',
+    'Savings transfer',
+    'Transfers & cash',
+    'Bank fees',
+    'Healthcare',
+    'Taxes',
+    'Insurance',
+    'Other',
+)
+
+
+def clean_transaction_label(description):
+    text = ' '.join((description or '').replace(';', ' ').split())
+    lowered = text.lower()
+    if 'autoservice pfister' in lowered:
+        return 'autoservice pfister repair / service'
+    if 'miete und ausgaben' in lowered:
+        match = re.search(r'miete und ausgaben\s+([a-zäöü]+)', lowered)
+        return ('rent and shared expenses ' + match.group(1)) if match else 'rent and shared expenses'
+    if 'uebertrag' in lowered or 'kontoübertrag' in lowered:
+        return 'transfer to own savings account'
+    if 'saldo dienstleistungspreisabschluss' in lowered:
+        return 'bank service fee'
+    first_part = text.split(' · ')[0].strip()
+    first_part = re.sub(r'\b[A-Z]{2}\d{2}\s?[A-Z0-9 ]{8,}\b', '', first_part)
+    first_part = re.sub(r'\b\d{4,}\b', '', first_part)
+    first_part = re.sub(r'\s+', ' ', first_part).strip(' ,;·-')
+    return (first_part[:80] or 'transaction').lower()
+
+
+def redact_transaction_for_ai(description):
+    text = ' '.join((description or '').replace(';', ' · ').split())
+    replacements = (
+        ('Felipe Cerinza Sick', '[self]'),
+        ('Sanchez Conde C. und Cerinza S', '[shared household]'),
+        ('Sanchez Conde C.', '[shared household]'),
+        ('Cerinza S', '[self]'),
+    )
+    for source, target in replacements:
+        text = text.replace(source, target)
+    text = re.sub(r'\b[A-Z]{2}\d{2}\s?[A-Z0-9 ]{8,}\b', '[iban]', text)
+    text = re.sub(r'BIC/BC:\s*[A-Z0-9]+', 'BIC/BC: [redacted]', text, flags=re.I)
+    text = re.sub(r'Transaktions-Nr\.\s*[A-Za-z0-9-]+', 'Transaktions-Nr. [redacted]', text, flags=re.I)
+    text = re.sub(r'TWINT-Acc\.:\+?\d+', 'TWINT-Acc. [redacted]', text, flags=re.I)
+    text = re.sub(r'Zahlungsgrund:\s*(?!Miete und Ausgaben)[^·]+', 'Zahlungsgrund: [redacted] ', text, flags=re.I)
+    text = re.sub(r'\b\d{8,}[-\d]*\b', '[number]', text)
+    text = re.sub(r'\b\d{4}\s+[A-ZÄÖÜ][A-Za-zÄÖÜäöüß .-]+(?:;| ·|$)', '[address] ', text)
+    text = re.sub(r'\b[A-ZÄÖÜa-zäöüß .-]+strasse\s+\d+[A-Za-z]?', '[address]', text)
+    text = re.sub(r'\bRue?[a-zäöüß .-]+\d+\b', '[address]', text, flags=re.I)
+    text = re.sub(r'Konto-Nr\.\s*IBAN:\s*\[iban\]', 'Konto-Nr. [redacted]', text, flags=re.I)
+    text = re.sub(r'Kartentransaktionsbetrag:[^·]+', 'card transaction amount [redacted]', text, flags=re.I)
+    text = re.sub(r'Devisenkurs:[^·]+', 'fx rate [redacted]', text, flags=re.I)
+    text = re.sub(r'\s+', ' ', text).strip()
+    return text[:700]
+
+
 def categorize_spending(description, amount):
     text = (description or '').lower()
     if amount > 0:
         if any(token in text for token in ('rueckerstattung', 'refund', 'gutschrift')):
             return 'Refunds'
         return 'Income'
+    if 'miete und ausgaben' in text:
+        return 'Rent & shared expenses'
+    if 'uebertrag' in text or 'kontoübertrag' in text:
+        return 'Savings transfer'
     if any(token in text for token in ('coop', 'migros', 'aldi', 'lidl', 'denner', 'spar ', 'volg')):
         return 'Groceries'
     if any(token in text for token in ('cafe', 'restaurant', 'bar ', 'uber eats', 'just eat', 'eat.ch', 'takeaway')):
@@ -1561,13 +1632,153 @@ def categorize_spending(description, amount):
         return 'Subscriptions & software'
     if any(token in text for token in ('autoservice', 'garage', 'reifen', 'am untergrun')):
         return 'Car & maintenance'
-    if any(token in text for token in ('dienstleistungspreis', 'kontofuehrung', 'kontoführung', 'gebuehr', 'gebühr', 'kosten:')):
+    if any(token in text for token in ('saldo dienstleistungspreisabschluss', 'kontofuehrung', 'kontoführung', 'kontogebuehr', 'kontogebühr')):
         return 'Bank fees'
     if any(token in text for token in ('miete', 'rent', 'strom', 'ewz', 'salt', 'sunrise', 'swisscom', 'versicherung')):
         return 'Housing & bills'
     if any(token in text for token in ('ihr verwendungszweck', 'e-banking', 'sammelauftrag', 'twint')):
         return 'Transfers & cash'
     return 'Other'
+
+
+def load_spending_ai_key():
+    for name in ('OPENAI_API_KEY', 'SPENDING_ANALYSIS_API_KEY'):
+        value = os.environ.get(name)
+        if value:
+            return value.strip()
+    for filename in ('hashen_key_generator', 'hashen_key_generator.txt', 'hashen_key_generator.rtf', '.openai_api_key'):
+        path = Path(settings.BASE_DIR) / filename
+        if not path.exists() or not path.is_file():
+            continue
+        text = path.read_text(encoding='utf-8', errors='ignore')
+        match = re.search(r'(sk-proj-[A-Za-z0-9_\-]+|sk-[A-Za-z0-9_\-]+)', text)
+        if match:
+            return match.group(1)
+    return None
+
+
+def spending_ai_export_enabled():
+    return os.environ.get('SPENDING_AI_EXPORT_ENABLED') == '1'
+
+
+def extract_response_text(payload):
+    if payload.get('output_text'):
+        return payload['output_text']
+    parts = []
+    for item in payload.get('output', []):
+        for content in item.get('content', []):
+            if content.get('type') in ('output_text', 'text') and content.get('text'):
+                parts.append(content['text'])
+    return '\n'.join(parts)
+
+
+def parse_ai_json(text):
+    if not text:
+        raise ValueError('AI response was empty.')
+    match = re.search(r'```json\s*(.*?)```', text, flags=re.S)
+    if match:
+        text = match.group(1)
+    else:
+        start = text.find('{')
+        end = text.rfind('}')
+        text = text[start:end + 1] if start != -1 and end != -1 and end > start else text
+    return json.loads(text)
+
+
+def apply_ai_spending_cleanup(transactions):
+    if os.environ.get('DISABLE_SPENDING_AI') == '1':
+        return transactions
+    if not spending_ai_export_enabled():
+        return transactions
+    api_key = load_spending_ai_key()
+    if not api_key:
+        return transactions
+    items = [
+        {
+            'id': index,
+            'amount': str(item['amount']),
+            'text': redact_transaction_for_ai(item['description']),
+            'rule_category': item.get('category'),
+            'rule_label': item.get('display_description'),
+        }
+        for index, item in enumerate(transactions)
+    ]
+    prompt = (
+        'Clean and categorize Swiss bank transactions for a personal monthly spending dashboard.\n'
+        'Return JSON only with key "items". For each item return id, category, display_description, reason.\n'
+        'Use only these categories: %s.\n'
+        'display_description must be short, human-readable, max 8 words, no addresses, no IBANs, no transaction numbers.\n'
+        'The text has already been redacted locally. Do not try to reconstruct private details.\n'
+        'Important examples: Autoservice Pfister should be "autoservice pfister repair / service" and Car & maintenance. '
+        'UEBERTRAG or Kontoübertrag to Felipe Cerinza Sick / own UBS account should be Savings transfer. '
+        'Miete und Ausgaben Oktober shared with partner should be Rent & shared expenses.\n\n'
+        'Transactions:\n%s'
+    ) % (', '.join(SPENDING_CATEGORIES), json.dumps(items, ensure_ascii=False))
+    body = {
+        'model': os.environ.get('SPENDING_ANALYSIS_MODEL', 'gpt-5-mini'),
+        'input': prompt,
+        'text': {
+            'format': {
+                'type': 'json_schema',
+                'name': 'spending_classification',
+                'strict': True,
+                'schema': {
+                    'type': 'object',
+                    'additionalProperties': False,
+                    'properties': {
+                        'items': {
+                            'type': 'array',
+                            'items': {
+                                'type': 'object',
+                                'additionalProperties': False,
+                                'properties': {
+                                    'id': {'type': 'integer'},
+                                    'category': {'type': 'string'},
+                                    'display_description': {'type': 'string'},
+                                    'reason': {'type': 'string'},
+                                },
+                                'required': ['id', 'category', 'display_description', 'reason'],
+                            },
+                        },
+                    },
+                    'required': ['items'],
+                },
+            },
+        },
+    }
+    request = urlrequest.Request(
+        'https://api.openai.com/v1/responses',
+        data=json.dumps(body).encode('utf-8'),
+        headers={
+            'Authorization': 'Bearer %s' % api_key,
+            'Content-Type': 'application/json',
+        },
+        method='POST',
+    )
+    try:
+        with urlrequest.urlopen(request, timeout=30) as response:
+            payload = json.loads(response.read().decode('utf-8'))
+        classified = parse_ai_json(extract_response_text(payload))
+        by_id = {int(item['id']): item for item in classified.get('items', []) if str(item.get('id', '')).isdigit()}
+    except (HTTPError, URLError, TimeoutError, ValueError, json.JSONDecodeError, KeyError):
+        return transactions
+
+    allowed = set(SPENDING_CATEGORIES)
+    for index, transaction in enumerate(transactions):
+        cleaned = by_id.get(index)
+        if not cleaned:
+            continue
+        category = cleaned.get('category')
+        label = (cleaned.get('display_description') or '').strip()
+        reason = (cleaned.get('reason') or '').strip()
+        if category in allowed:
+            transaction['category'] = category
+            transaction['category_source'] = 'ai'
+        if label:
+            transaction['display_description'] = label[:180]
+        if reason:
+            transaction['category_reason'] = reason[:180]
+    return transactions
 
 
 def parse_spending_csv(uploaded_file):
@@ -1616,10 +1827,14 @@ def parse_spending_csv(uploaded_file):
             'balance': parse_statement_decimal(data.get('Saldo'), None),
             'category': categorize_spending(description, amount),
             'description': description,
+            'display_description': clean_transaction_label(description),
+            'category_source': 'rules',
+            'category_reason': '',
             'transaction_number': (data.get('Transaktions-Nr.') or '').strip(),
         })
     if not transactions:
         raise ValueError('No transactions found in CSV.')
+    transactions = apply_ai_spending_cleanup(transactions)
 
     period_start = parse_date(metadata.get('Von')) or min(item['booking_date'] for item in transactions)
     period_end = parse_date(metadata.get('Bis')) or max(item['booking_date'] for item in transactions)
@@ -1668,13 +1883,19 @@ def save_spending_statement(parsed, filename):
 
 
 def statement_buckets(statement):
-    buckets = defaultdict(lambda: {'category': '', 'spent': Decimal('0'), 'income': Decimal('0'), 'count': 0})
+    buckets = defaultdict(lambda: {'category': '', 'spent': Decimal('0'), 'income': Decimal('0'), 'count': 0, 'items': []})
     for item in statement.transactions.all():
         bucket = buckets[item.category]
         bucket['category'] = item.category
         bucket['count'] += 1
+        label = item.display_description or clean_transaction_label(item.description)
         if item.amount < 0:
             bucket['spent'] += -item.amount
+            bucket['items'].append({
+                'label': label,
+                'amount': -item.amount,
+                'source': item.category_source,
+            })
         else:
             bucket['income'] += item.amount
     bucket_list = sorted(buckets.values(), key=lambda item: item['spent'], reverse=True)
@@ -1682,6 +1903,13 @@ def statement_buckets(statement):
     for bucket in bucket_list:
         bucket['share'] = (bucket['spent'] / statement.total_outflow * Decimal('100')).quantize(Decimal('0.1')) if statement.total_outflow else Decimal('0')
         bucket['width'] = int((bucket['spent'] / max_spent * Decimal('100')).quantize(Decimal('1'))) if max_spent else 0
+        bucket['items'] = sorted(bucket['items'], key=lambda item: item['amount'], reverse=True)
+        bucket['tooltip'] = '\n'.join(
+            '%s: %s %.2f' % (item['label'], statement.currency, item['amount'])
+            for item in bucket['items'][:10]
+        )
+        if len(bucket['items']) > 10:
+            bucket['tooltip'] += '\n+%s more' % (len(bucket['items']) - 10)
     return bucket_list
 
 

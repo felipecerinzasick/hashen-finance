@@ -117,3 +117,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# Local private data
+hashen_key_generator*
+transactions*.csv

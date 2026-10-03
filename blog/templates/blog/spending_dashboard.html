@@ -293,6 +293,7 @@
     }
 
     .bucket-row {
+      position: relative;
       border: 1px solid var(--line);
       border-radius: 8px;
       padding: 13px;
@@ -318,6 +319,29 @@
       height: 100%;
       border-radius: inherit;
       background: var(--accent);
+    }
+
+    .bucket-tooltip {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: calc(100% - 4px);
+      z-index: 10;
+      display: none;
+      border: 1px solid rgba(23, 36, 33, 0.16);
+      border-radius: 8px;
+      background: #172421;
+      color: #edf5f0;
+      padding: 11px 12px;
+      font-size: 12px;
+      line-height: 1.45;
+      white-space: pre-line;
+      box-shadow: 0 16px 38px rgba(29, 47, 42, 0.22);
+    }
+
+    .bucket-row:hover .bucket-tooltip,
+    .bucket-row:focus-within .bucket-tooltip {
+      display: block;
     }
 
     .spending-table {
@@ -511,12 +535,15 @@
               <div class="bucket-list">
                 {% for bucket in buckets %}
                   {% if bucket.spent > 0 %}
-                    <div class="bucket-row">
+                    <div class="bucket-row" tabindex="0" title="{{ bucket.tooltip }}">
                       <div class="bucket-top">
                         <strong>{{ bucket.category }}</strong>
                         <span>{{ selected_statement.currency }} {{ bucket.spent|floatformat:2 }} · {{ bucket.share }}%</span>
                       </div>
                       <div class="bucket-bar"><div class="bucket-fill" style="width: {{ bucket.width }}%;"></div></div>
+                      {% if bucket.tooltip %}
+                        <div class="bucket-tooltip">{{ bucket.tooltip }}</div>
+                      {% endif %}
                     </div>
                   {% endif %}
                 {% empty %}
@@ -581,7 +608,7 @@
                 {% for item in top_transactions %}
                   <tr>
                     <td>{{ item.booking_date|date:"d.m.Y" }}</td>
-                    <td>{{ item.description }}</td>
+                    <td>{{ item.display_description|default:item.description }}</td>
                     <td>{{ item.category }}</td>
                     <td class="right loss">{{ selected_statement.currency }} {{ item.amount|floatformat:2 }}</td>
                   </tr>

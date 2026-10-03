@@ -178,6 +178,9 @@ class SpendingTransaction(models.Model):
     balance = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
     category = models.CharField(max_length=80)
     description = models.TextField()
+    display_description = models.CharField(max_length=180, blank=True)
+    category_source = models.CharField(max_length=24, default='rules')
+    category_reason = models.CharField(max_length=180, blank=True)
     transaction_number = models.CharField(max_length=80, blank=True)
 
     class Meta:

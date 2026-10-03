@@ -1,0 +1,601 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hashen Spending</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <style>
+    :root {
+      --ink: #1d2f2a;
+      --muted: #65746f;
+      --line: #d9e1dc;
+      --panel: #ffffff;
+      --page: #f4f6f1;
+      --accent: #1f6f56;
+      --accent-soft: #dfeee8;
+      --gold: #b68a35;
+      --blue: #315f7d;
+      --danger: #a94442;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--ink);
+      font-family: Inter, Arial, sans-serif;
+      letter-spacing: 0;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .dashboard-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 248px minmax(0, 1fr);
+    }
+
+    .sidebar {
+      background: #0f2638;
+      color: #f8fafc;
+      padding: 28px 22px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 34px;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      background: #b68a35;
+      color: #172421;
+    }
+
+    .brand strong {
+      display: block;
+      font-size: 15px;
+      line-height: 1.2;
+    }
+
+    .brand span {
+      color: #aab4c3;
+      font-size: 12px;
+    }
+
+    .nav-list {
+      display: grid;
+      gap: 6px;
+    }
+
+    .nav-link-local {
+      color: #d8dee9;
+      padding: 10px 12px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .nav-link-local.active,
+    .nav-link-local:hover,
+    .nav-sublist a.active,
+    .nav-sublist a:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+      text-decoration: none;
+    }
+
+    .nav-sublist {
+      display: grid;
+      gap: 4px;
+      margin: -2px 0 8px 14px;
+      padding-left: 10px;
+      border-left: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .nav-sublist a {
+      color: #aab4c3;
+      border-radius: 6px;
+      padding: 7px 9px;
+      font-size: 12px;
+      text-decoration: none;
+    }
+
+    .nav-icon {
+      width: 15px;
+      height: 15px;
+      flex: 0 0 auto;
+    }
+
+    .content {
+      min-width: 0;
+    }
+
+    .topbar {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 32px;
+      background: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      backdrop-filter: blur(10px);
+    }
+
+    .topbar h1 {
+      font-size: 22px;
+      margin: 0;
+      font-weight: 800;
+    }
+
+    .topbar p {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .main-grid {
+      padding: 28px 32px 40px;
+      display: grid;
+      gap: 22px;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      min-width: 0;
+      box-shadow: 0 14px 34px rgba(29, 47, 42, 0.05);
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .panel-header h2 {
+      font-size: 17px;
+      margin: 0;
+      font-weight: 800;
+    }
+
+    .panel-header p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .upload-form {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .field-input {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: #fff;
+      min-height: 42px;
+      border-radius: 6px;
+      padding: 8px 10px;
+      color: var(--ink);
+    }
+
+    .btn-local {
+      border: 1px solid transparent;
+      min-height: 42px;
+      border-radius: 6px;
+      padding: 8px 14px;
+      background: var(--accent);
+      color: #fff;
+      cursor: pointer;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .btn-local.secondary {
+      background: #fff;
+      color: var(--ink);
+      border-color: var(--line);
+      text-decoration: none;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .metric-value {
+      font-size: 27px;
+      line-height: 1.1;
+      font-weight: 800;
+      margin-top: 10px;
+    }
+
+    .gain { color: var(--accent); }
+    .loss { color: var(--danger); }
+
+    .month-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .month-chip {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 7px 11px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .month-chip.active,
+    .month-chip:hover {
+      background: var(--accent-soft);
+      border-color: rgba(31, 111, 86, 0.26);
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr);
+      gap: 22px;
+    }
+
+    .bucket-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .bucket-row {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 13px;
+      background: #fff;
+    }
+
+    .bucket-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: baseline;
+    }
+
+    .bucket-bar {
+      height: 9px;
+      background: #e8edf3;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 11px;
+    }
+
+    .bucket-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: var(--accent);
+    }
+
+    .spending-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .spending-table th,
+    .spending-table td {
+      padding: 12px 8px;
+      border-bottom: 1px solid var(--line);
+      font-size: 14px;
+      vertical-align: top;
+    }
+
+    .spending-table th {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .right { text-align: right; }
+
+    .empty-note,
+    .alert-note {
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.75);
+      color: var(--muted);
+    }
+
+    .alert-note {
+      border-style: solid;
+      background: #fffbf3;
+      color: var(--ink);
+    }
+
+    @media (max-width: 1100px) {
+      .dashboard-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        height: auto;
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        padding: 8px 10px 9px;
+      }
+
+      .sidebar .brand {
+        display: none;
+      }
+
+      .sidebar .nav-list {
+        display: flex;
+        overflow-x: auto;
+        gap: 8px;
+        scrollbar-width: none;
+      }
+
+      .sidebar .nav-list::-webkit-scrollbar {
+        display: none;
+      }
+
+      .sidebar .nav-link-local,
+      .sidebar .nav-sublist a {
+        flex: 0 0 auto;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(255, 255, 255, 0.09);
+        padding: 8px 12px;
+        color: #e4ece8;
+      }
+
+      .sidebar .nav-sublist {
+        display: contents;
+      }
+
+      .summary-grid,
+      .section-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .topbar {
+        position: static;
+        align-items: flex-start;
+      }
+
+      .main-grid {
+        padding: 18px 14px 28px;
+      }
+
+      .upload-form {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .metric-value {
+        font-size: 22px;
+      }
+
+      .spending-table th:nth-child(3),
+      .spending-table td:nth-child(3) {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-shell">
+    {% include "blog/private_sidebar.html" with active_page="spending" %}
+    <main class="content">
+      <header class="topbar">
+        <div>
+          <h1>Spending</h1>
+          <p>Monthly cash-flow view from uploaded bank transactions.</p>
+        </div>
+      </header>
+
+      <section class="main-grid">
+        {% for message in messages %}
+          <div class="alert-note">{{ message }}</div>
+        {% endfor %}
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Upload monthly CSV</h2>
+              <p>Import one bank statement after month-end. Uploading the same month replaces the previous analysis.</p>
+            </div>
+          </div>
+          <form class="upload-form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input class="field-input" type="file" name="statement_csv" accept=".csv,text/csv" required>
+            <button class="btn-local" type="submit">Analyze CSV</button>
+          </form>
+        </section>
+
+        {% if statements %}
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <h2>Imported months</h2>
+                <p>Switch between previous statements to compare spending patterns.</p>
+              </div>
+            </div>
+            <div class="month-row">
+              {% for statement in statements %}
+                <a class="month-chip {% if selected_statement and statement.month == selected_statement.month %}active{% endif %}" href="?month={{ statement.month|date:'Y-m' }}">{{ statement.month|date:"F Y" }}</a>
+              {% endfor %}
+            </div>
+          </section>
+        {% endif %}
+
+        {% if selected_statement %}
+          <section class="summary-grid">
+            <div class="panel">
+              <span class="label">Beginning balance</span>
+              <div class="metric-value">{{ selected_statement.currency }} {{ selected_statement.beginning_balance|floatformat:2 }}</div>
+            </div>
+            <div class="panel">
+              <span class="label">Ending balance</span>
+              <div class="metric-value">{{ selected_statement.currency }} {{ selected_statement.ending_balance|floatformat:2 }}</div>
+            </div>
+            <div class="panel">
+              <span class="label">Money in</span>
+              <div class="metric-value gain">{{ selected_statement.currency }} {{ selected_statement.total_inflow|floatformat:2 }}</div>
+            </div>
+            <div class="panel">
+              <span class="label">Money out</span>
+              <div class="metric-value loss">{{ selected_statement.currency }} {{ selected_statement.total_outflow|floatformat:2 }}</div>
+            </div>
+          </section>
+
+          <section class="section-grid">
+            <div class="panel">
+              <div class="panel-header">
+                <div>
+                  <h2>{{ selected_statement.month|date:"F Y" }} buckets</h2>
+                  <p>{{ selected_statement.period_start|date:"d.m.Y" }} to {{ selected_statement.period_end|date:"d.m.Y" }} · {{ selected_statement.transaction_count }} transactions</p>
+                </div>
+              </div>
+              <div class="bucket-list">
+                {% for bucket in buckets %}
+                  {% if bucket.spent > 0 %}
+                    <div class="bucket-row">
+                      <div class="bucket-top">
+                        <strong>{{ bucket.category }}</strong>
+                        <span>{{ selected_statement.currency }} {{ bucket.spent|floatformat:2 }} · {{ bucket.share }}%</span>
+                      </div>
+                      <div class="bucket-bar"><div class="bucket-fill" style="width: {{ bucket.width }}%;"></div></div>
+                    </div>
+                  {% endif %}
+                {% empty %}
+                  <div class="empty-note">No spending buckets yet.</div>
+                {% endfor %}
+              </div>
+            </div>
+
+            <aside class="panel">
+              <div class="panel-header">
+                <div>
+                  <h2>Cash-flow statement</h2>
+                  <p>Simple bridge from opening to closing cash.</p>
+                </div>
+              </div>
+              <table class="spending-table">
+                <tbody>
+                  <tr><td>Beginning balance</td><td class="right">{{ selected_statement.currency }} {{ selected_statement.beginning_balance|floatformat:2 }}</td></tr>
+                  <tr><td>Inflows</td><td class="right gain">+{{ selected_statement.currency }} {{ selected_statement.total_inflow|floatformat:2 }}</td></tr>
+                  <tr><td>Outflows</td><td class="right loss">-{{ selected_statement.currency }} {{ selected_statement.total_outflow|floatformat:2 }}</td></tr>
+                  <tr><td><strong>Net flow</strong></td><td class="right"><strong>{{ selected_statement.currency }} {{ selected_statement.net_flow|floatformat:2 }}</strong></td></tr>
+                  <tr><td>Ending balance</td><td class="right">{{ selected_statement.currency }} {{ selected_statement.ending_balance|floatformat:2 }}</td></tr>
+                </tbody>
+              </table>
+              {% if comparison %}
+                <hr>
+                <div class="panel-header">
+                  <div>
+                    <h2>Compared with {{ comparison.month|date:"F Y" }}</h2>
+                    <p>Outflow change: {{ selected_statement.currency }} {{ comparison.outflow_change|floatformat:2 }} · Net-flow change: {{ selected_statement.currency }} {{ comparison.net_flow_change|floatformat:2 }}</p>
+                  </div>
+                </div>
+                <div class="bucket-list">
+                  {% for item in comparison.bucket_changes %}
+                    <div class="bucket-top">
+                      <span>{{ item.category }}</span>
+                      <strong class="{% if item.change > 0 %}loss{% elif item.change < 0 %}gain{% endif %}">{{ selected_statement.currency }} {{ item.change|floatformat:2 }}</strong>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </aside>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <h2>Largest outflows</h2>
+                <p>Biggest transactions in the selected month.</p>
+              </div>
+            </div>
+            <table class="spending-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Description</th>
+                  <th>Bucket</th>
+                  <th class="right">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in top_transactions %}
+                  <tr>
+                    <td>{{ item.booking_date|date:"d.m.Y" }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.category }}</td>
+                    <td class="right loss">{{ selected_statement.currency }} {{ item.amount|floatformat:2 }}</td>
+                  </tr>
+                {% empty %}
+                  <tr><td colspan="4">No outflows found.</td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </section>
+        {% else %}
+          <section class="empty-note">Upload the first monthly CSV to create a spending analysis.</section>
+        {% endif %}
+      </section>
+    </main>
+  </div>
+</body>
+</html>

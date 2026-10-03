@@ -145,6 +145,46 @@ class PortfolioSnapshot(models.Model):
 
     def __str__(self):
         return '%s %s' % (self.snapshot_date, self.total_chf)
+
+
+class SpendingStatement(models.Model):
+    month = models.DateField(unique=True)
+    period_start = models.DateField()
+    period_end = models.DateField()
+    currency = models.CharField(max_length=3, default='CHF')
+    beginning_balance = models.DecimalField(max_digits=18, decimal_places=2)
+    ending_balance = models.DecimalField(max_digits=18, decimal_places=2)
+    total_inflow = models.DecimalField(max_digits=18, decimal_places=2, default=0)
+    total_outflow = models.DecimalField(max_digits=18, decimal_places=2, default=0)
+    net_flow = models.DecimalField(max_digits=18, decimal_places=2, default=0)
+    transaction_count = models.PositiveIntegerField(default=0)
+    source_filename = models.CharField(max_length=240, blank=True)
+    uploaded_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ('-month',)
+
+    def __str__(self):
+        return '%s %s' % (self.month.strftime('%Y-%m'), self.ending_balance)
+
+
+class SpendingTransaction(models.Model):
+    statement = models.ForeignKey(SpendingStatement, related_name='transactions', on_delete=models.CASCADE)
+    booking_date = models.DateField()
+    value_date = models.DateField(blank=True, null=True)
+    closing_date = models.DateField(blank=True, null=True)
+    currency = models.CharField(max_length=3, default='CHF')
+    amount = models.DecimalField(max_digits=18, decimal_places=2)
+    balance = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+    category = models.CharField(max_length=80)
+    description = models.TextField()
+    transaction_number = models.CharField(max_length=80, blank=True)
+
+    class Meta:
+        ordering = ('-booking_date', '-id')
+
+    def __str__(self):
+        return '%s %s %s' % (self.booking_date, self.category, self.amount)
         
 
 class PostManager(models.Manager):

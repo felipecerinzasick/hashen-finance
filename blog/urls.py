@@ -35,6 +35,7 @@ urlpatterns = [
     path('dashboard/reports/', views.portfolio_reports, name='portfolio_reports'),
     path('dashboard/reports/<slug:kind>/<str:date>.pdf', views.portfolio_period_report_pdf, name='portfolio_period_report_pdf'),
     path('dashboard/report.pdf', views.portfolio_report_pdf, name='portfolio_report_pdf'),
+    path('dashboard/spending/', views.spending_dashboard, name='spending_dashboard'),
     path('api/wealth-progression/', views.wealth_progression, name='wealth_progression'),
     path('api/portfolio-snapshot/', views.portfolio_snapshot, name='portfolio_snapshot'),
     path('api/bitcoin-price/', views.bitcoin_price, name='bitcoin_price'),

@@ -1,31 +1,26 @@
-{% extends "blog/base.html" %}
-{% block content %}
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<!------ Include the above in your HEAD tag ---------->
-<style>
-body { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMC8yOS8xMiKqq3kAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzVxteM2AAABHklEQVRIib2Vyw6EIAxFW5idr///Qx9sfG3pLEyJ3tAwi5EmBqRo7vHawiEEERHS6x7MTMxMVv6+z3tPMUYSkfTM/R0fEaG2bbMv+Gc4nZzn+dN4HAcREa3r+hi3bcuu68jLskhVIlW073tWaYlQ9+F9IpqmSfq+fwskhdO/AwmUTJXrOuaRQNeRkOd5lq7rXmS5InmERKoER/QMvUAPlZDHcZRhGN4CSeGY+aHMqgcks5RrHv/eeh455x5KrMq2yHQdibDO6ncG/KZWL7M8xDyS1/MIO0NJqdULLS81X6/X6aR0nqBSJcPeZnlZrzN477NKURn2Nus8sjzmEII0TfMiyxUuxphVWjpJkbx0btUnshRihVv70Bv8ItXq6Asoi/ZiCbU6YgAAAABJRU5ErkJggg==);}
-.error-template {padding: 40px 15px;text-align: center;}
-.error-actions {margin-top:15px;margin-bottom:15px;}
-.error-actions .btn { margin-right:10px; }
-</style>
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="error-template">
-                <h1>
-                    Oops!</h1>
-                <h2>
-                    404 Not Found</h2>
-                <div class="error-details">
-                    Sorry, an error has occured. Requested page not found!
-                </div>
-                <div class="error-actions">
-                    <a href="{% url 'index' %}" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span>
-                        Take Me Home </a><a href="{% url 'index' %}" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-envelope"></span> Contact Support </a>
-                </div>
-            </div>
+{% extends "blog/base1.html" %}
+
+{% block main %}
+<main class="wc-landing">
+  <section class="wc-section" style="padding-top: 140px; min-height: 78vh;">
+    <div class="container">
+      <div class="wc-product-grid" style="align-items: center;">
+        <div>
+          <div class="wc-kicker">Page not found</div>
+          <h1 style="font-size: clamp(42px, 7vw, 76px); line-height: 1.02; margin: 0 0 18px;">This page does not exist.</h1>
+          <p style="max-width: 620px; color: var(--wc-muted); font-size: 18px; line-height: 1.7;">The link may be old, private, or mistyped. Head back to the public site or request access if you were looking for the owner console.</p>
+          <div class="wc-card-actions">
+            <a class="sv-btn" href="{% url 'index' %}">Go home</a>
+            <button class="sv-btn secondary" type="button" data-toggle="modal" data-target="#contactModal">Request access</button>
+          </div>
         </div>
+        <div class="wc-feature wc-action-card">
+          <span class="wc-stage">Hashen</span>
+          <h3>Bitcoin-native capital infrastructure</h3>
+          <p>Month-end exposure records, custody context, treasury-equity monitoring, and governance notes for private owners.</p>
+        </div>
+      </div>
     </div>
-</div>
-{% endblock content %}
+  </section>
+</main>
+{% endblock main %}

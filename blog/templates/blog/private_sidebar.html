@@ -166,6 +166,10 @@
       <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6V2Zm8 1.5V8h4.5L14 3.5ZM8 12h8v2H8v-2Zm0 4h8v2H8v-2Z" fill="currentColor"/></svg>
       <span>Reports</span>
     </a>
+    <a class="nav-link-local {% if active_page == 'spending' %}active{% endif %}" href="{% url 'spending_dashboard' %}">
+      <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4V5Zm2 3v2h12V8H6Zm0 4v4h5v-4H6Zm7 0v1.5h5V12h-5Zm0 2.5V16h5v-1.5h-5Z" fill="currentColor"/></svg>
+      <span>Spending</span>
+    </a>
     <a class="nav-link-local {% if active_page == 'memos' %}active{% endif %}" href="{% url 'memos' %}">
       <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v18H5V3Zm3 4v2h8V7H8Zm0 4v2h8v-2H8Zm0 4v2h5v-2H8Z" fill="currentColor"/></svg>
       <span>Memos</span>

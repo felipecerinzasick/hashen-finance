@@ -293,10 +293,8 @@ h3 {
   position: relative;
   padding: 112px 0 84px;
   background:
-    linear-gradient(180deg, rgba(23, 36, 33, 0.42) 0%, rgba(23, 36, 33, 0.82) 62%, var(--wc-page) 100%),
-    linear-gradient(90deg, rgba(23, 36, 33, 0.99), rgba(23, 36, 33, 0.76) 48%, rgba(23, 36, 33, 0.16)),
-    radial-gradient(900px 460px at 80% 16%, rgba(217, 182, 106, 0.32), transparent 64%),
-    radial-gradient(1200px 600px at 82% 28%, rgba(31, 111, 86, 0.5), transparent 60%),
+    linear-gradient(180deg, rgba(23, 36, 33, 0.18) 0%, rgba(23, 36, 33, 0.58) 68%, var(--wc-page) 100%),
+    linear-gradient(90deg, rgba(23, 36, 33, 0.96), rgba(23, 36, 33, 0.72) 48%, rgba(23, 36, 33, 0.22)),
     url("/static/img/digital-horizon.png"),
     #172421;
   background-size: cover;
@@ -327,8 +325,7 @@ h3 {
 
 .wc-landing {
   overflow: hidden;
-  background:
-    linear-gradient(180deg, var(--wc-page), #fff 46%, var(--wc-page));
+  background: var(--wc-page);
 }
 
 .wc-hero-copy {
@@ -666,8 +663,7 @@ h3 {
 }
 
 .wc-section.white {
-  background:
-    linear-gradient(180deg, #fff, #fbfcf8);
+  background: #fff;
 }
 
 .wc-section-title {
@@ -713,7 +709,7 @@ h3 {
   position: absolute;
   inset: 0 0 auto;
   height: 3px;
-  background: linear-gradient(90deg, var(--wc-green), var(--wc-gold));
+  background: var(--wc-gold);
   opacity: 0.86;
 }
 
@@ -748,9 +744,7 @@ h3 {
   flex-direction: column;
   justify-content: center;
   min-height: 260px;
-  background:
-    linear-gradient(135deg, rgba(31, 111, 86, 0.08), rgba(217, 182, 106, 0.08)),
-    #fff;
+  background: #fff;
 }
 
 .wc-card-actions {
@@ -1035,8 +1029,7 @@ h3 {
 @media (max-width: 640px) {
   .wc-product-hero {
     background:
-      linear-gradient(180deg, rgba(23, 36, 33, 0.9) 0%, rgba(29, 77, 63, 0.74) 48%, rgba(238, 246, 241, 0.92) 88%, var(--wc-page) 100%),
-      linear-gradient(160deg, rgba(217, 182, 106, 0.2) 0%, rgba(217, 182, 106, 0) 38%),
+      linear-gradient(180deg, rgba(23, 36, 33, 0.84) 0%, rgba(23, 36, 33, 0.66) 52%, rgba(238, 246, 241, 0.92) 88%, var(--wc-page) 100%),
       url("/static/img/digital-horizon.png"),
       #172421;
     background-size: cover;

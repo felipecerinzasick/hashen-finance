@@ -1,12 +1,15 @@
 import base64
 import calendar
+import csv
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
 import hashlib
+import io
 import json
 import os
 import ssl
 import textwrap
+from collections import defaultdict
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from functools import wraps
 from hmac import compare_digest
@@ -14,18 +17,20 @@ from pathlib import Path
 from urllib import parse, request as urlrequest
 from urllib.error import URLError, HTTPError
 
-from .models import Post, Comment, Resource, StockHolding, StockQuoteSnapshot, StockQuoteHistory, MemoNote, PortfolioSnapshot
+from .models import Post, Comment, Resource, StockHolding, StockQuoteSnapshot, StockQuoteHistory, MemoNote, PortfolioSnapshot, SpendingStatement, SpendingTransaction
 from newsletter.models import Newsletter
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404, HttpResponse, JsonResponse
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db import transaction as db_transaction
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone as django_timezone
 from django.utils.text import slugify
+from django.urls import reverse
 from django.views.decorators.csrf import ensure_csrf_cookie
 from .forms import PostForm,ContactForm
 from django.views.generic import (
@@ -1523,6 +1528,219 @@ def load_monitoring_report(slug):
             'negative': 'loss',
         }.get(update.get('assessment'), '')
     return report
+
+
+def parse_statement_decimal(value, default=Decimal('0')):
+    if value in (None, ''):
+        return default
+    normalized = str(value).strip().replace("'", '').replace(' ', '').replace(',', '.')
+    if not normalized:
+        return default
+    return Decimal(normalized).quantize(Decimal('0.01'))
+
+
+def statement_month(period_end):
+    return period_end.replace(day=1)
+
+
+def categorize_spending(description, amount):
+    text = (description or '').lower()
+    if amount > 0:
+        if any(token in text for token in ('rueckerstattung', 'refund', 'gutschrift')):
+            return 'Refunds'
+        return 'Income'
+    if any(token in text for token in ('coop', 'migros', 'aldi', 'lidl', 'denner', 'spar ', 'volg')):
+        return 'Groceries'
+    if any(token in text for token in ('cafe', 'restaurant', 'bar ', 'uber eats', 'just eat', 'eat.ch', 'takeaway')):
+        return 'Dining'
+    if any(token in text for token in ('sbb', 'parking', 'parkingpay', 'shell', 'bp ', 'esso', 'uber', 'mobility')):
+        return 'Transport'
+    if any(token in text for token in ('amazon', 'decathlon', 'zalando', 'ikea', 'galaxus', 'digitec')):
+        return 'Shopping'
+    if any(token in text for token in ('openai', 'microsoft', 'spotify', 'netflix', 'apple.com', 'google', 'paypal *microsoft')):
+        return 'Subscriptions & software'
+    if any(token in text for token in ('autoservice', 'garage', 'reifen', 'am untergrun')):
+        return 'Car & maintenance'
+    if any(token in text for token in ('dienstleistungspreis', 'kontofuehrung', 'kontoführung', 'gebuehr', 'gebühr', 'kosten:')):
+        return 'Bank fees'
+    if any(token in text for token in ('miete', 'rent', 'strom', 'ewz', 'salt', 'sunrise', 'swisscom', 'versicherung')):
+        return 'Housing & bills'
+    if any(token in text for token in ('ihr verwendungszweck', 'e-banking', 'sammelauftrag', 'twint')):
+        return 'Transfers & cash'
+    return 'Other'
+
+
+def parse_spending_csv(uploaded_file):
+    raw = uploaded_file.read()
+    text = raw.decode('utf-8-sig')
+    rows = list(csv.reader(io.StringIO(text), delimiter=';'))
+    metadata = {}
+    header_index = None
+    for index, row in enumerate(rows):
+        if row and row[0] == 'Abschlussdatum':
+            header_index = index
+            break
+        if len(row) >= 2 and row[0]:
+            metadata[row[0].strip(':')] = row[1].strip()
+    if header_index is None:
+        raise ValueError('No UBS transaction header found in CSV.')
+
+    header = rows[header_index]
+    transactions = []
+    for row in rows[header_index + 1:]:
+        if not row or not row[0]:
+            continue
+        data = {header[i]: row[i] if i < len(row) else '' for i in range(len(header))}
+        booking_date = parse_date(data.get('Buchungsdatum') or data.get('Abschlussdatum'))
+        if not booking_date:
+            continue
+        debit = parse_statement_decimal(data.get('Belastung'), None)
+        credit = parse_statement_decimal(data.get('Gutschrift'), None)
+        if debit is not None and debit != 0:
+            amount = debit
+        elif credit is not None and credit != 0:
+            amount = credit
+        else:
+            amount = parse_statement_decimal(data.get('Einzelbetrag'))
+        description = ' · '.join(
+            part.strip().strip('"')
+            for part in (data.get('Beschreibung1'), data.get('Beschreibung2'), data.get('Beschreibung3'))
+            if part and part.strip()
+        )
+        transactions.append({
+            'booking_date': booking_date,
+            'value_date': parse_date(data.get('Valutadatum')) if data.get('Valutadatum') else None,
+            'closing_date': parse_date(data.get('Abschlussdatum')) if data.get('Abschlussdatum') else None,
+            'currency': (data.get('Währung') or metadata.get('Bewertet in') or 'CHF')[:3],
+            'amount': amount,
+            'balance': parse_statement_decimal(data.get('Saldo'), None),
+            'category': categorize_spending(description, amount),
+            'description': description,
+            'transaction_number': (data.get('Transaktions-Nr.') or '').strip(),
+        })
+    if not transactions:
+        raise ValueError('No transactions found in CSV.')
+
+    period_start = parse_date(metadata.get('Von')) or min(item['booking_date'] for item in transactions)
+    period_end = parse_date(metadata.get('Bis')) or max(item['booking_date'] for item in transactions)
+    beginning_balance = parse_statement_decimal(metadata.get('Anfangssaldo'))
+    ending_balance = parse_statement_decimal(metadata.get('Schlusssaldo'))
+    total_inflow = sum((item['amount'] for item in transactions if item['amount'] > 0), Decimal('0')).quantize(Decimal('0.01'))
+    total_outflow = sum((-item['amount'] for item in transactions if item['amount'] < 0), Decimal('0')).quantize(Decimal('0.01'))
+    return {
+        'month': statement_month(period_end),
+        'period_start': period_start,
+        'period_end': period_end,
+        'currency': metadata.get('Bewertet in') or transactions[0]['currency'],
+        'beginning_balance': beginning_balance,
+        'ending_balance': ending_balance,
+        'total_inflow': total_inflow,
+        'total_outflow': total_outflow,
+        'net_flow': (total_inflow - total_outflow).quantize(Decimal('0.01')),
+        'transaction_count': len(transactions),
+        'transactions': transactions,
+    }
+
+
+def save_spending_statement(parsed, filename):
+    with db_transaction.atomic():
+        statement, _created = SpendingStatement.objects.update_or_create(
+            month=parsed['month'],
+            defaults={
+                'period_start': parsed['period_start'],
+                'period_end': parsed['period_end'],
+                'currency': parsed['currency'],
+                'beginning_balance': parsed['beginning_balance'],
+                'ending_balance': parsed['ending_balance'],
+                'total_inflow': parsed['total_inflow'],
+                'total_outflow': parsed['total_outflow'],
+                'net_flow': parsed['net_flow'],
+                'transaction_count': parsed['transaction_count'],
+                'source_filename': filename[:240],
+            }
+        )
+        statement.transactions.all().delete()
+        SpendingTransaction.objects.bulk_create([
+            SpendingTransaction(statement=statement, **item)
+            for item in parsed['transactions']
+        ])
+    return statement
+
+
+def statement_buckets(statement):
+    buckets = defaultdict(lambda: {'category': '', 'spent': Decimal('0'), 'income': Decimal('0'), 'count': 0})
+    for item in statement.transactions.all():
+        bucket = buckets[item.category]
+        bucket['category'] = item.category
+        bucket['count'] += 1
+        if item.amount < 0:
+            bucket['spent'] += -item.amount
+        else:
+            bucket['income'] += item.amount
+    bucket_list = sorted(buckets.values(), key=lambda item: item['spent'], reverse=True)
+    max_spent = max([item['spent'] for item in bucket_list] or [Decimal('0')])
+    for bucket in bucket_list:
+        bucket['share'] = (bucket['spent'] / statement.total_outflow * Decimal('100')).quantize(Decimal('0.1')) if statement.total_outflow else Decimal('0')
+        bucket['width'] = int((bucket['spent'] / max_spent * Decimal('100')).quantize(Decimal('1'))) if max_spent else 0
+    return bucket_list
+
+
+@require_dashboard_auth
+def spending_dashboard(request):
+    if request.method == 'POST':
+        uploaded = request.FILES.get('statement_csv')
+        if not uploaded:
+            messages.error(request, 'Choose a CSV file first.')
+            return redirect('spending_dashboard')
+        try:
+            statement = save_spending_statement(parse_spending_csv(uploaded), uploaded.name)
+            messages.success(request, 'Spending statement for %s imported.' % statement.month.strftime('%B %Y'))
+            return redirect('%s?month=%s' % (reverse('spending_dashboard'), statement.month.strftime('%Y-%m')))
+        except (UnicodeDecodeError, ValueError, InvalidOperation) as exc:
+            messages.error(request, 'Could not analyze the CSV: %s' % exc)
+            return redirect('spending_dashboard')
+
+    statements = list(SpendingStatement.objects.all())
+    selected = None
+    selected_month = request.GET.get('month')
+    if selected_month:
+        try:
+            selected = SpendingStatement.objects.filter(month=parse_date(selected_month + '-01')).first()
+        except ValueError:
+            selected = None
+    if selected is None and statements:
+        selected = statements[0]
+
+    buckets = statement_buckets(selected) if selected else []
+    previous = SpendingStatement.objects.filter(month__lt=selected.month).order_by('-month').first() if selected else None
+    comparison = None
+    if selected and previous:
+        previous_buckets = {item['category']: item for item in statement_buckets(previous)}
+        comparison = {
+            'month': previous.month,
+            'outflow_change': selected.total_outflow - previous.total_outflow,
+            'net_flow_change': selected.net_flow - previous.net_flow,
+            'bucket_changes': [
+                {
+                    'category': bucket['category'],
+                    'change': bucket['spent'] - previous_buckets.get(bucket['category'], {}).get('spent', Decimal('0')),
+                }
+                for bucket in buckets[:8]
+            ],
+        }
+
+    top_transactions = []
+    if selected:
+        top_transactions = selected.transactions.filter(amount__lt=0).order_by('amount')[:10]
+
+    return render(request, 'blog/spending_dashboard.html', {
+        'title': 'Spending',
+        'statements': statements,
+        'selected_statement': selected,
+        'buckets': buckets,
+        'top_transactions': top_transactions,
+        'comparison': comparison,
+    })
 
 
 @require_dashboard_auth

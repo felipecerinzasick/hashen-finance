@@ -586,6 +586,10 @@ def previous_month_end(value):
     return first_day - timedelta(days=1)
 
 
+def current_mtd_date(today=None):
+    return today or django_timezone.localdate()
+
+
 def decimal_from_request(value, default='0'):
     try:
         return Decimal(str(value).replace(',', '.'))
@@ -668,8 +672,8 @@ def portfolio_periods_with_pending_month_end():
 
 def initial_current_snapshot_values(today=None):
     today = today or django_timezone.localdate()
-    current_end = month_end_for(today)
-    if current_end == datetime(2026, 8, 31).date():
+    current_date = current_mtd_date(today)
+    if current_date == datetime(2026, 8, 31).date():
         return CURRENT_MONTH_TO_DATE_DEFAULT
 
     locked = latest_locked_period()
@@ -684,14 +688,14 @@ def initial_current_snapshot_values(today=None):
 
 def get_current_portfolio_snapshot():
     today = django_timezone.localdate()
-    current_end = month_end_for(today)
-    snapshot = PortfolioSnapshot.objects.filter(snapshot_date=current_end).first()
+    current_date = current_mtd_date(today)
+    snapshot = PortfolioSnapshot.objects.filter(snapshot_date=current_date).first()
     if snapshot:
         return snapshot
 
     initial = initial_current_snapshot_values(today)
     return PortfolioSnapshot.objects.create(
-        snapshot_date=current_end,
+        snapshot_date=current_date,
         cash_chf=initial['cash'],
         bitcoin_chf=initial['bitcoin'],
         stocks_chf=initial['stocks'],
@@ -703,12 +707,12 @@ def get_current_portfolio_snapshot():
 
 def sync_current_snapshot_from_locked_close(locked_snapshot, today=None):
     today = today or django_timezone.localdate()
-    current_end = month_end_for(today)
-    if current_end <= locked_snapshot.snapshot_date:
+    current_date = current_mtd_date(today)
+    if current_date <= locked_snapshot.snapshot_date:
         return None
 
     current_snapshot, _created = PortfolioSnapshot.objects.update_or_create(
-        snapshot_date=current_end,
+        snapshot_date=current_date,
         defaults={
             'cash_chf': locked_snapshot.cash_chf,
             'bitcoin_chf': locked_snapshot.bitcoin_chf,
@@ -2173,7 +2177,7 @@ def portfolio_snapshot(request):
 
     action = payload.get('action', 'save_current')
     today = django_timezone.localdate()
-    snapshot_date = month_end_for(today)
+    snapshot_date = current_mtd_date(today)
     locked = False
 
     if action == 'lock_month_end':

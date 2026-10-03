@@ -291,24 +291,20 @@ h3 {
 .wc-product-hero {
   min-height: auto;
   position: relative;
-  padding: 112px 0 84px;
+  padding: 112px 0 96px;
   background:
-    linear-gradient(180deg, rgba(23, 36, 33, 0.18) 0%, rgba(23, 36, 33, 0.68) 64%, rgba(23, 36, 33, 0.76) 86%, var(--wc-page) 100%),
-    linear-gradient(90deg, rgba(23, 36, 33, 0.96), rgba(23, 36, 33, 0.72) 48%, rgba(23, 36, 33, 0.22)),
+    linear-gradient(180deg, rgba(23, 36, 33, 0.34) 0%, rgba(23, 36, 33, 0.48) 100%),
+    linear-gradient(90deg, rgba(18, 28, 25, 0.98), rgba(18, 28, 25, 0.76) 48%, rgba(18, 28, 25, 0.32)),
     url("/static/img/digital-horizon.png"),
     #172421;
   background-size: cover;
   background-position: center bottom;
   color: #fff;
+  border-bottom: 1px solid rgba(217, 182, 106, 0.16);
 }
 
 .wc-product-hero::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 0;
-  height: 110px;
-  background: linear-gradient(180deg, rgba(244, 246, 241, 0), var(--wc-page));
-  pointer-events: none;
+  display: none;
 }
 
 .wc-product-hero .container {
@@ -1029,12 +1025,12 @@ h3 {
 @media (max-width: 640px) {
   .wc-product-hero {
     background:
-      linear-gradient(180deg, rgba(23, 36, 33, 0.84) 0%, rgba(23, 36, 33, 0.72) 64%, rgba(23, 36, 33, 0.62) 82%, var(--wc-page) 100%),
+      linear-gradient(180deg, rgba(18, 28, 25, 0.78), rgba(18, 28, 25, 0.9)),
       url("/static/img/digital-horizon.png"),
       #172421;
     background-size: cover;
     background-position: center bottom;
-    padding: 96px 0 54px;
+    padding: 96px 0 64px;
   }
 
   .wc-product-hero h1 {

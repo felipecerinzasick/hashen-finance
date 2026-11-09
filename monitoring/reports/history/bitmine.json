@@ -1,0 +1,199 @@
+{
+  "slug": "bitmine",
+  "entries": [
+    {
+      "generated_at": "2026-11-09T10:58:55.859691+00:00",
+      "lookback_days": 3,
+      "overall_verdict": "neutral",
+      "email_summary": "BitMine resumes share buybacks as weekly ETH purchases slow near its 5% supply goal.",
+      "bottom_line": "BitMine is shifting incremental capital toward opportunistic stock buybacks (at a wide discount to its $14.5B crypto NAV) as its weekly ETH accumulation decelerates near the self-imposed 5% supply target, a mix of capital discipline and narrative transition rather than a new accumulation catalyst. The core treasury remains intact and still staking ~86% of holdings, but the thesis is now pivoting from pure ETH accretion toward buyback-driven NAV-per-share management.",
+      "snapshot": {
+        "holdings": "6,060,506 ETH (~4.9% of supply) plus 216 BTC, $180M Beast Industries stake, $82M Eightco stake; total crypto+cash+moonshots $14.5B as of Nov 1, 2026",
+        "share_price": 18.76,
+        "mnav": 0.81,
+        "as_of": "2026-11-06"
+      },
+      "source_conflicts": [
+        "One secondary source (Globe and Mail/CryptoProwl) frames the Oct 25–Nov 1 buyback and ETH purchase data as new 'this week' news on Nov 6-7, while the underlying 8-K figures (2.04M shares/$45.9M buyback, 8,573 ETH purchase, $14.5B holdings) were originally disclosed in BitMine's Oct 26 and Nov 2 8-Ks; no change in the underlying numbers, only delayed secondary reporting."
+      ],
+      "updates": [
+        {
+          "date": "2026-11-06",
+          "headline": "BitMine leans into buybacks as ETH purchases decelerate",
+          "what_happened": "Secondary coverage highlighted that BitMine has pivoted incremental capital toward share repurchases as its weekly ETH accumulation slows near the 5% supply target. Per the underlying 8-K data, BitMine repurchased 2.04 million shares for about $45.9 million at an average $22.48/share in late October, bringing 2026 buybacks to 22.9 million shares for $399.6 million, while its most recent weekly ETH buy (8,573 ETH) was one of its smallest of the year.",
+          "assessment": "neutral",
+          "thesis_fit": "Disciplined buybacks at a reported ~19% discount to crypto NAV support capital-allocation credibility, but slowing ETH purchases signal the pure-accumulation phase of the thesis is maturing and the story must now prove itself via staking yield and NAV management rather than headline ETH growth.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://www.theglobeandmail.com/investing/markets/markets-news/Yolowire/8676870/bitmine-resumes-stock-buybacks-as-ethereum-purchases-slow/"
+        },
+        {
+          "date": "2026-11-05",
+          "headline": "BMNR shares trade ~19% below reported crypto NAV",
+          "what_happened": "Following BitMine's Nov 2 disclosure of 6,060,506 ETH (4.9% of supply) and $14.5 billion in total crypto, cash and 'moonshot' holdings, BMNR's market capitalization of roughly $11.79 billion sat about $2.71 billion below that reported asset value, implying an mNAV near 0.81x.",
+          "assessment": "negative",
+          "thesis_fit": "A persistent discount to NAV reflects weak market confidence in BitMine's treasury-per-share economics and raises the bar for buybacks or staking income to close the gap, a headwind the thesis flags as a risk.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://financefeeds.com/bitmine-holds-6-06-million-eth-as-ether-rebounds-but-share-discount-remains-a-key-test/"
+        }
+      ]
+    },
+    {
+      "generated_at": "2026-09-25T14:00:52.835858+00:00",
+      "lookback_days": 3,
+      "overall_verdict": "neutral",
+      "email_summary": "No new material BitMine developments in the last 3 days; thesis unchanged since last week's $17.1B ETH treasury update.",
+      "bottom_line": "No fresh filings, financing, custody, or governance events emerged for BitMine in the Sept 22-25 window beyond already-reported items; the stock saw only routine price volatility tied to ETH's move. Thesis remains intact pending the next scheduled weekly 8-K and Tom Lee's Sept 30 Korea Blockchain Week keynote.",
+      "snapshot": {
+        "holdings": "5,983,940 ETH (~4.9% of ETH supply), plus 212 BTC, $105M Eightco stake, $180M Beast Industries stake, $714M cash & marketable securities; total crypto+cash+moonshots ~$17.1B as of Sept 20, 2026",
+        "share_price": 27.88,
+        "mnav": null,
+        "as_of": "2026-09-24"
+      },
+      "source_conflicts": [],
+      "updates": []
+    },
+    {
+      "generated_at": "2026-09-23T13:47:25.226038+00:00",
+      "lookback_days": 3,
+      "overall_verdict": "neutral",
+      "email_summary": "No new material BitMine developments beyond already-reported weekly ETH treasury update and Tom Lee commentary.",
+      "bottom_line": "The past three days brought only routine continuation of previously reported items (5.98M ETH holdings, Korea Blockchain Week keynote, institutional-underweight commentary) with no new financing, governance, or custody disclosures. Thesis remains unchanged pending BitMine's next weekly 8-K or any dilution/financing news.",
+      "snapshot": {
+        "holdings": "5,983,940 ETH (~4.9% of ETH supply); 212 BTC; $17.1B total crypto+cash+moonshots",
+        "share_price": 28.76,
+        "mnav": 1.0,
+        "as_of": "2026-09-23"
+      },
+      "source_conflicts": [],
+      "updates": []
+    },
+    {
+      "generated_at": "2026-09-21T15:14:43.847020+00:00",
+      "lookback_days": 3,
+      "overall_verdict": "positive",
+      "email_summary": "BitMine's Sept 21 weekly 8-K shows ETH holdings and staking revenue projections both rising as it nears its 5% supply target.",
+      "bottom_line": "The latest primary-source treasury update shows continued disciplined weekly ETH accumulation and rising projected staking revenue, reinforcing the core accumulation thesis. No new financing, dilution, or governance red flags surfaced in the window, though the company remains a high-risk, loss-making vehicle whose value is entirely tied to ETH price and execution.",
+      "snapshot": {
+        "holdings": "5,983,940 ETH (~4.9% of ETH supply); 5,067,309 ETH staked (85% of holdings); 212 BTC; $180M Beast Industries stake; $105M Eightco (ORBS) stake; $714M cash & marketable securities; total crypto+cash+moonshots $17.1B",
+        "share_price": 25.99,
+        "mnav": null,
+        "as_of": "2026-09-21"
+      },
+      "source_conflicts": [
+        "Share price snapshots conflict across sources in the window: CNN/bmnr.rocks show a close of $25.99-$27.26 (+8.79%) while Robinhood shows $25.85 as of Sept 19 and other trackers show $20.98-$22.47 on different dates; these appear to reflect different intraday/closing snapshots rather than a single conflicting figure.",
+        "ETH holdings value is quoted variably at $16.1B-$16.3B for the same 5,983,940 ETH figure depending on the ETH spot price used (~$2,688 per Coinbase vs. other timestamps), which is a pricing-timestamp difference rather than a substantive holdings discrepancy."
+      ],
+      "updates": [
+        {
+          "date": "2026-09-21",
+          "headline": "BitMine's weekly 8-K: ETH holdings hit 5.98M, 98% to 5% goal",
+          "what_happened": "In a Form 8-K filed September 21, 2026, BitMine disclosed it bought 27,562 ETH over the prior week, lifting total holdings to 5,983,940 ETH (4.9% of the 122.1M ETH supply) and total crypto/cash/moonshot holdings to $17.1 billion. The company said it is now 98% of the way to Tom Lee's 'Alchemy of 5%' target after 15 months, and staked ETH remained at 5,067,309 tokens (85% of holdings), with annualized staking revenue projections rising to $357 million from $334 million the prior week, and a theoretical fully-staked run rate of $421 million.",
+          "assessment": "positive",
+          "thesis_fit": "Continued weekly ETH accumulation funded without new dilutive share issuance disclosed this week, plus rising staking-yield economics, directly supports the credible-accumulation and staking-economics pillars of the thesis.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/0001829311/000149315226043486/ex99-1.htm"
+        },
+        {
+          "date": "2026-09-21",
+          "headline": "Tom Lee to keynote Korea Blockchain Week Sept 30",
+          "what_happened": "The same Sept 21 press release confirmed Chairman Tom Lee will deliver a keynote at Korea Blockchain Week on September 30, 2026, in Seoul, reiterating his view that a new crypto bull market began in late June 2026 and that ETH has outperformed the S&P 500 by 6,519 basis points quarter-to-date.",
+          "assessment": "neutral",
+          "thesis_fit": "A high-visibility public appearance reinforces the narrative/marketing side of the thesis but is not itself a treasury, financing, or governance action.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://www.prnewswire.com/news-releases/bitmine-immersion-technologies-bmnr-announces-eth-holdings-reach-5-98-million-tokens-and-total-crypto-and-total-cash-holdings-of-17-1-billion-302884434.html"
+        }
+      ]
+    },
+    {
+      "generated_at": "2026-09-19T15:52:31.676842+00:00",
+      "lookback_days": 8,
+      "overall_verdict": "neutral",
+      "email_summary": "BitMine kept buying ETH toward its 5% target, but a validator-advisor swap raised staking-transparency questions.",
+      "bottom_line": "Accumulation, staking scale, and analyst price-target hikes remain thesis-supportive, but an unexplained validator-advisor change and lack of signing-key disclosure add a governance/custody overhang worth monitoring. Net effect this period is roughly neutral: positive treasury/financing news offset by a fresh disclosure gap on staking control.",
+      "snapshot": {
+        "holdings": "5,956,378 ETH (~4.9% of ETH supply), 212 BTC, $180M Beast Industries stake, $98M Eightco (ORBS) stake, $549M cash & marketable securities as of Sept 13, 2026",
+        "share_price": 25.74,
+        "mnav": 1.02,
+        "as_of": "2026-09-18"
+      },
+      "source_conflicts": [
+        "Stock price differs slightly across trackers for the same period: Robinhood shows $25.74 (range $24.59-$25.89 on 9/18) while Kraken shows $24.98 (range $24.28-$26.97), likely reflecting different snapshot times.",
+        "Analyst price-target action (B. Riley to $30, Cantor Fitzgerald to $63.60) is dated September 10, 2026 by MarketBeat/KuCoin sources but was still being actively cited in market commentary through September 17-18, creating some ambiguity on whether this falls inside the 8-day window."
+      ],
+      "updates": [
+        {
+          "date": "2026-09-14",
+          "headline": "BitMine adds ETH, holdings near $15.8B, 4.9% of supply",
+          "what_happened": "BitMine's 8-K/press release disclosed ETH holdings of 5,956,378 tokens (about 4.9% of ETH supply) as of September 13, 2026, with total crypto, cash and 'moonshot' holdings of $15.8 billion. The company reported 5,067,309 staked ETH generating a 2.62% seven-day annualized yield, with projected annualized staking revenue of $334 million, rising to $392 million if fully staked.",
+          "assessment": "positive",
+          "thesis_fit": "Continued weekly ETH accumulation and rising staking-revenue disclosure directly support the credible-accumulation and staking-economics pillars of the thesis, though it is largely a continuation of the already-reported 5% supply push.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://www.prnewswire.com/news-releases/bitmine-immersion-technologies-bmnr-announces-eth-holdings-reach-5-96-million-tokens-and-total-crypto-and-total-cash-holdings-of-15-8-billion-302877149.html"
+        },
+        {
+          "date": "2026-09-11",
+          "headline": "Validator advisor swap raises staking-transparency questions",
+          "what_happened": "Reporting based on an 8-K disclosure showed BitMine ended a management-services agreement with Ethereum Tower on September 3 and appointed its affiliate, American Validator, to advise MAVAN the next day, with American Validator receiving a 1.5% fee on staking rewards. Coverage noted BitMine's staked ETH now equals roughly 11.8% of Ethereum's active stake, but the company has not disclosed how validator operations or signing-key control are split among MAVAN and outside operators.",
+          "assessment": "negative",
+          "thesis_fit": "This is a governance/custody-disclosure gap: as BitMine's staking footprint grows toward a material share of Ethereum's consensus stake, the lack of validator/signing-key transparency and an unexplained related-party advisor change weakens confidence in staking-risk disclosure discipline.",
+          "severity": "alert",
+          "confidence": "secondary only",
+          "source_url": "https://cryptoslate.com/bitmines-staked-eth-equals-nearly-12-of-ethereums-active-stake-but-who-controls-it/"
+        },
+        {
+          "date": "2026-09-10",
+          "headline": "Cantor Fitzgerald, B. Riley hike BMNR price targets",
+          "what_happened": "Cantor Fitzgerald more than doubled its BMNR price target from $30.60 to $63.60 while maintaining an Overweight rating, citing Ethereum's DeFi role and an expected crypto-market bottom by October 2026. B. Riley raised its target to $30 from $25 with a Buy rating, pointing to rising digital-asset prices and improving liquidity conditions.",
+          "assessment": "positive",
+          "thesis_fit": "Sell-side upgrades reflect growing Wall Street confidence in BitMine's ETH treasury and staking model, though the moves are narrative/valuation-driven rather than new operational disclosure.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://www.kucoin.com/news/flash/cantor-fitzgerald-doubles-bitmine-price-target-to-63-60-amid-ethereum-treasury-strategy"
+        }
+      ]
+    },
+    {
+      "generated_at": "2026-09-19T15:07:42.266859+00:00",
+      "lookback_days": 8,
+      "overall_verdict": "positive",
+      "email_summary": "BitMine is within striking distance of its 5% ETH supply target, with 85% of holdings staked, though Clarity Act failure hit the stock.",
+      "bottom_line": "BitMine's ETH treasury reached 5.96 million tokens (4.9% of supply) with over 85% staked, putting Tom Lee's '5%' accumulation goal about 144,000 ETH away. The Clarity Act failure caused a sharp but likely temporary pullback in the stock, unrelated to treasury execution.",
+      "snapshot": {
+        "market_price": 25.74,
+        "treasury_holdings": "5.96 million ETH (4.9% of ETH supply, as of Sept 13, 2026)",
+        "mnav": null,
+        "as_of": "2026-09-18"
+      },
+      "source_conflicts": [],
+      "updates": [
+        {
+          "date": "2026-09-16",
+          "headline": "BitMine nears Tom Lee's 5% Ethereum supply target",
+          "what_happened": "BitMine held 5.96 million ETH as of Sept 13, equal to 4.9% of Ethereum's 122 million-token supply, leaving it roughly 144,000 ETH short of the 5% goal. The company reported 5,067,309 ETH staked, over 85% of holdings, valued at about $12.7 billion.",
+          "assessment": "positive",
+          "thesis_fit": "Continued accumulation toward the 5% supply target combined with a high staking ratio supports the thesis of credible ETH accumulation paired with staking economics.",
+          "price_impact": "Likely up as the company approaches a widely-watched accumulation milestone.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://www.benzinga.com/crypto/cryptocurrency/26/09/61823316/bmnr-5-percent-ethereum"
+        },
+        {
+          "date": "2026-09-15",
+          "headline": "BMNR slumps over 8% as Clarity Act fails in Senate",
+          "what_happened": "BitMine shares fell more than 8% after the Clarity Act failed to advance in the Senate, part of a broader selloff in crypto-linked equities including Coinbase, Robinhood, Strategy and Strive.",
+          "assessment": "negative",
+          "thesis_fit": "A regulatory setback for digital assets broadly weighs on sentiment but does not change BitMine's ETH accumulation or staking economics.",
+          "price_impact": "Likely down short-term on risk-off sentiment tied to the failed legislation.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://finance.yahoo.com/markets/crypto/articles/bitcoin-slides-crypto-stocks-decline-011426654.html"
+        }
+      ]
+    }
+  ]
+}

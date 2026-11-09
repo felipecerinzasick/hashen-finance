@@ -1,7 +1,7 @@
 """
 Treasury-holdings monitor.
 
-Runs from GitHub Actions every other day. It asks Claude with web search for
+Runs from GitHub Actions once a week. It asks Claude with web search for
 new developments on the monitored treasury holdings, emails a compact alert when
 something new appears, and writes JSON reports for the dashboard.
 """
@@ -23,6 +23,8 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent
 STATE_FILE = ROOT / "state.json"
 REPORT_DIR = ROOT / "reports"
+HISTORY_DIR = REPORT_DIR / "history"
+HISTORY_LIMIT = int(os.environ.get("HISTORY_LIMIT", "104"))
 
 MODEL = os.environ.get("CLAUDE_MODEL", "claude-sonnet-5")
 MODE = os.environ.get("MODE", "alert").lower()
@@ -470,10 +472,61 @@ def normalize_report(report: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def history_entry(report: dict[str, Any]) -> dict[str, Any]:
+    """Compact copy of a company report for the per-holding archive."""
+    return {
+        "generated_at": report.get("generated_at"),
+        "lookback_days": report.get("lookback_days"),
+        "overall_verdict": report.get("overall_verdict"),
+        "email_summary": report.get("email_summary"),
+        "bottom_line": report.get("bottom_line"),
+        "snapshot": report.get("snapshot") or {},
+        "source_conflicts": report.get("source_conflicts") or [],
+        "updates": report.get("updates") or [],
+    }
+
+
+def sector_history_entry(sector: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "generated_at": sector.get("generated_at"),
+        "bottom_line": sector.get("bottom_line"),
+        "updates": sector.get("updates") or [],
+    }
+
+
+def append_history(slug: str, entry: dict[str, Any]) -> None:
+    """Add one run's assessment to reports/history/<slug>.json, newest first.
+
+    Entries are keyed by generated_at, so re-running the same report is a no-op
+    and a stale report carried over from an earlier run is not duplicated.
+    """
+    if not entry.get("generated_at"):
+        return
+    HISTORY_DIR.mkdir(parents=True, exist_ok=True)
+    path = HISTORY_DIR / f"{slug}.json"
+    try:
+        data = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    except json.JSONDecodeError:
+        data = {}
+    entries = [
+        existing
+        for existing in data.get("entries", [])
+        if isinstance(existing, dict)
+        and existing.get("generated_at")
+        and existing.get("generated_at") != entry["generated_at"]
+    ]
+    entries.append(entry)
+    entries.sort(key=lambda item: str(item.get("generated_at")), reverse=True)
+    payload = {"slug": slug, "entries": entries[:HISTORY_LIMIT]}
+    path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+
+
 def write_reports(reports: list[dict[str, Any]], sector: dict[str, Any], failures: list[str]) -> None:
     REPORT_DIR.mkdir(exist_ok=True)
+    generated_at = dt.datetime.now(dt.timezone.utc).isoformat()
+    sector.setdefault("generated_at", generated_at)
     latest = {
-        "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(),
+        "generated_at": generated_at,
         "lookback_days": LOOKBACK_DAYS,
         "reports": reports,
         "sector": sector,
@@ -487,6 +540,9 @@ def write_reports(reports: list[dict[str, Any]], sector: dict[str, Any], failure
                 json.dumps(report, indent=2, ensure_ascii=False),
                 encoding="utf-8",
             )
+            append_history(report["slug"], history_entry(report))
+    if sector.get("bottom_line") or sector.get("updates"):
+        append_history("sector", sector_history_entry(sector))
 
 
 def render_email(

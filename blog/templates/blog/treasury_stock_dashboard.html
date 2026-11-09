@@ -403,6 +403,12 @@
       font-size: 12px;
     }
 
+    .table-scroll {
+      max-width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
     .scenario-table {
       width: 100%;
       border-collapse: collapse;
@@ -531,6 +537,10 @@
         grid-template-columns: 1fr;
       }
 
+      .content {
+        overflow-x: clip;
+      }
+
       .sidebar {
         position: relative;
         height: auto;
@@ -554,6 +564,11 @@
 
       .monitor-summary {
         grid-template-columns: 1fr;
+      }
+
+      .scenario-table th.right,
+      .scenario-table td.right {
+        white-space: normal;
       }
     }
   </style>
@@ -663,7 +678,8 @@
             </div>
             <span id="scenarioTarget" class="pill">Loading</span>
           </div>
-          <table class="scenario-table">
+          <div class="table-scroll">
+            <table class="scenario-table">
             <thead>
               <tr>
                 <th>Scenario</th>
@@ -673,7 +689,8 @@
               </tr>
             </thead>
             <tbody id="scenarioBody"></tbody>
-          </table>
+            </table>
+          </div>
         </section>
 
         <section class="panel">
@@ -702,7 +719,8 @@
               <strong id="currentZone">Loading</strong>
             </div>
           </div>
-          <table class="scenario-table">
+          <div class="table-scroll">
+            <table class="scenario-table">
             <thead>
               <tr>
                 <th>Zone</th>
@@ -711,7 +729,8 @@
               </tr>
             </thead>
             <tbody id="rulesBody"></tbody>
-          </table>
+            </table>
+          </div>
         </section>
         {% include "blog/monitoring_panel.html" %}
       </section>

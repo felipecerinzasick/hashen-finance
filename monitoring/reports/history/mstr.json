@@ -1,0 +1,343 @@
+{
+  "slug": "mstr",
+  "entries": [
+    {
+      "generated_at": "2026-11-09T10:58:55.859651+00:00",
+      "lookback_days": 3,
+      "overall_verdict": "negative",
+      "email_summary": "CFO exits amid insider selling, BTC-per-share dips on dilutive buy, and MSCI decision looms Nov 11.",
+      "bottom_line": "This week combined a governance shock (CFO departure with prior insider selling) with a mechanically dilutive bitcoin purchase funded entirely by new stock at a compressed ~1.14x mNAV, weakening the BTC-per-share flywheel just as the market awaits MSCI's Nov 11 index-eligibility verdict. None of this is fatal, but the capital-markets machine is running on thinner margin than earlier in the cycle.",
+      "snapshot": {
+        "holdings": "849,327 BTC (~$64.08B aggregate cost, avg $75,451/BTC) as of Nov 1, 2026 per 8-K; some trackers (mnav.com) still show stale 848,517 BTC figure",
+        "share_price": 128.93,
+        "mnav": 1.14,
+        "as_of": "2026-11-06"
+      },
+      "source_conflicts": [
+        "BTC holdings: SEC 8-K (Nov 2, 2026) shows 849,327 BTC as of Nov 1, while mnav.com's live tracker still displayed the prior 848,517 BTC figure as of its Nov 6 update, likely a data-lag rather than a true discrepancy."
+      ],
+      "updates": [
+        {
+          "date": "2026-10-26",
+          "headline": "CFO Andrew Kang resigns effective Nov. 5, 2026",
+          "what_happened": "Strategy disclosed in an 8-K that CFO Andrew Kang will resign effective November 5, 2026, remaining as a non-executive advisor through year-end. CEO Phong Le takes over as interim principal financial officer, Shelley Khanna becomes Chief Accounting Officer, and Reza Virasteh is slated to become CFO and co-principal financial officer alongside Le on January 1, 2027.",
+          "assessment": "negative",
+          "thesis_fit": "A finance-leadership transition during a period of heavy capital-markets activity (ATM issuance, preferred buybacks, BTC purchases) adds execution risk to the financing engine the thesis depends on, and separate reporting noted insiders including the CEO and a director sold MSTR shares before the announcement.",
+          "severity": "alert",
+          "confidence": "primary source",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/0001050446/000105044626000047/mstr-20261026.htm"
+        },
+        {
+          "date": "2026-11-02",
+          "headline": "811 BTC bought via stock sale; BTC/share fell slightly",
+          "what_happened": "Strategy's Nov 2 8-K disclosed the purchase of 811 BTC for $65.5 million (avg $80,846/BTC) between Oct 26–Nov 1, funded entirely by selling 1,178,552 MSTR shares for $164.0M net proceeds, raising total holdings to 849,327 BTC. Because the purchase was funded via share issuance near a compressed mNAV, bitcoin per MSTR share edged down roughly 0.17% on the week, per outside analysis.",
+          "assessment": "negative",
+          "thesis_fit": "The core checklist test — does capital-markets activity grow BTC per diluted share — failed this week; issuing stock near parity mNAV to buy BTC is dilutive rather than accretive to existing holders.",
+          "severity": "alert",
+          "confidence": "primary source",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/0001050446/000119312526442707/mstr-20261102.htm"
+        },
+        {
+          "date": "2026-11-06",
+          "headline": "mNAV premium slips to ~1.14x as MSTR falls 21.6%",
+          "what_happened": "MSTR's mNAV compressed to approximately 1.14x as the stock fell from $164.55 (Oct 6 close) to $128.93 (Nov 6 close), a 21.6% decline that preceded Saylor's latest bitcoin-accumulation chart post on Nov 8.",
+          "assessment": "negative",
+          "thesis_fit": "A narrower mNAV premium reduces the accretive power of future ATM issuance, directly constraining the capital-markets flywheel central to the thesis.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://www.tokenpost.com/news/investing/52174"
+        },
+        {
+          "date": "2026-11-11",
+          "headline": "MSCI final index decision due Nov 11, effective Nov 30",
+          "what_happened": "MSCI is scheduled to publish its final list of constituent changes on November 11, which could remove Strategy from its global equity benchmarks under new rules excluding non-operating/asset-heavy companies; implementation would follow the close of trading on November 30. Estimates of potential passive selling pressure range from roughly $1.8–2.8 billion in direct index-fund sales up to $11.8 billion including broader index-tracking flows.",
+          "assessment": "negative",
+          "thesis_fit": "Index exclusion would remove a structural source of passive demand for MSTR shares, a direct governance/index-decision risk the thesis explicitly tracks.",
+          "severity": "alert",
+          "confidence": "secondary only",
+          "source_url": "https://crypto.news/strategys-bitcoin-plan-faces-november-11-index-decision/"
+        },
+        {
+          "date": "2026-11-08",
+          "headline": "Saylor posts accumulation chart, hints at new BTC buy",
+          "what_happened": "Michael Saylor posted his familiar bitcoin-purchase chart on X on Sunday, November 8, a signal that historically precedes a new disclosed purchase, but the post itself contained no confirmed transaction details; any new buy requires confirmation via Strategy's next weekly 8-K.",
+          "assessment": "neutral",
+          "thesis_fit": "Directionally consistent with the accumulation strategy, but unconfirmed until the next SEC filing discloses size, price and funding source.",
+          "severity": "digest",
+          "confidence": "unconfirmed",
+          "source_url": "https://crypto.news/michael-saylor-strategy-bitcoin-buy-hint-strc/"
+        }
+      ]
+    },
+    {
+      "generated_at": "2026-09-27T14:07:57.041856+00:00",
+      "lookback_days": 3,
+      "overall_verdict": "neutral",
+      "email_summary": "Strategy files detailed proxy for daily preferred dividends; no new BTC buys, holdings steady at 846,000 BTC.",
+      "bottom_line": "The only new capital-markets action this window is a governance/mechanics change (daily dividend record dates for preferred stock) that leaves total payout and BTC per share unaffected. No new bitcoin purchases, sales, or dilutive issuance were disclosed in the last three days, so the treasury/BTC-per-share thesis is unchanged.",
+      "snapshot": {
+        "holdings": "846,000 BTC (unchanged since Sept 21, 2026; cost basis ~$63.8B, avg $75,416/BTC)",
+        "share_price": 158.87,
+        "mnav": 1.16,
+        "as_of": "2026-09-26"
+      },
+      "source_conflicts": [
+        "mNAV figures diverge by methodology: mnav.com reports 1.16x while bitcointreasuries.net shows 0.86x-0.87x (basic/diluted, market-cap based) versus 1.12x on an enterprise-value basis for the same Sept 20-21 BTC holdings figure of 846,000 — differences appear to stem from whether preferred stock/debt are included in the numerator, not from conflicting underlying data."
+      ],
+      "updates": [
+        {
+          "date": "2026-09-24",
+          "headline": "Board files proxy for daily preferred-dividend record dates",
+          "what_happened": "Strategy's board approved putting proposed amendments to the certificates of designation for STRF, STRC, STRK and STRD to a shareholder vote, moving all four preferred series to daily dividend record dates with payment the next business day. A preliminary proxy (PRE 14A) was filed September 25 for an October 28, 2026 virtual special meeting, with September 25 set as the voting record date; first daily-schedule payments are expected November 2, 2026 for STRC and January 4, 2027 for STRF/STRK/STRD.",
+          "assessment": "neutral",
+          "thesis_fit": "Improves preferred-stock trading mechanics and could reduce STRC's swings around record dates, supporting the credit stack's stability, but it does not change dividend rates, total payout obligations, or BTC per share.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/0001050446/000119312526401636/mstr-20260924.htm"
+        },
+        {
+          "date": "2026-09-25",
+          "headline": "Strategy launches shareholder campaign backing dividend vote",
+          "what_happened": "Strategy filed Rule 14a-12 soliciting material launching a shareholder-outreach campaign (dedicated voting site, investor presentation, social media push) supporting the daily-dividend proposal. Only common shareholders as of the September 25 record date may vote, and passage requires a majority of total common voting power, with Saylor controlling roughly 32.9% via Class B shares.",
+          "assessment": "neutral",
+          "thesis_fit": "A governance/capital-structure mechanics change aimed at strengthening demand for the preferred 'digital credit' stack rather than a BTC accumulation or dilution event.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://unchainedcrypto.com/strategy-seeks-shareholder-vote-to-pay-daily-dividends-on-strc-and-three-other-preferreds/"
+        },
+        {
+          "date": "2026-09-26",
+          "headline": "Saylor pitches 'digital asset bill of rights' policy framework",
+          "what_happened": "Michael Saylor shared an essay on X over the weekend and discussed a proposed 'bill of digital rights' for crypto participants at the Bitcoin Policy Institute's Freedom Tech DC event, arguing the reforms could help catalyze a much larger digital-asset industry.",
+          "assessment": "neutral",
+          "thesis_fit": "Continued Saylor advocacy for favorable crypto policy is directionally supportive of the sector but is not a company-specific financing or treasury action affecting BTC per share.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://blockonomi.com/strategy-mstr-stock-saylor-proposes-digital-asset-rights-framework"
+        }
+      ]
+    },
+    {
+      "generated_at": "2026-09-25T14:00:52.835821+00:00",
+      "lookback_days": 3,
+      "overall_verdict": "neutral",
+      "email_summary": "Strategy proposes daily preferred dividends and draws scrutiny over Trump-linked account trades; no new BTC purchases disclosed this window.",
+      "bottom_line": "The daily-dividend proposal is a structural upgrade to the Digital Credit financing stack that could improve liquidity without adding to dividend obligations, a mild positive for financing quality. The Trump-account disclosure is a governance/optics sideshow with no balance-sheet impact and does not change BTC-per-share trajectory.",
+      "snapshot": {
+        "holdings": "846,000 BTC (as of 2026-09-20), cost basis $63.80B, avg $75,416/BTC",
+        "share_price": 160.41,
+        "mnav": 1.14,
+        "as_of": "2026-09-24"
+      },
+      "source_conflicts": [
+        "mNAV readings diverge across trackers: bitcointreasuries.net shows mNAV(EV) 1.14x / diluted 0.90x as of Sept 21, versus the previously reported 1.17x figure — likely a methodology (EV vs. basic/diluted) difference rather than a data error."
+      ],
+      "updates": [
+        {
+          "date": "2026-09-24",
+          "headline": "Board calls special vote on daily preferred dividends",
+          "what_happened": "Strategy's board approved a special shareholder meeting (Oct 28, record date Sept 25) to vote on amending STRC, STRF, STRK and STRD certificates of designations to pay dividends on a daily record-date/next-business-day basis instead of monthly or quarterly. The company filed an 8-K and preliminary proxy confirming the amendments do not change dividend rates or total obligations, only payment frequency and mechanics, with STRC switching first (initial record date Nov. 1, payment Nov. 2) if approved.",
+          "assessment": "positive",
+          "thesis_fit": "A daily-accrual cadence is intended to enhance liquidity, trading efficiency and reinvestment timing for the Digital Credit preferreds, which could make future STRC/STRF/STRK/STRD issuance more attractive and support the financing engine used to fund BTC purchases without diluting BTC-per-share economics.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/0001050446/000119312526401636/mstr-20260924.htm"
+        },
+        {
+          "date": "2026-09-22",
+          "headline": "Trump-linked accounts disclosed buying MSTR before rally",
+          "what_happened": "A federal ethics filing (OGE Form 278-T) posted Sept. 22 showed investment accounts associated with President Trump sold MSTR in June and then bought back shares in two tranches on July 24 and July 27, near the stock's summer lows; MSTR has since risen roughly 80-83%. The Trump Organization stated the accounts are managed on a discretionary basis by third parties with no involvement from Trump in trade selection.",
+          "assessment": "neutral",
+          "thesis_fit": "This is a disclosure about a politically-connected shareholder's trading pattern, not a change to Strategy's balance sheet, BTC holdings, or financing structure, though it has drawn prior Congressional scrutiny (Sen. Warren, Rep. Garcia) that could add headline/regulatory noise around the stock.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://www.tipranks.com/news/president-donald-trumps-investment-accounts-rebought-strategy-stock-before-83-price-jump"
+        }
+      ]
+    },
+    {
+      "generated_at": "2026-09-23T13:47:25.225995+00:00",
+      "lookback_days": 3,
+      "overall_verdict": "positive",
+      "email_summary": "MSTR's mNAV climbs to a 3-month high and unrealized BTC losses flip to ~$8-9B in gains as Bitcoin tops $85K.",
+      "bottom_line": "No new capital-markets or governance items beyond already-reported BTC buys and STRC buybacks; the incremental news is a BTC-price-driven improvement in mNAV and unrealized P&L that strengthens the balance sheet without new dilution. Thesis remains intact but unchanged mechanically — the gains are mark-to-market, not from accretive per-share BTC growth this week.",
+      "snapshot": {
+        "holdings": "846,000 BTC (as of Sept 20, 2026), acquired for $63.80B at avg $75,416/BTC",
+        "share_price": 167.33,
+        "mnav": 1.17,
+        "as_of": "2026-09-22"
+      },
+      "source_conflicts": [
+        "Unrealized profit estimates vary across sources ($8B, $8.59B, $8.75B, $8.9B, $9B) depending on exact BTC price snapshot used and timing of the article; all describe the same directional swing from a prior ~$10-13B unrealized loss."
+      ],
+      "updates": [
+        {
+          "date": "2026-09-21",
+          "headline": "MSTR mNAV climbs to 1.17x, highest since June",
+          "what_happened": "Strategy's mNAV multiple rose to 1.17x, meaning investors are paying $1.17 for every $1 of BTC held, as MSTR stock closed at $168 on September 21, its highest close since May 15. The rise came after the stock added roughly $32 billion in market value over three months, a figure Strategy itself highlighted on X.",
+          "assessment": "positive",
+          "thesis_fit": "A rising mNAV premium improves the economics of any future ATM/equity issuance for BTC purchases, directly supporting the 'financing priced attractively vs mNAV' checklist item.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://coingape.com/markets/mstr-stock-forecast-analyst-eyes-rally-to-225-as-strategys-bitcoin-premium-hits-3-month-high/"
+        },
+        {
+          "date": "2026-09-22",
+          "headline": "Unrealized BTC loss flips to ~$8-9B gain",
+          "what_happened": "Strategy's 846,000 BTC holdings swung from an unrealized loss of roughly $10-13B earlier this year to an unrealized gain of approximately $8-9 billion as Bitcoin rallied above $85,000. The reversal follows an $8.2 billion net loss reported for Q2 2026 driven largely by unrealized BTC losses.",
+          "assessment": "positive",
+          "thesis_fit": "Improves BTC NAV coverage and eases pressure on the STRC/preferred credit stack, though it is purely price-driven rather than from per-share BTC accretion this week.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://finance.yahoo.com/markets/crypto/articles/strategy-swings-10b-unrealized-loss-095854130.html"
+        }
+      ]
+    },
+    {
+      "generated_at": "2026-09-21T15:14:43.846983+00:00",
+      "lookback_days": 3,
+      "overall_verdict": "positive",
+      "email_summary": "Strategy resumes BTC buying with cash (not new shares) after 3-week pause; stock jumps ~8-16%.",
+      "bottom_line": "Strategy funded its return to Bitcoin accumulation entirely from existing USD Cash rather than dilutive ATM issuance, a mild positive for BTC-per-share math, while continuing to retire STRC preferred toward par. The moves, paired with a supportive week for BTC price, drove a sharp share-price recovery, though mNAV remains near parity (~1.04x), limiting the accretive power of any future equity-funded purchases.",
+      "snapshot": {
+        "holdings": "846,000 BTC",
+        "share_price": 166.6,
+        "mnav": 1.04,
+        "as_of": "2026-09-21"
+      },
+      "source_conflicts": [
+        "mNAV estimates vary by source and date: mnav.com shows a live 1.04x, bitcointreasuries.net showed 1.06x (EV) / 0.78-0.79x (basic/diluted) as of Aug 31, and other trackers cited 0.68x basic as of Aug 3 — figures are not directly comparable due to differing dates and methodologies (EV vs basic vs diluted)."
+      ],
+      "updates": [
+        {
+          "date": "2026-09-21",
+          "headline": "Strategy resumes BTC buys, 950 BTC funded by cash",
+          "what_happened": "Strategy filed an 8-K disclosing it purchased 950 BTC for $75.7 million (avg $79,670/BTC) during September 14-20, ending a roughly three-week pause. Critically, the purchase was funded entirely from existing USD Cash rather than new share or ATM issuance, and total holdings rose to 846,000 BTC at an average cost of $75,416.",
+          "assessment": "positive",
+          "thesis_fit": "Accumulation funded from cash rather than new equity increases BTC per diluted share without adding dilution, directly supporting the core treasury-flywheel thesis.",
+          "severity": "alert",
+          "confidence": "primary source",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/0001050446/000119312526396093/mstr-20260914.htm"
+        },
+        {
+          "date": "2026-09-21",
+          "headline": "STRC preferred buyback grows to $174M for the week",
+          "what_happened": "The same 8-K disclosed Strategy repurchased 1,771,238 shares of STRC preferred for $174.0 million during September 14-20, up from $139.3 million the prior week, funded from USD Cash. As of September 20, USD Reserve stood at $5.04 billion and USD Cash at $1.05 billion, after also using $57.4 million of the USD Reserve for preferred dividends and debt interest.",
+          "assessment": "neutral",
+          "thesis_fit": "Continued STRC buybacks push the preferred back toward par and stabilize the digital-credit stack, but draw down cash that could otherwise fund additional BTC purchases.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526396093/mstr-20260914.htm"
+        },
+        {
+          "date": "2026-09-21",
+          "headline": "MSTR stock surges over 8% on BTC purchase news",
+          "what_happened": "MSTR shares rose more than 8% in premarket trading Monday, extending a prior week's 17% weekly gain, after the company disclosed the resumed bitcoin buying and preferred repurchase. The move pushed the stock back into positive territory for the year, following weeks of pressure tied to forced BTC/stock sales to meet preferred dividend obligations.",
+          "assessment": "positive",
+          "thesis_fit": "Share price reaction reflects renewed confidence in the accumulation flywheel, though the stock remains a high-beta BTC proxy far below its 52-week high.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://finance.yahoo.com/markets/article/michael-saylors-strategy-jumps-as-the-company-says-it-bought-more-bitcoin-133538866.html"
+        }
+      ]
+    },
+    {
+      "generated_at": "2026-09-19T15:52:31.676804+00:00",
+      "lookback_days": 8,
+      "overall_verdict": "neutral",
+      "email_summary": "No new BTC bought in two weeks; MSTR rallied 16% on Sept 18 as analysts raised targets and mNAV firmed near 1.04x.",
+      "bottom_line": "Strategy remains in a capital-preservation posture — repurchasing STRC preferred with USD cash rather than buying BTC — while Wall Street sell-side turned more constructive as the stock rallied off multi-month lows. BTC-per-share is flat this period; the thesis hinges on whether the improved mNAV/sentiment translates into resumed accretive bitcoin buying rather than just preferred buybacks.",
+      "snapshot": {
+        "holdings": "845,050 BTC (unchanged since Aug 31, 2026; cost basis $63.73B, avg $75,412/BTC per Sept 14 8-K)",
+        "share_price": 153.92,
+        "mnav": 1.04,
+        "as_of": "2026-09-18"
+      },
+      "source_conflicts": [
+        "Multiple Sept 18 secondary sources (KuCoin, Timothy Sykes/Yahoo aggregator) cite Strategy's BTC holdings as '840,050 BTC,' which conflicts with the primary Sept 14 8-K and other Sept 18 secondary sources (Alliance Global note, StocksToTrade) that confirm 845,050 BTC as of Sept 13; the 845,050 figure is better supported by the primary filing."
+      ],
+      "updates": [
+        {
+          "date": "2026-09-18",
+          "headline": "Wall Street turns bullish, MSTR jumps 16% on new coverage",
+          "what_happened": "Alliance Global initiated coverage with a Buy rating and $217 target citing the roughly 845,050 BTC stack, while B. Riley, Canaccord and Barclays raised price targets into the $160–$179 range and Bernstein maintained an Outperform rating. Multiple secondary sources reported MSTR closed at $153.92 on Sept 18, up over 16% on the day, aided by a broader bitcoin rally and favorable regulatory sentiment.",
+          "assessment": "positive",
+          "thesis_fit": "Improving sell-side sentiment and a firming mNAV (back toward parity/premium) matter for the treasury flywheel, since Strategy's ability to issue equity/preferreds accretively depends on trading at or above NAV.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://www.kucoin.com/news/flash/strategy-stock-mstr-surges-16-39-amid-bitcoin-rally-and-regulatory-developments"
+        },
+        {
+          "date": "2026-09-18",
+          "headline": "CEO Phong Le reaffirms accumulation stance, leaves door open to sales",
+          "what_happened": "In a public statement, CEO Phong Le confirmed Strategy's large BTC treasury position and reiterated the company's primary objective as a long-term bitcoin accumulator. He also noted management would consider selling small amounts of bitcoin if market conditions or capital needs warranted it, consistent with the pattern of small tactical BTC sales seen earlier in 2026.",
+          "assessment": "neutral",
+          "thesis_fit": "Reaffirms the now-established shift away from a strict 'never sell' policy toward tactical liquidity management, a known risk factor for the treasury thesis rather than a new development.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://www.kucoin.com/news/flash/strategy-stock-mstr-surges-16-39-amid-bitcoin-rally-and-regulatory-developments"
+        }
+      ]
+    },
+    {
+      "generated_at": "2026-09-19T15:07:42.266828+00:00",
+      "lookback_days": 8,
+      "overall_verdict": "neutral",
+      "email_summary": "MSTR paused BTC buys again but rallied 16% on a SEC tokenization exemption while MSCI weighs index exclusion.",
+      "bottom_line": "Strategy prioritized preferred buybacks over new Bitcoin purchases this window, holding BTC per share flat, while a favorable SEC ruling and Clarity Act fallout drove sharp two-way volatility. The pending MSCI non-operating company screen remains the key overhang into the Sept 30 consultation deadline.",
+      "snapshot": {
+        "market_price": 153.92,
+        "treasury_holdings": "845,050 BTC (unchanged since Aug 31; cost basis $63.73B)",
+        "mnav": 1.04,
+        "as_of": "2026-09-18"
+      },
+      "source_conflicts": [],
+      "updates": [
+        {
+          "date": "2026-09-14",
+          "headline": "Strategy buys back $139.3M of STRC preferred, no BTC trades",
+          "what_happened": "Strategy repurchased 1.42 million STRC preferred shares for about $139.3 million between Sept 8-13 via an 8-K filing, funded from its USD Cash reserve. The company made no bitcoin purchases or sales, leaving holdings unchanged at 845,050 BTC.",
+          "assessment": "neutral",
+          "thesis_fit": "Preferred buybacks strengthen the credit stack but do not grow BTC per diluted share, the core metric for this thesis.",
+          "price_impact": "No immediate effect on the stock; balance-sheet housekeeping rather than a BTC-accretive event.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://www.theblock.co/news/business/2026-09-14-strategy-strc-bitcoin-mstr-414603"
+        },
+        {
+          "date": "2026-09-15",
+          "headline": "Clarity Act fails Senate cloture, crypto stocks slide",
+          "what_happened": "The Digital Asset Market Clarity Act failed a 49-50 Senate procedural vote, and MSTR fell over 5% alongside broader crypto weakness. Saylor responded that bitcoin already has adequate U.S. regulatory clarity via CFTC, IRS, SEC and FASB treatment.",
+          "assessment": "negative",
+          "thesis_fit": "A regulatory setback for the broader digital-asset industry adds macro/sentiment risk but does not change Strategy's BTC accumulation mechanics.",
+          "price_impact": "Likely down short-term on risk-off sentiment tied to the failed legislation.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://www.coindesk.com/business/2026/09/15/live-updates-bitcoin-slides-from-nearly-usd80-000-as-senate-votes-on-clarity-act"
+        },
+        {
+          "date": "2026-09-18",
+          "headline": "MSTR surges 16% on SEC tokenized-stock exemption",
+          "what_happened": "Strategy shares jumped 16.39% to close at $153.92 after the SEC introduced a temporary five-year exemption allowing certain platforms to trade tokenized versions of U.S.-listed stocks. CEO Phong Le reaffirmed the 840,050 BTC treasury position and long-term accumulation strategy.",
+          "assessment": "positive",
+          "thesis_fit": "A supportive regulatory backdrop and renewed institutional/retail interest in crypto-linked equities is a tailwind for MSTR's mNAV premium, though it is a sentiment-driven move rather than new BTC accretion.",
+          "price_impact": "Likely up near-term on the regulatory catalyst and crypto stock rally.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://www.gurufocus.com/news/9088649/mstr-looks-331-overvalued-on-gf-value-after-sec-innovation-exemption-boost"
+        },
+        {
+          "date": "2026-09-19",
+          "headline": "MSCI index-exclusion consultation nears Sept 30 deadline",
+          "what_happened": "MSCI's proposed 'non-operating company' screen, which would exclude Strategy and Metaplanet from the MSCI ACWI IMI index, remains open for feedback through September 30, with a decision expected by October 16 and possible implementation in the November review. Simulations suggest up to $2 billion in forced passive outflows if adopted.",
+          "assessment": "negative",
+          "thesis_fit": "Index exclusion would remove a source of passive-fund demand for MSTR shares, a structural headwind to the mNAV premium independent of BTC fundamentals.",
+          "price_impact": "Mixed/unclear now, but likely down if MSCI finalizes exclusion in October, given forced passive selling risk.",
+          "severity": "alert",
+          "confidence": "secondary only",
+          "source_url": "https://www.tftc.io/msci-non-operating-company-screen-strategy-metaplanet-index-exclusion"
+        }
+      ]
+    }
+  ]
+}

@@ -1,9 +1,131 @@
 {% if monitoring_report %}
+<style>
+  .monitor-panel .monitor-item-top {
+    flex-wrap: wrap;
+  }
+
+  .monitor-panel .monitor-summary strong,
+  .monitor-panel .monitor-item h3,
+  .monitor-panel .monitor-item h4,
+  .monitor-panel .monitor-item p {
+    overflow-wrap: anywhere;
+  }
+
+  .monitor-archive {
+    margin-top: 16px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.88);
+  }
+
+  .monitor-archive > summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .monitor-archive > summary::-webkit-details-marker,
+  .monitor-archive-updates > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .monitor-archive > summary span {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .monitor-archive > summary strong {
+    color: var(--accent);
+    font-size: 13px;
+  }
+
+  .monitor-archive > summary strong::after {
+    content: " \25BE";
+  }
+
+  .monitor-archive[open] > summary strong::after {
+    content: " \25B4";
+  }
+
+  .monitor-archive-list {
+    display: grid;
+    gap: 12px;
+    padding: 0 14px 14px;
+  }
+
+  .monitor-archive-entry {
+    background: #fff;
+  }
+
+  .monitor-archive-entry h3 {
+    font-size: 15px;
+  }
+
+  .monitor-archive-entry > .monitor-item-top > strong,
+  .monitor-archive-update > .monitor-item-top > strong {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 2px 9px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .monitor-archive-entry .monitor-snapshot {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .monitor-archive-updates {
+    margin-top: 10px;
+  }
+
+  .monitor-archive-updates > summary {
+    cursor: pointer;
+    list-style: none;
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  .monitor-archive-updates > summary::after {
+    content: " \25BE";
+  }
+
+  .monitor-archive-updates[open] > summary::after {
+    content: " \25B4";
+  }
+
+  .monitor-archive-update {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+  }
+
+  .monitor-archive-update h4 {
+    margin: 4px 0 0;
+    font-size: 14px;
+    font-weight: 700;
+  }
+</style>
 <section class="panel monitor-panel">
   <div class="panel-header">
     <div>
       <h2>Management Monitor</h2>
-      <p>Automatically checked every other day for thesis-relevant management, financing, treasury, and filing updates.</p>
+      <p>Checked weekly for thesis-relevant management, financing, treasury, and filing updates. Earlier assessments stay available in the archive below.</p>
     </div>
     <span class="pill {{ monitoring_report.verdict_class }}">{{ monitoring_report.overall_verdict|title }}</span>
   </div>
@@ -23,7 +145,7 @@
     </div>
     <div>
       <span>Last checked</span>
-      <strong>{% if monitoring_report.generated_at %}{{ monitoring_report.generated_at }}{% else %}Waiting for first run{% endif %}</strong>
+      <strong>{% if monitoring_report.generated_label %}{{ monitoring_report.generated_label }}{% else %}Waiting for first run{% endif %}</strong>
     </div>
   </div>
 
@@ -64,7 +186,63 @@
       {% endfor %}
     </div>
   {% else %}
-    <div class="empty-note">No monitoring items have been generated yet. The next scheduled GitHub Action will update this panel if anything new appears.</div>
+    <div class="empty-note">No new items in the latest sweep. The next scheduled GitHub Action will update this panel if anything new appears.</div>
+  {% endif %}
+
+  {% if monitoring_report.history %}
+    <details class="monitor-archive">
+      <summary>
+        <span>Archive</span>
+        <strong>{{ monitoring_report.history_count }} earlier assessment{{ monitoring_report.history_count|pluralize }}</strong>
+      </summary>
+      <div class="monitor-archive-list">
+        {% for entry in monitoring_report.history %}
+          <article class="monitor-item monitor-archive-entry">
+            <div class="monitor-item-top">
+              <div>
+                <span>{{ entry.generated_label }}</span>
+                <h3>{{ entry.email_summary|default:entry.bottom_line }}</h3>
+              </div>
+              <strong class="{{ entry.verdict_class }}">{{ entry.overall_verdict|title }}</strong>
+            </div>
+            {% if entry.email_summary and entry.bottom_line %}
+              <p>{{ entry.bottom_line }}</p>
+            {% endif %}
+            {% if entry.snapshot.holdings or entry.snapshot.share_price or entry.snapshot.mnav %}
+              <p class="monitor-snapshot">
+                Holdings {{ entry.snapshot.holdings|default:"n/a" }} &middot;
+                Share price {{ entry.snapshot.share_price|default:"n/a" }} &middot;
+                mNAV {{ entry.snapshot.mnav|default:"n/a" }}{% if entry.snapshot.as_of %} &middot; as of {{ entry.snapshot.as_of }}{% endif %}
+              </p>
+            {% endif %}
+            {% if entry.has_updates %}
+              <details class="monitor-archive-updates">
+                <summary>{{ entry.updates|length }} update{{ entry.updates|length|pluralize }}</summary>
+                {% for update in entry.updates %}
+                  <div class="monitor-archive-update">
+                    <div class="monitor-item-top">
+                      <div>
+                        <span>{{ update.date }}</span>
+                        <h4>{{ update.headline }}</h4>
+                      </div>
+                      <strong class="{{ update.assessment_class }}">{{ update.assessment|title }}</strong>
+                    </div>
+                    <p>{{ update.what_happened }}</p>
+                    {% if update.thesis_fit %}<p><b>Thesis fit:</b> {{ update.thesis_fit }}</p>{% endif %}
+                    <div class="monitor-meta">
+                      <span>{{ update.confidence }}</span>
+                      {% if update.source_url %}
+                        <a href="{{ update.source_url }}" target="_blank" rel="noopener noreferrer">Source</a>
+                      {% endif %}
+                    </div>
+                  </div>
+                {% endfor %}
+              </details>
+            {% endif %}
+          </article>
+        {% endfor %}
+      </div>
+    </details>
   {% endif %}
 </section>
 {% endif %}

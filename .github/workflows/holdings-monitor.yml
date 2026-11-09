@@ -2,8 +2,9 @@ name: Holdings monitor
 
 on:
   schedule:
-    # Every other day at 08:20 UTC. Good enough for management/news monitoring.
-    - cron: "20 8 */2 * *"
+    # Weekly, Monday 07:20 UTC. One sweep costs roughly 4-5 USD in API usage,
+    # so this keeps spend at or under about 5 USD per week.
+    - cron: "20 7 * * 1"
   workflow_dispatch:
     inputs:
       mode:
@@ -33,6 +34,8 @@ jobs:
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           MAIL_TO: ${{ secrets.MAIL_TO }}
           MODE: ${{ github.event.inputs.mode || 'alert' }}
+          # Weekly cadence: look back a full week plus a day so nothing falls between sweeps.
+          LOOKBACK_DAYS: "8"
           SAMPLE_DATA: ${{ github.event.inputs.sample_data == '1' && '1' || '' }}
           BASE_URL: https://hashen-finance.onrender.com
         run: python monitoring/monitor.py
@@ -40,6 +43,6 @@ jobs:
         run: |
           git config user.name "holdings-monitor"
           git config user.email "bot@users.noreply.github.com"
-          git add monitoring/state.json monitoring/reports/*.json
+          git add monitoring/state.json monitoring/reports
           git diff --cached --quiet || git commit -m "update holdings monitor"
           git push

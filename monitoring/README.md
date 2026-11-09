@@ -1,6 +1,6 @@
 # Holdings monitor
 
-GitHub Actions runs `monitoring/monitor.py` every other day. Claude searches for
+GitHub Actions runs `monitoring/monitor.py` once a week (Monday 07:20 UTC). Claude searches for
 new developments around the treasury-stock holdings, assesses whether each item
 is positive, negative, or neutral for the thesis, emails a compact alert, and
 writes dashboard JSON files under `monitoring/reports/`.
@@ -14,6 +14,24 @@ sweep fails.
 
 The dashboard pages read those JSON files, so each treasury page can show the
 latest assessment at the bottom.
+
+## Archive
+
+Every run also appends a compact copy of each company assessment (and the
+sector sweep) to `monitoring/reports/history/<slug>.json`, newest first, capped
+at 104 entries (two years of weekly runs). The dashboard shows these under
+"Archive" in the Management Monitor panel, so earlier verdicts and their
+source-linked updates stay readable after the live report is replaced. The
+files are committed by the workflow like the rest of `monitoring/reports/`.
+
+## Cost and cadence
+
+One full sweep (four holdings plus the sector check) uses roughly 1.3 million
+input tokens and about 45 web searches on `claude-sonnet-5`, which is about
+4-5 USD. The weekly schedule therefore costs at most about 5 USD per week. The
+workflow sets `LOOKBACK_DAYS=8` so a weekly alert run still covers the whole
+gap since the previous sweep. To change the model, set `CLAUDE_MODEL` in the
+workflow environment.
 
 ## Required GitHub secrets
 

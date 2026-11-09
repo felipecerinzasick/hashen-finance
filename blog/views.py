@@ -23,6 +23,7 @@ from newsletter.models import Newsletter
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404, HttpResponse, JsonResponse
 from django.conf import settings
+from blog.monitoring_reports import load_monitoring_report as load_monitoring_report_from
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db import transaction as db_transaction
@@ -1512,27 +1513,7 @@ def dashboard(request):
 
 
 def load_monitoring_report(slug):
-    report_path = Path(settings.BASE_DIR) / 'monitoring' / 'reports' / ('%s.json' % slug)
-    try:
-        report = json.loads(report_path.read_text(encoding='utf-8'))
-    except (OSError, json.JSONDecodeError):
-        return None
-    if not isinstance(report.get('snapshot'), dict):
-        report['snapshot'] = {}
-    for key in ('holdings', 'share_price', 'mnav', 'as_of'):
-        report['snapshot'].setdefault(key, None)
-    report.setdefault('source_conflicts', [])
-    report['has_updates'] = bool(report.get('updates'))
-    report['verdict_class'] = {
-        'positive': 'gain',
-        'negative': 'loss',
-    }.get(report.get('overall_verdict'), '')
-    for update in report.get('updates', []):
-        update['assessment_class'] = {
-            'positive': 'gain',
-            'negative': 'loss',
-        }.get(update.get('assessment'), '')
-    return report
+    return load_monitoring_report_from(slug, settings.BASE_DIR)
 
 
 def parse_statement_decimal(value, default=Decimal('0')):

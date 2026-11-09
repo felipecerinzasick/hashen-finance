@@ -3,30 +3,60 @@
   "name": "Asset Entities / Strive",
   "ticker": "ASST",
   "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/asst/",
-  "generated_at": "2026-09-25T14:00:52.835854+00:00",
+  "generated_at": "2026-11-09T10:58:55.859685+00:00",
   "lookback_days": 3,
   "snapshot": {
-    "holdings": "26,355 BTC (as of 2026-09-18, per 8-K)",
-    "share_price": 28.99,
-    "mnav": 1.56,
-    "as_of": "2026-09-23"
+    "holdings": "43,124 BTC",
+    "share_price": 21.45,
+    "mnav": 1.02,
+    "as_of": "2026-11-06"
   },
   "overall_verdict": "neutral",
-  "email_summary": "No material new filings in the last 3 days; secondary sources estimate another ~$86M SATA raise funding ~1,000 more BTC, unconfirmed by 8-K.",
-  "bottom_line": "No new primary-source disclosures emerged in the last three days beyond the already-reported 26,355 BTC purchase and TD Cowen upgrade. Secondary trackers estimate Strive raised roughly $86M via SATA sales from Sept 21-23, which if confirmed would extend the accumulation pace but has not yet been disclosed in an 8-K.",
+  "email_summary": "Strive posts $509M GAAP Q3 profit on BTC gains, but dilution continues as Fidelity's stake shrinks to 8.1% and B.Riley trims price target.",
+  "bottom_line": "Q3 results show real execution on the Bitcoin-yield story (18.5% QTD, 63.2% YTD, 43,124 BTC) and a large GAAP profit, but share count growth, a cut price target, and an agent exiting the ATM program underscore ongoing dilution and valuation caution. Net effect on thesis is roughly neutral this week.",
   "source_conflicts": [
-    "Estimated SATA capital raise of ~$85.88M (Sept 21-23) and implied ~1,002 BTC purchase are based on third-party BitcoinTreasuries.net modeling, not yet confirmed by a Strive 8-K filing."
+    "BTC holdings cited as 43,124 in Strive's official Q3 press release/8-K, while several trackers (DefiLlama, mNAV.com) round to 43,000 BTC as of early November."
   ],
   "updates": [
     {
-      "date": "2026-09-24",
-      "headline": "Trackers estimate ~$86M SATA raise, no 8-K yet",
-      "what_happened": "Secondary crypto-news outlets citing BitcoinTreasuries.net estimated that Strive raised roughly $85.88 million through SATA preferred stock sales over three trading sessions from September 21-23, 2026, which could fund purchase of approximately 1,002 more bitcoin. As of these reports, Strive's last confirmed SEC filing still showed 26,355 BTC as of September 18, with no new 8-K disclosing an updated bitcoin count.",
-      "assessment": "neutral",
-      "thesis_fit": "Continued reliance on the SATA ATM to fund accumulation supports the Bitcoin-per-share growth story, but the figure is an unconfirmed third-party estimate pending the company's next official balance-sheet update.",
+      "date": "2026-11-06",
+      "headline": "Strive posts $509M GAAP Q3 profit on BTC gains",
+      "what_happened": "Strive's Q3 2026 earnings release reported GAAP net income of $509 million and diluted EPS of $5.24, driven by $533.7 million in unrealized bitcoin gains, versus revenue of only $2.70 million. The company disclosed BTC Yield of 18.5% for the quarter and 63.2% year-to-date, having acquired 8,136 BTC in Q3 and a further 15,124 BTC from Oct 1-30, bringing total holdings to 43,124 BTC, alongside $490.4 million cash and a completed $609 million net SATS preferred raise on October 20.",
+      "assessment": "positive",
+      "thesis_fit": "Strong BTC yield and a large unrealized-gain-driven profit support the Bitcoin-per-share growth story central to the treasury thesis, though revenue remains negligible versus the core operating business.",
       "severity": "digest",
-      "confidence": "unconfirmed",
-      "source_url": "https://coincentral.com/strive-asst-stock-jumps-into-bitcoin-buying-spree-with-86m-raise"
+      "confidence": "primary source",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/0001920406/000162828026071331/striveincq32026earningsrel.htm"
+    },
+    {
+      "date": "2026-11-06",
+      "headline": "Fidelity's passive stake in ASST falls to 8.1%",
+      "what_happened": "A Schedule 13G/A (Amendment No. 2) filed by FMR LLC and Abigail Johnson showed their jointly reported stake falling to 8.1% (9,514,519 shares) as of October 30, 2026, down from 13.8% (9,887,332 shares) reported as of June 30, 2026. The percentage decline stems mainly from a near-doubling of shares outstanding (implied ~117.5 million from ~71.6 million) rather than large share sales by Fidelity.",
+      "assessment": "negative",
+      "thesis_fit": "The sharp percentage drop in a major passive holder's stake, driven by rapid share-count growth from ATM issuance, is a concrete marker of the dilution risk central to the thesis.",
+      "severity": "digest",
+      "confidence": "primary source",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/0001920406/000031506626002936/primary_doc.xml"
+    },
+    {
+      "date": "2026-11-06",
+      "headline": "Benchmark Company to exit ASST's ATM sales agreements",
+      "what_happened": "Two 424B3 filings disclosed that The Benchmark Company, LLC will exit as a sales agent from both Strive's up to $2.55 billion Class A common stock ATM program and its up to $2.6 billion SATA preferred ATM program, effective November 16, 2026, with the other existing agents remaining in place.",
+      "assessment": "neutral",
+      "thesis_fit": "A single agent exiting a multi-bank ATM syndicate is a routine administrative change and does not by itself alter financing capacity or dilution terms.",
+      "severity": "digest",
+      "confidence": "primary source",
+      "source_url": "https://www.stocktitan.net/overview/ASST/"
+    },
+    {
+      "date": "2026-11-06",
+      "headline": "B.Riley cuts ASST price target to $27 from $33",
+      "what_happened": "B.Riley lowered its price target on Strive to $27 from $33 while maintaining a Buy rating, citing a lower Bitcoin price assumption and a larger preferred equity stack; the firm raised its 2026 BTC holdings estimate to ~47,000 and its preferred-stack projection to $2.4 billion, while cutting its EV/mNAV multiple to 1.6x from 1.7x.",
+      "assessment": "negative",
+      "thesis_fit": "A price-target cut tied explicitly to a growing preferred stack reinforces the risk that rising senior claims could dilute the common equity's Bitcoin-per-share upside.",
+      "severity": "digest",
+      "confidence": "secondary only",
+      "source_url": "https://www.investing.com/news/analyst-ratings/briley-cuts-strive-enterprises-stock-price-target-on-btc-assumptions-93CH-5009094"
     }
   ]
 }

@@ -3,20 +3,32 @@
   "name": "Metaplanet",
   "ticker": "3350.T / MTPLF / DN3.F",
   "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/metaplanet/",
-  "generated_at": "2026-09-27T14:07:57.041880+00:00",
+  "generated_at": "2026-11-09T10:58:55.859677+00:00",
   "lookback_days": 3,
   "snapshot": {
-    "holdings": "43,000 BTC",
-    "share_price": 288.0,
-    "mnav": 0.77,
-    "as_of": "2026-09-25"
+    "holdings": "44,000 BTC (as of most recent disclosed accumulation, per October 2026 purchase disclosures)",
+    "share_price": 237.0,
+    "mnav": null,
+    "as_of": "2026-11-06"
   },
   "overall_verdict": "neutral",
-  "email_summary": "No new material Metaplanet disclosures in the last 3 days; stock rallied with broader crypto market.",
-  "bottom_line": "No fresh filings, financing actions, or shareholder changes emerged in the September 24–27 window beyond already-reported items; the stock's ~18% bounce appears tied to a broader Bitcoin market rally rather than company-specific news. Thesis stance is unchanged pending the next quarterly BTC purchase disclosure or EDINET large-holder filing.",
+  "email_summary": "Morgan Stanley group's Metaplanet stake fell from 5.25% to 2.51% in a Nov 6 filing tied to securities-lending activity, not a clear directional signal.",
+  "bottom_line": "The only confirmed development inside the 3-day window is a large-shareholder report showing Morgan Stanley-affiliated entities cutting their combined Metaplanet stake below the 5% disclosure threshold, but the stated holding purpose was securities-business/lending, not an investment view, so read-through to thesis is limited. The bigger near-term catalyst remains MSCI's final index-exclusion list due November 11, which was already flagged and has not yet been resolved.",
   "source_conflicts": [
-    "mNAV figures vary by source and date: bitcointreasuries.net shows both 0.77x (EV basis) and 0.57x (basic) for the same 43,000 BTC holding, with page timestamps inconsistently dated Jul 2, 2026 and Sep 21, 2026 — treat current mNAV as indicative only.",
-    "Share price references conflict across sources for the same period: Investing.com shows 243 JPY as of Sep 23, while JinaCoin technical analysis shows 288 JPY as of Sep 25 following an 18.5% two-day rally."
+    "BTC holdings figures conflict across sources: some trackers still show 40,177 BTC (as of Q1 2026 purchase) while others show 44,000 BTC (as of October 2026 purchases); no new BTC purchase was disclosed in the Nov 6-9 window.",
+    "Share count and market cap figures conflict across data providers: one source lists 307,570,337 total issued shares while market-cap figures from other aggregators imply a much larger share base, likely reflecting treasury-share or reporting-date differences.",
+    "mNAV estimates conflict across providers (one third-party site shows ~1.21x using a 40,177 BTC base), so no single current mNAV figure can be confirmed as of this sweep."
   ],
-  "updates": []
+  "updates": [
+    {
+      "date": "2026-11-06",
+      "headline": "Morgan Stanley group cuts Metaplanet stake to 2.51%",
+      "what_happened": "Morgan Stanley MUFG Securities and affiliated entities filed a change report with Japan's Kanto Local Finance Bureau on November 6 showing their combined Metaplanet stake fell from 5.25% to 2.51%, with the reporting obligation date set at October 30. The filing breaks out the reduction across Morgan Stanley MUFG Securities, Morgan Stanley & Co. International plc, and Morgan Stanley & Co. LLC, with the UK entity's stake falling from 3.64% to 1.48%.",
+      "assessment": "neutral",
+      "thesis_fit": "This is a large-shareholder reduction below the 5% disclosure threshold per the monitoring checklist, but the group's prior filing stated the holding was for 'securities business' and 'securities lending' purposes rather than long-term investment conviction, so it likely reflects prime-brokerage/stock-lending flow rather than a bearish institutional view on the stock.",
+      "severity": "digest",
+      "confidence": "primary source",
+      "source_url": "https://kabutan.jp/news/marketnews/?b=n202611061442"
+    }
+  ]
 }

@@ -3,17 +3,40 @@
   "name": "BitMine Immersion",
   "ticker": "BMNR",
   "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/bitmine/",
-  "generated_at": "2026-09-25T14:00:52.835858+00:00",
+  "generated_at": "2026-11-09T10:58:55.859691+00:00",
   "lookback_days": 3,
   "snapshot": {
-    "holdings": "5,983,940 ETH (~4.9% of ETH supply), plus 212 BTC, $105M Eightco stake, $180M Beast Industries stake, $714M cash & marketable securities; total crypto+cash+moonshots ~$17.1B as of Sept 20, 2026",
-    "share_price": 27.88,
-    "mnav": null,
-    "as_of": "2026-09-24"
+    "holdings": "6,060,506 ETH (~4.9% of supply) plus 216 BTC, $180M Beast Industries stake, $82M Eightco stake; total crypto+cash+moonshots $14.5B as of Nov 1, 2026",
+    "share_price": 18.76,
+    "mnav": 0.81,
+    "as_of": "2026-11-06"
   },
   "overall_verdict": "neutral",
-  "email_summary": "No new material BitMine developments in the last 3 days; thesis unchanged since last week's $17.1B ETH treasury update.",
-  "bottom_line": "No fresh filings, financing, custody, or governance events emerged for BitMine in the Sept 22-25 window beyond already-reported items; the stock saw only routine price volatility tied to ETH's move. Thesis remains intact pending the next scheduled weekly 8-K and Tom Lee's Sept 30 Korea Blockchain Week keynote.",
-  "source_conflicts": [],
-  "updates": []
+  "email_summary": "BitMine resumes share buybacks as weekly ETH purchases slow near its 5% supply goal.",
+  "bottom_line": "BitMine is shifting incremental capital toward opportunistic stock buybacks (at a wide discount to its $14.5B crypto NAV) as its weekly ETH accumulation decelerates near the self-imposed 5% supply target, a mix of capital discipline and narrative transition rather than a new accumulation catalyst. The core treasury remains intact and still staking ~86% of holdings, but the thesis is now pivoting from pure ETH accretion toward buyback-driven NAV-per-share management.",
+  "source_conflicts": [
+    "One secondary source (Globe and Mail/CryptoProwl) frames the Oct 25–Nov 1 buyback and ETH purchase data as new 'this week' news on Nov 6-7, while the underlying 8-K figures (2.04M shares/$45.9M buyback, 8,573 ETH purchase, $14.5B holdings) were originally disclosed in BitMine's Oct 26 and Nov 2 8-Ks; no change in the underlying numbers, only delayed secondary reporting."
+  ],
+  "updates": [
+    {
+      "date": "2026-11-06",
+      "headline": "BitMine leans into buybacks as ETH purchases decelerate",
+      "what_happened": "Secondary coverage highlighted that BitMine has pivoted incremental capital toward share repurchases as its weekly ETH accumulation slows near the 5% supply target. Per the underlying 8-K data, BitMine repurchased 2.04 million shares for about $45.9 million at an average $22.48/share in late October, bringing 2026 buybacks to 22.9 million shares for $399.6 million, while its most recent weekly ETH buy (8,573 ETH) was one of its smallest of the year.",
+      "assessment": "neutral",
+      "thesis_fit": "Disciplined buybacks at a reported ~19% discount to crypto NAV support capital-allocation credibility, but slowing ETH purchases signal the pure-accumulation phase of the thesis is maturing and the story must now prove itself via staking yield and NAV management rather than headline ETH growth.",
+      "severity": "digest",
+      "confidence": "secondary only",
+      "source_url": "https://www.theglobeandmail.com/investing/markets/markets-news/Yolowire/8676870/bitmine-resumes-stock-buybacks-as-ethereum-purchases-slow/"
+    },
+    {
+      "date": "2026-11-05",
+      "headline": "BMNR shares trade ~19% below reported crypto NAV",
+      "what_happened": "Following BitMine's Nov 2 disclosure of 6,060,506 ETH (4.9% of supply) and $14.5 billion in total crypto, cash and 'moonshot' holdings, BMNR's market capitalization of roughly $11.79 billion sat about $2.71 billion below that reported asset value, implying an mNAV near 0.81x.",
+      "assessment": "negative",
+      "thesis_fit": "A persistent discount to NAV reflects weak market confidence in BitMine's treasury-per-share economics and raises the bar for buybacks or staking income to close the gap, a headwind the thesis flags as a risk.",
+      "severity": "digest",
+      "confidence": "secondary only",
+      "source_url": "https://financefeeds.com/bitmine-holds-6-06-million-eth-as-ether-rebounds-but-share-discount-remains-a-key-test/"
+    }
+  ]
 }

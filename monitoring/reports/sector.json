@@ -1,4 +1,59 @@
 {
-  "bottom_line": "",
-  "updates": []
+  "bottom_line": "The Democratic sweep of Congress has thrown the CLARITY Act's revival into serious doubt just as MSCI's final list of index-excluded Bitcoin treasury companies is due November 11, compounding capital-markets access risk for DAT/treasury equities heading into month-end.",
+  "updates": [
+    {
+      "date": "2026-11-04",
+      "headline": "Democrats sweep Congress, CLARITY Act outlook darkens",
+      "what_happened": "Democrats won control of both the Senate and House in the November 3 midterms, and analysts say this materially dims prospects for the stalled CLARITY Act crypto market-structure bill. Expected incoming Senate Banking Chair Elizabeth Warren and other Democrats are seen prioritizing scrutiny of Trump's personal crypto dealings over passing industry-friendly legislation, with one analyst saying the industry should \"expect the Clarity Act to remain on hold through 2028.\"",
+      "assessment": "negative",
+      "severity": "alert",
+      "confidence": "secondary only",
+      "source_url": "https://www.cnbc.com/2026/11/05/crypto-midterms-democrats-clarity-act.html"
+    },
+    {
+      "date": "2026-11-04",
+      "headline": "Democrats weigh new, tougher crypto market-structure bill",
+      "what_happened": "House Democrats are reportedly discussing a broader crypto market-structure bill for the next Congress that could expand SEC authority over crypto markets while narrowing CFTC responsibilities, and could add restrictions on crypto-related activities by Trump and other federal officials. The new Congress convenes in January 2027, creating a different political environment for crypto regulation.",
+      "assessment": "negative",
+      "severity": "digest",
+      "confidence": "secondary only",
+      "source_url": "https://www.tmgm.com/en/analysis/market-news/article/us-democrats-plan-new-crypto-market-structure-bill-after-midterm-wins-202611050303"
+    },
+    {
+      "date": "2026-10-16",
+      "headline": "MSCI final Bitcoin-treasury index exclusion list due Nov 11",
+      "what_happened": "MSCI confirmed its finalized non-operating-company methodology will determine the final list of potentially excluded constituents (including Strategy and Metaplanet) on November 11, 2026, with index changes effective at the close of trading on November 30. A preliminary list already flags Strategy, Metaplanet and Upexi for possible removal under the five-ratio financial screen, though two-year filing buffers limit immediate turnover.",
+      "assessment": "negative",
+      "severity": "alert",
+      "confidence": "secondary only",
+      "source_url": "https://unchainedcrypto.com/strategy-metaplanet-face-exit-from-msci-indexes-as-the-index-provider-adopts-new-test/"
+    },
+    {
+      "date": "2026-11-06",
+      "headline": "FinCEN cuts exchange MEXC off from US financial system",
+      "what_happened": "Treasury's FinCEN designated MEXC Global a primary money-laundering concern on November 6, barring US financial institutions from processing transfers to or from the exchange over an alleged $16.7 billion in illicit flows tied to Russia, Iran and North Korea between 2021 and 2026. The order, issued under the Combating Russian Money Laundering Act, takes effect 30 days after Federal Register publication; MEXC said user assets remain secure and it is conducting an independent AML review.",
+      "assessment": "negative",
+      "severity": "digest",
+      "confidence": "secondary only",
+      "source_url": "https://www.tftc.io/fincen-mexc-global-ban-16-billion-illicit-flows"
+    },
+    {
+      "date": "2026-11-06",
+      "headline": "Bank of Russia approves BTC, ETH, USDT for retail trading",
+      "what_happened": "The Bank of Russia approved Bitcoin, Ether and USDT as the first cryptocurrencies that non-qualified (retail) investors may buy through licensed brokers, asset managers and exchanges, effective November 17, 2026, with a 300,000-ruble annual purchase cap per intermediary. The Moscow Exchange is targeting a December 1 launch for Bitcoin and Ether trading.",
+      "assessment": "positive",
+      "severity": "digest",
+      "confidence": "secondary only",
+      "source_url": "https://coinpaprika.com/news/russia-opens-bitcoin-ether-usdt"
+    },
+    {
+      "date": "2026-11-08",
+      "headline": "Bitcoin, Ether ETFs post large joint weekly outflows",
+      "what_happened": "US spot Bitcoin ETFs recorded roughly $1.3 billion in net outflows for the week ending November 7, the largest weekly outflow since late June 2026, while spot Ether ETFs also shed money rather than drawing inflows as in the prior reporting period. The outflows coincided with Bitcoin trading near three-month lows around $75,000-76,000 amid higher Treasury yields following a stronger-than-expected October jobs report.",
+      "assessment": "negative",
+      "severity": "digest",
+      "confidence": "secondary only",
+      "source_url": "https://cryptoticker.io/en/crypto-news-this-week-recap-key-dates-november-2026"
+    }
+  ]
 }

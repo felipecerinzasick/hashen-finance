@@ -2,6 +2,39 @@
   "slug": "sector",
   "entries": [
     {
+      "generated_at": "2026-11-16T17:15:39.042457+00:00",
+      "bottom_line": "MSCI's November review confirmed removal of Strategy, Metaplanet and Upexi from its global indexes (effective Nov 30) while sparing Ethereum-treasury SharpLink, even as a hawkish Fed pivot toward serial 2027 rate hikes further tightens financing conditions for the beaten-down treasury-company sector.",
+      "updates": [
+        {
+          "date": "2026-11-11",
+          "headline": "MSCI confirms Strategy, Metaplanet, Upexi index deletions",
+          "what_happened": "MSCI's November index review, published Nov 11, listed Strategy for deletion from the MSCI USA Index and Metaplanet from the MSCI Japan Small Cap Index, effective at the close of trading Nov 30, with crypto treasury firm Upexi also removed. Ethereum treasury company SharpLink was not included among the deletions in the review and instead remains on a watchlist under the same non-operating-company framework.",
+          "assessment": "negative",
+          "severity": "alert",
+          "confidence": "primary source",
+          "source_url": "https://www.theblock.co/news/markets/2026-11-11-strategy-metaplanet-lose-msci-index-membership-november-reshuffle-438437"
+        },
+        {
+          "date": "2026-11-12",
+          "headline": "White House nominates four SEC, CFTC commissioner picks",
+          "what_happened": "The White House nominated Kristin N. Johnson and Steven Levine for SEC commissioner seats and Nathan Anonick and Matthew Rowland for CFTC seats, filling vacancies at both crypto-relevant regulators. The Senate Agriculture Committee will consider the CFTC nominees while Senate Banking handles the SEC picks, with a confirmation hearing already set for November 19.",
+          "assessment": "neutral",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://www.theblock.co/news/regulation/2026-11-12-white-house-crypto-picks-sec-cftc-439175"
+        },
+        {
+          "date": "2026-11-14",
+          "headline": "Fed officials signal December hike, more tightening into 2027",
+          "what_happened": "Federal Reserve officials delivered hawkish remarks this week that solidified market expectations for a 25-basis-point December rate hike, with futures now pricing consecutive quarter-point increases in December, January and March 2027 rather than just December and March as previously expected. San Francisco Fed President Mary Daly said on Nov 13 that officials will \"need to, in all likelihood, raise rates,\" citing persistent inflation and stronger-than-expected wholesale and consumer price data.",
+          "assessment": "negative",
+          "severity": "alert",
+          "confidence": "secondary only",
+          "source_url": "https://www.kucoin.com/news/flash/fed-officials-signal-december-rate-hike-market-prices-for-further-increases-in-2027"
+        }
+      ]
+    },
+    {
       "generated_at": "2026-11-09T10:58:55.859758+00:00",
       "bottom_line": "The Democratic sweep of Congress has thrown the CLARITY Act's revival into serious doubt just as MSCI's final list of index-excluded Bitcoin treasury companies is due November 11, compounding capital-markets access risk for DAT/treasury equities heading into month-end.",
       "updates": [

@@ -3,32 +3,61 @@
   "name": "Metaplanet",
   "ticker": "3350.T / MTPLF / DN3.F",
   "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/metaplanet/",
-  "generated_at": "2026-11-09T10:58:55.859677+00:00",
-  "lookback_days": 3,
+  "generated_at": "2026-11-16T17:15:39.042374+00:00",
+  "lookback_days": 8,
   "snapshot": {
-    "holdings": "44,000 BTC (as of most recent disclosed accumulation, per October 2026 purchase disclosures)",
-    "share_price": 237.0,
-    "mnav": null,
-    "as_of": "2026-11-06"
+    "holdings": "44,000 BTC (as of September 30, 2026; confirmed on company site as of November 12, 2026)",
+    "share_price": 204.0,
+    "mnav": 0.49,
+    "as_of": "2026-11-16"
   },
-  "overall_verdict": "neutral",
-  "email_summary": "Morgan Stanley group's Metaplanet stake fell from 5.25% to 2.51% in a Nov 6 filing tied to securities-lending activity, not a clear directional signal.",
-  "bottom_line": "The only confirmed development inside the 3-day window is a large-shareholder report showing Morgan Stanley-affiliated entities cutting their combined Metaplanet stake below the 5% disclosure threshold, but the stated holding purpose was securities-business/lending, not an investment view, so read-through to thesis is limited. The bigger near-term catalyst remains MSCI's final index-exclusion list due November 11, which was already flagged and has not yet been resolved.",
+  "overall_verdict": "negative",
+  "email_summary": "Metaplanet slashed FY2026 guidance after a ¥27B loss, and MSCI confirmed its Nov 30 index removal, even as buybacks continue.",
+  "bottom_line": "This week brought a confirmed negative catalyst (MSCI exclusion effective Nov 30) layered onto a steep guidance cut and nine-month net loss tied to BTC valuation/sale losses and mNAV-constrained financing. Ongoing buybacks below mNAV are a partial offset, but BTC accumulation has effectively stalled while the stock trades near 0.49x-0.72x mNAV.",
   "source_conflicts": [
-    "BTC holdings figures conflict across sources: some trackers still show 40,177 BTC (as of Q1 2026 purchase) while others show 44,000 BTC (as of October 2026 purchases); no new BTC purchase was disclosed in the Nov 6-9 window.",
-    "Share count and market cap figures conflict across data providers: one source lists 307,570,337 total issued shares while market-cap figures from other aggregators imply a much larger share base, likely reflecting treasury-share or reporting-date differences.",
-    "mNAV estimates conflict across providers (one third-party site shows ~1.21x using a 40,177 BTC base), so no single current mNAV figure can be confirmed as of this sweep."
+    "mNAV estimates diverge depending on methodology: cryptoticker.io calculated 0.72x using enterprise value versus 0.49x using market capitalization, both as of November 12, 2026.",
+    "Buyback utilization percentages are reported inconsistently across outlets (54.4% of share count vs. 47.1% of yen budget), reflecting the two different caps (200M shares / ¥60B) in the same program."
   ],
   "updates": [
     {
-      "date": "2026-11-06",
-      "headline": "Morgan Stanley group cuts Metaplanet stake to 2.51%",
-      "what_happened": "Morgan Stanley MUFG Securities and affiliated entities filed a change report with Japan's Kanto Local Finance Bureau on November 6 showing their combined Metaplanet stake fell from 5.25% to 2.51%, with the reporting obligation date set at October 30. The filing breaks out the reduction across Morgan Stanley MUFG Securities, Morgan Stanley & Co. International plc, and Morgan Stanley & Co. LLC, with the UK entity's stake falling from 3.64% to 1.48%.",
-      "assessment": "neutral",
-      "thesis_fit": "This is a large-shareholder reduction below the 5% disclosure threshold per the monitoring checklist, but the group's prior filing stated the holding was for 'securities business' and 'securities lending' purposes rather than long-term investment conviction, so it likely reflects prime-brokerage/stock-lending flow rather than a bearish institutional view on the stock.",
+      "date": "2026-11-13",
+      "headline": "Metaplanet slashes FY2026 revenue, profit guidance 59-74%",
+      "what_happened": "Metaplanet cut its FY2026 revenue forecast from ¥16 billion to ¥6.5 billion and operating profit from ¥11.4 billion to ¥3 billion. The company posted a nine-month net loss of ¥27.16 billion (~$170 million) versus a ¥13.53 billion profit a year earlier, driven by Bitcoin valuation and sale losses, and explicitly linked the slowdown to capping financing while its share price traded below 1.0x mNAV.",
+      "assessment": "negative",
+      "thesis_fit": "Directly confirms the thesis-weakening scenario of financing constraints and slowed, less-accretive BTC accumulation when mNAV is below 1.0x.",
+      "severity": "alert",
+      "confidence": "primary source",
+      "source_url": "https://www.ad-hoc-news.de/boerse/news/unternehmensnachrichten/metaplanet-cuts-2026-guidance-as-bitcoin-slump-and-index-exit-weigh-on-shares/70521053"
+    },
+    {
+      "date": "2026-11-11",
+      "headline": "MSCI confirms Metaplanet removal from Japan Small Cap Index",
+      "what_happened": "MSCI's November 2026 Index Review formally listed Metaplanet for deletion from the MSCI Japan Small Cap Index, with the change taking effect after the close of trading on November 30, 2026. This converts the prior 'under review' exclusion risk into a confirmed, dated event that will trigger passive-fund selling.",
+      "assessment": "negative",
+      "thesis_fit": "Confirmed index exclusion removes a passive-flow support and validates the governance/mNAV concerns that drove MSCI's review, directly relevant to the MSCI checklist item.",
+      "severity": "alert",
+      "confidence": "secondary only",
+      "source_url": "https://www.cryptotimes.io/2026/11/13/metaplanet-stock-buyback-hits-108-7m-shares-as-bitcoin-treasury-firm-faces-msci-exit/"
+    },
+    {
+      "date": "2026-11-13",
+      "headline": "Buyback continues: 108.7M shares repurchased, ~54% of cap used",
+      "what_happened": "Metaplanet disclosed it repurchased an additional 12,256,200 shares for about ¥3.0 billion between November 1-12, bringing cumulative repurchases since the October 14 program start to 108.7 million shares for ¥28.27 billion. This represents 54.4% of the 200-million-share limit and 47.1% of the ¥60 billion budget under the authorization running through October 2027.",
+      "assessment": "positive",
+      "thesis_fit": "Executed (not merely authorized) buybacks while shares trade below mNAV directly raises BTC-per-share for remaining holders, consistent with the thesis's most important accretive-action checklist item.",
       "severity": "digest",
       "confidence": "primary source",
-      "source_url": "https://kabutan.jp/news/marketnews/?b=n202611061442"
+      "source_url": "https://www.cryptotimes.io/2026/11/13/metaplanet-stock-buyback-hits-108-7m-shares-as-bitcoin-treasury-firm-faces-msci-exit/"
+    },
+    {
+      "date": "2026-11-16",
+      "headline": "Superplanet names CIO, plans US perpetual preferred issuance",
+      "what_happened": "Super League Enterprise (soon to be renamed Superplanet upon closing Metaplanet's 2,100 BTC contribution) announced Jesse Myers will join as incoming Chief Investment Officer. The release stated Superplanet intends to pursue perpetual preferred equity issuance post-closing to run an 'Amplified Bitcoin' strategy aimed at growing Bitcoin per common share.",
+      "assessment": "neutral",
+      "thesis_fit": "This is a subsidiary-level (Nasdaq-listed Superplanet) capital-structure plan rather than a direct Metaplanet TSE share action, but it signals management's continued preference for preferred/debt financing over common dilution, which aligns with the thesis's preferred financing checklist item.",
+      "severity": "digest",
+      "confidence": "primary source",
+      "source_url": "https://www.globenewswire.com/news-release/2026/11/16/3403967/0/en/super-league-appoints-bitcoin-treasury-operator-and-capital-markets-strategist-jesse-myers-as-incoming-chief-investment-officer.html"
     }
   ]
 }

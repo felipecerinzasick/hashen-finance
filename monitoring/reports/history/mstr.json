@@ -2,6 +2,65 @@
   "slug": "mstr",
   "entries": [
     {
+      "generated_at": "2026-11-16T17:15:39.042350+00:00",
+      "lookback_days": 8,
+      "overall_verdict": "negative",
+      "email_summary": "MSCI confirmed MSTR's index removal while BTC purchases slowed and the treasury swung back to a ~$9.6B paper loss.",
+      "bottom_line": "The confirmed MSCI deletion removes a passive-demand pillar just as Strategy's weekly BTC buying pace collapsed (1,036 BTC then only 485 BTC) and a greater share of ATM proceeds went to defending STRC's par value rather than accumulating bitcoin. With BTC near $64K versus a $75,452 average cost basis, the treasury has flipped back into a large unrealized loss, reinforcing the bearish setup for the financing flywheel.",
+      "snapshot": {
+        "holdings": "850,849 BTC (~4.05% of 21M max supply), acquired for ~$64.20B aggregate, avg cost $75,452/BTC",
+        "share_price": 104.3,
+        "mnav": null,
+        "as_of": "2026-11-16"
+      },
+      "source_conflicts": [
+        "mNAV estimates diverge sharply across sources for mid-November 2026: mnav.com shows ~1.20x (Nov 15), a macro research note cites 1.09x (Nov 15-16), while another tracker showed a 0.87x discount in early November — likely reflecting different calculation methods (basic vs. enterprise-adjusted) and intraday price swings; no single reliable mNAV figure can be confirmed for this snapshot.",
+        "Total BTC holdings as of Nov 8 are reported as both 850,364 (Investing.com, mnav.com) and figures citing slightly different average costs; as of Nov 15 holdings are consistently reported at 850,849 BTC across multiple sources."
+      ],
+      "updates": [
+        {
+          "date": "2026-11-11",
+          "headline": "MSCI confirms Strategy removal from USA Index Nov 30",
+          "what_happened": "MSCI published its November index review confirming Strategy will be deleted from the MSCI USA Index and other global equity benchmarks at the close of November 30, under a new rule excluding 'non-operating' asset-holding companies. Strategy had argued in prior letters that exclusion would have no meaningful business impact, but analysts estimate billions in passive-fund outflows as index trackers are forced to sell.",
+          "assessment": "negative",
+          "thesis_fit": "Loss of passive index demand could compress the mNAV premium further and make equity-based financing for BTC purchases more expensive or less available, directly threatening the capital-markets flywheel the thesis depends on.",
+          "severity": "alert",
+          "confidence": "secondary only",
+          "source_url": "https://www.theblock.co/news/markets/2026-11-11-strategy-metaplanet-lose-msci-index-membership-november-reshuffle-438437"
+        },
+        {
+          "date": "2026-11-09",
+          "headline": "Strategy buys 1,036 BTC, STRC buyback outpaces purchase",
+          "what_happened": "For the week of Nov 2-8, Strategy sold 2,051,348 MSTR shares for $283.8 million net proceeds, using $81.9 million to buy 1,036 BTC at an average $79,012/BTC, while $188.3 million went to repurchasing STRC preferred stock. Total holdings reached 850,364 BTC.",
+          "assessment": "neutral",
+          "thesis_fit": "BTC accumulation continued but the majority of new ATM-dilution proceeds funded preferred buybacks rather than bitcoin purchases, muting BTC-per-share accretion from this raise.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://www.investing.com/news/cryptocurrency-news/strategy-sells-mstr-shares-buys-bitcoin-and-repurchases-strc-stock-432SI-5011934"
+        },
+        {
+          "date": "2026-11-16",
+          "headline": "BTC buying pace drops 59% to just 485 coins",
+          "what_happened": "For the week of Nov 9-15, Strategy sold 2,087,040 MSTR shares for $244.7 million, but allocated only $33.4 million (14%) to buy 485 BTC at $68,887/BTC — a sharp pullback from the prior week's 1,036 BTC. The bulk, $206.3-228.1 million (84%), funded STRC preferred-stock repurchases. Holdings rose to 850,849 BTC at an average cost of $75,452.",
+          "assessment": "negative",
+          "thesis_fit": "A shrinking share of dilutive capital raises is going toward BTC accumulation versus preferred-stock price defense, which weakens the bitcoin-per-share growth argument at the core of the thesis.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://www.stocktitan.net/sec-filings/MSTR/8-k-strategy-inc-reports-material-event-f1d981342dcb.html"
+        },
+        {
+          "date": "2026-11-16",
+          "headline": "BTC treasury swings back to ~$9.6B unrealized loss",
+          "what_happened": "With bitcoin trading near $64,000-68,000 against Strategy's $75,452 average acquisition cost, the company's bitcoin position is now carrying an estimated $9.6-9.8 billion paper loss, reversing the previously reported multi-billion-dollar unrealized gain from earlier in the fall.",
+          "assessment": "negative",
+          "thesis_fit": "Under fair-value accounting this swing drives large non-cash GAAP volatility and signals that a sustained BTC price slide below the average cost basis pressures both reported earnings and the equity's mNAV, reinforcing the discount risk to the financing flywheel.",
+          "severity": "alert",
+          "confidence": "secondary only",
+          "source_url": "https://www.benzinga.com/trading-ideas/movers/26/11/63289216/strategy-stock-plunges-8-as-bitcoin-sinks-to-64000-msci-exit-looms"
+        }
+      ]
+    },
+    {
       "generated_at": "2026-11-09T10:58:55.859651+00:00",
       "lookback_days": 3,
       "overall_verdict": "negative",

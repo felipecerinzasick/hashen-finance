@@ -2,6 +2,55 @@
   "slug": "asst",
   "entries": [
     {
+      "generated_at": "2026-11-16T17:15:39.042382+00:00",
+      "lookback_days": 8,
+      "overall_verdict": "negative",
+      "email_summary": "Strive keeps buying BTC at a loss to spot while raising preferred dividend costs and shares sink 10% in a crypto selloff.",
+      "bottom_line": "Strive's weekly BTC accumulation continues but recent purchases are now underwater versus spot, cash is shrinking, and the preferred dividend rate just rose, adding cost pressure even as some institutional holders added shares. Net effect is modestly negative for the near-term execution story, though the long-term accumulation thesis remains intact.",
+      "snapshot": {
+        "holdings": "43,404 BTC as of Nov 13, 2026",
+        "share_price": 19.3,
+        "mnav": null,
+        "as_of": "2026-11-16"
+      },
+      "source_conflicts": [
+        "Market cap (~$2.72B) cited in same-day coverage predates the ~10% premarket share price decline on Nov 16, so market cap/mNAV figures from that day are inconsistent depending on timing.",
+        "Cash balance change ($22.3M decline to $465.3M) was not explicitly tied to the $17.5M BTC purchase or the $10M preferred raise in the 8-K, per secondary reporting."
+      ],
+      "updates": [
+        {
+          "date": "2026-11-16",
+          "headline": "Strive buys 251 BTC at a loss to current spot price",
+          "what_happened": "Strive's Form 8-K disclosed the purchase of 251 bitcoin between Nov. 7-13 at an average cost of $69,853 per coin, bringing total holdings to 43,404 BTC. The filing also showed cash fell $22.3 million to $465.3 million and that Strive raised about $10 million by selling 104,478 shares of its 15% fixed-rate Series A (SATS) preferred stock, with no common or variable-rate SATA shares sold during the week.",
+          "assessment": "negative",
+          "thesis_fit": "Continued BTC accumulation supports the treasury thesis, but buying at $69,853 while bitcoin traded near $64,300-$68,800 means this tranche sits at an unrealized loss, and funding it via expensive 15% fixed preferred raises the cost-of-capital bar for a durable BTC-per-share story.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://unchainedcrypto.com/strives-weekly-bitcoin-buying-rebounds-to-251-btc-as-it-pays-less-per-coin"
+        },
+        {
+          "date": "2026-11-12",
+          "headline": "Strive raises SATA preferred dividend rate to 13.25%",
+          "what_happened": "Strive's board increased the dividend rate on its Variable Rate Series A Perpetual Preferred Stock (SATA) from 13.00% to 13.25% per annum, effective for periods starting December 1, 2026, per an 8-K filing.",
+          "assessment": "negative",
+          "thesis_fit": "A higher preferred dividend rate increases the cash yield Strive must cover from its 18-month reserve and operating cash flow, adding to the capital-structure cost that bears on durability of the BTC-per-share strategy.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://www.stocktitan.net/sec-filings/ASST/8-k-strive-inc-reports-material-event-25b814afc448.html"
+        },
+        {
+          "date": "2026-11-12",
+          "headline": "BNY Mellon, State Street raise ASST stakes in Q3 13Fs",
+          "what_happened": "A Nov. 5 13F showed Bank of New York Mellon raised its Strive stake 28% to 237,100 shares worth $6.97 million as of Sept. 30. A separate Nov. 12 13F showed State Street raised its Strive position 12% to roughly $50 million.",
+          "assessment": "positive",
+          "thesis_fit": "Incremental institutional buying during Q3 is a modest positive signal for market trust in the treasury story, partially offsetting the recently reported reduction in Fidelity's passive stake.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://bitcoinmagazine.com/news/bny-mellon-raises-strive-asst-stake-28"
+        }
+      ]
+    },
+    {
       "generated_at": "2026-11-09T10:58:55.859685+00:00",
       "lookback_days": 3,
       "overall_verdict": "neutral",

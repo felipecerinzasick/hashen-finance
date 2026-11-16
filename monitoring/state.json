@@ -364,6 +364,91 @@
       "id": "e278b02f0a16b7",
       "label": "sector: Bitcoin, Ether ETFs post large joint weekly outflows",
       "date": "2026-11-08"
+    },
+    {
+      "id": "a07487322c5f8b",
+      "label": "mstr: MSCI confirms Strategy removal from USA Index Nov 30",
+      "date": "2026-11-11"
+    },
+    {
+      "id": "542c33f3b57b6c",
+      "label": "mstr: Strategy buys 1,036 BTC, STRC buyback outpaces purchase",
+      "date": "2026-11-09"
+    },
+    {
+      "id": "b5855a631c21ed",
+      "label": "mstr: BTC buying pace drops 59% to just 485 coins",
+      "date": "2026-11-16"
+    },
+    {
+      "id": "e5731aa5eab0fe",
+      "label": "mstr: BTC treasury swings back to ~$9.6B unrealized loss",
+      "date": "2026-11-16"
+    },
+    {
+      "id": "c70caf64d22fe5",
+      "label": "metaplanet: Metaplanet slashes FY2026 revenue, profit guidance 59-74%",
+      "date": "2026-11-13"
+    },
+    {
+      "id": "c38d10a385d745",
+      "label": "metaplanet: MSCI confirms Metaplanet removal from Japan Small Cap Index",
+      "date": "2026-11-11"
+    },
+    {
+      "id": "d36fd768aee82c",
+      "label": "metaplanet: Buyback continues: 108.7M shares repurchased, ~54% of cap used",
+      "date": "2026-11-13"
+    },
+    {
+      "id": "8ca1dca136ba97",
+      "label": "metaplanet: Superplanet names CIO, plans US perpetual preferred issuance",
+      "date": "2026-11-16"
+    },
+    {
+      "id": "1ace59dd6682a2",
+      "label": "asst: Strive buys 251 BTC at a loss to current spot price",
+      "date": "2026-11-16"
+    },
+    {
+      "id": "c939bdb1b5dd3c",
+      "label": "asst: Strive raises SATA preferred dividend rate to 13.25%",
+      "date": "2026-11-12"
+    },
+    {
+      "id": "8cae2fb03ff82c",
+      "label": "asst: BNY Mellon, State Street raise ASST stakes in Q3 13Fs",
+      "date": "2026-11-12"
+    },
+    {
+      "id": "a9e3c0caa790c0",
+      "label": "bitmine: BitMine adds 7,653 ETH as holdings value falls to $11.8B",
+      "date": "2026-11-16"
+    },
+    {
+      "id": "039d4ff85b59f7",
+      "label": "bitmine: MSCI removes Strategy from indexes; BitMine not named",
+      "date": "2026-11-11"
+    },
+    {
+      "id": "75a2595c5cf559",
+      "label": "bitmine: BitMine launches retail voting program defaulting to Board",
+      "date": "2026-11-06"
+    },
+    {
+      "id": "4e562e51413d19",
+      "label": "sector: MSCI confirms Strategy, Metaplanet, Upexi index deletions",
+      "date": "2026-11-11"
+    },
+    {
+      "id": "0ee08e5a4ebbd3",
+      "label": "sector: White House nominates four SEC, CFTC commissioner picks",
+      "date": "2026-11-12"
+    },
+    {
+      "id": "39cb588f4e89e4",
+      "label": "sector: Fed officials signal December hike, more tightening into 2027",
+      "date": "2026-11-14"
     }
   ]
 }

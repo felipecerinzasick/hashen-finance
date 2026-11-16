@@ -3,70 +3,61 @@
   "name": "Strategy",
   "ticker": "MSTR",
   "dashboard_url": "https://hashen-finance.onrender.com/dashboard/mstr/",
-  "generated_at": "2026-11-09T10:58:55.859651+00:00",
-  "lookback_days": 3,
+  "generated_at": "2026-11-16T17:15:39.042350+00:00",
+  "lookback_days": 8,
   "snapshot": {
-    "holdings": "849,327 BTC (~$64.08B aggregate cost, avg $75,451/BTC) as of Nov 1, 2026 per 8-K; some trackers (mnav.com) still show stale 848,517 BTC figure",
-    "share_price": 128.93,
-    "mnav": 1.14,
-    "as_of": "2026-11-06"
+    "holdings": "850,849 BTC (~4.05% of 21M max supply), acquired for ~$64.20B aggregate, avg cost $75,452/BTC",
+    "share_price": 104.3,
+    "mnav": null,
+    "as_of": "2026-11-16"
   },
   "overall_verdict": "negative",
-  "email_summary": "CFO exits amid insider selling, BTC-per-share dips on dilutive buy, and MSCI decision looms Nov 11.",
-  "bottom_line": "This week combined a governance shock (CFO departure with prior insider selling) with a mechanically dilutive bitcoin purchase funded entirely by new stock at a compressed ~1.14x mNAV, weakening the BTC-per-share flywheel just as the market awaits MSCI's Nov 11 index-eligibility verdict. None of this is fatal, but the capital-markets machine is running on thinner margin than earlier in the cycle.",
+  "email_summary": "MSCI confirmed MSTR's index removal while BTC purchases slowed and the treasury swung back to a ~$9.6B paper loss.",
+  "bottom_line": "The confirmed MSCI deletion removes a passive-demand pillar just as Strategy's weekly BTC buying pace collapsed (1,036 BTC then only 485 BTC) and a greater share of ATM proceeds went to defending STRC's par value rather than accumulating bitcoin. With BTC near $64K versus a $75,452 average cost basis, the treasury has flipped back into a large unrealized loss, reinforcing the bearish setup for the financing flywheel.",
   "source_conflicts": [
-    "BTC holdings: SEC 8-K (Nov 2, 2026) shows 849,327 BTC as of Nov 1, while mnav.com's live tracker still displayed the prior 848,517 BTC figure as of its Nov 6 update, likely a data-lag rather than a true discrepancy."
+    "mNAV estimates diverge sharply across sources for mid-November 2026: mnav.com shows ~1.20x (Nov 15), a macro research note cites 1.09x (Nov 15-16), while another tracker showed a 0.87x discount in early November — likely reflecting different calculation methods (basic vs. enterprise-adjusted) and intraday price swings; no single reliable mNAV figure can be confirmed for this snapshot.",
+    "Total BTC holdings as of Nov 8 are reported as both 850,364 (Investing.com, mnav.com) and figures citing slightly different average costs; as of Nov 15 holdings are consistently reported at 850,849 BTC across multiple sources."
   ],
   "updates": [
     {
-      "date": "2026-10-26",
-      "headline": "CFO Andrew Kang resigns effective Nov. 5, 2026",
-      "what_happened": "Strategy disclosed in an 8-K that CFO Andrew Kang will resign effective November 5, 2026, remaining as a non-executive advisor through year-end. CEO Phong Le takes over as interim principal financial officer, Shelley Khanna becomes Chief Accounting Officer, and Reza Virasteh is slated to become CFO and co-principal financial officer alongside Le on January 1, 2027.",
-      "assessment": "negative",
-      "thesis_fit": "A finance-leadership transition during a period of heavy capital-markets activity (ATM issuance, preferred buybacks, BTC purchases) adds execution risk to the financing engine the thesis depends on, and separate reporting noted insiders including the CEO and a director sold MSTR shares before the announcement.",
-      "severity": "alert",
-      "confidence": "primary source",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/0001050446/000105044626000047/mstr-20261026.htm"
-    },
-    {
-      "date": "2026-11-02",
-      "headline": "811 BTC bought via stock sale; BTC/share fell slightly",
-      "what_happened": "Strategy's Nov 2 8-K disclosed the purchase of 811 BTC for $65.5 million (avg $80,846/BTC) between Oct 26–Nov 1, funded entirely by selling 1,178,552 MSTR shares for $164.0M net proceeds, raising total holdings to 849,327 BTC. Because the purchase was funded via share issuance near a compressed mNAV, bitcoin per MSTR share edged down roughly 0.17% on the week, per outside analysis.",
-      "assessment": "negative",
-      "thesis_fit": "The core checklist test — does capital-markets activity grow BTC per diluted share — failed this week; issuing stock near parity mNAV to buy BTC is dilutive rather than accretive to existing holders.",
-      "severity": "alert",
-      "confidence": "primary source",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/0001050446/000119312526442707/mstr-20261102.htm"
-    },
-    {
-      "date": "2026-11-06",
-      "headline": "mNAV premium slips to ~1.14x as MSTR falls 21.6%",
-      "what_happened": "MSTR's mNAV compressed to approximately 1.14x as the stock fell from $164.55 (Oct 6 close) to $128.93 (Nov 6 close), a 21.6% decline that preceded Saylor's latest bitcoin-accumulation chart post on Nov 8.",
-      "assessment": "negative",
-      "thesis_fit": "A narrower mNAV premium reduces the accretive power of future ATM issuance, directly constraining the capital-markets flywheel central to the thesis.",
-      "severity": "digest",
-      "confidence": "secondary only",
-      "source_url": "https://www.tokenpost.com/news/investing/52174"
-    },
-    {
       "date": "2026-11-11",
-      "headline": "MSCI final index decision due Nov 11, effective Nov 30",
-      "what_happened": "MSCI is scheduled to publish its final list of constituent changes on November 11, which could remove Strategy from its global equity benchmarks under new rules excluding non-operating/asset-heavy companies; implementation would follow the close of trading on November 30. Estimates of potential passive selling pressure range from roughly $1.8–2.8 billion in direct index-fund sales up to $11.8 billion including broader index-tracking flows.",
+      "headline": "MSCI confirms Strategy removal from USA Index Nov 30",
+      "what_happened": "MSCI published its November index review confirming Strategy will be deleted from the MSCI USA Index and other global equity benchmarks at the close of November 30, under a new rule excluding 'non-operating' asset-holding companies. Strategy had argued in prior letters that exclusion would have no meaningful business impact, but analysts estimate billions in passive-fund outflows as index trackers are forced to sell.",
       "assessment": "negative",
-      "thesis_fit": "Index exclusion would remove a structural source of passive demand for MSTR shares, a direct governance/index-decision risk the thesis explicitly tracks.",
+      "thesis_fit": "Loss of passive index demand could compress the mNAV premium further and make equity-based financing for BTC purchases more expensive or less available, directly threatening the capital-markets flywheel the thesis depends on.",
       "severity": "alert",
       "confidence": "secondary only",
-      "source_url": "https://crypto.news/strategys-bitcoin-plan-faces-november-11-index-decision/"
+      "source_url": "https://www.theblock.co/news/markets/2026-11-11-strategy-metaplanet-lose-msci-index-membership-november-reshuffle-438437"
     },
     {
-      "date": "2026-11-08",
-      "headline": "Saylor posts accumulation chart, hints at new BTC buy",
-      "what_happened": "Michael Saylor posted his familiar bitcoin-purchase chart on X on Sunday, November 8, a signal that historically precedes a new disclosed purchase, but the post itself contained no confirmed transaction details; any new buy requires confirmation via Strategy's next weekly 8-K.",
+      "date": "2026-11-09",
+      "headline": "Strategy buys 1,036 BTC, STRC buyback outpaces purchase",
+      "what_happened": "For the week of Nov 2-8, Strategy sold 2,051,348 MSTR shares for $283.8 million net proceeds, using $81.9 million to buy 1,036 BTC at an average $79,012/BTC, while $188.3 million went to repurchasing STRC preferred stock. Total holdings reached 850,364 BTC.",
       "assessment": "neutral",
-      "thesis_fit": "Directionally consistent with the accumulation strategy, but unconfirmed until the next SEC filing discloses size, price and funding source.",
+      "thesis_fit": "BTC accumulation continued but the majority of new ATM-dilution proceeds funded preferred buybacks rather than bitcoin purchases, muting BTC-per-share accretion from this raise.",
       "severity": "digest",
-      "confidence": "unconfirmed",
-      "source_url": "https://crypto.news/michael-saylor-strategy-bitcoin-buy-hint-strc/"
+      "confidence": "primary source",
+      "source_url": "https://www.investing.com/news/cryptocurrency-news/strategy-sells-mstr-shares-buys-bitcoin-and-repurchases-strc-stock-432SI-5011934"
+    },
+    {
+      "date": "2026-11-16",
+      "headline": "BTC buying pace drops 59% to just 485 coins",
+      "what_happened": "For the week of Nov 9-15, Strategy sold 2,087,040 MSTR shares for $244.7 million, but allocated only $33.4 million (14%) to buy 485 BTC at $68,887/BTC — a sharp pullback from the prior week's 1,036 BTC. The bulk, $206.3-228.1 million (84%), funded STRC preferred-stock repurchases. Holdings rose to 850,849 BTC at an average cost of $75,452.",
+      "assessment": "negative",
+      "thesis_fit": "A shrinking share of dilutive capital raises is going toward BTC accumulation versus preferred-stock price defense, which weakens the bitcoin-per-share growth argument at the core of the thesis.",
+      "severity": "digest",
+      "confidence": "primary source",
+      "source_url": "https://www.stocktitan.net/sec-filings/MSTR/8-k-strategy-inc-reports-material-event-f1d981342dcb.html"
+    },
+    {
+      "date": "2026-11-16",
+      "headline": "BTC treasury swings back to ~$9.6B unrealized loss",
+      "what_happened": "With bitcoin trading near $64,000-68,000 against Strategy's $75,452 average acquisition cost, the company's bitcoin position is now carrying an estimated $9.6-9.8 billion paper loss, reversing the previously reported multi-billion-dollar unrealized gain from earlier in the fall.",
+      "assessment": "negative",
+      "thesis_fit": "Under fair-value accounting this swing drives large non-cash GAAP volatility and signals that a sustained BTC price slide below the average cost basis pressures both reported earnings and the equity's mNAV, reinforcing the discount risk to the financing flywheel.",
+      "severity": "alert",
+      "confidence": "secondary only",
+      "source_url": "https://www.benzinga.com/trading-ideas/movers/26/11/63289216/strategy-stock-plunges-8-as-bitcoin-sinks-to-64000-msci-exit-looms"
     }
   ]
 }

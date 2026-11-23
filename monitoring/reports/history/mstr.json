@@ -2,6 +2,85 @@
   "slug": "mstr",
   "entries": [
     {
+      "generated_at": "2026-11-23T19:20:44.474979+00:00",
+      "lookback_days": 8,
+      "overall_verdict": "negative",
+      "email_summary": "Strategy keeps buying BTC but at a trickle while STRC buybacks dominate cash and mNAV sits near/below 1x.",
+      "bottom_line": "BTC-per-share accretion continues (13 straight weeks per Saylor) but at a shrinking pace as weekly BTC buys fell to just 457 coins while STRC preferred buybacks absorbed 7x more cash; with mNAV hovering near parity (0.97-1.07x depending on measure) and BTC sitting ~$9.6-12B underwater, the equity-issuance flywheel that powers the thesis is stalling, though management has avoided value-destructive raises so far.",
+      "snapshot": {
+        "holdings": "851,305 BTC as of Nov 22, 2026 (avg cost $75,446/BTC, total cost ~$64.23B)",
+        "share_price": 97.0,
+        "mnav": 0.97,
+        "as_of": "2026-11-23"
+      },
+      "source_conflicts": [
+        "mNAV estimates for the week vary by source and methodology: TheBlock showed ~0.68-0.69x (Nov 19-20), mnav.com showed 1.01x (Nov 20), BloFin's dashboard-based calc showed 0.78x-1.07x depending on definition (Nov 17), and cryptoticker reported 0.97x (Nov 20) — basic market-cap-only vs. enterprise-value vs. company-dashboard methodologies diverge meaningfully at these compressed levels.",
+        "Unrealized BTC loss estimates range from ~$9.6B to ~$13.7B depending on the exact BTC price snapshot and date used across sources this week."
+      ],
+      "updates": [
+        {
+          "date": "2026-11-23",
+          "headline": "Strategy buys just 457 BTC, STRC buyback 7x larger",
+          "what_happened": "Strategy disclosed in an 8-K that between Nov 16-22 it sold 1,925,676 Class A shares for $176.7 million net proceeds, using only $29.6 million (17%) to buy 457 BTC at an average of $64,898/coin, while the remaining $211.8 million funded STRC preferred buybacks — roughly seven times the bitcoin spend. Total holdings rose to 851,305 BTC at an average cost of $75,446.",
+          "assessment": "negative",
+          "thesis_fit": "BTC accumulation pace continues to shrink and capital is being redirected toward preferred buybacks rather than new BTC, muting the stock's effective exposure to further BTC upside.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://www.investing.com/news/cryptocurrency-news/strategy-buys-bitcoin-expands-repurchase-program-432SI-5045501"
+        },
+        {
+          "date": "2026-11-23",
+          "headline": "Board raises preferred-stock buyback cap to $4 billion",
+          "what_happened": "Strategy's board approved increasing the authorized aggregate purchase price under its digital credit securities (preferred stock) repurchase program from $3.0 billion to $4.0 billion, with $1.12 billion remaining available as of Nov 22. The company also authorized reallocating up to $1.0 billion from the USD Reserve to USD Cash, which dropped the USD Reserve to $3.73 billion from $4.75 billion the prior week.",
+          "assessment": "neutral",
+          "thesis_fit": "Expands flexibility to retire discounted preferred stock, which can be accretive to common equity, but further depletes the cash buffer that supports BTC buying and dividend coverage.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://www.tipranks.com/news/company-announcements/strategy-reports-bitcoin-purchases-and-expanded-repurchase-authorization"
+        },
+        {
+          "date": "2026-11-23",
+          "headline": "Saylor claims 13 straight weeks of BTC-per-share gains",
+          "what_happened": "Michael Saylor said on X that Strategy's net Bitcoin per share rose for a 13th consecutive week, equivalent to a 2,505 BTC gain worth $199 million before preferred dividends, or 584 satoshis per share cumulatively. The company paid $17.6 million in preferred dividends and spent $211.8 million on STRC buybacks during the same week.",
+          "assessment": "positive",
+          "thesis_fit": "Directly addresses the core thesis metric (BTC per diluted share), showing continued per-share accretion even as absolute BTC buying slows and dividends/buybacks consume most new capital.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://crypto.news/strategy-net-bitcoin-per-share-13-weeks"
+        },
+        {
+          "date": "2026-11-20",
+          "headline": "mNAV falls near or below 1.0x as BTC crashes",
+          "what_happened": "Strategy's mNAV touched roughly 0.97x on the company's own metric Nov 20 and as low as 0.68-0.78x on simple market-cap methodologies as Bitcoin fell toward $55,673, a two-year low, before partially recovering. MSTR stock fell to around $81-86 intraday during the week, down over 20% in five trading days at one point.",
+          "assessment": "negative",
+          "thesis_fit": "A sub-1.0x or near-parity mNAV stalls the equity-issuance flywheel that historically let Strategy raise accretive capital to buy more BTC per share.",
+          "severity": "alert",
+          "confidence": "secondary only",
+          "source_url": "https://cryptoticker.io/en/strategy-mnav-below-1-mstr-stock/"
+        },
+        {
+          "date": "2026-11-20",
+          "headline": "Peter Schiff renews 'complete fraud' attack on Saylor",
+          "what_happened": "As MSTR stock fell nearly 23% over the week to $86.13 by Nov 19, bitcoin critic Peter Schiff renewed public criticism of Strategy's business model, calling it a \"complete fraud\" in response to Saylor's investor Q&A, arguing the company lacks a viable underlying business.",
+          "assessment": "negative",
+          "thesis_fit": "High-profile public critique amplifies bearish sentiment during a period of falling mNAV and widening unrealized BTC losses, adding reputational/narrative pressure on the stock.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://coinpaper.com/39139/strategy-stock-crashes-23-in-one-week-as-peter-schiff-calls-saylor-s-company-a-fraud"
+        },
+        {
+          "date": "2026-11-16",
+          "headline": "Strategy buys 485 BTC, spending drops 59% week-over-week",
+          "what_happened": "Strategy disclosed buying 485 BTC for $33.4 million (avg $68,887/coin) during the week ended Nov 15, down 59% in dollar terms from the prior week's $81.9 million purchase, while funding the bulk of a $244.7 million stock sale toward STRC buybacks rather than BTC. Holdings reached 850,849 BTC with no BTC sales reported.",
+          "assessment": "negative",
+          "thesis_fit": "Continued deceleration in BTC buying pace as the price fell, reinforcing the pattern of prioritizing preferred-stock buybacks over fresh Bitcoin accumulation.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://beincrypto.com/strategy-halves-bitcoin-buying-price-dip/"
+        }
+      ]
+    },
+    {
       "generated_at": "2026-11-16T17:15:39.042350+00:00",
       "lookback_days": 8,
       "overall_verdict": "negative",

@@ -1,33 +1,78 @@
 {
-  "bottom_line": "MSCI's November review confirmed removal of Strategy, Metaplanet and Upexi from its global indexes (effective Nov 30) while sparing Ethereum-treasury SharpLink, even as a hawkish Fed pivot toward serial 2027 rate hikes further tightens financing conditions for the beaten-down treasury-company sector.",
+  "bottom_line": "Sector risk sentiment deteriorated sharply this week as MSCI's finalized index-exclusion list took effect, Bitcoin and Ether ETFs posted their worst outflows in months, Fed officials hardened toward a December hike (with Dec 9 odds near 90-95%), and widening treasury-company mNAV discounts are choking off the equity-issuance financing loop that funded years of corporate Bitcoin accumulation.",
   "updates": [
     {
       "date": "2026-11-11",
-      "headline": "MSCI confirms Strategy, Metaplanet, Upexi index deletions",
-      "what_happened": "MSCI's November index review, published Nov 11, listed Strategy for deletion from the MSCI USA Index and Metaplanet from the MSCI Japan Small Cap Index, effective at the close of trading Nov 30, with crypto treasury firm Upexi also removed. Ethereum treasury company SharpLink was not included among the deletions in the review and instead remains on a watchlist under the same non-operating-company framework.",
+      "headline": "MSCI confirms Strategy, Metaplanet deletion; SharpLink on watch list",
+      "what_happened": "MSCI officially published its November index review naming Strategy for deletion from the MSCI USA Index and Metaplanet from the MSCI Japan Small Cap Index, effective at the close of November 30, under its finalized 'non-operating company' screening framework. Ethereum treasury company SharpLink was not deleted outright but was placed on a new public watch list.",
       "assessment": "negative",
       "severity": "alert",
       "confidence": "primary source",
-      "source_url": "https://www.theblock.co/news/markets/2026-11-11-strategy-metaplanet-lose-msci-index-membership-november-reshuffle-438437"
+      "source_url": "https://www.fool.com/investing/2026/11/21/msci-is-cutting-strategy-and-metaplanet-from-its-indexes-here-s-what-it-means-for-bitcoin-treasury-company-stocks/"
     },
     {
-      "date": "2026-11-12",
-      "headline": "White House nominates four SEC, CFTC commissioner picks",
-      "what_happened": "The White House nominated Kristin N. Johnson and Steven Levine for SEC commissioner seats and Nathan Anonick and Matthew Rowland for CFTC seats, filling vacancies at both crypto-relevant regulators. The Senate Agriculture Committee will consider the CFTC nominees while Senate Banking handles the SEC picks, with a confirmation hearing already set for November 19.",
-      "assessment": "neutral",
-      "severity": "digest",
-      "confidence": "secondary only",
-      "source_url": "https://www.theblock.co/news/regulation/2026-11-12-white-house-crypto-picks-sec-cftc-439175"
-    },
-    {
-      "date": "2026-11-14",
-      "headline": "Fed officials signal December hike, more tightening into 2027",
-      "what_happened": "Federal Reserve officials delivered hawkish remarks this week that solidified market expectations for a 25-basis-point December rate hike, with futures now pricing consecutive quarter-point increases in December, January and March 2027 rather than just December and March as previously expected. San Francisco Fed President Mary Daly said on Nov 13 that officials will \"need to, in all likelihood, raise rates,\" citing persistent inflation and stronger-than-expected wholesale and consumer price data.",
+      "date": "2026-11-20",
+      "headline": "Bitcoin, Ether ETFs post largest weekly outflows in months",
+      "what_happened": "US spot Bitcoin ETFs recorded roughly $1.79 billion in net outflows for the week ending November 20, the third-largest weekly outflow on record and the fourth consecutive losing week, with BlackRock's IBIT alone shedding about $1.37 billion. Spot Ether ETFs lost an additional $305-314 million, extending an eight-week outflow streak, while Bitcoin fell from about $65,300 to below $59,000 during the week.",
       "assessment": "negative",
       "severity": "alert",
       "confidence": "secondary only",
-      "source_url": "https://www.kucoin.com/news/flash/fed-officials-signal-december-rate-hike-market-prices-for-further-increases-in-2027"
+      "source_url": "https://coinpaper.com/39252/bitcoin-et-fs-lose-1-79-billion-in-one-week-while-btc-falls-nearly-10"
+    },
+    {
+      "date": "2026-11-20",
+      "headline": "Fed December hike odds surge to 90-95% after hawkish minutes",
+      "what_happened": "Minutes from the October FOMC meeting, released November 18, showed almost all officials backing further tightening, with some open to a move larger than 25bp in December. CME FedWatch and prediction markets subsequently pushed December 9 hike odds to roughly 90-95%, before a broader equity selloff later cut 50bp-hike odds to zero and left a 25bp move to 4.00-4.25% as the dominant expectation.",
+      "assessment": "negative",
+      "severity": "alert",
+      "confidence": "secondary only",
+      "source_url": "https://www.tradingpedia.com/2026/11/19/crypto-slips-as-fed-minutes-fuel-december-rate-hike-bets/"
+    },
+    {
+      "date": "2026-11-19",
+      "headline": "SEC nominees Johnson, Levine testify at Senate Banking hearing",
+      "what_happened": "Steven Levine and Kristin N. Johnson appeared before the Senate Banking Committee for their SEC confirmation hearing, with discussion focused on the SEC's September 17 tokenized-stock innovation exemption. Johnson emphasized notice-and-comment rulemaking while Levine compared the exemption to early ETF exemptive orders that later led to formal rulemaking; confirming both would move the SEC from two to four commissioners.",
+      "assessment": "neutral",
+      "severity": "digest",
+      "confidence": "secondary only",
+      "source_url": "https://defieducationfund.substack.com/p/defi-debrief-week-of-november-162026"
+    },
+    {
+      "date": "2026-11-17",
+      "headline": "CFTC nominees face Senate Agriculture hearing; chair backs CFTC spot role",
+      "what_happened": "The Senate Agriculture Committee held its hearing for CFTC nominees Nathan Anonick and Matthew Rowland on November 17, with Chairman Boozman stating the CFTC is the right regulator for the digital-asset spot market. Separately, on November 9 Coinbase, Kalshi, Payward, DRW, Jump Trading and Paradigm submitted a proposed amicus brief supporting the CFTC in ongoing market-structure litigation, and the SEC also filed its own amicus brief.",
+      "assessment": "neutral",
+      "severity": "digest",
+      "confidence": "secondary only",
+      "source_url": "https://www.troutman.com/insights/digital-assets-blockchain-newsletter-november-19-2026/"
+    },
+    {
+      "date": "2026-11-23",
+      "headline": "CFTC prediction-market rules move to White House review",
+      "what_happened": "The CFTC filed its 'Prediction Markets; Public Interest Determinations' rulemaking with the White House's Office of Information and Regulatory Affairs for review, advancing its claim of exclusive jurisdiction over event contracts. A coalition of 44 state attorneys general said they opposed the CFTC's prediction-market rulemaking, underscoring an ongoing state-federal jurisdiction dispute.",
+      "assessment": "neutral",
+      "severity": "digest",
+      "confidence": "primary source",
+      "source_url": "https://www.theblock.co/news/regulation/2026-11-23-cftc-prediction-market-rules-advance-white-house-review-amid-state-federal-jurisdiction-fight-445384"
+    },
+    {
+      "date": "2026-11-18",
+      "headline": "Majority of top crypto treasury firms trade below NAV, choking financing",
+      "what_happened": "Blockworks data cited this week showed 24 of the 25 largest crypto-treasury companies trading below the value of their holdings, with Strategy's mNAV around 1.0-1.08x (and briefly sub-1x), Metaplanet at 0.49x, and SharpLink near 0.67x as of mid-to-late November. Persistent sub-1.0x mNAV removes the equity-issuance arbitrage that funded years of corporate Bitcoin accumulation, with VanEck noting 20 companies have already retreated from Bitcoin treasury strategies in 2026 (9 full exits, 7 partial sellers).",
+      "assessment": "negative",
+      "severity": "alert",
+      "confidence": "secondary only",
+      "source_url": "https://coinpedia.org/research-report/good-time-to-buy-bitcoin-the-signals-worth-watching-after-the-55122-low/"
+    },
+    {
+      "date": "2026-11-16",
+      "headline": "CFTC approves blockchain-based derivatives exchange TLD Markets",
+      "what_happened": "On November 16, the CFTC designated TLD Markets, Inc. as a new derivatives exchange, confirmed in the agency's official filing record, extending the CFTC's recent run of crypto-market-infrastructure approvals.",
+      "assessment": "positive",
+      "severity": "digest",
+      "confidence": "primary source",
+      "source_url": "https://news.bitcoin.com/regulation-and-legal/this-week-in-crypto-law-november-22-2026/"
     }
   ],
-  "generated_at": "2026-11-16T17:15:39.042457+00:00"
+  "generated_at": "2026-11-23T19:20:44.475089+00:00"
 }

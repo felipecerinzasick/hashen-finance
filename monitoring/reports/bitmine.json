@@ -3,48 +3,41 @@
   "name": "BitMine Immersion",
   "ticker": "BMNR",
   "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/bitmine/",
-  "generated_at": "2026-11-16T17:15:39.042388+00:00",
+  "generated_at": "2026-11-23T19:20:44.475018+00:00",
   "lookback_days": 8,
   "snapshot": {
-    "holdings": "6,077,745 ETH (~4.97% of ETH supply) + 216 BTC + $180M Beast Industries stake + $67M Eightco stake; total crypto/cash/\"moonshots\" ~$11.8B as of Nov 15, 2026",
-    "share_price": null,
-    "mnav": 0.93,
-    "as_of": "2026-11-16"
+    "holdings": "6,085,564 ETH (4.98% of ETH supply) plus 216 BTC, $180M Beast Industries stake, $54M Eightco (ORBS) stake, $50M other moonshots, $384M cash & marketable securities; total crypto+cash+moonshots $11.1B as of Nov 22, 2026",
+    "share_price": 15.3,
+    "mnav": 0.83,
+    "as_of": "2026-11-23"
   },
   "overall_verdict": "neutral",
-  "email_summary": "BitMine keeps buying ETH weekly as holdings value falls to $11.8B on price decline; MSCI spared BMNR while Strategy got cut.",
-  "bottom_line": "BitMine continued disciplined weekly ETH accumulation and avoided the MSCI index-exclusion fate that hit Strategy, but total treasury value fell sharply on ETH price weakness and the staked-ETH ratio has stagnated for three straight weeks. A new retail-voting program that defaults shares to Board recommendations is a mild governance watch-item given the company's history of large share-authorization asks.",
-  "source_conflicts": [],
+  "email_summary": "BitMine's weekly 8-K shows ETH holdings climbing to 6.09M tokens as total asset value slips to $11.1B on lower ETH prices.",
+  "bottom_line": "BitMine kept its uninterrupted weekly ETH-buying streak alive, adding 7,819 ETH even as a falling ETH price cut total disclosed treasury value to $11.1B from $11.8B the prior week. No new financing, dilution, buyback, or governance disclosures emerged in the window, leaving the thesis essentially unchanged on fundamentals while mNAV continues to trade at a discount (~0.83x) to reported NAV.",
+  "source_conflicts": [
+    "BMNR share price on Nov 23 is reported inconsistently across sources: Benzinga cites a Monday close of $15.30 (+17.9%), while Robinhood shows an intraday price of $14.22 the same day — likely reflecting different intraday snapshots rather than a true data conflict.",
+    "mNAV/discount estimates differ by source and date: Cestrian Capital Research pegs BMNR at a 14% NAV discount (0.86x) as of Nov 18 close, while the BMNR mNAV Tracker shows 0.83x (17.4% discount) as of Nov 23 — consistent with a widening discount over the week but not a direct same-day conflict."
+  ],
   "updates": [
     {
-      "date": "2026-11-16",
-      "headline": "BitMine adds 7,653 ETH as holdings value falls to $11.8B",
-      "what_happened": "BitMine's weekly 8-K disclosed ETH holdings of 6,077,745 tokens (4.97% of supply) as of Nov 15, up 7,653 ETH for the week, but total crypto/cash/moonshots value fell to $11.8 billion from $14.5 billion earlier in the month as ETH's price dropped to $1,823. Staked ETH held flat at 5,227,037 for a third straight week, meaning the staking ratio slipped to about 86% of holdings even as token count grew. Chairman Tom Lee called the ETH decline a \"waterfall decline in price\" that he attributes to Nvidia-related margin selling in Asia and investors raising cash ahead of the Anthropic IPO.",
+      "date": "2026-11-23",
+      "headline": "BitMine adds 7,819 ETH; total holdings dip to $11.1B",
+      "what_happened": "BitMine's weekly 8-K disclosed ETH holdings rising to 6,085,564 tokens (4.98% of total ETH supply) after buying 7,819 ETH over the prior week, extending its streak of weekly purchases since June 2025. Total crypto, cash, and moonshot holdings fell to $11.1 billion from $11.8 billion a week earlier because the ETH price used for the mark dropped to $1,713 from $1,823, even though staked ETH (5,227,037 tokens) and projected annualized staking revenue ($286M, up from a prior high of $294M) were essentially unchanged in token terms.",
       "assessment": "neutral",
-      "thesis_fit": "Continued weekly accumulation discipline is thesis-supportive, but a stagnant staking balance alongside growing token count and a sharp mark-to-market value decline are mild negatives for the custody/staking-economics and ETH-per-share legs of the thesis.",
+      "thesis_fit": "Continued disciplined weekly ETH accumulation and unchanged staking participation (~86% of ETH staked) support the accumulation leg of the thesis, but the falling ETH mark and the stock's persistent ~17% discount to NAV offset the positive on-chain progress.",
       "severity": "digest",
       "confidence": "primary source",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/0001829311/000149315226052063/ex99-1.htm"
+      "source_url": "https://www.sec.gov/Archives/edgar/data/0001829311/000149315226053668/ex99-1.htm"
     },
     {
-      "date": "2026-11-11",
-      "headline": "MSCI removes Strategy from indexes; BitMine not named",
-      "what_happened": "In its November 2026 Index Review, MSCI confirmed removal of Strategy's Class A shares from its USA Large Cap Index and Global Investable Market Indexes effective after the Nov. 30 close, under new rules targeting non-operating, crypto-heavy balance sheets. BitMine was not named among the companies removed, and BMNR shares rose on the news even as Strategy shares lagged.",
-      "assessment": "positive",
-      "thesis_fit": "Avoiding MSCI exclusion removes a near-term passive-selling overhang that is now weighing on peer treasury vehicles, a direct positive for BitMine's index-related positioning.",
-      "severity": "digest",
-      "confidence": "secondary only",
-      "source_url": "https://www.thestreet.com/crypto/markets/strategy-stock-under-pressure-ahead-of-key-msci-decision-today"
-    },
-    {
-      "date": "2026-11-06",
-      "headline": "BitMine launches retail voting program defaulting to Board",
-      "what_happened": "BitMine filed a DEFA14A introducing a \"Retail Voting Program\" that lets shareholders opt in to have their shares automatically voted in line with Board recommendations at future meetings, modeled on similar programs at large-cap companies. Shareholders retain the ability to override individual votes or opt out, but the program is designed to raise support for future proposals without issuing new shares to secure quorum.",
+      "date": "2026-11-23",
+      "headline": "Tom Lee frames ETH, BTC as 'hard money' on low supply growth",
+      "what_happened": "In commentary accompanying the weekly 8-K, Chairman Tom Lee argued ETH and BTC function as hard money, noting ETH supply had grown 1.26% since BitMine adopted its treasury strategy in June 2025, versus 0.82% for Bitcoin and much higher annualized inflation for Solana, XRP, and Cardano. He used the comparison to reinforce BitMine's ETH-centric accumulation thesis rather than announcing any new treasury-policy action.",
       "assessment": "neutral",
-      "thesis_fit": "Given BitMine's history of large share-authorization requests to fund its ETH strategy, a program that streamlines Board-aligned voting is a governance item worth monitoring for how it affects shareholder scrutiny of future dilutive financing proposals.",
+      "thesis_fit": "This is narrative reinforcement of the existing ETH-accumulation thesis rather than a concrete new commitment on treasury policy, financing, or custody.",
       "severity": "digest",
       "confidence": "primary source",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/0001829311/000149315226050507/defa14a.htm"
+      "source_url": "https://www.theblock.co/news/business/2026-11-23-bitmine-adds-7819-eth-tom-lee-makes-hard-money-case-444948"
     }
   ]
 }

@@ -449,6 +449,106 @@
       "id": "39cb588f4e89e4",
       "label": "sector: Fed officials signal December hike, more tightening into 2027",
       "date": "2026-11-14"
+    },
+    {
+      "id": "fcb544eb0345cc",
+      "label": "mstr: Strategy buys just 457 BTC, STRC buyback 7x larger",
+      "date": "2026-11-23"
+    },
+    {
+      "id": "4c6f2caaa16ba6",
+      "label": "mstr: Board raises preferred-stock buyback cap to $4 billion",
+      "date": "2026-11-23"
+    },
+    {
+      "id": "e36fde7f697bdf",
+      "label": "mstr: Saylor claims 13 straight weeks of BTC-per-share gains",
+      "date": "2026-11-23"
+    },
+    {
+      "id": "48e63165e3dfb4",
+      "label": "mstr: mNAV falls near or below 1.0x as BTC crashes",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "74a8134e01ae76",
+      "label": "mstr: Peter Schiff renews 'complete fraud' attack on Saylor",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "727fb2decc8e2c",
+      "label": "mstr: Strategy buys 485 BTC, spending drops 59% week-over-week",
+      "date": "2026-11-16"
+    },
+    {
+      "id": "7a0bbf85d2f2af",
+      "label": "metaplanet: Metaplanet to use CB proceeds for buybacks, not BTC",
+      "date": "2026-11-21"
+    },
+    {
+      "id": "293d9aa6afaa43",
+      "label": "metaplanet: Metaplanet formally convenes Dec 18 EGM on capital reduction",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "220f6f107d9701",
+      "label": "metaplanet: MSCI confirms Metaplanet removal effective Nov 30",
+      "date": "2026-11-11"
+    },
+    {
+      "id": "18c1bcb6512f14",
+      "label": "asst: Strive pauses Bitcoin buying, skips ATM sales for a week",
+      "date": "2026-11-23"
+    },
+    {
+      "id": "d49d2cc9b283bd",
+      "label": "bitmine: BitMine adds 7,819 ETH; total holdings dip to $11.1B",
+      "date": "2026-11-23"
+    },
+    {
+      "id": "c02c4eb8f454f0",
+      "label": "bitmine: Tom Lee frames ETH, BTC as 'hard money' on low supply growth",
+      "date": "2026-11-23"
+    },
+    {
+      "id": "b4ac2196aeb782",
+      "label": "sector: MSCI confirms Strategy, Metaplanet deletion; SharpLink on watch list",
+      "date": "2026-11-11"
+    },
+    {
+      "id": "f29b43a1ffa997",
+      "label": "sector: Bitcoin, Ether ETFs post largest weekly outflows in months",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "6f1b77c7e7ed20",
+      "label": "sector: Fed December hike odds surge to 90-95% after hawkish minutes",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "f31ceb9c5f8004",
+      "label": "sector: SEC nominees Johnson, Levine testify at Senate Banking hearing",
+      "date": "2026-11-19"
+    },
+    {
+      "id": "f4fc0f216407e2",
+      "label": "sector: CFTC nominees face Senate Agriculture hearing; chair backs CFTC spot role",
+      "date": "2026-11-17"
+    },
+    {
+      "id": "7fefbffc3974bb",
+      "label": "sector: CFTC prediction-market rules move to White House review",
+      "date": "2026-11-23"
+    },
+    {
+      "id": "f2d0ee5e3424ba",
+      "label": "sector: Majority of top crypto treasury firms trade below NAV, choking financing",
+      "date": "2026-11-18"
+    },
+    {
+      "id": "bfdcff8fd70646",
+      "label": "sector: CFTC approves blockchain-based derivatives exchange TLD Markets",
+      "date": "2026-11-16"
     }
   ]
 }

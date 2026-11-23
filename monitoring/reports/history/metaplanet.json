@@ -2,6 +2,55 @@
   "slug": "metaplanet",
   "entries": [
     {
+      "generated_at": "2026-11-23T19:20:44.475004+00:00",
+      "lookback_days": 8,
+      "overall_verdict": "neutral",
+      "email_summary": "Metaplanet redirects CB proceeds to buybacks, formally convenes Dec 18 EGM, shares hit multi-year low as mNAV sinks near 0.46x.",
+      "bottom_line": "No new dilution or incremental BTC buying was disclosed this week; instead, management confirmed it is steering October convertible-bond proceeds into share buybacks below mNAV rather than new equity-funded Bitcoin purchases, which is non-dilutive and BTC-per-share accretive. However, the stock continued falling to fresh lows with mNAV compressing toward ~0.46-0.6x ahead of the Nov 30 MSCI exclusion, underscoring persistent valuation and financing-capacity pressure.",
+      "snapshot": {
+        "holdings": "44,000 BTC (as of 2026-09-30)",
+        "share_price": 177.0,
+        "mnav": 0.46,
+        "as_of": "2026-11-20"
+      },
+      "source_conflicts": [
+        "mNAV estimates vary by source and date (0.49x on Nov 12 per bitcointreasuries.net-based calc, 0.6-0.61x on Nov 16-17 post-earnings per Japanese trackers, 0.46x implied by PBR on Nov 20 per Kabutan) — likely reflects fast-moving price/BTC-price inputs rather than a true conflict, but figures should not be treated as interchangeable.",
+        "Some third-party trackers (bitcointreasuries.net cached pages) still show 43,000 BTC as of Jul/Oct 2026, while Metaplanet's own Q3 disclosure and most financial media confirm 44,000 BTC as of Sept 30, 2026."
+      ],
+      "updates": [
+        {
+          "date": "2026-11-21",
+          "headline": "Metaplanet to use CB proceeds for buybacks, not BTC",
+          "what_happened": "Reporting on Metaplanet's capital allocation plans indicates the company is prioritizing share repurchases over additional Bitcoin purchases with proceeds from its October convertible bond issue. Between October 14 and November 12 the company spent roughly ¥28.3 billion repurchasing shares, including about 12.3 million shares for ¥3.0 billion in the November 1-12 window alone.",
+          "assessment": "positive",
+          "thesis_fit": "Directing non-dilutive debt proceeds into buybacks executed below 1.0x mNAV is accretive to BTC per share and avoids further equity dilution, consistent with the thesis's preference for buybacks over dilutive issuance.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://www.ad-hoc-news.de/boerse/news/unternehmensnachrichten/metaplanet-pivots-to-buybacks-after-bitcoin-slump-forces-2026-guidance-cut/70542888"
+        },
+        {
+          "date": "2026-11-20",
+          "headline": "Metaplanet formally convenes Dec 18 EGM on capital reduction",
+          "what_happened": "Metaplanet filed timely disclosures ('Notice of Convocation for the Extraordinary General Meeting' and a virtual-attendance guide) confirming the previously announced capital stock/reserve reduction to ¥1 will be voted on at a virtual EGM on December 18, 2026, with an effective date around December 30, 2026.",
+          "assessment": "neutral",
+          "thesis_fit": "This is procedural formalization of the already-disclosed capital reduction plan (to expand distributable reserves for buybacks/dividends) rather than a change in terms.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://www.nikkei.com/nkd/disclosure/tdnr/20261119583207/"
+        },
+        {
+          "date": "2026-11-11",
+          "headline": "MSCI confirms Metaplanet removal effective Nov 30",
+          "what_happened": "MSCI's official filings confirmed Metaplanet will be deleted from the MSCI Japan Small Cap Index at the close of November 30, 2026, alongside Strategy's removal from the MSCI USA Index. This was previously flagged as a pending decision and is now finalized with an exact effective date.",
+          "assessment": "negative",
+          "thesis_fit": "Index removal triggers mechanical selling from benchmark-tracking funds, a known flow headwind already part of the thesis's MSCI risk factor, now confirmed with a firm date.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://www.theblock.co/news/markets/2026-11-11-strategy-metaplanet-lose-msci-index-membership-november-reshuffle-438437"
+        }
+      ]
+    },
+    {
       "generated_at": "2026-11-16T17:15:39.042374+00:00",
       "lookback_days": 8,
       "overall_verdict": "negative",

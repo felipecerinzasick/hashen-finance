@@ -2,6 +2,45 @@
   "slug": "bitmine",
   "entries": [
     {
+      "generated_at": "2026-11-23T19:20:44.475018+00:00",
+      "lookback_days": 8,
+      "overall_verdict": "neutral",
+      "email_summary": "BitMine's weekly 8-K shows ETH holdings climbing to 6.09M tokens as total asset value slips to $11.1B on lower ETH prices.",
+      "bottom_line": "BitMine kept its uninterrupted weekly ETH-buying streak alive, adding 7,819 ETH even as a falling ETH price cut total disclosed treasury value to $11.1B from $11.8B the prior week. No new financing, dilution, buyback, or governance disclosures emerged in the window, leaving the thesis essentially unchanged on fundamentals while mNAV continues to trade at a discount (~0.83x) to reported NAV.",
+      "snapshot": {
+        "holdings": "6,085,564 ETH (4.98% of ETH supply) plus 216 BTC, $180M Beast Industries stake, $54M Eightco (ORBS) stake, $50M other moonshots, $384M cash & marketable securities; total crypto+cash+moonshots $11.1B as of Nov 22, 2026",
+        "share_price": 15.3,
+        "mnav": 0.83,
+        "as_of": "2026-11-23"
+      },
+      "source_conflicts": [
+        "BMNR share price on Nov 23 is reported inconsistently across sources: Benzinga cites a Monday close of $15.30 (+17.9%), while Robinhood shows an intraday price of $14.22 the same day — likely reflecting different intraday snapshots rather than a true data conflict.",
+        "mNAV/discount estimates differ by source and date: Cestrian Capital Research pegs BMNR at a 14% NAV discount (0.86x) as of Nov 18 close, while the BMNR mNAV Tracker shows 0.83x (17.4% discount) as of Nov 23 — consistent with a widening discount over the week but not a direct same-day conflict."
+      ],
+      "updates": [
+        {
+          "date": "2026-11-23",
+          "headline": "BitMine adds 7,819 ETH; total holdings dip to $11.1B",
+          "what_happened": "BitMine's weekly 8-K disclosed ETH holdings rising to 6,085,564 tokens (4.98% of total ETH supply) after buying 7,819 ETH over the prior week, extending its streak of weekly purchases since June 2025. Total crypto, cash, and moonshot holdings fell to $11.1 billion from $11.8 billion a week earlier because the ETH price used for the mark dropped to $1,713 from $1,823, even though staked ETH (5,227,037 tokens) and projected annualized staking revenue ($286M, up from a prior high of $294M) were essentially unchanged in token terms.",
+          "assessment": "neutral",
+          "thesis_fit": "Continued disciplined weekly ETH accumulation and unchanged staking participation (~86% of ETH staked) support the accumulation leg of the thesis, but the falling ETH mark and the stock's persistent ~17% discount to NAV offset the positive on-chain progress.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/0001829311/000149315226053668/ex99-1.htm"
+        },
+        {
+          "date": "2026-11-23",
+          "headline": "Tom Lee frames ETH, BTC as 'hard money' on low supply growth",
+          "what_happened": "In commentary accompanying the weekly 8-K, Chairman Tom Lee argued ETH and BTC function as hard money, noting ETH supply had grown 1.26% since BitMine adopted its treasury strategy in June 2025, versus 0.82% for Bitcoin and much higher annualized inflation for Solana, XRP, and Cardano. He used the comparison to reinforce BitMine's ETH-centric accumulation thesis rather than announcing any new treasury-policy action.",
+          "assessment": "neutral",
+          "thesis_fit": "This is narrative reinforcement of the existing ETH-accumulation thesis rather than a concrete new commitment on treasury policy, financing, or custody.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://www.theblock.co/news/business/2026-11-23-bitmine-adds-7819-eth-tom-lee-makes-hard-money-case-444948"
+        }
+      ]
+    },
+    {
       "generated_at": "2026-11-16T17:15:39.042388+00:00",
       "lookback_days": 8,
       "overall_verdict": "neutral",

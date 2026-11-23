@@ -2,6 +2,32 @@
   "slug": "asst",
   "entries": [
     {
+      "generated_at": "2026-11-23T19:20:44.475012+00:00",
+      "lookback_days": 8,
+      "overall_verdict": "neutral",
+      "email_summary": "Strive paused Bitcoin buying and ATM sales for the first time in months as cash dipped to $462.4M.",
+      "bottom_line": "After weeks of steady accumulation funded by preferred-stock ATMs, Strive's treasury growth engine paused for a week with no BTC purchases or share sales, a routine but notable break in cadence worth watching for signs of financing fatigue. Share price remains highly volatile (down to $14.51 before a 16.5% gap-up), and mNAV has compressed to roughly 1.36x, modestly narrowing the arbitrage that has funded past purchases.",
+      "snapshot": {
+        "holdings": "43,404 BTC (unchanged week-over-week as of Nov 20, 2026)",
+        "share_price": 16.9,
+        "mnav": 1.36,
+        "as_of": "2026-11-23"
+      },
+      "source_conflicts": [],
+      "updates": [
+        {
+          "date": "2026-11-23",
+          "headline": "Strive pauses Bitcoin buying, skips ATM sales for a week",
+          "what_happened": "Strive disclosed in a Form 8-K that it purchased no bitcoin during the week ended November 20, 2026, leaving its treasury unchanged at 43,404 BTC, and sold no shares of Class A common stock, SATA, or SATS preferred through its at-the-market programs. Cash and cash equivalents declined $2.9 million to $462.4 million over the week, and the company's 505,000 shares of Strategy's STRC preferred stock lost roughly $3.2 million in fair value. Share counts were unchanged at 127,331,109 combined Class A/B shares.",
+          "assessment": "neutral",
+          "thesis_fit": "A pause in both BTC accumulation and ATM issuance interrupts the weekly 'bitcoin-per-share' growth narrative central to the thesis, though a single quiet week does not by itself signal distress.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1920406/000162828026075372/asst-20261123.htm"
+        }
+      ]
+    },
+    {
       "generated_at": "2026-11-16T17:15:39.042382+00:00",
       "lookback_days": 8,
       "overall_verdict": "negative",

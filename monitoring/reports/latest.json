@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-16T17:15:39.042457+00:00",
+  "generated_at": "2026-11-23T19:20:44.475089+00:00",
   "lookback_days": 8,
   "reports": [
     {
@@ -7,61 +7,81 @@
       "name": "Strategy",
       "ticker": "MSTR",
       "dashboard_url": "https://hashen-finance.onrender.com/dashboard/mstr/",
-      "generated_at": "2026-11-16T17:15:39.042350+00:00",
+      "generated_at": "2026-11-23T19:20:44.474979+00:00",
       "lookback_days": 8,
       "snapshot": {
-        "holdings": "850,849 BTC (~4.05% of 21M max supply), acquired for ~$64.20B aggregate, avg cost $75,452/BTC",
-        "share_price": 104.3,
-        "mnav": null,
-        "as_of": "2026-11-16"
+        "holdings": "851,305 BTC as of Nov 22, 2026 (avg cost $75,446/BTC, total cost ~$64.23B)",
+        "share_price": 97.0,
+        "mnav": 0.97,
+        "as_of": "2026-11-23"
       },
       "overall_verdict": "negative",
-      "email_summary": "MSCI confirmed MSTR's index removal while BTC purchases slowed and the treasury swung back to a ~$9.6B paper loss.",
-      "bottom_line": "The confirmed MSCI deletion removes a passive-demand pillar just as Strategy's weekly BTC buying pace collapsed (1,036 BTC then only 485 BTC) and a greater share of ATM proceeds went to defending STRC's par value rather than accumulating bitcoin. With BTC near $64K versus a $75,452 average cost basis, the treasury has flipped back into a large unrealized loss, reinforcing the bearish setup for the financing flywheel.",
+      "email_summary": "Strategy keeps buying BTC but at a trickle while STRC buybacks dominate cash and mNAV sits near/below 1x.",
+      "bottom_line": "BTC-per-share accretion continues (13 straight weeks per Saylor) but at a shrinking pace as weekly BTC buys fell to just 457 coins while STRC preferred buybacks absorbed 7x more cash; with mNAV hovering near parity (0.97-1.07x depending on measure) and BTC sitting ~$9.6-12B underwater, the equity-issuance flywheel that powers the thesis is stalling, though management has avoided value-destructive raises so far.",
       "source_conflicts": [
-        "mNAV estimates diverge sharply across sources for mid-November 2026: mnav.com shows ~1.20x (Nov 15), a macro research note cites 1.09x (Nov 15-16), while another tracker showed a 0.87x discount in early November — likely reflecting different calculation methods (basic vs. enterprise-adjusted) and intraday price swings; no single reliable mNAV figure can be confirmed for this snapshot.",
-        "Total BTC holdings as of Nov 8 are reported as both 850,364 (Investing.com, mnav.com) and figures citing slightly different average costs; as of Nov 15 holdings are consistently reported at 850,849 BTC across multiple sources."
+        "mNAV estimates for the week vary by source and methodology: TheBlock showed ~0.68-0.69x (Nov 19-20), mnav.com showed 1.01x (Nov 20), BloFin's dashboard-based calc showed 0.78x-1.07x depending on definition (Nov 17), and cryptoticker reported 0.97x (Nov 20) — basic market-cap-only vs. enterprise-value vs. company-dashboard methodologies diverge meaningfully at these compressed levels.",
+        "Unrealized BTC loss estimates range from ~$9.6B to ~$13.7B depending on the exact BTC price snapshot and date used across sources this week."
       ],
       "updates": [
         {
-          "date": "2026-11-11",
-          "headline": "MSCI confirms Strategy removal from USA Index Nov 30",
-          "what_happened": "MSCI published its November index review confirming Strategy will be deleted from the MSCI USA Index and other global equity benchmarks at the close of November 30, under a new rule excluding 'non-operating' asset-holding companies. Strategy had argued in prior letters that exclusion would have no meaningful business impact, but analysts estimate billions in passive-fund outflows as index trackers are forced to sell.",
+          "date": "2026-11-23",
+          "headline": "Strategy buys just 457 BTC, STRC buyback 7x larger",
+          "what_happened": "Strategy disclosed in an 8-K that between Nov 16-22 it sold 1,925,676 Class A shares for $176.7 million net proceeds, using only $29.6 million (17%) to buy 457 BTC at an average of $64,898/coin, while the remaining $211.8 million funded STRC preferred buybacks — roughly seven times the bitcoin spend. Total holdings rose to 851,305 BTC at an average cost of $75,446.",
           "assessment": "negative",
-          "thesis_fit": "Loss of passive index demand could compress the mNAV premium further and make equity-based financing for BTC purchases more expensive or less available, directly threatening the capital-markets flywheel the thesis depends on.",
-          "severity": "alert",
-          "confidence": "secondary only",
-          "source_url": "https://www.theblock.co/news/markets/2026-11-11-strategy-metaplanet-lose-msci-index-membership-november-reshuffle-438437"
+          "thesis_fit": "BTC accumulation pace continues to shrink and capital is being redirected toward preferred buybacks rather than new BTC, muting the stock's effective exposure to further BTC upside.",
+          "severity": "digest",
+          "confidence": "primary source",
+          "source_url": "https://www.investing.com/news/cryptocurrency-news/strategy-buys-bitcoin-expands-repurchase-program-432SI-5045501"
         },
         {
-          "date": "2026-11-09",
-          "headline": "Strategy buys 1,036 BTC, STRC buyback outpaces purchase",
-          "what_happened": "For the week of Nov 2-8, Strategy sold 2,051,348 MSTR shares for $283.8 million net proceeds, using $81.9 million to buy 1,036 BTC at an average $79,012/BTC, while $188.3 million went to repurchasing STRC preferred stock. Total holdings reached 850,364 BTC.",
+          "date": "2026-11-23",
+          "headline": "Board raises preferred-stock buyback cap to $4 billion",
+          "what_happened": "Strategy's board approved increasing the authorized aggregate purchase price under its digital credit securities (preferred stock) repurchase program from $3.0 billion to $4.0 billion, with $1.12 billion remaining available as of Nov 22. The company also authorized reallocating up to $1.0 billion from the USD Reserve to USD Cash, which dropped the USD Reserve to $3.73 billion from $4.75 billion the prior week.",
           "assessment": "neutral",
-          "thesis_fit": "BTC accumulation continued but the majority of new ATM-dilution proceeds funded preferred buybacks rather than bitcoin purchases, muting BTC-per-share accretion from this raise.",
+          "thesis_fit": "Expands flexibility to retire discounted preferred stock, which can be accretive to common equity, but further depletes the cash buffer that supports BTC buying and dividend coverage.",
           "severity": "digest",
           "confidence": "primary source",
-          "source_url": "https://www.investing.com/news/cryptocurrency-news/strategy-sells-mstr-shares-buys-bitcoin-and-repurchases-strc-stock-432SI-5011934"
+          "source_url": "https://www.tipranks.com/news/company-announcements/strategy-reports-bitcoin-purchases-and-expanded-repurchase-authorization"
         },
         {
-          "date": "2026-11-16",
-          "headline": "BTC buying pace drops 59% to just 485 coins",
-          "what_happened": "For the week of Nov 9-15, Strategy sold 2,087,040 MSTR shares for $244.7 million, but allocated only $33.4 million (14%) to buy 485 BTC at $68,887/BTC — a sharp pullback from the prior week's 1,036 BTC. The bulk, $206.3-228.1 million (84%), funded STRC preferred-stock repurchases. Holdings rose to 850,849 BTC at an average cost of $75,452.",
-          "assessment": "negative",
-          "thesis_fit": "A shrinking share of dilutive capital raises is going toward BTC accumulation versus preferred-stock price defense, which weakens the bitcoin-per-share growth argument at the core of the thesis.",
+          "date": "2026-11-23",
+          "headline": "Saylor claims 13 straight weeks of BTC-per-share gains",
+          "what_happened": "Michael Saylor said on X that Strategy's net Bitcoin per share rose for a 13th consecutive week, equivalent to a 2,505 BTC gain worth $199 million before preferred dividends, or 584 satoshis per share cumulatively. The company paid $17.6 million in preferred dividends and spent $211.8 million on STRC buybacks during the same week.",
+          "assessment": "positive",
+          "thesis_fit": "Directly addresses the core thesis metric (BTC per diluted share), showing continued per-share accretion even as absolute BTC buying slows and dividends/buybacks consume most new capital.",
           "severity": "digest",
-          "confidence": "primary source",
-          "source_url": "https://www.stocktitan.net/sec-filings/MSTR/8-k-strategy-inc-reports-material-event-f1d981342dcb.html"
+          "confidence": "secondary only",
+          "source_url": "https://crypto.news/strategy-net-bitcoin-per-share-13-weeks"
         },
         {
-          "date": "2026-11-16",
-          "headline": "BTC treasury swings back to ~$9.6B unrealized loss",
-          "what_happened": "With bitcoin trading near $64,000-68,000 against Strategy's $75,452 average acquisition cost, the company's bitcoin position is now carrying an estimated $9.6-9.8 billion paper loss, reversing the previously reported multi-billion-dollar unrealized gain from earlier in the fall.",
+          "date": "2026-11-20",
+          "headline": "mNAV falls near or below 1.0x as BTC crashes",
+          "what_happened": "Strategy's mNAV touched roughly 0.97x on the company's own metric Nov 20 and as low as 0.68-0.78x on simple market-cap methodologies as Bitcoin fell toward $55,673, a two-year low, before partially recovering. MSTR stock fell to around $81-86 intraday during the week, down over 20% in five trading days at one point.",
           "assessment": "negative",
-          "thesis_fit": "Under fair-value accounting this swing drives large non-cash GAAP volatility and signals that a sustained BTC price slide below the average cost basis pressures both reported earnings and the equity's mNAV, reinforcing the discount risk to the financing flywheel.",
+          "thesis_fit": "A sub-1.0x or near-parity mNAV stalls the equity-issuance flywheel that historically let Strategy raise accretive capital to buy more BTC per share.",
           "severity": "alert",
           "confidence": "secondary only",
-          "source_url": "https://www.benzinga.com/trading-ideas/movers/26/11/63289216/strategy-stock-plunges-8-as-bitcoin-sinks-to-64000-msci-exit-looms"
+          "source_url": "https://cryptoticker.io/en/strategy-mnav-below-1-mstr-stock/"
+        },
+        {
+          "date": "2026-11-20",
+          "headline": "Peter Schiff renews 'complete fraud' attack on Saylor",
+          "what_happened": "As MSTR stock fell nearly 23% over the week to $86.13 by Nov 19, bitcoin critic Peter Schiff renewed public criticism of Strategy's business model, calling it a \"complete fraud\" in response to Saylor's investor Q&A, arguing the company lacks a viable underlying business.",
+          "assessment": "negative",
+          "thesis_fit": "High-profile public critique amplifies bearish sentiment during a period of falling mNAV and widening unrealized BTC losses, adding reputational/narrative pressure on the stock.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://coinpaper.com/39139/strategy-stock-crashes-23-in-one-week-as-peter-schiff-calls-saylor-s-company-a-fraud"
+        },
+        {
+          "date": "2026-11-16",
+          "headline": "Strategy buys 485 BTC, spending drops 59% week-over-week",
+          "what_happened": "Strategy disclosed buying 485 BTC for $33.4 million (avg $68,887/coin) during the week ended Nov 15, down 59% in dollar terms from the prior week's $81.9 million purchase, while funding the bulk of a $244.7 million stock sale toward STRC buybacks rather than BTC. Holdings reached 850,849 BTC with no BTC sales reported.",
+          "assessment": "negative",
+          "thesis_fit": "Continued deceleration in BTC buying pace as the price fell, reinforcing the pattern of prioritizing preferred-stock buybacks over fresh Bitcoin accumulation.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://beincrypto.com/strategy-halves-bitcoin-buying-price-dip/"
         }
       ]
     },
@@ -70,61 +90,51 @@
       "name": "Metaplanet",
       "ticker": "3350.T / MTPLF / DN3.F",
       "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/metaplanet/",
-      "generated_at": "2026-11-16T17:15:39.042374+00:00",
+      "generated_at": "2026-11-23T19:20:44.475004+00:00",
       "lookback_days": 8,
       "snapshot": {
-        "holdings": "44,000 BTC (as of September 30, 2026; confirmed on company site as of November 12, 2026)",
-        "share_price": 204.0,
-        "mnav": 0.49,
-        "as_of": "2026-11-16"
+        "holdings": "44,000 BTC (as of 2026-09-30)",
+        "share_price": 177.0,
+        "mnav": 0.46,
+        "as_of": "2026-11-20"
       },
-      "overall_verdict": "negative",
-      "email_summary": "Metaplanet slashed FY2026 guidance after a ¥27B loss, and MSCI confirmed its Nov 30 index removal, even as buybacks continue.",
-      "bottom_line": "This week brought a confirmed negative catalyst (MSCI exclusion effective Nov 30) layered onto a steep guidance cut and nine-month net loss tied to BTC valuation/sale losses and mNAV-constrained financing. Ongoing buybacks below mNAV are a partial offset, but BTC accumulation has effectively stalled while the stock trades near 0.49x-0.72x mNAV.",
+      "overall_verdict": "neutral",
+      "email_summary": "Metaplanet redirects CB proceeds to buybacks, formally convenes Dec 18 EGM, shares hit multi-year low as mNAV sinks near 0.46x.",
+      "bottom_line": "No new dilution or incremental BTC buying was disclosed this week; instead, management confirmed it is steering October convertible-bond proceeds into share buybacks below mNAV rather than new equity-funded Bitcoin purchases, which is non-dilutive and BTC-per-share accretive. However, the stock continued falling to fresh lows with mNAV compressing toward ~0.46-0.6x ahead of the Nov 30 MSCI exclusion, underscoring persistent valuation and financing-capacity pressure.",
       "source_conflicts": [
-        "mNAV estimates diverge depending on methodology: cryptoticker.io calculated 0.72x using enterprise value versus 0.49x using market capitalization, both as of November 12, 2026.",
-        "Buyback utilization percentages are reported inconsistently across outlets (54.4% of share count vs. 47.1% of yen budget), reflecting the two different caps (200M shares / ¥60B) in the same program."
+        "mNAV estimates vary by source and date (0.49x on Nov 12 per bitcointreasuries.net-based calc, 0.6-0.61x on Nov 16-17 post-earnings per Japanese trackers, 0.46x implied by PBR on Nov 20 per Kabutan) — likely reflects fast-moving price/BTC-price inputs rather than a true conflict, but figures should not be treated as interchangeable.",
+        "Some third-party trackers (bitcointreasuries.net cached pages) still show 43,000 BTC as of Jul/Oct 2026, while Metaplanet's own Q3 disclosure and most financial media confirm 44,000 BTC as of Sept 30, 2026."
       ],
       "updates": [
         {
-          "date": "2026-11-13",
-          "headline": "Metaplanet slashes FY2026 revenue, profit guidance 59-74%",
-          "what_happened": "Metaplanet cut its FY2026 revenue forecast from ¥16 billion to ¥6.5 billion and operating profit from ¥11.4 billion to ¥3 billion. The company posted a nine-month net loss of ¥27.16 billion (~$170 million) versus a ¥13.53 billion profit a year earlier, driven by Bitcoin valuation and sale losses, and explicitly linked the slowdown to capping financing while its share price traded below 1.0x mNAV.",
-          "assessment": "negative",
-          "thesis_fit": "Directly confirms the thesis-weakening scenario of financing constraints and slowed, less-accretive BTC accumulation when mNAV is below 1.0x.",
-          "severity": "alert",
+          "date": "2026-11-21",
+          "headline": "Metaplanet to use CB proceeds for buybacks, not BTC",
+          "what_happened": "Reporting on Metaplanet's capital allocation plans indicates the company is prioritizing share repurchases over additional Bitcoin purchases with proceeds from its October convertible bond issue. Between October 14 and November 12 the company spent roughly ¥28.3 billion repurchasing shares, including about 12.3 million shares for ¥3.0 billion in the November 1-12 window alone.",
+          "assessment": "positive",
+          "thesis_fit": "Directing non-dilutive debt proceeds into buybacks executed below 1.0x mNAV is accretive to BTC per share and avoids further equity dilution, consistent with the thesis's preference for buybacks over dilutive issuance.",
+          "severity": "digest",
+          "confidence": "secondary only",
+          "source_url": "https://www.ad-hoc-news.de/boerse/news/unternehmensnachrichten/metaplanet-pivots-to-buybacks-after-bitcoin-slump-forces-2026-guidance-cut/70542888"
+        },
+        {
+          "date": "2026-11-20",
+          "headline": "Metaplanet formally convenes Dec 18 EGM on capital reduction",
+          "what_happened": "Metaplanet filed timely disclosures ('Notice of Convocation for the Extraordinary General Meeting' and a virtual-attendance guide) confirming the previously announced capital stock/reserve reduction to ¥1 will be voted on at a virtual EGM on December 18, 2026, with an effective date around December 30, 2026.",
+          "assessment": "neutral",
+          "thesis_fit": "This is procedural formalization of the already-disclosed capital reduction plan (to expand distributable reserves for buybacks/dividends) rather than a change in terms.",
+          "severity": "digest",
           "confidence": "primary source",
-          "source_url": "https://www.ad-hoc-news.de/boerse/news/unternehmensnachrichten/metaplanet-cuts-2026-guidance-as-bitcoin-slump-and-index-exit-weigh-on-shares/70521053"
+          "source_url": "https://www.nikkei.com/nkd/disclosure/tdnr/20261119583207/"
         },
         {
           "date": "2026-11-11",
-          "headline": "MSCI confirms Metaplanet removal from Japan Small Cap Index",
-          "what_happened": "MSCI's November 2026 Index Review formally listed Metaplanet for deletion from the MSCI Japan Small Cap Index, with the change taking effect after the close of trading on November 30, 2026. This converts the prior 'under review' exclusion risk into a confirmed, dated event that will trigger passive-fund selling.",
+          "headline": "MSCI confirms Metaplanet removal effective Nov 30",
+          "what_happened": "MSCI's official filings confirmed Metaplanet will be deleted from the MSCI Japan Small Cap Index at the close of November 30, 2026, alongside Strategy's removal from the MSCI USA Index. This was previously flagged as a pending decision and is now finalized with an exact effective date.",
           "assessment": "negative",
-          "thesis_fit": "Confirmed index exclusion removes a passive-flow support and validates the governance/mNAV concerns that drove MSCI's review, directly relevant to the MSCI checklist item.",
-          "severity": "alert",
-          "confidence": "secondary only",
-          "source_url": "https://www.cryptotimes.io/2026/11/13/metaplanet-stock-buyback-hits-108-7m-shares-as-bitcoin-treasury-firm-faces-msci-exit/"
-        },
-        {
-          "date": "2026-11-13",
-          "headline": "Buyback continues: 108.7M shares repurchased, ~54% of cap used",
-          "what_happened": "Metaplanet disclosed it repurchased an additional 12,256,200 shares for about ¥3.0 billion between November 1-12, bringing cumulative repurchases since the October 14 program start to 108.7 million shares for ¥28.27 billion. This represents 54.4% of the 200-million-share limit and 47.1% of the ¥60 billion budget under the authorization running through October 2027.",
-          "assessment": "positive",
-          "thesis_fit": "Executed (not merely authorized) buybacks while shares trade below mNAV directly raises BTC-per-share for remaining holders, consistent with the thesis's most important accretive-action checklist item.",
+          "thesis_fit": "Index removal triggers mechanical selling from benchmark-tracking funds, a known flow headwind already part of the thesis's MSCI risk factor, now confirmed with a firm date.",
           "severity": "digest",
           "confidence": "primary source",
-          "source_url": "https://www.cryptotimes.io/2026/11/13/metaplanet-stock-buyback-hits-108-7m-shares-as-bitcoin-treasury-firm-faces-msci-exit/"
-        },
-        {
-          "date": "2026-11-16",
-          "headline": "Superplanet names CIO, plans US perpetual preferred issuance",
-          "what_happened": "Super League Enterprise (soon to be renamed Superplanet upon closing Metaplanet's 2,100 BTC contribution) announced Jesse Myers will join as incoming Chief Investment Officer. The release stated Superplanet intends to pursue perpetual preferred equity issuance post-closing to run an 'Amplified Bitcoin' strategy aimed at growing Bitcoin per common share.",
-          "assessment": "neutral",
-          "thesis_fit": "This is a subsidiary-level (Nasdaq-listed Superplanet) capital-structure plan rather than a direct Metaplanet TSE share action, but it signals management's continued preference for preferred/debt financing over common dilution, which aligns with the thesis's preferred financing checklist item.",
-          "severity": "digest",
-          "confidence": "primary source",
-          "source_url": "https://www.globenewswire.com/news-release/2026/11/16/3403967/0/en/super-league-appoints-bitcoin-treasury-operator-and-capital-markets-strategist-jesse-myers-as-incoming-chief-investment-officer.html"
+          "source_url": "https://www.theblock.co/news/markets/2026-11-11-strategy-metaplanet-lose-msci-index-membership-november-reshuffle-438437"
         }
       ]
     },
@@ -133,51 +143,28 @@
       "name": "Asset Entities / Strive",
       "ticker": "ASST",
       "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/asst/",
-      "generated_at": "2026-11-16T17:15:39.042382+00:00",
+      "generated_at": "2026-11-23T19:20:44.475012+00:00",
       "lookback_days": 8,
       "snapshot": {
-        "holdings": "43,404 BTC as of Nov 13, 2026",
-        "share_price": 19.3,
-        "mnav": null,
-        "as_of": "2026-11-16"
+        "holdings": "43,404 BTC (unchanged week-over-week as of Nov 20, 2026)",
+        "share_price": 16.9,
+        "mnav": 1.36,
+        "as_of": "2026-11-23"
       },
-      "overall_verdict": "negative",
-      "email_summary": "Strive keeps buying BTC at a loss to spot while raising preferred dividend costs and shares sink 10% in a crypto selloff.",
-      "bottom_line": "Strive's weekly BTC accumulation continues but recent purchases are now underwater versus spot, cash is shrinking, and the preferred dividend rate just rose, adding cost pressure even as some institutional holders added shares. Net effect is modestly negative for the near-term execution story, though the long-term accumulation thesis remains intact.",
-      "source_conflicts": [
-        "Market cap (~$2.72B) cited in same-day coverage predates the ~10% premarket share price decline on Nov 16, so market cap/mNAV figures from that day are inconsistent depending on timing.",
-        "Cash balance change ($22.3M decline to $465.3M) was not explicitly tied to the $17.5M BTC purchase or the $10M preferred raise in the 8-K, per secondary reporting."
-      ],
+      "overall_verdict": "neutral",
+      "email_summary": "Strive paused Bitcoin buying and ATM sales for the first time in months as cash dipped to $462.4M.",
+      "bottom_line": "After weeks of steady accumulation funded by preferred-stock ATMs, Strive's treasury growth engine paused for a week with no BTC purchases or share sales, a routine but notable break in cadence worth watching for signs of financing fatigue. Share price remains highly volatile (down to $14.51 before a 16.5% gap-up), and mNAV has compressed to roughly 1.36x, modestly narrowing the arbitrage that has funded past purchases.",
+      "source_conflicts": [],
       "updates": [
         {
-          "date": "2026-11-16",
-          "headline": "Strive buys 251 BTC at a loss to current spot price",
-          "what_happened": "Strive's Form 8-K disclosed the purchase of 251 bitcoin between Nov. 7-13 at an average cost of $69,853 per coin, bringing total holdings to 43,404 BTC. The filing also showed cash fell $22.3 million to $465.3 million and that Strive raised about $10 million by selling 104,478 shares of its 15% fixed-rate Series A (SATS) preferred stock, with no common or variable-rate SATA shares sold during the week.",
-          "assessment": "negative",
-          "thesis_fit": "Continued BTC accumulation supports the treasury thesis, but buying at $69,853 while bitcoin traded near $64,300-$68,800 means this tranche sits at an unrealized loss, and funding it via expensive 15% fixed preferred raises the cost-of-capital bar for a durable BTC-per-share story.",
+          "date": "2026-11-23",
+          "headline": "Strive pauses Bitcoin buying, skips ATM sales for a week",
+          "what_happened": "Strive disclosed in a Form 8-K that it purchased no bitcoin during the week ended November 20, 2026, leaving its treasury unchanged at 43,404 BTC, and sold no shares of Class A common stock, SATA, or SATS preferred through its at-the-market programs. Cash and cash equivalents declined $2.9 million to $462.4 million over the week, and the company's 505,000 shares of Strategy's STRC preferred stock lost roughly $3.2 million in fair value. Share counts were unchanged at 127,331,109 combined Class A/B shares.",
+          "assessment": "neutral",
+          "thesis_fit": "A pause in both BTC accumulation and ATM issuance interrupts the weekly 'bitcoin-per-share' growth narrative central to the thesis, though a single quiet week does not by itself signal distress.",
           "severity": "digest",
           "confidence": "primary source",
-          "source_url": "https://unchainedcrypto.com/strives-weekly-bitcoin-buying-rebounds-to-251-btc-as-it-pays-less-per-coin"
-        },
-        {
-          "date": "2026-11-12",
-          "headline": "Strive raises SATA preferred dividend rate to 13.25%",
-          "what_happened": "Strive's board increased the dividend rate on its Variable Rate Series A Perpetual Preferred Stock (SATA) from 13.00% to 13.25% per annum, effective for periods starting December 1, 2026, per an 8-K filing.",
-          "assessment": "negative",
-          "thesis_fit": "A higher preferred dividend rate increases the cash yield Strive must cover from its 18-month reserve and operating cash flow, adding to the capital-structure cost that bears on durability of the BTC-per-share strategy.",
-          "severity": "digest",
-          "confidence": "primary source",
-          "source_url": "https://www.stocktitan.net/sec-filings/ASST/8-k-strive-inc-reports-material-event-25b814afc448.html"
-        },
-        {
-          "date": "2026-11-12",
-          "headline": "BNY Mellon, State Street raise ASST stakes in Q3 13Fs",
-          "what_happened": "A Nov. 5 13F showed Bank of New York Mellon raised its Strive stake 28% to 237,100 shares worth $6.97 million as of Sept. 30. A separate Nov. 12 13F showed State Street raised its Strive position 12% to roughly $50 million.",
-          "assessment": "positive",
-          "thesis_fit": "Incremental institutional buying during Q3 is a modest positive signal for market trust in the treasury story, partially offsetting the recently reported reduction in Fidelity's passive stake.",
-          "severity": "digest",
-          "confidence": "primary source",
-          "source_url": "https://bitcoinmagazine.com/news/bny-mellon-raises-strive-asst-stake-28"
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1920406/000162828026075372/asst-20261123.htm"
         }
       ]
     },
@@ -186,84 +173,122 @@
       "name": "BitMine Immersion",
       "ticker": "BMNR",
       "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/bitmine/",
-      "generated_at": "2026-11-16T17:15:39.042388+00:00",
+      "generated_at": "2026-11-23T19:20:44.475018+00:00",
       "lookback_days": 8,
       "snapshot": {
-        "holdings": "6,077,745 ETH (~4.97% of ETH supply) + 216 BTC + $180M Beast Industries stake + $67M Eightco stake; total crypto/cash/\"moonshots\" ~$11.8B as of Nov 15, 2026",
-        "share_price": null,
-        "mnav": 0.93,
-        "as_of": "2026-11-16"
+        "holdings": "6,085,564 ETH (4.98% of ETH supply) plus 216 BTC, $180M Beast Industries stake, $54M Eightco (ORBS) stake, $50M other moonshots, $384M cash & marketable securities; total crypto+cash+moonshots $11.1B as of Nov 22, 2026",
+        "share_price": 15.3,
+        "mnav": 0.83,
+        "as_of": "2026-11-23"
       },
       "overall_verdict": "neutral",
-      "email_summary": "BitMine keeps buying ETH weekly as holdings value falls to $11.8B on price decline; MSCI spared BMNR while Strategy got cut.",
-      "bottom_line": "BitMine continued disciplined weekly ETH accumulation and avoided the MSCI index-exclusion fate that hit Strategy, but total treasury value fell sharply on ETH price weakness and the staked-ETH ratio has stagnated for three straight weeks. A new retail-voting program that defaults shares to Board recommendations is a mild governance watch-item given the company's history of large share-authorization asks.",
-      "source_conflicts": [],
+      "email_summary": "BitMine's weekly 8-K shows ETH holdings climbing to 6.09M tokens as total asset value slips to $11.1B on lower ETH prices.",
+      "bottom_line": "BitMine kept its uninterrupted weekly ETH-buying streak alive, adding 7,819 ETH even as a falling ETH price cut total disclosed treasury value to $11.1B from $11.8B the prior week. No new financing, dilution, buyback, or governance disclosures emerged in the window, leaving the thesis essentially unchanged on fundamentals while mNAV continues to trade at a discount (~0.83x) to reported NAV.",
+      "source_conflicts": [
+        "BMNR share price on Nov 23 is reported inconsistently across sources: Benzinga cites a Monday close of $15.30 (+17.9%), while Robinhood shows an intraday price of $14.22 the same day — likely reflecting different intraday snapshots rather than a true data conflict.",
+        "mNAV/discount estimates differ by source and date: Cestrian Capital Research pegs BMNR at a 14% NAV discount (0.86x) as of Nov 18 close, while the BMNR mNAV Tracker shows 0.83x (17.4% discount) as of Nov 23 — consistent with a widening discount over the week but not a direct same-day conflict."
+      ],
       "updates": [
         {
-          "date": "2026-11-16",
-          "headline": "BitMine adds 7,653 ETH as holdings value falls to $11.8B",
-          "what_happened": "BitMine's weekly 8-K disclosed ETH holdings of 6,077,745 tokens (4.97% of supply) as of Nov 15, up 7,653 ETH for the week, but total crypto/cash/moonshots value fell to $11.8 billion from $14.5 billion earlier in the month as ETH's price dropped to $1,823. Staked ETH held flat at 5,227,037 for a third straight week, meaning the staking ratio slipped to about 86% of holdings even as token count grew. Chairman Tom Lee called the ETH decline a \"waterfall decline in price\" that he attributes to Nvidia-related margin selling in Asia and investors raising cash ahead of the Anthropic IPO.",
+          "date": "2026-11-23",
+          "headline": "BitMine adds 7,819 ETH; total holdings dip to $11.1B",
+          "what_happened": "BitMine's weekly 8-K disclosed ETH holdings rising to 6,085,564 tokens (4.98% of total ETH supply) after buying 7,819 ETH over the prior week, extending its streak of weekly purchases since June 2025. Total crypto, cash, and moonshot holdings fell to $11.1 billion from $11.8 billion a week earlier because the ETH price used for the mark dropped to $1,713 from $1,823, even though staked ETH (5,227,037 tokens) and projected annualized staking revenue ($286M, up from a prior high of $294M) were essentially unchanged in token terms.",
           "assessment": "neutral",
-          "thesis_fit": "Continued weekly accumulation discipline is thesis-supportive, but a stagnant staking balance alongside growing token count and a sharp mark-to-market value decline are mild negatives for the custody/staking-economics and ETH-per-share legs of the thesis.",
+          "thesis_fit": "Continued disciplined weekly ETH accumulation and unchanged staking participation (~86% of ETH staked) support the accumulation leg of the thesis, but the falling ETH mark and the stock's persistent ~17% discount to NAV offset the positive on-chain progress.",
           "severity": "digest",
           "confidence": "primary source",
-          "source_url": "https://www.sec.gov/Archives/edgar/data/0001829311/000149315226052063/ex99-1.htm"
+          "source_url": "https://www.sec.gov/Archives/edgar/data/0001829311/000149315226053668/ex99-1.htm"
         },
         {
-          "date": "2026-11-11",
-          "headline": "MSCI removes Strategy from indexes; BitMine not named",
-          "what_happened": "In its November 2026 Index Review, MSCI confirmed removal of Strategy's Class A shares from its USA Large Cap Index and Global Investable Market Indexes effective after the Nov. 30 close, under new rules targeting non-operating, crypto-heavy balance sheets. BitMine was not named among the companies removed, and BMNR shares rose on the news even as Strategy shares lagged.",
-          "assessment": "positive",
-          "thesis_fit": "Avoiding MSCI exclusion removes a near-term passive-selling overhang that is now weighing on peer treasury vehicles, a direct positive for BitMine's index-related positioning.",
-          "severity": "digest",
-          "confidence": "secondary only",
-          "source_url": "https://www.thestreet.com/crypto/markets/strategy-stock-under-pressure-ahead-of-key-msci-decision-today"
-        },
-        {
-          "date": "2026-11-06",
-          "headline": "BitMine launches retail voting program defaulting to Board",
-          "what_happened": "BitMine filed a DEFA14A introducing a \"Retail Voting Program\" that lets shareholders opt in to have their shares automatically voted in line with Board recommendations at future meetings, modeled on similar programs at large-cap companies. Shareholders retain the ability to override individual votes or opt out, but the program is designed to raise support for future proposals without issuing new shares to secure quorum.",
+          "date": "2026-11-23",
+          "headline": "Tom Lee frames ETH, BTC as 'hard money' on low supply growth",
+          "what_happened": "In commentary accompanying the weekly 8-K, Chairman Tom Lee argued ETH and BTC function as hard money, noting ETH supply had grown 1.26% since BitMine adopted its treasury strategy in June 2025, versus 0.82% for Bitcoin and much higher annualized inflation for Solana, XRP, and Cardano. He used the comparison to reinforce BitMine's ETH-centric accumulation thesis rather than announcing any new treasury-policy action.",
           "assessment": "neutral",
-          "thesis_fit": "Given BitMine's history of large share-authorization requests to fund its ETH strategy, a program that streamlines Board-aligned voting is a governance item worth monitoring for how it affects shareholder scrutiny of future dilutive financing proposals.",
+          "thesis_fit": "This is narrative reinforcement of the existing ETH-accumulation thesis rather than a concrete new commitment on treasury policy, financing, or custody.",
           "severity": "digest",
           "confidence": "primary source",
-          "source_url": "https://www.sec.gov/Archives/edgar/data/0001829311/000149315226050507/defa14a.htm"
+          "source_url": "https://www.theblock.co/news/business/2026-11-23-bitmine-adds-7819-eth-tom-lee-makes-hard-money-case-444948"
         }
       ]
     }
   ],
   "sector": {
-    "bottom_line": "MSCI's November review confirmed removal of Strategy, Metaplanet and Upexi from its global indexes (effective Nov 30) while sparing Ethereum-treasury SharpLink, even as a hawkish Fed pivot toward serial 2027 rate hikes further tightens financing conditions for the beaten-down treasury-company sector.",
+    "bottom_line": "Sector risk sentiment deteriorated sharply this week as MSCI's finalized index-exclusion list took effect, Bitcoin and Ether ETFs posted their worst outflows in months, Fed officials hardened toward a December hike (with Dec 9 odds near 90-95%), and widening treasury-company mNAV discounts are choking off the equity-issuance financing loop that funded years of corporate Bitcoin accumulation.",
     "updates": [
       {
         "date": "2026-11-11",
-        "headline": "MSCI confirms Strategy, Metaplanet, Upexi index deletions",
-        "what_happened": "MSCI's November index review, published Nov 11, listed Strategy for deletion from the MSCI USA Index and Metaplanet from the MSCI Japan Small Cap Index, effective at the close of trading Nov 30, with crypto treasury firm Upexi also removed. Ethereum treasury company SharpLink was not included among the deletions in the review and instead remains on a watchlist under the same non-operating-company framework.",
+        "headline": "MSCI confirms Strategy, Metaplanet deletion; SharpLink on watch list",
+        "what_happened": "MSCI officially published its November index review naming Strategy for deletion from the MSCI USA Index and Metaplanet from the MSCI Japan Small Cap Index, effective at the close of November 30, under its finalized 'non-operating company' screening framework. Ethereum treasury company SharpLink was not deleted outright but was placed on a new public watch list.",
         "assessment": "negative",
         "severity": "alert",
         "confidence": "primary source",
-        "source_url": "https://www.theblock.co/news/markets/2026-11-11-strategy-metaplanet-lose-msci-index-membership-november-reshuffle-438437"
+        "source_url": "https://www.fool.com/investing/2026/11/21/msci-is-cutting-strategy-and-metaplanet-from-its-indexes-here-s-what-it-means-for-bitcoin-treasury-company-stocks/"
       },
       {
-        "date": "2026-11-12",
-        "headline": "White House nominates four SEC, CFTC commissioner picks",
-        "what_happened": "The White House nominated Kristin N. Johnson and Steven Levine for SEC commissioner seats and Nathan Anonick and Matthew Rowland for CFTC seats, filling vacancies at both crypto-relevant regulators. The Senate Agriculture Committee will consider the CFTC nominees while Senate Banking handles the SEC picks, with a confirmation hearing already set for November 19.",
-        "assessment": "neutral",
-        "severity": "digest",
-        "confidence": "secondary only",
-        "source_url": "https://www.theblock.co/news/regulation/2026-11-12-white-house-crypto-picks-sec-cftc-439175"
-      },
-      {
-        "date": "2026-11-14",
-        "headline": "Fed officials signal December hike, more tightening into 2027",
-        "what_happened": "Federal Reserve officials delivered hawkish remarks this week that solidified market expectations for a 25-basis-point December rate hike, with futures now pricing consecutive quarter-point increases in December, January and March 2027 rather than just December and March as previously expected. San Francisco Fed President Mary Daly said on Nov 13 that officials will \"need to, in all likelihood, raise rates,\" citing persistent inflation and stronger-than-expected wholesale and consumer price data.",
+        "date": "2026-11-20",
+        "headline": "Bitcoin, Ether ETFs post largest weekly outflows in months",
+        "what_happened": "US spot Bitcoin ETFs recorded roughly $1.79 billion in net outflows for the week ending November 20, the third-largest weekly outflow on record and the fourth consecutive losing week, with BlackRock's IBIT alone shedding about $1.37 billion. Spot Ether ETFs lost an additional $305-314 million, extending an eight-week outflow streak, while Bitcoin fell from about $65,300 to below $59,000 during the week.",
         "assessment": "negative",
         "severity": "alert",
         "confidence": "secondary only",
-        "source_url": "https://www.kucoin.com/news/flash/fed-officials-signal-december-rate-hike-market-prices-for-further-increases-in-2027"
+        "source_url": "https://coinpaper.com/39252/bitcoin-et-fs-lose-1-79-billion-in-one-week-while-btc-falls-nearly-10"
+      },
+      {
+        "date": "2026-11-20",
+        "headline": "Fed December hike odds surge to 90-95% after hawkish minutes",
+        "what_happened": "Minutes from the October FOMC meeting, released November 18, showed almost all officials backing further tightening, with some open to a move larger than 25bp in December. CME FedWatch and prediction markets subsequently pushed December 9 hike odds to roughly 90-95%, before a broader equity selloff later cut 50bp-hike odds to zero and left a 25bp move to 4.00-4.25% as the dominant expectation.",
+        "assessment": "negative",
+        "severity": "alert",
+        "confidence": "secondary only",
+        "source_url": "https://www.tradingpedia.com/2026/11/19/crypto-slips-as-fed-minutes-fuel-december-rate-hike-bets/"
+      },
+      {
+        "date": "2026-11-19",
+        "headline": "SEC nominees Johnson, Levine testify at Senate Banking hearing",
+        "what_happened": "Steven Levine and Kristin N. Johnson appeared before the Senate Banking Committee for their SEC confirmation hearing, with discussion focused on the SEC's September 17 tokenized-stock innovation exemption. Johnson emphasized notice-and-comment rulemaking while Levine compared the exemption to early ETF exemptive orders that later led to formal rulemaking; confirming both would move the SEC from two to four commissioners.",
+        "assessment": "neutral",
+        "severity": "digest",
+        "confidence": "secondary only",
+        "source_url": "https://defieducationfund.substack.com/p/defi-debrief-week-of-november-162026"
+      },
+      {
+        "date": "2026-11-17",
+        "headline": "CFTC nominees face Senate Agriculture hearing; chair backs CFTC spot role",
+        "what_happened": "The Senate Agriculture Committee held its hearing for CFTC nominees Nathan Anonick and Matthew Rowland on November 17, with Chairman Boozman stating the CFTC is the right regulator for the digital-asset spot market. Separately, on November 9 Coinbase, Kalshi, Payward, DRW, Jump Trading and Paradigm submitted a proposed amicus brief supporting the CFTC in ongoing market-structure litigation, and the SEC also filed its own amicus brief.",
+        "assessment": "neutral",
+        "severity": "digest",
+        "confidence": "secondary only",
+        "source_url": "https://www.troutman.com/insights/digital-assets-blockchain-newsletter-november-19-2026/"
+      },
+      {
+        "date": "2026-11-23",
+        "headline": "CFTC prediction-market rules move to White House review",
+        "what_happened": "The CFTC filed its 'Prediction Markets; Public Interest Determinations' rulemaking with the White House's Office of Information and Regulatory Affairs for review, advancing its claim of exclusive jurisdiction over event contracts. A coalition of 44 state attorneys general said they opposed the CFTC's prediction-market rulemaking, underscoring an ongoing state-federal jurisdiction dispute.",
+        "assessment": "neutral",
+        "severity": "digest",
+        "confidence": "primary source",
+        "source_url": "https://www.theblock.co/news/regulation/2026-11-23-cftc-prediction-market-rules-advance-white-house-review-amid-state-federal-jurisdiction-fight-445384"
+      },
+      {
+        "date": "2026-11-18",
+        "headline": "Majority of top crypto treasury firms trade below NAV, choking financing",
+        "what_happened": "Blockworks data cited this week showed 24 of the 25 largest crypto-treasury companies trading below the value of their holdings, with Strategy's mNAV around 1.0-1.08x (and briefly sub-1x), Metaplanet at 0.49x, and SharpLink near 0.67x as of mid-to-late November. Persistent sub-1.0x mNAV removes the equity-issuance arbitrage that funded years of corporate Bitcoin accumulation, with VanEck noting 20 companies have already retreated from Bitcoin treasury strategies in 2026 (9 full exits, 7 partial sellers).",
+        "assessment": "negative",
+        "severity": "alert",
+        "confidence": "secondary only",
+        "source_url": "https://coinpedia.org/research-report/good-time-to-buy-bitcoin-the-signals-worth-watching-after-the-55122-low/"
+      },
+      {
+        "date": "2026-11-16",
+        "headline": "CFTC approves blockchain-based derivatives exchange TLD Markets",
+        "what_happened": "On November 16, the CFTC designated TLD Markets, Inc. as a new derivatives exchange, confirmed in the agency's official filing record, extending the CFTC's recent run of crypto-market-infrastructure approvals.",
+        "assessment": "positive",
+        "severity": "digest",
+        "confidence": "primary source",
+        "source_url": "https://news.bitcoin.com/regulation-and-legal/this-week-in-crypto-law-november-22-2026/"
       }
     ],
-    "generated_at": "2026-11-16T17:15:39.042457+00:00"
+    "generated_at": "2026-11-23T19:20:44.475089+00:00"
   },
   "failures": []
 }

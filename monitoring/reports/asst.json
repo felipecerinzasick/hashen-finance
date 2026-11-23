@@ -3,51 +3,28 @@
   "name": "Asset Entities / Strive",
   "ticker": "ASST",
   "dashboard_url": "https://hashen-finance.onrender.com/dashboard/stocks/treasury/asst/",
-  "generated_at": "2026-11-16T17:15:39.042382+00:00",
+  "generated_at": "2026-11-23T19:20:44.475012+00:00",
   "lookback_days": 8,
   "snapshot": {
-    "holdings": "43,404 BTC as of Nov 13, 2026",
-    "share_price": 19.3,
-    "mnav": null,
-    "as_of": "2026-11-16"
+    "holdings": "43,404 BTC (unchanged week-over-week as of Nov 20, 2026)",
+    "share_price": 16.9,
+    "mnav": 1.36,
+    "as_of": "2026-11-23"
   },
-  "overall_verdict": "negative",
-  "email_summary": "Strive keeps buying BTC at a loss to spot while raising preferred dividend costs and shares sink 10% in a crypto selloff.",
-  "bottom_line": "Strive's weekly BTC accumulation continues but recent purchases are now underwater versus spot, cash is shrinking, and the preferred dividend rate just rose, adding cost pressure even as some institutional holders added shares. Net effect is modestly negative for the near-term execution story, though the long-term accumulation thesis remains intact.",
-  "source_conflicts": [
-    "Market cap (~$2.72B) cited in same-day coverage predates the ~10% premarket share price decline on Nov 16, so market cap/mNAV figures from that day are inconsistent depending on timing.",
-    "Cash balance change ($22.3M decline to $465.3M) was not explicitly tied to the $17.5M BTC purchase or the $10M preferred raise in the 8-K, per secondary reporting."
-  ],
+  "overall_verdict": "neutral",
+  "email_summary": "Strive paused Bitcoin buying and ATM sales for the first time in months as cash dipped to $462.4M.",
+  "bottom_line": "After weeks of steady accumulation funded by preferred-stock ATMs, Strive's treasury growth engine paused for a week with no BTC purchases or share sales, a routine but notable break in cadence worth watching for signs of financing fatigue. Share price remains highly volatile (down to $14.51 before a 16.5% gap-up), and mNAV has compressed to roughly 1.36x, modestly narrowing the arbitrage that has funded past purchases.",
+  "source_conflicts": [],
   "updates": [
     {
-      "date": "2026-11-16",
-      "headline": "Strive buys 251 BTC at a loss to current spot price",
-      "what_happened": "Strive's Form 8-K disclosed the purchase of 251 bitcoin between Nov. 7-13 at an average cost of $69,853 per coin, bringing total holdings to 43,404 BTC. The filing also showed cash fell $22.3 million to $465.3 million and that Strive raised about $10 million by selling 104,478 shares of its 15% fixed-rate Series A (SATS) preferred stock, with no common or variable-rate SATA shares sold during the week.",
-      "assessment": "negative",
-      "thesis_fit": "Continued BTC accumulation supports the treasury thesis, but buying at $69,853 while bitcoin traded near $64,300-$68,800 means this tranche sits at an unrealized loss, and funding it via expensive 15% fixed preferred raises the cost-of-capital bar for a durable BTC-per-share story.",
+      "date": "2026-11-23",
+      "headline": "Strive pauses Bitcoin buying, skips ATM sales for a week",
+      "what_happened": "Strive disclosed in a Form 8-K that it purchased no bitcoin during the week ended November 20, 2026, leaving its treasury unchanged at 43,404 BTC, and sold no shares of Class A common stock, SATA, or SATS preferred through its at-the-market programs. Cash and cash equivalents declined $2.9 million to $462.4 million over the week, and the company's 505,000 shares of Strategy's STRC preferred stock lost roughly $3.2 million in fair value. Share counts were unchanged at 127,331,109 combined Class A/B shares.",
+      "assessment": "neutral",
+      "thesis_fit": "A pause in both BTC accumulation and ATM issuance interrupts the weekly 'bitcoin-per-share' growth narrative central to the thesis, though a single quiet week does not by itself signal distress.",
       "severity": "digest",
       "confidence": "primary source",
-      "source_url": "https://unchainedcrypto.com/strives-weekly-bitcoin-buying-rebounds-to-251-btc-as-it-pays-less-per-coin"
-    },
-    {
-      "date": "2026-11-12",
-      "headline": "Strive raises SATA preferred dividend rate to 13.25%",
-      "what_happened": "Strive's board increased the dividend rate on its Variable Rate Series A Perpetual Preferred Stock (SATA) from 13.00% to 13.25% per annum, effective for periods starting December 1, 2026, per an 8-K filing.",
-      "assessment": "negative",
-      "thesis_fit": "A higher preferred dividend rate increases the cash yield Strive must cover from its 18-month reserve and operating cash flow, adding to the capital-structure cost that bears on durability of the BTC-per-share strategy.",
-      "severity": "digest",
-      "confidence": "primary source",
-      "source_url": "https://www.stocktitan.net/sec-filings/ASST/8-k-strive-inc-reports-material-event-25b814afc448.html"
-    },
-    {
-      "date": "2026-11-12",
-      "headline": "BNY Mellon, State Street raise ASST stakes in Q3 13Fs",
-      "what_happened": "A Nov. 5 13F showed Bank of New York Mellon raised its Strive stake 28% to 237,100 shares worth $6.97 million as of Sept. 30. A separate Nov. 12 13F showed State Street raised its Strive position 12% to roughly $50 million.",
-      "assessment": "positive",
-      "thesis_fit": "Incremental institutional buying during Q3 is a modest positive signal for market trust in the treasury story, partially offsetting the recently reported reduction in Fidelity's passive stake.",
-      "severity": "digest",
-      "confidence": "primary source",
-      "source_url": "https://bitcoinmagazine.com/news/bny-mellon-raises-strive-asst-stake-28"
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1920406/000162828026075372/asst-20261123.htm"
     }
   ]
 }
